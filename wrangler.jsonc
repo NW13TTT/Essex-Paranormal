@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "essex-paranormal",
   "main": "./worker.js",
-  "compatibility_date": "2026-09-03",
+  "compatibility_date": "2026-09-02",
   "assets": {
     "directory": "./",
     "binding": "ASSETS"
