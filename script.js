@@ -1,8 +1,18 @@
+// =========================================
+// ESSEX PARANORMAL
+// Main website JavaScript
+// =========================================
+
+
+// MOBILE NAVIGATION
+
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector("#navLinks");
 
 if (menuToggle && navLinks) {
+
   menuToggle.addEventListener("click", () => {
+
     const isOpen = navLinks.classList.toggle("open");
 
     menuToggle.setAttribute(
@@ -12,32 +22,42 @@ if (menuToggle && navLinks) {
 
     menuToggle.setAttribute(
       "aria-label",
-      isOpen ? "Close navigation menu" : "Open navigation menu"
+      isOpen
+        ? "Close navigation menu"
+        : "Open navigation menu"
     );
+
   });
+
 }
 
 
-/* Close mobile menu after selecting a link */
+// CLOSE MOBILE MENU WHEN A LINK IS SELECTED
 
-document.querySelectorAll("#navLinks a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks?.classList.remove("open");
+document
+  .querySelectorAll("#navLinks a")
+  .forEach((link) => {
 
-    menuToggle?.setAttribute(
-      "aria-expanded",
-      "false"
-    );
+    link.addEventListener("click", () => {
 
-    menuToggle?.setAttribute(
-      "aria-label",
-      "Open navigation menu"
-    );
+      navLinks?.classList.remove("open");
+
+      menuToggle?.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      menuToggle?.setAttribute(
+        "aria-label",
+        "Open navigation menu"
+      );
+
+    });
+
   });
-});
 
 
-/* Placeholder social links */
+// PLACEHOLDER SOCIAL LINKS
 
 document
   .querySelectorAll('[data-placeholder="true"]')
