@@ -368,17 +368,25 @@ textarea {
 
     inset: 0;
 
-    background:
-        radial-gradient(
-            circle at 25% 45%,
-            rgba(192, 255, 79, 0.08),
-            transparent 30%
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(2, 3, 3, 0.98) 0%,
+            rgba(2, 3, 3, 0.90) 28%,
+            rgba(2, 3, 3, 0.52) 58%,
+            rgba(2, 3, 3, 0.78) 100%
         ),
-        radial-gradient(
-            circle at 78% 55%,
-            rgba(192, 255, 79, 0.04),
-            transparent 35%
-        );
+        linear-gradient(
+            0deg,
+            rgba(2, 3, 3, 0.94) 0%,
+            transparent 55%,
+            rgba(0, 0, 0, 0.35) 100%
+        ),
+        url("/hero-background.svg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
     pointer-events: none;
 }
@@ -520,12 +528,6 @@ textarea {
 }
 
 
-/*
-   This is deliberately NOT clipping the logo into a square.
-   The black corners of the JPG blend into the website
-   background, while the green circle becomes the visual edge.
-*/
-
 .hero-logo {
     position: relative;
 
@@ -564,19 +566,7 @@ textarea {
    ========================================================= */
 
 .hero-logo-ring {
-    position: absolute;
-
-    width: 94%;
-    height: 94%;
-
-    border: 1px solid rgba(192, 255, 79, 0.10);
-
-    border-radius: 50%;
-
-    animation:
-        logoRingPulse 5s ease-in-out infinite;
-
-    pointer-events: none;
+    display: none;
 }
 
 
@@ -2186,6 +2176,43 @@ textarea {
         align-items: flex-start;
 
         flex-direction: column;
+    }
+
+}
+
+
+/* =========================================================
+   HERO BACKGROUND RESPONSIVE POSITIONING
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .hero-background {
+        background-position: 62% center;
+
+        background-image:
+            linear-gradient(
+                90deg,
+                rgba(2, 3, 3, 0.97) 0%,
+                rgba(2, 3, 3, 0.84) 52%,
+                rgba(2, 3, 3, 0.78) 100%
+            ),
+            linear-gradient(
+                0deg,
+                rgba(2, 3, 3, 0.97) 0%,
+                transparent 58%,
+                rgba(0, 0, 0, 0.45) 100%
+            ),
+            url("/hero-background.svg");
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .hero-background {
+        background-position: 68% center;
     }
 
 }
