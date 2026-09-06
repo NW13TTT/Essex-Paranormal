@@ -1,9 +1,16 @@
 /* =========================================================
    ESSEX PARANORMAL
-   Main Website JavaScript
+   Website JavaScript + Control Room API Connection
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       API
+       ===================================================== */
+
+    const API_BASE = "/api";
+
 
     /* =====================================================
        MOBILE NAVIGATION
@@ -29,10 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     ? "Close navigation menu"
                     : "Open navigation menu"
             );
+
         });
 
-
-        /* Close menu when navigation link is selected */
 
         navLinks.querySelectorAll("a").forEach((link) => {
 
@@ -49,12 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     "aria-label",
                     "Open navigation menu"
                 );
+
             });
 
         });
 
-
-        /* Close menu when clicking outside it */
 
         document.addEventListener("click", (event) => {
 
@@ -75,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "aria-label",
                     "Open navigation menu"
                 );
+
             }
 
         });
@@ -125,13 +131,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const updateBackToTop = () => {
 
             if (window.scrollY > 600) {
+
                 backToTop.style.opacity = "1";
                 backToTop.style.visibility = "visible";
                 backToTop.style.pointerEvents = "auto";
+
             } else {
+
                 backToTop.style.opacity = "0";
                 backToTop.style.visibility = "hidden";
                 backToTop.style.pointerEvents = "none";
+
             }
 
         };
@@ -189,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ACTIVE NAVIGATION LINK
+       ACTIVE NAVIGATION
        ===================================================== */
 
     const sections = document.querySelectorAll("section[id]");
@@ -232,6 +242,146 @@ document.addEventListener("DOMContentLoaded", () => {
         sections.forEach((section) => {
             observer.observe(section);
         });
+
+    }
+
+
+    /* =====================================================
+       CONTROL ROOM API
+       ===================================================== */
+
+    async function loadInvestigations() {
+
+        const investigationContainer =
+            document.querySelector("#investigation-list");
+
+        if (!investigationContainer) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(`${API_BASE}/investigations`);
+
+            if (!response.ok) {
+                throw new Error(
+                    `API returned ${response.status}`
+                );
+            }
+
+            const data = await response.json();
+
+            if (
+                !data.success ||
+                !Array.isArray(data.investigations)
+            ) {
+                throw new Error(
+                    "Invalid investigation data"
+                );
+            }
+
+            investigationContainer.innerHTML = "";
+
+
+            data.investigations.forEach((investigation) => {
+
+                const card =
+                    document.createElement("article");
+
+                card.className = "investigation-card";
+
+
+                const dateText =
+                    investigation.date
+                        ? investigation.date
+                        : "Date pending";
+
+
+                card.innerHTML = `
+                    <div class="investigation-card-top">
+
+                        <span class="investigation-id">
+                            ${escapeHTML(investigation.id)}
+                        </span>
+
+                        <span class="investigation-status">
+                            ${escapeHTML(investigation.status)}
+                        </span>
+
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(investigation.title)}
+                    </h3>
+
+                    <div class="investigation-meta">
+
+                        <span>
+                            LOCATION
+                            <strong>
+                                ${escapeHTML(investigation.location)}
+                            </strong>
+                        </span>
+
+                        <span>
+                            DATE
+                            <strong>
+                                ${escapeHTML(dateText)}
+                            </strong>
+                        </span>
+
+                    </div>
+
+                    <p>
+                        ${escapeHTML(investigation.description)}
+                    </p>
+
+                    <a
+                        href="#case-files"
+                        class="investigation-link"
+                    >
+                        VIEW CASE FILE
+                    </a>
+                `;
+
+
+                investigationContainer.appendChild(card);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Essex Paranormal API error:",
+                error
+            );
+
+            investigationContainer.innerHTML = `
+                <div class="api-error">
+                    <strong>INVESTIGATION ARCHIVE TEMPORARILY UNAVAILABLE</strong>
+                    <span>Please check back shortly.</span>
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       HTML SAFETY
+       ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
     }
 
@@ -289,6 +439,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 new Date().getFullYear();
 
         });
+
+
+    /* =====================================================
+       LOAD CONTROL ROOM DATA
+       ===================================================== */
+
+    loadInvestigations();
 
 
     /* =====================================================
