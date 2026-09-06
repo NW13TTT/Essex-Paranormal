@@ -27,40 +27,26 @@ export default {
     }
 
 
-    // Investigations
+    /*
+     * =====================================================
+     * INVESTIGATIONS
+     * =====================================================
+     *
+     * The public website must never display invented
+     * investigations or placeholder cases.
+     *
+     * Real investigations will be supplied by the
+     * Control Room / publishing system when that
+     * connection is implemented.
+     *
+     * Until then, return an honest empty collection.
+     */
+
     if (url.pathname === "/api/investigations") {
-
-      const investigations = [
-        {
-          id: "EP-001",
-          title: "Investigation 001",
-          location: "Location pending",
-          date: null,
-          status: "PENDING",
-          description: "Investigation details will appear here once published."
-        },
-        {
-          id: "EP-002",
-          title: "Investigation 002",
-          location: "Location pending",
-          date: null,
-          status: "PENDING",
-          description: "Investigation details will appear here once published."
-        },
-        {
-          id: "EP-003",
-          title: "Investigation 003",
-          location: "Location pending",
-          date: null,
-          status: "PENDING",
-          description: "Investigation details will appear here once published."
-        }
-      ];
-
       return new Response(
         JSON.stringify({
           success: true,
-          investigations
+          investigations: []
         }),
         {
           headers: {
@@ -74,8 +60,17 @@ export default {
 
     /*
      * =====================================================
-     * FUTURE API ROUTES
+     * FUTURE CONTROL ROOM / CMS API ROUTES
      * =====================================================
+     *
+     * These routes are intentionally NOT fabricated here.
+     *
+     * When the Control Room publishing connection is added,
+     * the public website can consume published content from
+     * the existing system without exposing private storage,
+     * credentials or administrative functionality.
+     *
+     * Planned areas include:
      *
      * /api/case-files
      * /api/evidence
@@ -84,8 +79,7 @@ export default {
      * /api/bookings
      * /api/payments
      *
-     * These will eventually connect to the Control Room
-     * and database.
+     * No dummy data is returned for these routes.
      */
 
 
