@@ -1,6 +1,7 @@
 /* =========================================================
    ESSEX PARANORMAL
-   COMPLETE WEBSITE JAVASCRIPT
+   WEBSITE JAVASCRIPT
+   CINEMATIC UI + EXISTING API CONNECTION
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,11 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const entryScreen =
         document.querySelector("#entry-screen");
 
+
     if (entryScreen) {
 
         document.body.style.overflow = "hidden";
 
         let entryFinished = false;
+
 
         const finishEntry = () => {
 
@@ -45,46 +48,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * Normal cinematic intro.
-         * The image appears first, holds,
-         * then fades away to reveal the website.
+         * Short premium cinematic introduction.
+         * CSS controls the visual animation.
+         * This timer simply releases the page.
          */
 
-        setTimeout(() => {
-
-            finishEntry();
-
-        }, 5800);
-
-
-        /*
-         * Accessibility.
-         * Reduced-motion users get a much shorter
-         * introduction.
-         */
-
-        if (
+        const reducedMotion =
             window.matchMedia(
                 "(prefers-reduced-motion: reduce)"
-            ).matches
-        ) {
+            ).matches;
 
-            setTimeout(() => {
 
-                finishEntry();
+        const introDuration =
+            reducedMotion
+                ? 700
+                : 3000;
 
-            }, 700);
 
-        }
+        setTimeout(
+            finishEntry,
+            introDuration
+        );
 
     }
+
 
 
     /* =====================================================
        API
        ===================================================== */
 
+    /*
+     * IMPORTANT:
+     * Keep this endpoint unchanged.
+     *
+     * The public website consumes published investigation
+     * information through the existing API architecture.
+     */
+
     const API_BASE = "/api";
+
 
 
     /* =====================================================
@@ -100,26 +103,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (menuToggle && navLinks) {
 
+
+        const closeMenu = () => {
+
+            navLinks.classList.remove("open");
+
+            menuToggle.classList.remove("open");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+            document.body.classList.remove(
+                "nav-open"
+            );
+
+        };
+
+
+        const openMenu = () => {
+
+            navLinks.classList.add("open");
+
+            menuToggle.classList.add("open");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            menuToggle.setAttribute(
+                "aria-label",
+                "Close navigation menu"
+            );
+
+            document.body.classList.add(
+                "nav-open"
+            );
+
+        };
+
+
         menuToggle.addEventListener(
             "click",
             () => {
 
                 const isOpen =
-                    navLinks.classList.toggle("open");
+                    navLinks.classList.contains(
+                        "open"
+                    );
 
 
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    isOpen ? "true" : "false"
-                );
-
-
-                menuToggle.setAttribute(
-                    "aria-label",
-                    isOpen
-                        ? "Close navigation menu"
-                        : "Open navigation menu"
-                );
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
 
             }
         );
@@ -133,27 +178,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     "click",
                     () => {
 
-                        navLinks.classList.remove(
-                            "open"
-                        );
-
-
-                        menuToggle.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-
-                        menuToggle.setAttribute(
-                            "aria-label",
-                            "Open navigation menu"
-                        );
+                        closeMenu();
 
                     }
                 );
 
             });
 
+
+        /*
+         * Close the mobile navigation when the user
+         * taps outside the menu.
+         */
 
         document.addEventListener(
             "click",
@@ -165,21 +201,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     !menuToggle.contains(event.target)
                 ) {
 
-                    navLinks.classList.remove(
-                        "open"
-                    );
+                    closeMenu();
+
+                }
+
+            }
+        );
 
 
-                    menuToggle.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+        /*
+         * Escape key closes the menu.
+         */
 
+        document.addEventListener(
+            "keydown",
+            (event) => {
 
-                    menuToggle.setAttribute(
-                        "aria-label",
-                        "Open navigation menu"
-                    );
+                if (
+                    event.key === "Escape" &&
+                    navLinks.classList.contains("open")
+                ) {
+
+                    closeMenu();
+
+                    menuToggle.focus();
 
                 }
 
@@ -187,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
+
 
 
     /* =====================================================
@@ -228,9 +274,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     target.scrollIntoView({
-                        behavior: "smooth",
+                        behavior:
+                            window.matchMedia(
+                                "(prefers-reduced-motion: reduce)"
+                            ).matches
+                                ? "auto"
+                                : "smooth",
+
                         block: "start"
                     });
+
+
+                    /*
+                     * Keep the URL hash useful for navigation,
+                     * but do not cause a second jump.
+                     */
+
+                    if (
+                        window.history &&
+                        window.history.replaceState
+                    ) {
+
+                        window.history.replaceState(
+                            null,
+                            "",
+                            targetId
+                        );
+
+                    }
 
                 }
             );
@@ -238,34 +309,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
+
     /* =====================================================
        BACK TO TOP
        ===================================================== */
 
     const backToTop =
-        document.querySelector(".back-to-top");
+        document.querySelector(
+            ".back-to-top"
+        );
 
 
     if (backToTop) {
+
 
         const updateBackToTop = () => {
 
             if (window.scrollY > 600) {
 
-                backToTop.style.opacity = "1";
-
-                backToTop.style.visibility =
-                    "visible";
+                backToTop.classList.add(
+                    "visible"
+                );
 
                 backToTop.style.pointerEvents =
                     "auto";
 
             } else {
 
-                backToTop.style.opacity = "0";
-
-                backToTop.style.visibility =
-                    "hidden";
+                backToTop.classList.remove(
+                    "visible"
+                );
 
                 backToTop.style.pointerEvents =
                     "none";
@@ -295,8 +368,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 window.scrollTo({
+
                     top: 0,
-                    behavior: "smooth"
+
+                    behavior:
+                        window.matchMedia(
+                            "(prefers-reduced-motion: reduce)"
+                        ).matches
+                            ? "auto"
+                            : "smooth"
+
                 });
 
             }
@@ -305,15 +386,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     /* =====================================================
        HEADER SCROLL EFFECT
        ===================================================== */
 
     const header =
-        document.querySelector(".site-header");
+        document.querySelector(
+            ".site-header"
+        );
 
 
     if (header) {
+
 
         const updateHeader = () => {
 
@@ -348,6 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     /* =====================================================
        ACTIVE NAVIGATION
        ===================================================== */
@@ -369,6 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
         navigationLinks.length &&
         "IntersectionObserver" in window
     ) {
+
 
         const observer =
             new IntersectionObserver(
@@ -436,6 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     /* =====================================================
        INVESTIGATIONS API
        ===================================================== */
@@ -455,6 +543,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
+            /*
+             * EXISTING API CONNECTION
+             *
+             * Do not replace this with a dummy data source.
+             */
+
             const response =
                 await fetch(
                     `${API_BASE}/investigations`,
@@ -464,7 +558,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         headers: {
                             "Accept":
                                 "application/json"
-                        }
+                        },
+
+                        cache: "no-store"
                     }
                 );
 
@@ -496,12 +592,56 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /*
+             * No fake cases.
+             *
+             * If the API has no published investigations,
+             * display an honest empty state.
+             */
+
+            if (
+                data.investigations.length === 0
+            ) {
+
+                investigationContainer.innerHTML = `
+
+                    <article class="empty-state">
+
+                        <span class="empty-state-code">
+                            INVESTIGATION ARCHIVE
+                        </span>
+
+                        <h3>
+                            No published investigations yet.
+                        </h3>
+
+                        <p>
+                            When an investigation is published
+                            through the Essex Paranormal system,
+                            its verified information will appear
+                            here.
+                        </p>
+
+                        <span class="empty-state-status">
+                            AWAITING PUBLISHED CASE DATA
+                        </span>
+
+                    </article>
+
+                `;
+
+                return;
+
+            }
+
+
             investigationContainer.innerHTML =
                 "";
 
 
             data.investigations.forEach(
                 (investigation) => {
+
 
                     const card =
                         document.createElement(
@@ -518,6 +658,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             ? investigation.date
                             : "Date pending";
 
+
+                    /*
+                     * All API-controlled text is escaped
+                     * before being inserted into HTML.
+                     */
 
                     card.innerHTML = `
 
@@ -548,6 +693,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="investigation-meta">
 
                             <span>
+
                                 LOCATION
 
                                 <strong>
@@ -555,10 +701,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                         investigation.location
                                     )}
                                 </strong>
+
                             </span>
 
 
                             <span>
+
                                 DATE
 
                                 <strong>
@@ -566,6 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         dateText
                                     )}
                                 </strong>
+
                             </span>
 
                         </div>
@@ -604,32 +753,34 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+            /*
+             * Fail safely.
+             *
+             * We do not invent investigations when the
+             * existing API is unavailable.
+             */
+
             investigationContainer.innerHTML = `
 
-                <article class="investigation-card">
+                <article class="empty-state">
 
-                    <div class="investigation-card-top">
-
-                        <span class="investigation-id">
-                            EP
-                        </span>
-
-                        <span class="investigation-status">
-                            SYSTEM
-                        </span>
-
-                    </div>
-
+                    <span class="empty-state-code">
+                        INVESTIGATION ARCHIVE
+                    </span>
 
                     <h3>
-                        Investigation Archive
+                        Investigation archive unavailable.
                     </h3>
 
-
                     <p>
-                        The investigation archive is
-                        temporarily unavailable.
+                        Published investigation information
+                        could not be retrieved right now.
+                        Please try again later.
                     </p>
+
+                    <span class="empty-state-status">
+                        SYSTEM TEMPORARILY UNAVAILABLE
+                    </span>
 
                 </article>
 
@@ -638,6 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
+
 
 
     /* =====================================================
@@ -673,6 +825,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     /* =====================================================
        IMAGE ERROR CHECK
        ===================================================== */
@@ -703,6 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
+
     /* =====================================================
        CURRENT YEAR
        ===================================================== */
@@ -719,6 +873,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
+
     /* =====================================================
        LOAD INVESTIGATIONS
        ===================================================== */
@@ -726,12 +881,17 @@ document.addEventListener("DOMContentLoaded", () => {
     loadInvestigations();
 
 
+
     /* =====================================================
        PAGE READY
        ===================================================== */
 
-    document.body.classList.add(
-        "page-ready"
-    );
+    requestAnimationFrame(() => {
+
+        document.body.classList.add(
+            "page-ready"
+        );
+
+    });
 
 });
