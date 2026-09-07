@@ -1,94 +1,95 @@
 export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
+    async fetch(request, env) {
+        const url = new URL(request.url);
 
-    /*
-     * =====================================================
-     * ESSEX PARANORMAL API
-     * =====================================================
-     */
+        /*
+         * =====================================================
+         * ESSEX PARANORMAL PUBLIC API
+         * =====================================================
+         *
+         * Keep this Worker deliberately small and safe.
+         *
+         * The public website can consume published information
+         * through these routes without exposing any private
+         * Control Room, database, authentication or deployment
+         * credentials.
+         *
+         * Future CMS / Control Room routes should only be added
+         * when the real backend architecture is ready.
+         */
 
-    // Health check
-    if (url.pathname === "/api/status") {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          system: "Essex Paranormal API",
-          status: "online",
-          version: "1.0"
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          }
+
+        /* =====================================================
+           API STATUS
+           ===================================================== */
+
+        if (
+            request.method === "GET" &&
+            url.pathname === "/api/status"
+        ) {
+            return jsonResponse({
+                success: true,
+                system: "Essex Paranormal API",
+                status: "online",
+                version: "1.0"
+            });
         }
-      );
-    }
 
 
-    /*
-     * =====================================================
-     * INVESTIGATIONS
-     * =====================================================
-     *
-     * The public website must never display invented
-     * investigations or placeholder cases.
-     *
-     * Real investigations will be supplied by the
-     * Control Room / publishing system when that
-     * connection is implemented.
-     *
-     * Until then, return an honest empty collection.
-     */
+        /* =====================================================
+           INVESTIGATIONS
+           ===================================================== */
 
-    if (url.pathname === "/api/investigations") {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          investigations: []
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          }
+        if (
+            request.method === "GET" &&
+            url.pathname === "/api/investigations"
+        ) {
+            /*
+             * Only return genuine published investigation data.
+             *
+             * Until the publishing backend supplies real records,
+             * an empty array is intentional.
+             *
+             * DO NOT add fictional cases, locations, dates,
+             * findings or investigation statuses here.
+             */
+
+            return jsonResponse({
+                success: true,
+                investigations: []
+            });
         }
-      );
+
+
+        /* =====================================================
+           STATIC WEBSITE ASSETS
+           ===================================================== */
+
+        return env.ASSETS.fetch(request);
     }
-
-
-    /*
-     * =====================================================
-     * FUTURE CONTROL ROOM / CMS API ROUTES
-     * =====================================================
-     *
-     * These routes are intentionally NOT fabricated here.
-     *
-     * When the Control Room publishing connection is added,
-     * the public website can consume published content from
-     * the existing system without exposing private storage,
-     * credentials or administrative functionality.
-     *
-     * Planned areas include:
-     *
-     * /api/case-files
-     * /api/evidence
-     * /api/gallery
-     * /api/locations
-     * /api/bookings
-     * /api/payments
-     *
-     * No dummy data is returned for these routes.
-     */
-
-
-    /*
-     * =====================================================
-     * WEBSITE
-     * =====================================================
-     */
-
-    return env.ASSETS.fetch(request);
-  }
 };
+
+
+/* =========================================================
+   JSON RESPONSE HELPER
+   ========================================================= */
+
+function jsonResponse(data, status = 200) {
+    return new Response(
+        JSON.stringify(data),
+        {
+            status,
+
+            headers: {
+                "Content-Type":
+                    "application/json; charset=UTF-8",
+
+                "Cache-Control":
+                    "no-store",
+
+                "Access-Control-Allow-Origin":
+                    "*"
+            }
+        }
+    );
+}
