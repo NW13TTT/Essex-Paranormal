@@ -1,8 +1,9 @@
 :root {
     --black: #050608;
     --black-soft: #080b0d;
-    --panel: rgba(9, 12, 14, 0.72);
-    --panel-light: rgba(15, 19, 21, 0.62);
+
+    --panel: rgba(9, 12, 14, 0.62);
+    --panel-light: rgba(15, 19, 21, 0.52);
 
     --white: #f4f4f1;
     --muted: #a9abad;
@@ -42,18 +43,31 @@ html {
 
 
 body {
+    position: relative;
+
     min-width: 320px;
     overflow-x: hidden;
+
+    /*
+     * ONE CONTINUOUS ESSEX PARANORMAL WALLPAPER
+     *
+     * This is the background for the entire public site.
+     * Individual sections do not replace it.
+     */
 
     background:
         linear-gradient(
             180deg,
-            rgba(3, 5, 6, 0.12) 0%,
-            rgba(3, 5, 6, 0.62) 34%,
-            rgba(3, 5, 6, 0.88) 100%
+            rgba(3, 5, 6, 0.08) 0%,
+            rgba(3, 5, 6, 0.24) 25%,
+            rgba(3, 5, 6, 0.38) 50%,
+            rgba(3, 5, 6, 0.58) 75%,
+            rgba(3, 5, 6, 0.78) 100%
         ),
         url("/essex-paranormal-cinematic-background.webp")
         center top / cover fixed no-repeat;
+
+    background-color: var(--black);
 
     color: var(--white);
 
@@ -76,25 +90,45 @@ body {
 }
 
 
+/*
+ * Global darkness layer.
+ *
+ * It keeps the wallpaper visible while preventing
+ * the background from overpowering the content.
+ */
+
 body::before {
     content: "";
 
     position: fixed;
     inset: 0;
 
-    z-index: -1;
+    z-index: 0;
 
     pointer-events: none;
 
     background:
         linear-gradient(
             180deg,
-            rgba(0, 0, 0, 0.1),
-            rgba(0, 0, 0, 0.42) 45%,
-            rgba(0, 0, 0, 0.8)
+            rgba(0, 0, 0, 0.08),
+            rgba(0, 0, 0, 0.28) 38%,
+            rgba(0, 0, 0, 0.58) 72%,
+            rgba(0, 0, 0, 0.82) 100%
         );
 
-    opacity: 0.96;
+    opacity: 0.9;
+}
+
+
+/*
+ * Keep actual site content above the wallpaper layer.
+ */
+
+.site-header,
+main,
+.site-footer {
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -185,6 +219,7 @@ button {
 /* =========================================================
    CINEMATIC ENTRY
    APPROVED INTRO
+   DO NOT ALTER
    ========================================================= */
 
 #entry-screen {
@@ -500,6 +535,8 @@ button {
     overflow: hidden;
 
     isolation: isolate;
+
+    background: transparent;
 }
 
 
@@ -514,10 +551,10 @@ button {
     background:
         linear-gradient(
             90deg,
-            rgba(2, 4, 5, 0.9) 0%,
-            rgba(2, 4, 5, 0.58) 40%,
-            rgba(2, 4, 5, 0.24) 72%,
-            rgba(2, 4, 5, 0.55) 100%
+            rgba(2, 4, 5, 0.72) 0%,
+            rgba(2, 4, 5, 0.38) 40%,
+            rgba(2, 4, 5, 0.12) 72%,
+            rgba(2, 4, 5, 0.38) 100%
         );
 }
 
@@ -533,9 +570,9 @@ button {
     background:
         linear-gradient(
             180deg,
-            rgba(0, 0, 0, 0.28) 0%,
+            rgba(0, 0, 0, 0.22) 0%,
             transparent 42%,
-            rgba(0, 0, 0, 0.82) 100%
+            rgba(0, 0, 0, 0.64) 100%
         );
 }
 
@@ -798,6 +835,14 @@ button {
     padding:
         clamp(100px, 10vw, 170px)
         0;
+
+    /*
+     * IMPORTANT:
+     * Sections remain transparent so the same wallpaper
+     * continues behind the entire website.
+     */
+
+    background: transparent;
 }
 
 
@@ -812,8 +857,8 @@ button {
     background:
         linear-gradient(
             180deg,
-            rgba(4, 6, 7, 0.12),
-            rgba(4, 6, 7, 0.46)
+            rgba(4, 6, 7, 0.08),
+            rgba(4, 6, 7, 0.34)
         );
 }
 
@@ -868,11 +913,16 @@ button {
    ========================================================= */
 
 .profile-section {
+    background: transparent;
+}
+
+
+.profile-section::before {
     background:
         linear-gradient(
             180deg,
-            rgba(5, 7, 8, 0.18),
-            rgba(5, 7, 8, 0.64)
+            rgba(5, 7, 8, 0.08),
+            rgba(5, 7, 8, 0.42)
         );
 }
 
@@ -983,7 +1033,7 @@ button {
         1px solid rgba(255, 255, 255, 0.12);
 
     background:
-        rgba(0, 0, 0, 0.2);
+        rgba(0, 0, 0, 0.28);
 
     box-shadow:
         var(--shadow);
@@ -1094,7 +1144,7 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(7, 10, 11, 0.48);
+        rgba(7, 10, 11, 0.42);
 }
 
 
@@ -1124,14 +1174,20 @@ button {
 
 /* =========================================================
    DESTINATIONS
+   FOUR MAIN ENTRY POINTS
    ========================================================= */
 
 .destinations-section {
+    background: transparent;
+}
+
+
+.destinations-section::before {
     background:
         linear-gradient(
             180deg,
-            rgba(3, 5, 6, 0.42),
-            rgba(3, 5, 6, 0.68)
+            rgba(3, 5, 6, 0.16),
+            rgba(3, 5, 6, 0.38)
         );
 }
 
@@ -1156,14 +1212,27 @@ button {
     border:
         1px solid rgba(255, 255, 255, 0.09);
 
+    /*
+     * Translucent card.
+     * No wallpaper inside the card.
+     */
+
     background:
-        rgba(5, 7, 8, 0.64);
+        linear-gradient(
+            180deg,
+            rgba(5, 7, 8, 0.20),
+            rgba(5, 7, 8, 0.82)
+        );
 
     isolation: isolate;
 
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
     transition:
         transform 0.45s var(--ease),
-        border-color 0.35s ease;
+        border-color 0.35s ease,
+        background 0.35s ease;
 }
 
 
@@ -1173,8 +1242,21 @@ button {
 
     border-color:
         var(--border-orange);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(5, 7, 8, 0.16),
+            rgba(5, 7, 8, 0.78)
+        );
 }
 
+
+/*
+ * IMPORTANT:
+ * These image layers remain available structurally,
+ * but no longer load the main site wallpaper.
+ */
 
 .destination-image {
     position: absolute;
@@ -1182,69 +1264,22 @@ button {
 
     z-index: -2;
 
-    background-position: center;
-    background-size: cover;
+    background-image: none !important;
 
-    opacity: 0.4;
+    background-color:
+        rgba(0, 0, 0, 0.06);
 
-    transition:
-        transform 0.7s var(--ease),
-        opacity 0.5s ease;
+    opacity: 0;
+
+    pointer-events: none;
 }
 
 
-.destination-card:hover .destination-image {
-    transform: scale(1.06);
-
-    opacity: 0.56;
-}
-
-
-.destination-image-experience {
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(0, 0, 0, 0.9)
-        ),
-        url("/essex-paranormal-cinematic-background.webp")
-        center / cover no-repeat;
-}
-
-
-.destination-image-investigation {
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(0, 0, 0, 0.92)
-        ),
-        url("/essex-paranormal-cinematic-background.webp")
-        68% center / cover no-repeat;
-}
-
-
-.destination-image-gallery {
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(0, 0, 0, 0.92)
-        ),
-        url("/essex-paranormal-feature.jpg.PNG")
-        center / cover no-repeat;
-}
-
-
+.destination-image-experience,
+.destination-image-investigation,
+.destination-image-gallery,
 .destination-image-media {
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(0, 0, 0, 0.92)
-        ),
-        url("/essex-paranormal-cinematic-background.webp")
-        30% center / cover no-repeat;
+    background-image: none !important;
 }
 
 
@@ -1259,8 +1294,8 @@ button {
     background:
         linear-gradient(
             180deg,
-            rgba(0, 0, 0, 0.1),
-            rgba(0, 0, 0, 0.93) 88%
+            rgba(0, 0, 0, 0.04),
+            rgba(0, 0, 0, 0.78) 88%
         );
 }
 
@@ -1308,6 +1343,9 @@ button {
     color: var(--orange);
 
     font-size: 19px;
+
+    background:
+        rgba(5, 7, 8, 0.30);
 }
 
 
@@ -1326,7 +1364,7 @@ button {
     min-height: 76px;
 
     color:
-        rgba(244, 244, 241, 0.62);
+        rgba(244, 244, 241, 0.70);
 
     font-size: 13px;
 
@@ -1350,8 +1388,13 @@ button {
    ========================================================= */
 
 .approach-section {
+    background: transparent;
+}
+
+
+.approach-section::before {
     background:
-        rgba(3, 5, 6, 0.66);
+        rgba(3, 5, 6, 0.30);
 }
 
 
@@ -1384,7 +1427,10 @@ button {
     padding: 40px;
 
     background:
-        rgba(8, 11, 12, 0.72);
+        rgba(8, 11, 12, 0.62);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 
@@ -1472,11 +1518,16 @@ button {
    ========================================================= */
 
 .investigations-section {
+    background: transparent;
+}
+
+
+.investigations-section::before {
     background:
         linear-gradient(
             180deg,
-            rgba(3, 5, 6, 0.62),
-            rgba(3, 5, 6, 0.82)
+            rgba(3, 5, 6, 0.28),
+            rgba(3, 5, 6, 0.48)
         );
 }
 
@@ -1500,7 +1551,10 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(8, 11, 12, 0.65);
+        rgba(8, 11, 12, 0.62);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 
@@ -1562,9 +1616,12 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(7, 10, 11, 0.68);
+        rgba(7, 10, 11, 0.62);
 
     overflow: hidden;
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 
@@ -1613,6 +1670,11 @@ button {
 }
 
 
+/*
+ * No copy of the main wallpaper here.
+ * This area is an entry point for published content.
+ */
+
 .featured-visual {
     position: relative;
 
@@ -1624,8 +1686,7 @@ button {
     padding: 50px;
 
     background:
-        url("/essex-paranormal-cinematic-background.webp")
-        center / cover no-repeat;
+        rgba(5, 7, 8, 0.20);
 }
 
 
@@ -1636,13 +1697,13 @@ button {
     background:
         linear-gradient(
             90deg,
-            rgba(7, 10, 11, 0.35),
-            rgba(7, 10, 11, 0.08)
+            rgba(7, 10, 11, 0.48),
+            rgba(7, 10, 11, 0.12)
         ),
         linear-gradient(
             180deg,
             transparent 40%,
-            rgba(0, 0, 0, 0.85)
+            rgba(0, 0, 0, 0.74)
         );
 }
 
@@ -1671,8 +1732,13 @@ button {
    ========================================================= */
 
 .evidence-section {
+    background: transparent;
+}
+
+
+.evidence-section::before {
     background:
-        rgba(3, 5, 6, 0.76);
+        rgba(3, 5, 6, 0.38);
 }
 
 
@@ -1703,7 +1769,10 @@ button {
     padding: 35px;
 
     background:
-        rgba(8, 11, 12, 0.74);
+        rgba(8, 11, 12, 0.62);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 
     transition:
         background 0.3s ease;
@@ -1712,7 +1781,7 @@ button {
 
 .evidence-item:hover {
     background:
-        rgba(14, 17, 18, 0.86);
+        rgba(14, 17, 18, 0.76);
 }
 
 
@@ -1786,11 +1855,16 @@ button {
    ========================================================= */
 
 .gallery-section {
+    background: transparent;
+}
+
+
+.gallery-section::before {
     background:
         linear-gradient(
             180deg,
-            rgba(3, 5, 6, 0.72),
-            rgba(3, 5, 6, 0.84)
+            rgba(3, 5, 6, 0.36),
+            rgba(3, 5, 6, 0.52)
         );
 }
 
@@ -1814,7 +1888,10 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(8, 11, 12, 0.64);
+        rgba(8, 11, 12, 0.58);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 
@@ -1833,6 +1910,9 @@ button {
     font-size: 38px;
     font-weight: 300;
     letter-spacing: 0.06em;
+
+    background:
+        rgba(5, 7, 8, 0.25);
 }
 
 
@@ -1858,8 +1938,13 @@ button {
    ========================================================= */
 
 .contact-section {
+    background: transparent;
+}
+
+
+.contact-section::before {
     background:
-        rgba(3, 5, 6, 0.84);
+        rgba(3, 5, 6, 0.50);
 }
 
 
@@ -1883,11 +1968,14 @@ button {
         linear-gradient(
             135deg,
             rgba(255, 106, 26, 0.07),
-            rgba(8, 11, 12, 0.78)
+            rgba(8, 11, 12, 0.70)
         );
 
     box-shadow:
         var(--shadow);
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 
@@ -1955,7 +2043,10 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(8, 11, 12, 0.52);
+        rgba(8, 11, 12, 0.50);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 
@@ -1978,11 +2069,17 @@ button {
 
 /* =========================================================
    LEGAL
+   TEMPORARY MAIN-PAGE SUPPORT
    ========================================================= */
 
 .legal-section {
+    background: transparent;
+}
+
+
+.legal-section::before {
     background:
-        rgba(3, 5, 6, 0.9);
+        rgba(3, 5, 6, 0.62);
 }
 
 
@@ -2006,7 +2103,10 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(8, 11, 12, 0.72);
+        rgba(8, 11, 12, 0.58);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 
@@ -2054,6 +2154,27 @@ button {
 }
 
 
+/*
+ * This class is ready for the next stage.
+ *
+ * When the legal page is created, the detailed cards
+ * will be removed from the public home page and replaced
+ * by small footer links.
+ */
+
+.legal-page-link {
+    display: inline-flex;
+
+    margin-top: 30px;
+
+    color: var(--orange);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -2068,7 +2189,11 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(3, 5, 6, 0.96);
+        linear-gradient(
+            180deg,
+            rgba(3, 5, 6, 0.48),
+            rgba(3, 4, 5, 0.92)
+        );
 }
 
 
@@ -2243,6 +2368,9 @@ button {
         rgba(255, 255, 255, 0.65);
 
     font-size: 16px;
+
+    background:
+        rgba(5, 7, 8, 0.30);
 
     transition:
         color 0.25s ease,
@@ -2710,6 +2838,27 @@ button {
             1px solid var(--border);
     }
 
+
+    /*
+     * Mobile cards stay translucent.
+     * No wallpaper is inserted into individual cards.
+     */
+
+    .destination-card {
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+
+    .approach-item,
+    .evidence-item,
+    .gallery-empty,
+    .empty-state,
+    .contact-panel {
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
 }
 
 
@@ -2761,11 +2910,19 @@ button {
     }
 
 
+    /*
+     * Keep the wallpaper covering the full viewport on
+     * mobile rather than shrinking it to a short strip.
+     */
+
     body {
-        background-attachment: scroll;
+        background-attachment: fixed;
 
         background-size:
-            auto 100%;
+            cover;
+
+        background-position:
+            center top;
     }
 
 
@@ -3102,7 +3259,7 @@ button {
 
     .destination-card:hover .destination-image {
         transform: none;
-        opacity: 0.4;
+        opacity: 0;
     }
 
 
@@ -3118,7 +3275,7 @@ button {
 
     .evidence-item:hover {
         background:
-            rgba(8, 11, 12, 0.74);
+            rgba(8, 11, 12, 0.62);
     }
 
 }
@@ -3157,3 +3314,83 @@ button {
     }
 
 }
+
+
+/* =========================================================
+   ESSEX PARANORMAL
+   CONTINUOUS WALLPAPER SAFETY OVERRIDES
+   ========================================================= */
+
+/*
+ * These final rules deliberately override any older
+ * section-specific wallpaper declarations that may
+ * remain elsewhere in the stylesheet.
+ *
+ * There is ONE main wallpaper.
+ */
+
+.destination-image,
+.destination-image-experience,
+.destination-image-investigation,
+.destination-image-gallery,
+.destination-image-media {
+    background-image: none !important;
+    opacity: 0 !important;
+}
+
+
+/*
+ * No section is allowed to replace the main wallpaper.
+ */
+
+.profile-section,
+.destinations-section,
+.approach-section,
+.investigations-section,
+.evidence-section,
+.gallery-section,
+.contact-section,
+.legal-section {
+    background-color: transparent !important;
+}
+
+
+/*
+ * The biography image remains an actual image only.
+ * It is never used as a background.
+ */
+
+.profile-image-frame {
+    background:
+        rgba(0, 0, 0, 0.28);
+}
+
+
+/*
+ * The main wallpaper remains visible behind the
+ * entire journey.
+ */
+
+main {
+    background: transparent;
+}
+
+
+/*
+ * Keep the footer visually connected to the same
+ * continuous environment.
+ */
+
+.site-footer {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(3, 5, 6, 0.42),
+            rgba(3, 4, 5, 0.94)
+        );
+}
+
+
+/* =========================================================
+   END
+   ========================================================= */
