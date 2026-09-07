@@ -45,17 +45,131 @@ function initEntryScreen() {
         return;
     }
 
+
+    /*
+     * =====================================================
+     * ESSEX PARANORMAL
+     * CINEMATIC → HOME POSITION
+     *
+     * The approved cinematic itself is unchanged.
+     *
+     * This only makes sure that when the cinematic
+     * disappears, the visitor is at the very top of Home.
+     * =====================================================
+     */
+
+
+    /*
+     * Tell the browser not to restore an old scroll
+     * position when the page is opened or refreshed.
+     *
+     * This is particularly useful on Safari / iPhone.
+     */
+
+    try {
+        if ("scrollRestoration" in history) {
+            history.scrollRestoration = "manual";
+        }
+    } catch (error) {
+        /*
+         * If the browser does not allow this,
+         * continue normally.
+         */
+    }
+
+
+    /*
+     * Immediately put the underlying website at
+     * the beginning of the page.
+     */
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+    });
+
+
+    /*
+     * Give the browser another opportunity to establish
+     * the correct position before the cinematic begins.
+     */
+
+    window.requestAnimationFrame(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "auto"
+        });
+    });
+
+
     const reducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const displayTime = reducedMotion ? 700 : 3000;
+
+    const displayTime = reducedMotion
+        ? 700
+        : 3000;
+
+
+    /*
+     * =====================================================
+     * CINEMATIC FINISH
+     * =====================================================
+     */
 
     window.setTimeout(() => {
+
+        /*
+         * Fade the approved cinematic away.
+         */
+
         entryScreen.classList.add("is-hidden");
 
+
+        /*
+         * Wait for the existing fade to finish.
+         * We do NOT change the cinematic timing.
+         */
+
         window.setTimeout(() => {
+
+            /*
+             * Remove the overlay.
+             */
+
             entryScreen.remove();
+
+
+            /*
+             * FINAL GUARANTEE:
+             *
+             * Once the cinematic has completely disappeared,
+             * the public website starts at the top of Home.
+             */
+
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto"
+            });
+
+
+            /*
+             * One final animation-frame correction helps
+             * prevent Safari/iOS from restoring an old position.
+             */
+
+            window.requestAnimationFrame(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "auto"
+                });
+            });
+
         }, reducedMotion ? 50 : 850);
 
     }, displayTime);
@@ -203,6 +317,7 @@ function initSmoothNavigation() {
              * Keep the URL useful without jumping
              * the browser directly to the anchor.
              */
+
             if (
                 window.history &&
                 window.history.replaceState
@@ -400,6 +515,7 @@ async function initInvestigations() {
      * Keep the initial honest state visible while
      * the public API is being checked.
      */
+
     container.setAttribute(
         "aria-live",
         "polite"
@@ -443,6 +559,7 @@ async function initInvestigations() {
          * Never create fake records when the API
          * contains no published investigations.
          */
+
         const investigations =
             Array.isArray(
                 data?.investigations
@@ -544,6 +661,7 @@ function createInvestigationCard(
      * These fields are read only from published API
      * content. Missing information is simply omitted.
      */
+
     const title =
         safeString(
             investigation.title ||
