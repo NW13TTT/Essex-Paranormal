@@ -155,6 +155,10 @@ function initSmoothNavigation() {
         'a[href^="#"]'
     );
 
+    const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     links.forEach((link) => {
         link.addEventListener("click", (event) => {
             const targetId =
@@ -189,7 +193,10 @@ function initSmoothNavigation() {
 
             window.scrollTo({
                 top: Math.max(0, targetPosition),
-                behavior: "smooth"
+                behavior:
+                    reducedMotion
+                        ? "auto"
+                        : "smooth"
             });
 
             /*
@@ -347,9 +354,16 @@ function initBackToTop() {
     button.addEventListener("click", (event) => {
         event.preventDefault();
 
+        const reducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
         window.scrollTo({
             top: 0,
-            behavior: "smooth"
+            behavior:
+                reducedMotion
+                    ? "auto"
+                    : "smooth"
         });
 
 
