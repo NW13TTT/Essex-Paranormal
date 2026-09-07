@@ -1,897 +1,854 @@
+"use strict";
+
+/*
+ * ESSEX PARANORMAL
+ * Main public-site JavaScript
+ *
+ * Important:
+ * - The public website remains a consumer of published data.
+ * - Existing /api architecture is preserved.
+ * - No private credentials are stored here.
+ * - No Control Room credentials are exposed here.
+ * - Investigation data is never invented by this script.
+ */
+
+const API_BASE = "/api";
+
+
 /* =========================================================
-   ESSEX PARANORMAL
-   WEBSITE JAVASCRIPT
-   CINEMATIC UI + EXISTING API CONNECTION
+   DOM READY
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+    initEntryScreen();
+    initMobileNavigation();
+    initSmoothNavigation();
+    initHeaderScroll();
+    initActiveNavigation();
+    initBackToTop();
+    initInvestigations();
+    initImageFallbacks();
+    initCurrentYear();
+    initPageReady();
+});
 
 
-    /* =====================================================
-       CINEMATIC ENTRY
-       ===================================================== */
+/* =========================================================
+   CINEMATIC ENTRY
+   APPROVED INTRO
+   ========================================================= */
 
-    const entryScreen =
-        document.querySelector("#entry-screen");
+function initEntryScreen() {
+    const entryScreen = document.getElementById("entry-screen");
+
+    if (!entryScreen) {
+        return;
+    }
+
+    const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const displayTime = reducedMotion ? 700 : 3000;
+
+    window.setTimeout(() => {
+        entryScreen.classList.add("is-hidden");
+
+        window.setTimeout(() => {
+            entryScreen.remove();
+        }, reducedMotion ? 50 : 850);
+
+    }, displayTime);
+}
 
 
-    if (entryScreen) {
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
 
-        document.body.style.overflow = "hidden";
+function initMobileNavigation() {
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.getElementById("main-navigation");
 
-        let entryFinished = false;
+    if (!menuToggle || !navigation) {
+        return;
+    }
+
+    const navigationLinks = navigation.querySelectorAll("a");
+
+    function openMenu() {
+        navigation.classList.add("open");
+        menuToggle.classList.add("open");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        menuToggle.setAttribute(
+            "aria-label",
+            "Close navigation menu"
+        );
+
+        document.body.classList.add("menu-open");
+    }
 
 
-        const finishEntry = () => {
+    function closeMenu() {
+        navigation.classList.remove("open");
+        menuToggle.classList.remove("open");
 
-            if (entryFinished) {
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        menuToggle.setAttribute(
+            "aria-label",
+            "Open navigation menu"
+        );
+
+        document.body.classList.remove("menu-open");
+    }
+
+
+    menuToggle.addEventListener("click", () => {
+        const isOpen =
+            navigation.classList.contains("open");
+
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+
+    navigationLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            closeMenu();
+        });
+    });
+
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    });
+
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) {
+            closeMenu();
+        }
+    });
+}
+
+
+/* =========================================================
+   SMOOTH NAVIGATION
+   ========================================================= */
+
+function initSmoothNavigation() {
+    const links = document.querySelectorAll(
+        'a[href^="#"]'
+    );
+
+    links.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const targetId =
+                link.getAttribute("href");
+
+            if (!targetId || targetId === "#") {
                 return;
             }
 
-            entryFinished = true;
+            const target =
+                document.querySelector(targetId);
 
-            entryScreen.classList.add(
-                "entry-finished"
-            );
-
-            document.body.style.overflow = "";
-
-            setTimeout(() => {
-
-                if (entryScreen) {
-                    entryScreen.remove();
-                }
-
-            }, 850);
-
-        };
-
-
-        /*
-         * Short premium cinematic introduction.
-         * CSS controls the visual animation.
-         * This timer simply releases the page.
-         */
-
-        const reducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
-
-
-        const introDuration =
-            reducedMotion
-                ? 700
-                : 3000;
-
-
-        setTimeout(
-            finishEntry,
-            introDuration
-        );
-
-    }
-
-
-
-    /* =====================================================
-       API
-       ===================================================== */
-
-    /*
-     * IMPORTANT:
-     * Keep this endpoint unchanged.
-     *
-     * The public website consumes published investigation
-     * information through the existing API architecture.
-     */
-
-    const API_BASE = "/api";
-
-
-
-    /* =====================================================
-       MOBILE NAVIGATION
-       ===================================================== */
-
-    const menuToggle =
-        document.querySelector(".menu-toggle");
-
-    const navLinks =
-        document.querySelector("#main-navigation");
-
-
-    if (menuToggle && navLinks) {
-
-
-        const closeMenu = () => {
-
-            navLinks.classList.remove("open");
-
-            menuToggle.classList.remove("open");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open navigation menu"
-            );
-
-            document.body.classList.remove(
-                "nav-open"
-            );
-
-        };
-
-
-        const openMenu = () => {
-
-            navLinks.classList.add("open");
-
-            menuToggle.classList.add("open");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-            menuToggle.setAttribute(
-                "aria-label",
-                "Close navigation menu"
-            );
-
-            document.body.classList.add(
-                "nav-open"
-            );
-
-        };
-
-
-        menuToggle.addEventListener(
-            "click",
-            () => {
-
-                const isOpen =
-                    navLinks.classList.contains(
-                        "open"
-                    );
-
-
-                if (isOpen) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
-
+            if (!target) {
+                return;
             }
-        );
 
+            event.preventDefault();
 
-        navLinks
-            .querySelectorAll("a")
-            .forEach((link) => {
+            const header =
+                document.querySelector(".site-header");
 
-                link.addEventListener(
-                    "click",
-                    () => {
+            const headerHeight =
+                header
+                    ? header.offsetHeight
+                    : 0;
 
-                        closeMenu();
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight -
+                15;
 
-                    }
-                );
-
+            window.scrollTo({
+                top: Math.max(0, targetPosition),
+                behavior: "smooth"
             });
 
-
-        /*
-         * Close the mobile navigation when the user
-         * taps outside the menu.
-         */
-
-        document.addEventListener(
-            "click",
-            (event) => {
-
-                if (
-                    navLinks.classList.contains("open") &&
-                    !navLinks.contains(event.target) &&
-                    !menuToggle.contains(event.target)
-                ) {
-
-                    closeMenu();
-
-                }
-
+            /*
+             * Keep the URL useful without jumping
+             * the browser directly to the anchor.
+             */
+            if (
+                window.history &&
+                window.history.replaceState
+            ) {
+                window.history.replaceState(
+                    null,
+                    "",
+                    targetId
+                );
             }
-        );
+        });
+    });
+}
 
 
-        /*
-         * Escape key closes the menu.
-         */
+/* =========================================================
+   HEADER SCROLL STATE
+   ========================================================= */
 
-        document.addEventListener(
-            "keydown",
-            (event) => {
+function initHeaderScroll() {
+    const header =
+        document.querySelector(".site-header");
 
-                if (
-                    event.key === "Escape" &&
-                    navLinks.classList.contains("open")
-                ) {
-
-                    closeMenu();
-
-                    menuToggle.focus();
-
-                }
-
-            }
-        );
-
+    if (!header) {
+        return;
     }
 
 
-
-    /* =====================================================
-       SMOOTH SCROLL
-       ===================================================== */
-
-    document
-        .querySelectorAll('a[href^="#"]')
-        .forEach((link) => {
-
-            link.addEventListener(
-                "click",
-                (event) => {
-
-                    const targetId =
-                        link.getAttribute("href");
+    function updateHeader() {
+        if (window.scrollY > 35) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    }
 
 
-                    if (
-                        !targetId ||
-                        targetId === "#"
-                    ) {
+    updateHeader();
+
+
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        {
+            passive: true
+        }
+    );
+}
+
+
+/* =========================================================
+   ACTIVE NAVIGATION
+   ========================================================= */
+
+function initActiveNavigation() {
+    const navigationLinks =
+        document.querySelectorAll(
+            '#main-navigation a[href^="#"]'
+        );
+
+    if (!navigationLinks.length) {
+        return;
+    }
+
+
+    const sections = [];
+
+
+    navigationLinks.forEach((link) => {
+        const targetId =
+            link.getAttribute("href");
+
+        const section =
+            document.querySelector(targetId);
+
+        if (section) {
+            sections.push({
+                section,
+                link
+            });
+        }
+    });
+
+
+    if (!sections.length) {
+        return;
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
                         return;
                     }
 
 
-                    const target =
-                        document.querySelector(
-                            targetId
+                    sections.forEach((item) => {
+                        item.link.classList.remove(
+                            "active"
                         );
-
-
-                    if (!target) {
-                        return;
-                    }
-
-
-                    event.preventDefault();
-
-
-                    target.scrollIntoView({
-                        behavior:
-                            window.matchMedia(
-                                "(prefers-reduced-motion: reduce)"
-                            ).matches
-                                ? "auto"
-                                : "smooth",
-
-                        block: "start"
                     });
 
 
-                    /*
-                     * Keep the URL hash useful for navigation,
-                     * but do not cause a second jump.
-                     */
-
-                    if (
-                        window.history &&
-                        window.history.replaceState
-                    ) {
-
-                        window.history.replaceState(
-                            null,
-                            "",
-                            targetId
+                    const current =
+                        sections.find(
+                            (item) =>
+                                item.section ===
+                                entry.target
                         );
 
+
+                    if (current) {
+                        current.link.classList.add(
+                            "active"
+                        );
                     }
+                });
+            },
+            {
+                root: null,
+                rootMargin:
+                    "-35% 0px -55% 0px",
+                threshold: 0
+            }
+        );
 
-                }
-            );
 
+    sections.forEach((item) => {
+        observer.observe(item.section);
+    });
+}
+
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+function initBackToTop() {
+    const button =
+        document.querySelector(".back-to-top");
+
+    if (!button) {
+        return;
+    }
+
+
+    button.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
 
 
+        if (
+            window.history &&
+            window.history.replaceState
+        ) {
+            window.history.replaceState(
+                null,
+                "",
+                "#home"
+            );
+        }
+    });
+}
 
-    /* =====================================================
-       BACK TO TOP
-       ===================================================== */
 
-    const backToTop =
-        document.querySelector(
-            ".back-to-top"
+/* =========================================================
+   INVESTIGATIONS API
+   ========================================================= */
+
+async function initInvestigations() {
+    const container =
+        document.getElementById(
+            "investigation-list"
         );
 
-
-    if (backToTop) {
-
-
-        const updateBackToTop = () => {
-
-            if (window.scrollY > 600) {
-
-                backToTop.classList.add(
-                    "visible"
-                );
-
-                backToTop.style.pointerEvents =
-                    "auto";
-
-            } else {
-
-                backToTop.classList.remove(
-                    "visible"
-                );
-
-                backToTop.style.pointerEvents =
-                    "none";
-
-            }
-
-        };
-
-
-        updateBackToTop();
-
-
-        window.addEventListener(
-            "scroll",
-            updateBackToTop,
-            {
-                passive: true
-            }
-        );
-
-
-        backToTop.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-
-                window.scrollTo({
-
-                    top: 0,
-
-                    behavior:
-                        window.matchMedia(
-                            "(prefers-reduced-motion: reduce)"
-                        ).matches
-                            ? "auto"
-                            : "smooth"
-
-                });
-
-            }
-        );
-
+    if (!container) {
+        return;
     }
 
 
-
-    /* =====================================================
-       HEADER SCROLL EFFECT
-       ===================================================== */
-
-    const header =
-        document.querySelector(
-            ".site-header"
-        );
-
-
-    if (header) {
+    /*
+     * Keep the initial honest state visible while
+     * the public API is being checked.
+     */
+    container.setAttribute(
+        "aria-live",
+        "polite"
+    );
 
 
-        const updateHeader = () => {
-
-            if (window.scrollY > 30) {
-
-                header.classList.add(
-                    "scrolled"
-                );
-
-            } else {
-
-                header.classList.remove(
-                    "scrolled"
-                );
-
-            }
-
-        };
-
-
-        updateHeader();
-
-
-        window.addEventListener(
-            "scroll",
-            updateHeader,
-            {
-                passive: true
-            }
-        );
-
-    }
-
-
-
-    /* =====================================================
-       ACTIVE NAVIGATION
-       ===================================================== */
-
-    const sections =
-        document.querySelectorAll(
-            "section[id]"
-        );
-
-
-    const navigationLinks =
-        document.querySelectorAll(
-            "#main-navigation a"
-        );
-
-
-    if (
-        sections.length &&
-        navigationLinks.length &&
-        "IntersectionObserver" in window
-    ) {
-
-
-        const observer =
-            new IntersectionObserver(
-                (entries) => {
-
-                    entries.forEach(
-                        (entry) => {
-
-                            if (
-                                !entry.isIntersecting
-                            ) {
-                                return;
-                            }
-
-
-                            navigationLinks
-                                .forEach(
-                                    (link) => {
-
-                                        link.classList.remove(
-                                            "active"
-                                        );
-
-                                    }
-                                );
-
-
-                            const activeLink =
-                                document.querySelector(
-                                    `#main-navigation a[href="#${entry.target.id}"]`
-                                );
-
-
-                            if (activeLink) {
-
-                                activeLink.classList.add(
-                                    "active"
-                                );
-
-                            }
-
-                        }
-                    );
-
-                },
+    try {
+        const response =
+            await fetch(
+                `${API_BASE}/investigations`,
                 {
-                    rootMargin:
-                        "-35% 0px -55% 0px",
-
-                    threshold: 0
+                    method: "GET",
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    },
+                    credentials: "same-origin"
                 }
             );
 
 
-        sections.forEach(
-            (section) => {
-
-                observer.observe(
-                    section
-                );
-
-            }
-        );
-
-    }
+        if (!response.ok) {
+            throw new Error(
+                `Investigation API returned ${response.status}`
+            );
+        }
 
 
+        const data =
+            await response.json();
 
-    /* =====================================================
-       INVESTIGATIONS API
-       ===================================================== */
 
-    async function loadInvestigations() {
+        /*
+         * Accept the existing expected shape:
+         *
+         * {
+         *   success: true,
+         *   investigations: [...]
+         * }
+         *
+         * Never create fake records when the API
+         * contains no published investigations.
+         */
+        const investigations =
+            Array.isArray(
+                data?.investigations
+            )
+                ? data.investigations
+                : [];
 
-        const investigationContainer =
-            document.querySelector(
-                "#investigation-list"
+
+        if (!investigations.length) {
+            renderInvestigationEmptyState(
+                container
             );
 
-
-        if (!investigationContainer) {
             return;
         }
 
 
-        try {
+        renderInvestigations(
+            container,
+            investigations
+        );
 
-            /*
-             * EXISTING API CONNECTION
-             *
-             * Do not replace this with a dummy data source.
-             */
-
-            const response =
-                await fetch(
-                    `${API_BASE}/investigations`,
-                    {
-                        method: "GET",
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        },
-
-                        cache: "no-store"
-                    }
-                );
+    } catch (error) {
+        console.error(
+            "Unable to load investigations:",
+            error
+        );
 
 
-            if (!response.ok) {
-
-                throw new Error(
-                    `API returned ${response.status}`
-                );
-
-            }
+        renderInvestigationUnavailableState(
+            container
+        );
+    }
+}
 
 
-            const data =
-                await response.json();
+/* =========================================================
+   INVESTIGATION RENDERING
+   ========================================================= */
 
+function renderInvestigations(
+    container,
+    investigations
+) {
+    const fragment =
+        document.createDocumentFragment();
+
+
+    investigations.forEach(
+        (investigation, index) => {
 
             if (
-                !data.success ||
-                !Array.isArray(
-                    data.investigations
-                )
+                !investigation ||
+                typeof investigation !== "object"
             ) {
-
-                throw new Error(
-                    "Invalid investigation data"
-                );
-
-            }
-
-
-            /*
-             * No fake cases.
-             *
-             * If the API has no published investigations,
-             * display an honest empty state.
-             */
-
-            if (
-                data.investigations.length === 0
-            ) {
-
-                investigationContainer.innerHTML = `
-
-                    <article class="empty-state">
-
-                        <span class="empty-state-code">
-                            INVESTIGATION ARCHIVE
-                        </span>
-
-                        <h3>
-                            No published investigations yet.
-                        </h3>
-
-                        <p>
-                            When an investigation is published
-                            through the Essex Paranormal system,
-                            its verified information will appear
-                            here.
-                        </p>
-
-                        <span class="empty-state-status">
-                            AWAITING PUBLISHED CASE DATA
-                        </span>
-
-                    </article>
-
-                `;
-
                 return;
-
             }
 
 
-            investigationContainer.innerHTML =
-                "";
-
-
-            data.investigations.forEach(
-                (investigation) => {
-
-
-                    const card =
-                        document.createElement(
-                            "article"
-                        );
-
-
-                    card.className =
-                        "investigation-card";
-
-
-                    const dateText =
-                        investigation.date
-                            ? investigation.date
-                            : "Date pending";
-
-
-                    /*
-                     * All API-controlled text is escaped
-                     * before being inserted into HTML.
-                     */
-
-                    card.innerHTML = `
-
-                        <div class="investigation-card-top">
-
-                            <span class="investigation-id">
-                                ${escapeHTML(
-                                    investigation.id
-                                )}
-                            </span>
-
-                            <span class="investigation-status">
-                                ${escapeHTML(
-                                    investigation.status
-                                )}
-                            </span>
-
-                        </div>
-
-
-                        <h3>
-                            ${escapeHTML(
-                                investigation.title
-                            )}
-                        </h3>
-
-
-                        <div class="investigation-meta">
-
-                            <span>
-
-                                LOCATION
-
-                                <strong>
-                                    ${escapeHTML(
-                                        investigation.location
-                                    )}
-                                </strong>
-
-                            </span>
-
-
-                            <span>
-
-                                DATE
-
-                                <strong>
-                                    ${escapeHTML(
-                                        dateText
-                                    )}
-                                </strong>
-
-                            </span>
-
-                        </div>
-
-
-                        <p>
-                            ${escapeHTML(
-                                investigation.description
-                            )}
-                        </p>
-
-
-                        <a
-                            href="#case-files"
-                            class="investigation-link"
-                        >
-                            VIEW CASE FILE
-                        </a>
-
-                    `;
-
-
-                    investigationContainer.appendChild(
-                        card
-                    );
-
-                }
+            fragment.appendChild(
+                createInvestigationCard(
+                    investigation,
+                    index
+                )
             );
-
-
-        } catch (error) {
-
-            console.error(
-                "Essex Paranormal API error:",
-                error
-            );
-
-
-            /*
-             * Fail safely.
-             *
-             * We do not invent investigations when the
-             * existing API is unavailable.
-             */
-
-            investigationContainer.innerHTML = `
-
-                <article class="empty-state">
-
-                    <span class="empty-state-code">
-                        INVESTIGATION ARCHIVE
-                    </span>
-
-                    <h3>
-                        Investigation archive unavailable.
-                    </h3>
-
-                    <p>
-                        Published investigation information
-                        could not be retrieved right now.
-                        Please try again later.
-                    </p>
-
-                    <span class="empty-state-status">
-                        SYSTEM TEMPORARILY UNAVAILABLE
-                    </span>
-
-                </article>
-
-            `;
-
         }
+    );
 
+
+    if (!fragment.childNodes.length) {
+        renderInvestigationEmptyState(
+            container
+        );
+
+        return;
     }
 
 
+    container.replaceChildren(fragment);
+}
 
-    /* =====================================================
-       HTML SAFETY
-       ===================================================== */
 
-    function escapeHTML(value) {
+/* =========================================================
+   INVESTIGATION CARD
+   ========================================================= */
 
-        return String(
-            value ?? ""
-        )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+function createInvestigationCard(
+    investigation,
+    index
+) {
+    const article =
+        document.createElement("article");
 
+    article.className =
+        "investigation-card";
+
+
+    /*
+     * These fields are read only from published API
+     * content. Missing information is simply omitted.
+     */
+    const title =
+        safeString(
+            investigation.title ||
+            investigation.name ||
+            "Investigation"
+        );
+
+
+    const location =
+        safeString(
+            investigation.location
+        );
+
+
+    const date =
+        safeString(
+            investigation.date ||
+            investigation.investigationDate
+        );
+
+
+    const status =
+        safeString(
+            investigation.status
+        );
+
+
+    const summary =
+        safeString(
+            investigation.summary ||
+            investigation.description
+        );
+
+
+    const image =
+        safeString(
+            investigation.image ||
+            investigation.imageUrl
+        );
+
+
+    const details =
+        safeString(
+            investigation.url ||
+            investigation.link
+        );
+
+
+    article.innerHTML = `
+        <div class="investigation-card-image">
+            ${
+                image
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(title)}"
+                            loading="lazy"
+                        >
+                    `
+                    : ""
+            }
+        </div>
+
+        <div class="investigation-card-content">
+
+            <span class="investigation-card-number">
+                ${String(index + 1).padStart(2, "0")}
+            </span>
+
+            <span class="investigation-card-label">
+                PUBLISHED INVESTIGATION
+            </span>
+
+            <h3>
+                ${escapeHTML(title)}
+            </h3>
+
+            ${
+                location
+                    ? `
+                        <p class="investigation-location">
+                            ${escapeHTML(location)}
+                        </p>
+                    `
+                    : ""
+            }
+
+            ${
+                date
+                    ? `
+                        <p class="investigation-date">
+                            ${escapeHTML(date)}
+                        </p>
+                    `
+                    : ""
+            }
+
+            ${
+                summary
+                    ? `
+                        <p class="investigation-summary">
+                            ${escapeHTML(summary)}
+                        </p>
+                    `
+                    : ""
+            }
+
+            ${
+                status
+                    ? `
+                        <span class="investigation-status">
+                            ${escapeHTML(status)}
+                        </span>
+                    `
+                    : ""
+            }
+
+            ${
+                details
+                    ? `
+                        <a
+                            class="button button-outline"
+                            href="${escapeHTML(details)}"
+                        >
+                            VIEW CASE
+                            <span>→</span>
+                        </a>
+                    `
+                    : ""
+            }
+
+        </div>
+    `;
+
+
+    const imageElement =
+        article.querySelector(
+            ".investigation-card-image img"
+        );
+
+
+    if (imageElement) {
+        imageElement.addEventListener(
+            "error",
+            () => {
+                console.warn(
+                    "Investigation image failed to load:",
+                    imageElement.src
+                );
+
+                imageElement.remove();
+            }
+        );
     }
 
 
-
-    /* =====================================================
-       IMAGE ERROR CHECK
-       ===================================================== */
-
-    document
-        .querySelectorAll("img")
-        .forEach((image) => {
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    image.classList.add(
-                        "image-error"
-                    );
+    return article;
+}
 
 
-                    console.warn(
-                        "Essex Paranormal image could not be loaded:",
-                        image.getAttribute(
-                            "src"
-                        )
-                    );
+/* =========================================================
+   INVESTIGATION EMPTY STATE
+   ========================================================= */
 
-                }
-            );
+function renderInvestigationEmptyState(
+    container
+) {
+    container.innerHTML = `
+        <article class="empty-state">
 
-        });
+            <span class="empty-code">
+                INVESTIGATION ARCHIVE
+            </span>
+
+            <h3>
+                No published investigations yet.
+            </h3>
+
+            <p>
+                Verified investigation information
+                will appear here when published.
+            </p>
+
+            <span class="empty-status">
+                AWAITING PUBLISHED CASE DATA
+            </span>
+
+        </article>
+    `;
+}
 
 
+/* =========================================================
+   INVESTIGATION API UNAVAILABLE STATE
+   ========================================================= */
 
-    /* =====================================================
-       CURRENT YEAR
-       ===================================================== */
+function renderInvestigationUnavailableState(
+    container
+) {
+    container.innerHTML = `
+        <article class="empty-state">
+
+            <span class="empty-code">
+                INVESTIGATION ARCHIVE
+            </span>
+
+            <h3>
+                Investigation archive unavailable.
+            </h3>
+
+            <p>
+                Published investigation information
+                could not be loaded right now.
+                Please try again later.
+            </p>
+
+            <span class="empty-status">
+                TEMPORARILY UNAVAILABLE
+            </span>
+
+        </article>
+    `;
+}
+
+
+/* =========================================================
+   HTML ESCAPING
+   ========================================================= */
+
+function escapeHTML(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================================
+   SAFE STRING
+   ========================================================= */
+
+function safeString(value) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    if (
+        typeof value !== "string" &&
+        typeof value !== "number"
+    ) {
+        return "";
+    }
+
+    return String(value).trim();
+}
+
+
+/* =========================================================
+   IMAGE ERROR HANDLING
+   ========================================================= */
+
+function initImageFallbacks() {
+    const images =
+        document.querySelectorAll(
+            "img"
+        );
+
+
+    images.forEach((image) => {
+        image.addEventListener(
+            "error",
+            () => {
+                console.warn(
+                    "Website image failed to load:",
+                    image.src
+                );
+
+                image.classList.add(
+                    "image-load-error"
+                );
+            }
+        );
+    });
+}
+
+
+/* =========================================================
+   CURRENT YEAR
+   ========================================================= */
+
+function initCurrentYear() {
+    const year =
+        new Date().getFullYear();
+
 
     document
         .querySelectorAll(
             "[data-current-year]"
         )
         .forEach((element) => {
-
             element.textContent =
-                new Date().getFullYear();
-
+                String(year);
         });
+}
 
 
+/* =========================================================
+   PAGE READY
+   ========================================================= */
 
-    /* =====================================================
-       LOAD INVESTIGATIONS
-       ===================================================== */
-
-    loadInvestigations();
-
-
-
-    /* =====================================================
-       PAGE READY
-       ===================================================== */
-
+function initPageReady() {
     requestAnimationFrame(() => {
-
         document.body.classList.add(
             "page-ready"
         );
-
     });
-
-});
+}
