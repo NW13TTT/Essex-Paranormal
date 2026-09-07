@@ -1,22 +1,16 @@
 "use strict";
 
-/*
- * ESSEX PARANORMAL
- * Main public-site JavaScript
- *
- * Important:
- * - The public website remains a consumer of published data.
- * - Existing /api architecture is preserved.
- * - No private credentials are stored here.
- * - No Control Room credentials are exposed here.
- * - Investigation data is never invented by this script.
- */
+
+/* =========================================================
+   ESSEX PARANORMAL
+   PUBLIC WEBSITE SCRIPT
+   ========================================================= */
 
 const API_BASE = "/api";
 
 
 /* =========================================================
-   DOM READY
+   STARTUP
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,7 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* =========================================================
    CINEMATIC ENTRY
-   APPROVED INTRO
+   =========================================================
+   The approved cinematic itself is not changed.
+
+   When it finishes:
+   1. The intro fades.
+   2. It is removed.
+   3. The page is forced back to the top of Home.
    ========================================================= */
 
 function initEntryScreen() {
@@ -47,23 +47,8 @@ function initEntryScreen() {
 
 
     /*
-     * =====================================================
-     * ESSEX PARANORMAL
-     * CINEMATIC → HOME POSITION
-     *
-     * The approved cinematic itself is unchanged.
-     *
-     * This only makes sure that when the cinematic
-     * disappears, the visitor is at the very top of Home.
-     * =====================================================
-     */
-
-
-    /*
-     * Tell the browser not to restore an old scroll
-     * position when the page is opened or refreshed.
-     *
-     * This is particularly useful on Safari / iPhone.
+     * Stop the browser restoring an old scroll position
+     * after returning to the page.
      */
 
     try {
@@ -72,35 +57,25 @@ function initEntryScreen() {
         }
     } catch (error) {
         /*
-         * If the browser does not allow this,
-         * continue normally.
+         * Continue normally if the browser does not allow
+         * scrollRestoration to be changed.
          */
     }
 
 
     /*
-     * Immediately put the underlying website at
-     * the beginning of the page.
+     * Immediately establish Home as the starting position.
      */
 
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto"
-    });
+    forceScrollTop();
 
 
     /*
-     * Give the browser another opportunity to establish
-     * the correct position before the cinematic begins.
+     * Give the browser one frame to apply the position.
      */
 
     window.requestAnimationFrame(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "auto"
-        });
+        forceScrollTop();
     });
 
 
@@ -109,65 +84,34 @@ function initEntryScreen() {
     ).matches;
 
 
-    const displayTime = reducedMotion
-        ? 700
-        : 3000;
-
-
     /*
-     * =====================================================
-     * CINEMATIC FINISH
-     * =====================================================
+     * Keep the existing cinematic timing.
      */
 
-    window.setTimeout(() => {
+    const displayTime = reducedMotion ? 700 : 3000;
 
-        /*
-         * Fade the approved cinematic away.
-         */
+
+    window.setTimeout(() => {
 
         entryScreen.classList.add("is-hidden");
 
 
-        /*
-         * Wait for the existing fade to finish.
-         * We do NOT change the cinematic timing.
-         */
-
         window.setTimeout(() => {
-
-            /*
-             * Remove the overlay.
-             */
 
             entryScreen.remove();
 
 
             /*
-             * FINAL GUARANTEE:
-             *
-             * Once the cinematic has completely disappeared,
-             * the public website starts at the top of Home.
+             * Final safety check.
+             * Home is always where the visitor lands
+             * after the cinematic.
              */
 
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: "auto"
-            });
+            forceScrollTop();
 
-
-            /*
-             * One final animation-frame correction helps
-             * prevent Safari/iOS from restoring an old position.
-             */
 
             window.requestAnimationFrame(() => {
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "auto"
-                });
+                forceScrollTop();
             });
 
         }, reducedMotion ? 50 : 850);
@@ -177,39 +121,143 @@ function initEntryScreen() {
 
 
 /* =========================================================
+   FORCE PAGE TO HOME TOP
+   ========================================================= */
+
+function forceScrollTop() {
+
+    if (
+        window.location.hash &&
+        window.location.hash !== "#home"
+    ) {
+        return;
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto"
+    });
+}
+
+
+/* =========================================================
    MOBILE NAVIGATION
    ========================================================= */
 
 function initMobileNavigation() {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navigation = document.getElementById("main-navigation");
+
+    const menuToggle =
+        document.querySelector(".menu-toggle");
+
+    const navigation =
+        document.getElementById("main-navigation");
+
 
     if (!menuToggle || !navigation) {
         return;
     }
 
-    const navigationLinks = navigation.querySelectorAll("a");
 
-    function openMenu() {
-        navigation.classList.add("open");
-        menuToggle.classList.add("open");
+    menuToggle.addEventListener("click", () => {
+
+        const isOpen =
+            navigation.classList.toggle("open");
+
+
+        menuToggle.classList.toggle(
+            "open",
+            isOpen
+        );
+
 
         menuToggle.setAttribute(
             "aria-expanded",
-            "true"
+            String(isOpen)
         );
+
 
         menuToggle.setAttribute(
             "aria-label",
-            "Close navigation menu"
+            isOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
         );
 
-        document.body.classList.add("menu-open");
+
+        document.body.classList.toggle(
+            "menu-open",
+            isOpen
+        );
+
+    });
+
+
+    /*
+     * Close the menu after selecting a navigation link.
+     */
+
+    navigation
+        .querySelectorAll("a")
+        .forEach((link) => {
+
+            link.addEventListener("click", () => {
+                closeMobileNavigation();
+            });
+
+        });
+
+
+    /*
+     * Escape key closes the mobile navigation.
+     */
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+            closeMobileNavigation();
+        }
+
+    });
+
+
+    /*
+     * If the browser is resized back to desktop,
+     * make sure the mobile menu is reset.
+     */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 900) {
+            closeMobileNavigation();
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   CLOSE MOBILE NAVIGATION
+   ========================================================= */
+
+function closeMobileNavigation() {
+
+    const menuToggle =
+        document.querySelector(".menu-toggle");
+
+    const navigation =
+        document.getElementById("main-navigation");
+
+
+    if (navigation) {
+        navigation.classList.remove("open");
     }
 
 
-    function closeMenu() {
-        navigation.classList.remove("open");
+    if (menuToggle) {
+
         menuToggle.classList.remove("open");
 
         menuToggle.setAttribute(
@@ -222,137 +270,134 @@ function initMobileNavigation() {
             "Open navigation menu"
         );
 
-        document.body.classList.remove("menu-open");
     }
 
 
-    menuToggle.addEventListener("click", () => {
-        const isOpen =
-            navigation.classList.contains("open");
-
-        if (isOpen) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
-
-
-    navigationLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-            closeMenu();
-        });
-    });
-
-
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            closeMenu();
-        }
-    });
-
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 900) {
-            closeMenu();
-        }
-    });
+    document.body.classList.remove(
+        "menu-open"
+    );
 }
 
 
 /* =========================================================
-   SMOOTH NAVIGATION
+   SMOOTH HASH NAVIGATION
    ========================================================= */
 
 function initSmoothNavigation() {
-    const links = document.querySelectorAll(
-        'a[href^="#"]'
-    );
 
-    const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const links =
+        document.querySelectorAll(
+            'a[href^="#"]'
+        );
+
 
     links.forEach((link) => {
+
         link.addEventListener("click", (event) => {
-            const targetId =
+
+            const href =
                 link.getAttribute("href");
 
-            if (!targetId || targetId === "#") {
+
+            if (
+                !href ||
+                href === "#" ||
+                href === "#!"
+            ) {
                 return;
             }
 
+
             const target =
-                document.querySelector(targetId);
+                document.querySelector(href);
+
 
             if (!target) {
                 return;
             }
 
+
             event.preventDefault();
+
 
             const header =
                 document.querySelector(".site-header");
+
 
             const headerHeight =
                 header
                     ? header.offsetHeight
                     : 0;
 
+
             const targetPosition =
                 target.getBoundingClientRect().top +
                 window.scrollY -
-                headerHeight -
-                15;
+                headerHeight;
+
 
             window.scrollTo({
-                top: Math.max(0, targetPosition),
-                behavior:
-                    reducedMotion
-                        ? "auto"
-                        : "smooth"
+                top:
+                    Math.max(
+                        0,
+                        targetPosition
+                    ),
+                left: 0,
+                behavior: "smooth"
             });
 
+
             /*
-             * Keep the URL useful without jumping
-             * the browser directly to the anchor.
+             * Update the address bar without
+             * creating another browser-history entry.
              */
 
-            if (
-                window.history &&
-                window.history.replaceState
-            ) {
-                window.history.replaceState(
+            try {
+
+                history.replaceState(
                     null,
                     "",
-                    targetId
+                    href
                 );
+
+            } catch (error) {
+                /*
+                 * Ignore browsers that prevent
+                 * history manipulation.
+                 */
             }
+
         });
+
     });
+
 }
 
 
 /* =========================================================
-   HEADER SCROLL STATE
+   HEADER SCROLL EFFECT
    ========================================================= */
 
 function initHeaderScroll() {
+
     const header =
         document.querySelector(".site-header");
+
 
     if (!header) {
         return;
     }
 
 
-    function updateHeader() {
-        if (window.scrollY > 35) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    }
+    const updateHeader =
+        () => {
+
+            header.classList.toggle(
+                "scrolled",
+                window.scrollY > 40
+            );
+
+        };
 
 
     updateHeader();
@@ -365,6 +410,7 @@ function initHeaderScroll() {
             passive: true
         }
     );
+
 }
 
 
@@ -373,33 +419,50 @@ function initHeaderScroll() {
    ========================================================= */
 
 function initActiveNavigation() {
-    const navigationLinks =
-        document.querySelectorAll(
-            '#main-navigation a[href^="#"]'
+
+    const navigation =
+        document.getElementById(
+            "main-navigation"
         );
 
-    if (!navigationLinks.length) {
+
+    if (!navigation) {
         return;
     }
 
 
-    const sections = [];
+    const links =
+        Array.from(
+            navigation.querySelectorAll(
+                'a[href^="#"]'
+            )
+        );
 
 
-    navigationLinks.forEach((link) => {
-        const targetId =
-            link.getAttribute("href");
+    const sections =
+        links
+            .map((link) => {
 
-        const section =
-            document.querySelector(targetId);
+                const href =
+                    link.getAttribute("href");
 
-        if (section) {
-            sections.push({
-                section,
-                link
-            });
-        }
-    });
+
+                const section =
+                    document.querySelector(href);
+
+
+                if (!section) {
+                    return null;
+                }
+
+
+                return {
+                    link,
+                    section
+                };
+
+            })
+            .filter(Boolean);
 
 
     if (!sections.length) {
@@ -407,49 +470,53 @@ function initActiveNavigation() {
     }
 
 
-    const observer =
-        new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
+    const updateActiveNavigation =
+        () => {
+
+            const scrollPosition =
+                window.scrollY +
+                window.innerHeight * 0.32;
 
 
-                    sections.forEach((item) => {
-                        item.link.classList.remove(
-                            "active"
-                        );
-                    });
+            let current =
+                sections[0];
 
 
-                    const current =
-                        sections.find(
-                            (item) =>
-                                item.section ===
-                                entry.target
-                        );
+            sections.forEach((item) => {
+
+                if (
+                    item.section.offsetTop <=
+                    scrollPosition
+                ) {
+                    current = item;
+                }
+
+            });
 
 
-                    if (current) {
-                        current.link.classList.add(
-                            "active"
-                        );
-                    }
-                });
-            },
-            {
-                root: null,
-                rootMargin:
-                    "-35% 0px -55% 0px",
-                threshold: 0
-            }
-        );
+            links.forEach((link) => {
+
+                link.classList.toggle(
+                    "active",
+                    link === current.link
+                );
+
+            });
+
+        };
 
 
-    sections.forEach((item) => {
-        observer.observe(item.section);
-    });
+    updateActiveNavigation();
+
+
+    window.addEventListener(
+        "scroll",
+        updateActiveNavigation,
+        {
+            passive: true
+        }
+    );
+
 }
 
 
@@ -458,53 +525,67 @@ function initActiveNavigation() {
    ========================================================= */
 
 function initBackToTop() {
-    const button =
-        document.querySelector(".back-to-top");
 
-    if (!button) {
+    const buttons =
+        document.querySelectorAll(
+            ".back-to-top"
+        );
+
+
+    if (!buttons.length) {
         return;
     }
 
 
-    button.addEventListener("click", (event) => {
-        event.preventDefault();
+    buttons.forEach((button) => {
 
-        const reducedMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
+        button.addEventListener(
+            "click",
+            (event) => {
 
-        window.scrollTo({
-            top: 0,
-            behavior:
-                reducedMotion
-                    ? "auto"
-                    : "smooth"
-        });
+                event.preventDefault();
 
 
-        if (
-            window.history &&
-            window.history.replaceState
-        ) {
-            window.history.replaceState(
-                null,
-                "",
-                "#home"
-            );
-        }
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
+                });
+
+
+                try {
+
+                    history.replaceState(
+                        null,
+                        "",
+                        "#home"
+                    );
+
+                } catch (error) {
+                    /*
+                     * Ignore history errors.
+                     */
+                }
+
+            }
+        );
+
     });
+
 }
 
 
 /* =========================================================
-   INVESTIGATIONS API
+   INVESTIGATIONS
    ========================================================= */
 
 async function initInvestigations() {
+
     const container =
-        document.getElementById(
-            "investigation-list"
+        document.querySelector(
+            "[data-investigations]"
         );
+
 
     if (!container) {
         return;
@@ -512,17 +593,19 @@ async function initInvestigations() {
 
 
     /*
-     * Keep the initial honest state visible while
-     * the public API is being checked.
+     * Never invent investigation records.
+     * The public website only displays data
+     * actually published by the Control Room API.
      */
 
-    container.setAttribute(
-        "aria-live",
-        "polite"
+    setInvestigationStatus(
+        container,
+        "LOADING INVESTIGATION ARCHIVE..."
     );
 
 
     try {
+
         const response =
             await fetch(
                 `${API_BASE}/investigations`,
@@ -532,14 +615,14 @@ async function initInvestigations() {
                         "Accept":
                             "application/json"
                     },
-                    credentials: "same-origin"
+                    cache: "no-store"
                 }
             );
 
 
         if (!response.ok) {
             throw new Error(
-                `Investigation API returned ${response.status}`
+                `Investigation request failed: ${response.status}`
             );
         }
 
@@ -548,387 +631,249 @@ async function initInvestigations() {
             await response.json();
 
 
-        /*
-         * Accept the existing expected shape:
-         *
-         * {
-         *   success: true,
-         *   investigations: [...]
-         * }
-         *
-         * Never create fake records when the API
-         * contains no published investigations.
-         */
-
-        const investigations =
-            Array.isArray(
-                data?.investigations
+        if (
+            !data ||
+            data.success !== true ||
+            !Array.isArray(
+                data.investigations
             )
-                ? data.investigations
-                : [];
-
-
-        if (!investigations.length) {
-            renderInvestigationEmptyState(
-                container
+        ) {
+            throw new Error(
+                "Invalid investigation response."
             );
-
-            return;
         }
 
 
         renderInvestigations(
             container,
-            investigations
+            data.investigations
         );
 
+
     } catch (error) {
+
         console.error(
             "Unable to load investigations:",
             error
         );
 
 
-        renderInvestigationUnavailableState(
+        renderInvestigationUnavailable(
             container
         );
+
     }
+
 }
 
 
 /* =========================================================
-   INVESTIGATION RENDERING
+   INVESTIGATION STATUS
+   ========================================================= */
+
+function setInvestigationStatus(
+    container,
+    message
+) {
+
+    container.innerHTML = `
+        <div class="empty-state">
+            <span class="empty-code">
+                ARCHIVE
+            </span>
+
+            <h3>
+                ${escapeHtml(message)}
+            </h3>
+
+            <p>
+                Published investigations will appear here.
+            </p>
+
+            <span class="empty-status">
+                ESSEX PARANORMAL
+            </span>
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER INVESTIGATIONS
    ========================================================= */
 
 function renderInvestigations(
     container,
     investigations
 ) {
-    const fragment =
-        document.createDocumentFragment();
 
+    if (!investigations.length) {
 
-    investigations.forEach(
-        (investigation, index) => {
+        container.innerHTML = `
+            <div class="empty-state">
 
-            if (
-                !investigation ||
-                typeof investigation !== "object"
-            ) {
-                return;
-            }
+                <span class="empty-code">
+                    ARCHIVE STATUS
+                </span>
 
+                <h3>
+                    NO INVESTIGATIONS PUBLISHED YET
+                </h3>
 
-            fragment.appendChild(
-                createInvestigationCard(
-                    investigation,
-                    index
-                )
-            );
-        }
-    );
+                <p>
+                    The investigation archive is currently empty.
+                    New investigations will appear here when
+                    they are published.
+                </p>
 
+                <span class="empty-status">
+                    CHECK BACK FOR FUTURE INVESTIGATIONS
+                </span>
 
-    if (!fragment.childNodes.length) {
-        renderInvestigationEmptyState(
-            container
-        );
+            </div>
+        `;
 
         return;
     }
 
 
-    container.replaceChildren(fragment);
+    container.innerHTML =
+        investigations
+            .map(
+                renderInvestigationCard
+            )
+            .join("");
+
 }
 
 
 /* =========================================================
-   INVESTIGATION CARD
+   RENDER SINGLE INVESTIGATION
    ========================================================= */
 
-function createInvestigationCard(
-    investigation,
-    index
+function renderInvestigationCard(
+    investigation
 ) {
-    const article =
-        document.createElement("article");
-
-    article.className =
-        "investigation-card";
-
-
-    /*
-     * These fields are read only from published API
-     * content. Missing information is simply omitted.
-     */
 
     const title =
-        safeString(
-            investigation.title ||
-            investigation.name ||
-            "Investigation"
-        );
+        investigation.title ||
+        investigation.name ||
+        "Untitled Investigation";
+
+
+    const description =
+        investigation.description ||
+        investigation.summary ||
+        "Investigation information will be published here.";
 
 
     const location =
-        safeString(
-            investigation.location
-        );
+        investigation.location ||
+        "";
 
 
     const date =
-        safeString(
-            investigation.date ||
-            investigation.investigationDate
-        );
+        investigation.date ||
+        investigation.investigation_date ||
+        "";
 
 
-    const status =
-        safeString(
-            investigation.status
-        );
+    return `
+        <article class="investigation-card">
 
+            <div class="investigation-card-content">
 
-    const summary =
-        safeString(
-            investigation.summary ||
-            investigation.description
-        );
+                <p class="eyebrow">
+                    INVESTIGATION
+                </p>
 
+                <h3>
+                    ${escapeHtml(title)}
+                </h3>
 
-    const image =
-        safeString(
-            investigation.image ||
-            investigation.imageUrl
-        );
+                <p>
+                    ${escapeHtml(description)}
+                </p>
 
+                ${
+                    location || date
+                        ? `
+                            <div class="investigation-card-meta">
 
-    const details =
-        safeString(
-            investigation.url ||
-            investigation.link
-        );
+                                ${
+                                    location
+                                        ? `
+                                            <span>
+                                                ${escapeHtml(location)}
+                                            </span>
+                                        `
+                                        : ""
+                                }
 
+                                ${
+                                    date
+                                        ? `
+                                            <span>
+                                                ${escapeHtml(date)}
+                                            </span>
+                                        `
+                                        : ""
+                                }
 
-    article.innerHTML = `
-        <div class="investigation-card-image">
-            ${
-                image
-                    ? `
-                        <img
-                            src="${escapeHTML(image)}"
-                            alt="${escapeHTML(title)}"
-                            loading="lazy"
-                        >
-                    `
-                    : ""
-            }
-        </div>
+                            </div>
+                        `
+                        : ""
+                }
 
-        <div class="investigation-card-content">
-
-            <span class="investigation-card-number">
-                ${String(index + 1).padStart(2, "0")}
-            </span>
-
-            <span class="investigation-card-label">
-                PUBLISHED INVESTIGATION
-            </span>
-
-            <h3>
-                ${escapeHTML(title)}
-            </h3>
-
-            ${
-                location
-                    ? `
-                        <p class="investigation-location">
-                            ${escapeHTML(location)}
-                        </p>
-                    `
-                    : ""
-            }
-
-            ${
-                date
-                    ? `
-                        <p class="investigation-date">
-                            ${escapeHTML(date)}
-                        </p>
-                    `
-                    : ""
-            }
-
-            ${
-                summary
-                    ? `
-                        <p class="investigation-summary">
-                            ${escapeHTML(summary)}
-                        </p>
-                    `
-                    : ""
-            }
-
-            ${
-                status
-                    ? `
-                        <span class="investigation-status">
-                            ${escapeHTML(status)}
-                        </span>
-                    `
-                    : ""
-            }
-
-            ${
-                details
-                    ? `
-                        <a
-                            class="button button-outline"
-                            href="${escapeHTML(details)}"
-                        >
-                            VIEW CASE
-                            <span>→</span>
-                        </a>
-                    `
-                    : ""
-            }
-
-        </div>
-    `;
-
-
-    const imageElement =
-        article.querySelector(
-            ".investigation-card-image img"
-        );
-
-
-    if (imageElement) {
-        imageElement.addEventListener(
-            "error",
-            () => {
-                console.warn(
-                    "Investigation image failed to load:",
-                    imageElement.src
-                );
-
-                imageElement.remove();
-            }
-        );
-    }
-
-
-    return article;
-}
-
-
-/* =========================================================
-   INVESTIGATION EMPTY STATE
-   ========================================================= */
-
-function renderInvestigationEmptyState(
-    container
-) {
-    container.innerHTML = `
-        <article class="empty-state">
-
-            <span class="empty-code">
-                INVESTIGATION ARCHIVE
-            </span>
-
-            <h3>
-                No published investigations yet.
-            </h3>
-
-            <p>
-                Verified investigation information
-                will appear here when published.
-            </p>
-
-            <span class="empty-status">
-                AWAITING PUBLISHED CASE DATA
-            </span>
+            </div>
 
         </article>
     `;
+
 }
 
 
 /* =========================================================
-   INVESTIGATION API UNAVAILABLE STATE
+   INVESTIGATION API UNAVAILABLE
    ========================================================= */
 
-function renderInvestigationUnavailableState(
+function renderInvestigationUnavailable(
     container
 ) {
+
     container.innerHTML = `
-        <article class="empty-state">
+        <div class="empty-state">
 
             <span class="empty-code">
-                INVESTIGATION ARCHIVE
+                ARCHIVE STATUS
             </span>
 
             <h3>
-                Investigation archive unavailable.
+                INVESTIGATION ARCHIVE TEMPORARILY UNAVAILABLE
             </h3>
 
             <p>
-                Published investigation information
-                could not be loaded right now.
+                The archive could not be loaded right now.
                 Please try again later.
             </p>
 
             <span class="empty-status">
-                TEMPORARILY UNAVAILABLE
+                NO UNPUBLISHED CONTENT HAS BEEN INVENTED
             </span>
 
-        </article>
+        </div>
     `;
+
 }
 
 
 /* =========================================================
-   HTML ESCAPING
-   ========================================================= */
-
-function escapeHTML(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-
-/* =========================================================
-   SAFE STRING
-   ========================================================= */
-
-function safeString(value) {
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return "";
-    }
-
-    if (
-        typeof value !== "string" &&
-        typeof value !== "number"
-    ) {
-        return "";
-    }
-
-    return String(value).trim();
-}
-
-
-/* =========================================================
-   IMAGE ERROR HANDLING
+   IMAGE FALLBACKS
    ========================================================= */
 
 function initImageFallbacks() {
+
     const images =
         document.querySelectorAll(
             "img"
@@ -936,20 +881,41 @@ function initImageFallbacks() {
 
 
     images.forEach((image) => {
+
         image.addEventListener(
             "error",
             () => {
-                console.warn(
-                    "Website image failed to load:",
-                    image.src
-                );
 
                 image.classList.add(
-                    "image-load-error"
+                    "image-error"
                 );
+
+
+                /*
+                 * Do not repeatedly trigger the
+                 * error handler if a fallback is
+                 * already being attempted.
+                 */
+
+                if (
+                    image.dataset.fallbackApplied ===
+                    "true"
+                ) {
+                    return;
+                }
+
+
+                image.dataset.fallbackApplied =
+                    "true";
+
+            },
+            {
+                once: true
             }
         );
+
     });
+
 }
 
 
@@ -958,8 +924,11 @@ function initImageFallbacks() {
    ========================================================= */
 
 function initCurrentYear() {
+
     const year =
-        new Date().getFullYear();
+        String(
+            new Date().getFullYear()
+        );
 
 
     document
@@ -967,9 +936,12 @@ function initCurrentYear() {
             "[data-current-year]"
         )
         .forEach((element) => {
+
             element.textContent =
-                String(year);
+                year;
+
         });
+
 }
 
 
@@ -978,9 +950,48 @@ function initCurrentYear() {
    ========================================================= */
 
 function initPageReady() {
+
     requestAnimationFrame(() => {
+
+        document.documentElement.classList.add(
+            "page-ready"
+        );
+
         document.body.classList.add(
             "page-ready"
         );
+
     });
+
+}
+
+
+/* =========================================================
+   SAFE HTML
+   ========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
