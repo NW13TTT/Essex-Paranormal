@@ -69,6 +69,10 @@ body {
         sans-serif;
 
     line-height: 1.7;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 
@@ -244,6 +248,7 @@ button {
         );
 
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     transition:
         background 0.35s ease,
@@ -280,16 +285,47 @@ button {
     align-items: center;
 
     flex-shrink: 0;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   LOGO
+   EXISTING LOGO VISUAL CROP
+   ========================================================= */
+
+.brand-logo-crop {
+    position: relative;
+
+    width: clamp(155px, 14vw, 205px);
+    height: 58px;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
 }
 
 
 .brand-logo {
     width: auto;
-    height: 55px;
+    height: 78px;
+
+    max-width: none;
 
     object-fit: contain;
 
     border-radius: 4px;
+
+    /*
+       The existing logo image is retained.
+       The wrapper above hides excess image space.
+    */
+    transform:
+        translateX(-3px);
 
     filter:
         drop-shadow(
@@ -302,7 +338,9 @@ button {
 
 
 .brand:hover .brand-logo {
-    transform: scale(1.025);
+    transform:
+        translateX(-3px)
+        scale(1.025);
 }
 
 
@@ -328,6 +366,8 @@ button {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.18em;
+
+    white-space: nowrap;
 
     transition:
         color 0.25s ease;
@@ -2047,11 +2087,33 @@ button {
 }
 
 
-.footer-brand img {
-    width: auto;
+/* =========================================================
+   FOOTER LOGO CROP
+   ========================================================= */
+
+.footer-logo-crop {
+    position: relative;
+
+    width: 190px;
     height: 62px;
 
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
     margin-bottom: 20px;
+}
+
+
+.footer-brand img {
+    width: auto;
+    height: 82px;
+
+    max-width: none;
+
+    transform:
+        translateX(-3px);
 }
 
 
@@ -2193,6 +2255,176 @@ button {
 
 
 /* =========================================================
+   LARGE 4K / TV DISPLAYS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --max-width: 1600px;
+        --header-height: 94px;
+    }
+
+
+    .container {
+        width:
+            min(
+                calc(100% - 100px),
+                var(--max-width)
+            );
+    }
+
+
+    .brand-logo-crop {
+        width: 225px;
+        height: 64px;
+    }
+
+
+    .brand-logo {
+        height: 86px;
+    }
+
+
+    .hero-content {
+        width: min(900px, 72%);
+    }
+
+
+    .hero h1 {
+        font-size:
+            clamp(82px, 6vw, 132px);
+    }
+
+
+    .hero-description {
+        max-width: 650px;
+
+        font-size: 21px;
+    }
+
+
+    .section {
+        padding:
+            clamp(130px, 9vw, 200px)
+            0;
+    }
+
+
+    .section-heading {
+        max-width: 1000px;
+    }
+
+
+    .section-heading h2 {
+        font-size:
+            clamp(60px, 4.5vw, 88px);
+    }
+
+
+    .destination-card,
+    .destination-content {
+        min-height: 500px;
+    }
+
+
+    .destination-content {
+        padding: 38px;
+    }
+
+
+    .destination-content h3 {
+        font-size: 25px;
+    }
+
+
+    .destination-content p {
+        font-size: 14px;
+    }
+
+
+    .profile-copy h2 {
+        font-size:
+            clamp(55px, 4vw, 78px);
+    }
+
+
+    .bio-content p {
+        font-size: 17px;
+    }
+
+
+    .approach-item {
+        min-height: 380px;
+
+        padding: 50px;
+    }
+
+
+    .evidence-item {
+        min-height: 350px;
+
+        padding: 42px;
+    }
+
+
+    .footer-main {
+        gap: 70px;
+    }
+
+}
+
+
+/* =========================================================
+   ULTRA-WIDE CINEMATIC DISPLAYS
+   ========================================================= */
+
+@media (min-width: 2200px) {
+
+    body {
+        background-size:
+            cover;
+    }
+
+
+    .container {
+        width:
+            min(
+                calc(100% - 160px),
+                1760px
+            );
+    }
+
+
+    .hero-container {
+        min-height:
+            100svh;
+    }
+
+
+    .hero-content {
+        padding-top: 70px;
+    }
+
+
+    .hero h1 {
+        max-width: 1200px;
+
+        font-size:
+            clamp(100px, 5.4vw, 150px);
+    }
+
+
+    .hero-description {
+        max-width: 720px;
+
+        font-size: 23px;
+    }
+
+}
+
+
+/* =========================================================
    TABLET
    ========================================================= */
 
@@ -2214,6 +2446,16 @@ button {
 
     #main-navigation a {
         font-size: 10px;
+    }
+
+
+    .brand-logo-crop {
+        width: 165px;
+    }
+
+
+    .brand-logo {
+        height: 70px;
     }
 
 
@@ -2360,8 +2602,14 @@ button {
     }
 
 
+    .brand-logo-crop {
+        width: 155px;
+        height: 52px;
+    }
+
+
     .brand-logo {
-        height: 47px;
+        height: 68px;
     }
 
 
@@ -2432,7 +2680,42 @@ button {
 
         border-top:
             1px solid var(--border);
+    }
 
+}
+
+
+/* =========================================================
+   LANDSCAPE TABLETS / SMALL LAPTOPS
+   ========================================================= */
+
+@media (min-width: 641px) and (max-width: 1100px) {
+
+    .hero-content {
+        width: min(760px, 82%);
+    }
+
+
+    .hero h1 {
+        font-size:
+            clamp(58px, 8vw, 92px);
+    }
+
+
+    .section {
+        padding:
+            110px 0;
+    }
+
+
+    .destination-card,
+    .destination-content {
+        min-height: 430px;
+    }
+
+
+    .profile-image {
+        aspect-ratio: 3 / 4;
     }
 
 }
@@ -2455,6 +2738,23 @@ button {
 
         background-size:
             auto 100%;
+    }
+
+
+    .site-header {
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+
+    .brand-logo-crop {
+        width: 145px;
+        height: 50px;
+    }
+
+
+    .brand-logo {
+        height: 65px;
     }
 
 
@@ -2621,6 +2921,17 @@ button {
     }
 
 
+    .footer-logo-crop {
+        width: 175px;
+        height: 58px;
+    }
+
+
+    .footer-brand img {
+        height: 76px;
+    }
+
+
     .footer-bottom {
         flex-direction: column;
         align-items: flex-start;
@@ -2649,6 +2960,17 @@ button {
     }
 
 
+    .brand-logo-crop {
+        width: 130px;
+        height: 47px;
+    }
+
+
+    .brand-logo {
+        height: 61px;
+    }
+
+
     .hero h1 {
         font-size: 45px;
     }
@@ -2673,6 +2995,89 @@ button {
         min-height: 320px;
 
         padding: 30px;
+    }
+
+
+    .footer-logo-crop {
+        width: 160px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SHORT SCREENS
+   ========================================================= */
+
+@media (max-height: 700px) and (min-width: 901px) {
+
+    .hero {
+        min-height: 680px;
+    }
+
+
+    .hero-container {
+        min-height: 680px;
+
+        padding-bottom: 60px;
+    }
+
+
+    .hero-content {
+        padding-top: 25px;
+    }
+
+
+    .hero h1 {
+        font-size:
+            clamp(52px, 6vw, 86px);
+
+        margin-bottom: 22px;
+    }
+
+
+    .hero-description {
+        margin-bottom: 28px;
+    }
+
+
+    .hero-side-note {
+        bottom: 130px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .destination-card:hover {
+        transform: none;
+    }
+
+
+    .destination-card:hover .destination-image {
+        transform: none;
+        opacity: 0.4;
+    }
+
+
+    .button:hover {
+        transform: none;
+    }
+
+
+    .approach-item:hover::after {
+        transform: scaleX(0);
+    }
+
+
+    .evidence-item:hover {
+        background:
+            rgba(8, 11, 12, 0.74);
     }
 
 }
