@@ -5,7 +5,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
     <meta
@@ -21,6 +21,11 @@
     <meta
         name="theme-color"
         content="#050608"
+    >
+
+    <meta
+        name="color-scheme"
+        content="dark"
     >
 
     <title>
@@ -63,11 +68,20 @@
                 aria-label="Essex Paranormal home"
             >
 
-                <img
-                    src="/essex-paranormal-logo.jpg"
-                    alt="Essex Paranormal"
-                    class="brand-logo"
-                >
+                <!-- Logo crop wrapper.
+                     The original logo asset is retained.
+                     CSS controls the visible crop. -->
+
+                <span class="brand-logo-crop">
+
+                    <img
+                        src="/essex-paranormal-logo.jpg"
+                        alt="Essex Paranormal"
+                        class="brand-logo"
+                        decoding="async"
+                    >
+
+                </span>
 
             </a>
 
@@ -382,6 +396,7 @@
                                 alt="Essex Paranormal investigator"
                                 class="profile-image"
                                 loading="lazy"
+                                decoding="async"
                             >
 
                             <span
@@ -1652,10 +1667,19 @@
 
                 <div class="footer-brand">
 
-                    <img
-                        src="/essex-paranormal-logo.jpg"
-                        alt="Essex Paranormal"
-                    >
+                    <!-- Same original logo.
+                         CSS crop wrapper removes excess
+                         black space visually. -->
+
+                    <span class="footer-logo-crop">
+
+                        <img
+                            src="/essex-paranormal-logo.jpg"
+                            alt="Essex Paranormal"
+                            decoding="async"
+                        >
+
+                    </span>
 
 
                     <p>
