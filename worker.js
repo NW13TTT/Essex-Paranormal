@@ -4,24 +4,9 @@ export default {
 
         /*
          * =====================================================
-         * ESSEX PARANORMAL PUBLIC API
+         * API STATUS
          * =====================================================
-         *
-         * Keep this Worker deliberately small and safe.
-         *
-         * The public website can consume published information
-         * through these routes without exposing any private
-         * Control Room, database, authentication or deployment
-         * credentials.
-         *
-         * Future CMS / Control Room routes should only be added
-         * when the real backend architecture is ready.
          */
-
-
-        /* =====================================================
-           API STATUS
-           ===================================================== */
 
         if (
             request.method === "GET" &&
@@ -36,24 +21,29 @@ export default {
         }
 
 
-        /* =====================================================
-           INVESTIGATIONS
-           ===================================================== */
+        /*
+         * =====================================================
+         * PUBLIC INVESTIGATIONS API
+         * =====================================================
+         *
+         * IMPORTANT:
+         *
+         * This remains an honest public endpoint.
+         * No investigations are invented here.
+         *
+         * When the real published investigation system is
+         * connected, this endpoint can return published data.
+         *
+         * We are deliberately NOT adding a fake database,
+         * Supabase credentials, Control Room credentials,
+         * or private routing information here.
+         *
+         */
 
         if (
             request.method === "GET" &&
             url.pathname === "/api/investigations"
         ) {
-            /*
-             * Only return genuine published investigation data.
-             *
-             * Until the publishing backend supplies real records,
-             * an empty array is intentional.
-             *
-             * DO NOT add fictional cases, locations, dates,
-             * findings or investigation statuses here.
-             */
-
             return jsonResponse({
                 success: true,
                 investigations: []
@@ -61,9 +51,13 @@ export default {
         }
 
 
-        /* =====================================================
-           STATIC WEBSITE ASSETS
-           ===================================================== */
+        /*
+         * =====================================================
+         * STATIC WEBSITE ASSETS
+         * =====================================================
+         *
+         * Everything else is handled by Cloudflare Assets.
+         */
 
         return env.ASSETS.fetch(request);
     }
@@ -71,15 +65,17 @@ export default {
 
 
 /* =========================================================
-   JSON RESPONSE HELPER
+   JSON RESPONSE
    ========================================================= */
 
-function jsonResponse(data, status = 200) {
+function jsonResponse(
+    data,
+    status = 200
+) {
     return new Response(
         JSON.stringify(data),
         {
             status,
-
             headers: {
                 "Content-Type":
                     "application/json; charset=UTF-8",
