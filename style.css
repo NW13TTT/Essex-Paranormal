@@ -2042,3 +2042,1349 @@ h3 {
         font-size: 8px;
     }
 }
+/* =========================================================
+   ESSEX PARANORMAL
+   INVESTIGATION ARCHIVE + CASE PAGES
+   ADD TO THE BOTTOM OF EXISTING style.css
+   ========================================================= */
+
+
+/* =========================================================
+   ARCHIVE TOP RETURN
+   ========================================================= */
+
+.archive-top-return,
+.case-top-return {
+    background: #050505;
+    padding: 110px 0 20px;
+}
+
+.archive-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #aaa;
+    text-decoration: none;
+
+    font-size: .65rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+.archive-back-link span {
+    color: var(--green);
+    font-size: 1rem;
+}
+
+.archive-back-link:hover {
+    color: #fff;
+    transform: translateX(-4px);
+}
+
+
+/* =========================================================
+   ARCHIVE HERO
+   ========================================================= */
+
+.archive-hero {
+    position: relative;
+
+    min-height: 62vh;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 100px 0 85px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #050505 0%,
+            #090909 100%
+        );
+}
+
+.archive-hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 72% 42%,
+            rgba(140,255,0,.07),
+            transparent 35%
+        );
+
+    pointer-events: none;
+}
+
+.archive-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+}
+
+.archive-hero h1 {
+    margin: 0 0 25px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            3rem,
+            8vw,
+            7rem
+        );
+
+    line-height: .88;
+
+    font-weight: 900;
+
+    letter-spacing: -.055em;
+
+    text-transform: uppercase;
+}
+
+.archive-hero p {
+    max-width: 680px;
+
+    margin: 0;
+
+    color: #999;
+
+    font-size:
+        clamp(
+            .95rem,
+            1.5vw,
+            1.12rem
+        );
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   ARCHIVE SECTION
+   ========================================================= */
+
+.archive-section {
+    background: #080808;
+}
+
+.past-investigations {
+    background: #050505;
+}
+
+
+/* =========================================================
+   FEATURED CASE
+   ========================================================= */
+
+.featured-case {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.1fr)
+        minmax(0, 1fr);
+
+    min-width: 0;
+
+    background: #0c0c0c;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.5);
+
+    overflow: hidden;
+}
+
+.featured-case-image {
+    position: relative;
+
+    min-height: 620px;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+.featured-case-image::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.02),
+            rgba(0,0,0,.2)
+        );
+
+    pointer-events: none;
+}
+
+.featured-case-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    filter:
+        contrast(1.06)
+        brightness(.82);
+
+    transition:
+        transform 1s ease;
+}
+
+.featured-case:hover
+.featured-case-image img {
+    transform: scale(1.025);
+}
+
+.featured-case-label {
+    position: absolute;
+
+    left: 25px;
+    bottom: 25px;
+
+    z-index: 3;
+
+    padding: 8px 12px;
+
+    background:
+        rgba(0,0,0,.86);
+
+    border:
+        1px solid rgba(140,255,0,.3);
+
+    color: var(--green);
+
+    font-size: .6rem;
+    font-weight: 900;
+
+    letter-spacing: .13em;
+}
+
+
+/* =========================================================
+   FEATURED CASE CONTENT
+   ========================================================= */
+
+.featured-case-content {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding:
+        clamp(
+            35px,
+            5vw,
+            70px
+        );
+}
+
+.featured-case-content h2 {
+    margin: 0 0 8px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.4rem,
+            5vw,
+            5rem
+        );
+
+    line-height: .92;
+
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+
+    text-transform: uppercase;
+}
+
+.case-location {
+    margin-bottom: 30px;
+
+    color: var(--green);
+
+    font-size: .66rem;
+    font-weight: 900;
+
+    letter-spacing: .17em;
+
+    text-transform: uppercase;
+}
+
+.case-story p {
+    margin: 0 0 17px;
+
+    color: #999;
+
+    font-size: .93rem;
+
+    line-height: 1.8;
+}
+
+.case-story .case-intro {
+    color: #d4d4d4;
+
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   CASE META
+   ========================================================= */
+
+.case-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+    gap: 12px;
+
+    margin:
+        18px 0 30px;
+
+    padding:
+        20px 0;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.case-meta div {
+    min-width: 0;
+}
+
+.case-meta span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #666;
+
+    font-size: .55rem;
+    font-weight: 900;
+
+    letter-spacing: .12em;
+}
+
+.case-meta strong {
+    color: #ccc;
+
+    font-size: .7rem;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ARCHIVE GRID
+   ========================================================= */
+
+.investigation-archive-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap: 25px;
+}
+
+.archive-case-card {
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    background: #0b0b0b;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    overflow: hidden;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease;
+}
+
+.archive-case-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(140,255,0,.3);
+}
+
+.archive-case-image {
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+.archive-case-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform .7s ease;
+}
+
+.archive-case-card:hover
+.archive-case-image img {
+    transform: scale(1.035);
+}
+
+.archive-case-content {
+    padding: 30px;
+}
+
+.archive-case-number {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--green);
+
+    font-size: .58rem;
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+.archive-case-content h3 {
+    margin: 0 0 14px;
+
+    color: #fff;
+
+    font-size: 1.8rem;
+
+    font-weight: 900;
+
+    letter-spacing: -.025em;
+}
+
+.archive-case-content p {
+    margin: 0 0 25px;
+
+    color: #888;
+
+    font-size: .88rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   EMPTY ARCHIVE
+   ========================================================= */
+
+.archive-empty {
+    padding:
+        80px 30px;
+
+    text-align: center;
+
+    background: #0b0b0b;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.archive-empty-number {
+    display: block;
+
+    margin-bottom: 20px;
+
+    color: var(--green);
+
+    font-size: .58rem;
+    font-weight: 900;
+
+    letter-spacing: .2em;
+}
+
+.archive-empty h3 {
+    margin: 0 0 15px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            1.5rem,
+            4vw,
+            2.5rem
+        );
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.archive-empty p {
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    color: #777;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ARCHIVE INFORMATION
+   ========================================================= */
+
+.archive-information {
+    background: #080808;
+}
+
+.archive-information-inner {
+    max-width: 850px;
+}
+
+.archive-information-inner h2 {
+    margin: 15px 0 25px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.4rem,
+            6vw,
+            5rem
+        );
+
+    line-height: .95;
+
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+}
+
+.archive-information-inner p {
+    max-width: 700px;
+
+    margin: 0 0 17px;
+
+    color: #999;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   ARCHIVE RETURN
+   ========================================================= */
+
+.archive-return {
+    padding:
+        50px 0 100px;
+
+    background: #050505;
+}
+
+
+/* =========================================================
+   FULL CASE PAGE
+   ========================================================= */
+
+.case-top-return {
+    padding-bottom: 20px;
+}
+
+
+/* =========================================================
+   CASE HERO
+   ========================================================= */
+
+.case-hero {
+    position: relative;
+
+    min-height: 65vh;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding:
+        80px 0 85px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 75% 35%,
+            rgba(140,255,0,.055),
+            transparent 34%
+        ),
+        #050505;
+}
+
+.case-hero-content {
+    max-width: 1000px;
+}
+
+.case-hero h1 {
+    margin: 12px 0 20px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            4rem,
+            11vw,
+            9rem
+        );
+
+    line-height: .78;
+
+    font-weight: 900;
+
+    letter-spacing: -.065em;
+
+    text-transform: uppercase;
+}
+
+.case-hero-location {
+    margin-bottom: 40px;
+
+    color: var(--green);
+
+    font-size: .68rem;
+    font-weight: 900;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CASE HERO META
+   ========================================================= */
+
+.case-hero-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+    max-width: 700px;
+
+    border-top:
+        1px solid rgba(255,255,255,.12);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.12);
+}
+
+.case-hero-meta div {
+    padding:
+        18px 20px;
+
+    border-right:
+        1px solid rgba(255,255,255,.1);
+}
+
+.case-hero-meta div:last-child {
+    border-right: 0;
+}
+
+.case-hero-meta span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #666;
+
+    font-size: .53rem;
+    font-weight: 900;
+
+    letter-spacing: .14em;
+}
+
+.case-hero-meta strong {
+    color: #ccc;
+
+    font-size: .7rem;
+}
+
+
+/* =========================================================
+   CASE FEATURE IMAGE
+   ========================================================= */
+
+.case-feature-image {
+    background: #050505;
+
+    padding:
+        0 0 100px;
+}
+
+.case-feature-image figure {
+    position: relative;
+
+    margin: 0;
+
+    background: #000;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    overflow: hidden;
+}
+
+.case-feature-image img {
+    display: block;
+
+    width: 100%;
+
+    max-height: 780px;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    filter:
+        contrast(1.05)
+        brightness(.82);
+}
+
+.case-feature-image figcaption {
+    position: absolute;
+
+    left: 20px;
+    bottom: 20px;
+
+    padding:
+        8px 12px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    color: #aaa;
+
+    font-size: .55rem;
+    font-weight: 900;
+
+    letter-spacing: .13em;
+}
+
+
+/* =========================================================
+   CASE INTRODUCTION
+   ========================================================= */
+
+.case-introduction {
+    background: #080808;
+}
+
+.case-introduction-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(220px,.75fr)
+        minmax(0,1.5fr);
+
+    gap:
+        clamp(
+            40px,
+            8vw,
+            120px
+        );
+
+    align-items: start;
+}
+
+.case-introduction-heading {
+    position: sticky;
+
+    top: 120px;
+}
+
+.case-introduction-heading h2 {
+    margin: 15px 0 0;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.5rem,
+            6vw,
+            5rem
+        );
+
+    line-height: .9;
+
+    font-weight: 900;
+
+    letter-spacing: -.05em;
+}
+
+.case-introduction-copy {
+    max-width: 750px;
+}
+
+.case-introduction-copy p {
+    margin: 0 0 25px;
+
+    color: #999;
+
+    font-size:
+        clamp(
+            .95rem,
+            1.5vw,
+            1.08rem
+        );
+
+    line-height: 1.9;
+}
+
+.case-introduction-copy .case-lead {
+    color: #e0e0e0;
+
+    font-size:
+        clamp(
+            1.15rem,
+            2vw,
+            1.45rem
+        );
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CASE DETAILS
+   ========================================================= */
+
+.case-details {
+    background: #050505;
+}
+
+.case-details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+
+    gap: 1px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+}
+
+.case-detail-card {
+    padding: 30px;
+
+    background: #0b0b0b;
+}
+
+.case-detail-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #666;
+
+    font-size: .55rem;
+    font-weight: 900;
+
+    letter-spacing: .14em;
+}
+
+.case-detail-card strong {
+    color: #ddd;
+
+    font-size: .9rem;
+}
+
+
+/* =========================================================
+   CASE INVESTIGATION
+   ========================================================= */
+
+.case-investigation {
+    background: #080808;
+}
+
+.case-content-narrow {
+    max-width: 850px;
+}
+
+.case-content-narrow h2 {
+    margin: 15px 0 30px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.5rem,
+            6vw,
+            5rem
+        );
+
+    line-height: .92;
+
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+
+    text-transform: uppercase;
+}
+
+.case-content-narrow p {
+    margin: 0 0 22px;
+
+    color: #999;
+
+    font-size:
+        clamp(
+            .95rem,
+            1.5vw,
+            1.05rem
+        );
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.case-evidence {
+    background: #050505;
+}
+
+.evidence-placeholder {
+    padding:
+        65px 30px;
+
+    background: #0b0b0b;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    text-align: center;
+}
+
+.evidence-placeholder span {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: var(--green);
+
+    font-size: .58rem;
+    font-weight: 900;
+
+    letter-spacing: .18em;
+}
+
+.evidence-placeholder h3 {
+    margin: 0 0 12px;
+
+    color: #fff;
+
+    font-size: 1.7rem;
+
+    font-weight: 900;
+}
+
+.evidence-placeholder p {
+    margin: 0;
+
+    color: #777;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   PHOTOGRAPHS
+   ========================================================= */
+
+.case-gallery {
+    background: #080808;
+}
+
+.case-gallery-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+    gap: 15px;
+}
+
+.gallery-placeholder {
+    min-height: 260px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: #0b0b0b;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    text-align: center;
+}
+
+.gallery-placeholder span {
+    margin-bottom: 15px;
+
+    color: var(--green);
+
+    font-size: .55rem;
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+.gallery-placeholder strong {
+    margin-bottom: 10px;
+
+    color: #ddd;
+
+    font-size: 1rem;
+
+    letter-spacing: .03em;
+}
+
+.gallery-placeholder p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: .82rem;
+}
+
+
+/* =========================================================
+   FINDINGS
+   ========================================================= */
+
+.case-findings {
+    background: #050505;
+}
+
+.case-findings-inner {
+    max-width: 900px;
+
+    padding:
+        clamp(
+            35px,
+            6vw,
+            75px
+        );
+
+    background: #0b0b0b;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.case-findings-inner h2 {
+    margin: 15px 0 25px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            2.5rem,
+            6vw,
+            5rem
+        );
+
+    line-height: .9;
+
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+}
+
+.case-findings-inner p {
+    max-width: 750px;
+
+    margin: 0 0 20px;
+
+    color: #999;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   CONCLUSION
+   ========================================================= */
+
+.case-conclusion {
+    background: #080808;
+}
+
+
+/* =========================================================
+   CASE BOTTOM RETURN
+   ========================================================= */
+
+.case-bottom-return {
+    padding:
+        55px 0 100px;
+
+    background: #050505;
+}
+
+
+/* =========================================================
+   BUTTON SAFETY
+   ========================================================= */
+
+.archive-return .btn,
+.case-bottom-return .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .featured-case {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-case-image {
+        min-height: 450px;
+
+        aspect-ratio: 16 / 10;
+    }
+
+    .case-introduction-grid {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+    }
+
+    .case-introduction-heading {
+        position: static;
+    }
+
+    .case-details-grid {
+        grid-template-columns:
+            repeat(2, minmax(0,1fr));
+    }
+
+    .case-gallery-grid {
+        grid-template-columns:
+            repeat(2, minmax(0,1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .archive-top-return,
+    .case-top-return {
+        padding-top: 95px;
+    }
+
+    .archive-hero {
+        min-height: 55vh;
+
+        padding:
+            80px 0 60px;
+    }
+
+    .archive-hero h1 {
+        font-size:
+            clamp(
+                2.8rem,
+                14vw,
+                4.5rem
+            );
+    }
+
+    .featured-case-image {
+        min-height: 320px;
+
+        aspect-ratio: 4 / 3;
+    }
+
+    .featured-case-label {
+        left: 15px;
+        bottom: 15px;
+
+        font-size: .52rem;
+    }
+
+    .featured-case-content {
+        padding:
+            32px 22px 38px;
+    }
+
+    .featured-case-content h2 {
+        font-size:
+            clamp(
+                2.4rem,
+                13vw,
+                4rem
+            );
+    }
+
+    .case-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .investigation-archive-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-empty {
+        padding:
+            60px 20px;
+    }
+
+    .case-hero {
+        min-height: 58vh;
+
+        padding:
+            65px 0 60px;
+    }
+
+    .case-hero h1 {
+        font-size:
+            clamp(
+                3.7rem,
+                18vw,
+                6rem
+            );
+    }
+
+    .case-hero-location {
+        margin-bottom: 30px;
+    }
+
+    .case-hero-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .case-hero-meta div {
+        border-right: 0;
+
+        border-bottom:
+            1px solid rgba(255,255,255,.1);
+    }
+
+    .case-hero-meta div:last-child {
+        border-bottom: 0;
+    }
+
+    .case-feature-image {
+        padding-bottom: 65px;
+    }
+
+    .case-feature-image figcaption {
+        left: 12px;
+        bottom: 12px;
+
+        font-size: .48rem;
+    }
+
+    .case-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .case-detail-card {
+        padding: 24px;
+    }
+
+    .case-gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-placeholder {
+        min-height: 220px;
+    }
+
+    .case-findings-inner {
+        padding:
+            35px 22px;
+    }
+
+    .archive-return,
+    .case-bottom-return {
+        padding:
+            40px 0 70px;
+    }
+
+    .archive-return .btn,
+    .case-bottom-return .btn {
+        width: 100%;
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .featured-case-image img,
+    .archive-case-image img,
+    .archive-case-card,
+    .archive-back-link {
+        transition: none;
+    }
+
+}
