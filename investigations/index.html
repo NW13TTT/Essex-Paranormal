@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 
 <head>
 
@@ -7,17 +7,27 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
     <meta
         name="description"
-        content="Essex Paranormal investigation archive. Honest, real and unbiased paranormal investigations."
+        content="Essex Paranormal Investigation Archive. Evidence-led investigations, case files and documented locations."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
     >
 
     <meta
         name="theme-color"
-        content="#050505"
+        content="#050608"
+    >
+
+    <meta
+        name="color-scheme"
+        content="dark"
     >
 
     <title>
@@ -26,13 +36,691 @@
 
     <link
         rel="stylesheet"
-        href="../style.css"
+        href="/style.css"
     >
+
+    <style>
+
+        /* =====================================================
+           INVESTIGATION ARCHIVE PAGE
+           ===================================================== */
+
+        .archive-page {
+
+            background:
+                #050505;
+
+            min-height:
+                100vh;
+
+        }
+
+
+        /* =====================================================
+           ARCHIVE HERO
+           ===================================================== */
+
+        .archive-hero {
+
+            position:
+                relative;
+
+            padding:
+                145px 0 75px;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .archive-hero::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            background:
+                radial-gradient(
+                    circle at 75% 45%,
+                    rgba(255,101,29,.08),
+                    transparent 32%
+                );
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .archive-heading {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            max-width:
+                850px;
+
+        }
+
+
+        .archive-heading h1 {
+
+            margin:
+                0 0 22px;
+
+            color:
+                #fff;
+
+            font-size:
+                clamp(
+                    3rem,
+                    8vw,
+                    7rem
+                );
+
+            line-height:
+                .9;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -.055em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .archive-heading h1 span {
+
+            color:
+                #ff651d;
+
+        }
+
+
+        .archive-heading p:last-child {
+
+            max-width:
+                720px;
+
+            margin:
+                0;
+
+            color:
+                #aaa;
+
+            font-size:
+                clamp(
+                    1rem,
+                    1.7vw,
+                    1.2rem
+                );
+
+            line-height:
+                1.75;
+
+        }
+
+
+        /* =====================================================
+           ARCHIVE FEATURE IMAGE
+           ===================================================== */
+
+        .archive-feature {
+
+            position:
+                relative;
+
+            margin-top:
+                45px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .12
+                );
+
+            background:
+                #080808;
+
+            overflow:
+                hidden;
+
+            box-shadow:
+                0 30px 90px rgba(
+                    0,
+                    0,
+                    0,
+                    .55
+                );
+
+        }
+
+
+        .archive-image {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            aspect-ratio:
+                16 / 9;
+
+            object-fit:
+                cover;
+
+            object-position:
+                center;
+
+            filter:
+                brightness(.7)
+                contrast(1.08);
+
+            transition:
+                transform 1s ease,
+                filter 1s ease;
+
+        }
+
+
+        .archive-feature:hover
+        .archive-image {
+
+            transform:
+                scale(1.02);
+
+            filter:
+                brightness(.78)
+                contrast(1.08);
+
+        }
+
+
+        /* =====================================================
+           IMAGE TITLE
+           ===================================================== */
+
+        .archive-image-overlay {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                30px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.08),
+                    rgba(0,0,0,.52)
+                );
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .archive-title {
+
+            text-align:
+                center;
+
+            color:
+                #fff;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(
+                    2.2rem,
+                    6vw,
+                    6rem
+                );
+
+            line-height:
+                1.05;
+
+            letter-spacing:
+                .08em;
+
+            text-transform:
+                uppercase;
+
+            text-shadow:
+                0 3px 30px #000;
+
+        }
+
+
+        .archive-title::before,
+        .archive-title::after {
+
+            content:
+                "";
+
+            display:
+                block;
+
+            width:
+                min(
+                    260px,
+                    55vw
+                );
+
+            height:
+                1px;
+
+            margin:
+                0 auto 22px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .7
+                );
+
+        }
+
+
+        .archive-title::after {
+
+            margin:
+                22px auto 0;
+
+        }
+
+
+        /* =====================================================
+           ARCHIVE BUTTON
+           ===================================================== */
+
+        .archive-cta {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                82px;
+
+            padding:
+                20px 30px;
+
+            background:
+                #ff651d;
+
+            color:
+                #fff;
+
+            font-size:
+                .78rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .18em;
+
+            text-decoration:
+                none;
+
+            text-transform:
+                uppercase;
+
+            transition:
+                background .25s ease;
+
+        }
+
+
+        .archive-cta span {
+
+            margin-left:
+                22px;
+
+            font-size:
+                1.5rem;
+
+            line-height:
+                1;
+
+        }
+
+
+        .archive-cta:hover {
+
+            background:
+                #ff7b3b;
+
+        }
+
+
+        /* =====================================================
+           FEATURED INVESTIGATION
+           ===================================================== */
+
+        .featured-investigation {
+
+            position:
+                relative;
+
+            margin-top:
+                95px;
+
+            padding:
+                75px 0 110px;
+
+            border-top:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .featured-investigation::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #050505 0%,
+                    rgba(5,5,5,.9) 38%,
+                    rgba(5,5,5,.25) 100%
+                ),
+                url("/hmp-ashwell.PNG")
+                center / cover no-repeat;
+
+            opacity:
+                .42;
+
+        }
+
+
+        .featured-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            max-width:
+                620px;
+
+        }
+
+
+        .featured-content .eyebrow {
+
+            color:
+                #ff651d;
+
+        }
+
+
+        .featured-content h2 {
+
+            margin:
+                0 0 18px;
+
+            color:
+                #fff;
+
+            font-size:
+                clamp(
+                    2.7rem,
+                    7vw,
+                    6rem
+                );
+
+            line-height:
+                .9;
+
+            letter-spacing:
+                -.05em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .featured-content h2 span {
+
+            color:
+                #ff651d;
+
+        }
+
+
+        .featured-content p {
+
+            color:
+                #aaa;
+
+            line-height:
+                1.75;
+
+        }
+
+
+        /* =====================================================
+           CASE INFORMATION
+           ===================================================== */
+
+        .case-card {
+
+            margin-top:
+                30px;
+
+            padding:
+                25px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .1
+                );
+
+            background:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    .5
+                );
+
+            backdrop-filter:
+                blur(5px);
+
+        }
+
+
+        .case-card strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                8px;
+
+            color:
+                #fff;
+
+            letter-spacing:
+                .12em;
+
+        }
+
+
+        .case-card span {
+
+            color:
+                #888;
+
+            font-size:
+                .78rem;
+
+            letter-spacing:
+                .1em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+           ===================================================== */
+
+        .archive-back {
+
+            padding:
+                35px 0 80px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .archive-hero {
+
+                padding:
+                    125px 0 55px;
+
+            }
+
+
+            .archive-image {
+
+                aspect-ratio:
+                    4 / 3;
+
+            }
+
+
+            .archive-image-overlay {
+
+                padding:
+                    18px;
+
+            }
+
+
+            .archive-title {
+
+                font-size:
+                    clamp(
+                        1.8rem,
+                        9vw,
+                        3.2rem
+                    );
+
+            }
+
+
+            .archive-cta {
+
+                min-height:
+                    74px;
+
+                font-size:
+                    .67rem;
+
+            }
+
+
+            .featured-investigation {
+
+                margin-top:
+                    55px;
+
+                padding:
+                    60px 0 80px;
+
+            }
+
+
+            .featured-content h2 {
+
+                font-size:
+                    clamp(
+                        2.5rem,
+                        14vw,
+                        4.5rem
+                    );
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
-<body>
+<body class="archive-page">
 
 
     <!-- =====================================================
@@ -41,20 +729,62 @@
 
     <header class="site-header">
 
-        <div class="container">
+        <div class="container header-container">
+
 
             <a
-                href="/"
-                class="site-logo"
+                href="/#home"
+                class="brand"
                 aria-label="Essex Paranormal home"
             >
 
-                <img
-                    src="../essex-paranormal-logo.jpg"
-                    alt="Essex Paranormal"
-                >
+                <span class="brand-logo-crop">
+
+                    <img
+                        src="/essex-paranormal-logo.png"
+                        alt="Essex Paranormal"
+                        class="brand-logo"
+                        decoding="async"
+                    >
+
+                </span>
 
             </a>
+
+
+            <nav
+                id="main-navigation"
+                aria-label="Main navigation"
+            >
+
+                <a href="/#home">
+                    HOME
+                </a>
+
+                <a href="/#about">
+                    MEET LEWIS
+                </a>
+
+                <a href="/#experiences">
+                    EXPERIENCES
+                </a>
+
+                <a
+                    href="/investigations/"
+                    class="active"
+                >
+                    INVESTIGATIONS
+                </a>
+
+                <a href="/#gallery">
+                    GALLERY
+                </a>
+
+                <a href="/#contact">
+                    CONTACT
+                </a>
+
+            </nav>
 
 
             <button
@@ -72,36 +802,6 @@
             </button>
 
 
-            <nav
-                id="main-navigation"
-                aria-label="Main navigation"
-            >
-
-                <a href="/">
-                    HOME
-                </a>
-
-                <a href="/#about">
-                    ABOUT
-                </a>
-
-                <a
-                    href="/investigations/"
-                    class="active"
-                >
-                    INVESTIGATIONS
-                </a>
-
-                <a href="/#evidence">
-                    EVIDENCE
-                </a>
-
-                <a href="/#contact">
-                    CONTACT
-                </a>
-
-            </nav>
-
         </div>
 
     </header>
@@ -109,70 +809,91 @@
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         MAIN
          ===================================================== -->
 
     <main>
 
 
         <!-- =================================================
-             BACK BUTTON
-             ================================================= -->
-
-        <section class="archive-top-return">
-
-            <div class="container">
-
-                <a
-                    href="/"
-                    class="archive-back-link"
-                >
-
-                    <span aria-hidden="true">
-                        ←
-                    </span>
-
-                    BACK TO ESSEX PARANORMAL
-
-                </a>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             ARCHIVE HERO
+             ARCHIVE INTRO
              ================================================= -->
 
         <section class="archive-hero">
 
             <div class="container">
 
-                <div class="archive-hero-content">
 
-                    <div class="section-label">
-                        ESSEX PARANORMAL
-                    </div>
+                <div class="archive-heading">
+
+                    <p class="eyebrow">
+                        INVESTIGATIONS
+                    </p>
 
 
                     <h1>
-                        INVESTIGATION
-                        <br>
-                        ARCHIVE
+                        RECENT
+                        <span>CASE FILES.</span>
                     </h1>
 
 
                     <p>
-                        A record of our investigations,
-                        locations and findings.
-                        Every case is approached with
-                        an open mind, careful documentation
-                        and no predetermined conclusions.
+                        Real investigations will appear here
+                        once they have been published and
+                        approved for public release.
                     </p>
 
                 </div>
+
+
+
+                <!-- =========================================
+                     ARCHIVE IMAGE
+                     ========================================= -->
+
+                <div class="archive-feature">
+
+
+                    <img
+                        src="/investigation-archive.png"
+                        alt="Essex Paranormal Investigation Archive"
+                        class="archive-image"
+                        loading="eager"
+                        decoding="async"
+                    >
+
+
+                    <div
+                        class="archive-image-overlay"
+                        aria-hidden="true"
+                    >
+
+                        <div class="archive-title">
+
+                            Investigation<br>
+                            Archive
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="#featured"
+                        class="archive-cta"
+                    >
+
+                        VIEW INVESTIGATION ARCHIVE
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                </div>
+
 
             </div>
 
@@ -181,314 +902,76 @@
 
 
         <!-- =================================================
-             CURRENT INVESTIGATION
+             FEATURED INVESTIGATION
              ================================================= -->
 
         <section
-            class="archive-section section"
-            id="current-investigation"
+            id="featured"
+            class="featured-investigation"
         >
 
             <div class="container">
 
 
-                <div class="section-heading">
+                <div class="featured-content">
 
-                    <div class="section-label">
-                        CURRENT CASE
-                    </div>
+
+                    <p class="eyebrow">
+                        FEATURED INVESTIGATION
+                    </p>
 
 
                     <h2>
-                        LATEST INVESTIGATION
+                        HMP
+                        <span>ASHWELL.</span>
                     </h2>
 
 
                     <p>
-                        Our latest published investigation
-                        is featured below.
+
+                        A documented Essex Paranormal
+                        investigation presented as a full
+                        case file, bringing together the
+                        location, historical research,
+                        investigation material and evidence
+                        review.
+
                     </p>
 
-                </div>
+
+                    <div class="case-card">
+
+                        <strong>
+                            HMP ASHWELL
+                        </strong>
 
 
-
-                <!-- =========================================
-                     EP-001 HMP ASHWELL
-                     ========================================= -->
-
-                <article
-                    class="featured-case"
-                    data-case="EP-001"
-                >
-
-
-                    <div class="featured-case-image">
-
-                        <img
-                            src="../hmp-ashwell.png.PNG"
-                            alt="HMP Ashwell"
-                            loading="eager"
-                        >
-
-
-                        <span class="featured-case-label">
-                            EP-001 • FEATURED CASE
+                        <span>
+                            Rutland · Featured Case ·
+                            Full investigation coming next
                         </span>
 
                     </div>
 
 
-
-                    <div class="featured-case-content">
-
-
-                        <div class="section-label">
-                            INVESTIGATION EP-001
-                        </div>
-
-
-                        <h2>
-                            HMP ASHWELL
-                        </h2>
-
-
-                        <div class="case-location">
-                            LEICESTERSHIRE • UNITED KINGDOM
-                        </div>
-
-
-
-                        <!-- CUSTOMER SUPPLIED COPY -->
-
-                        <div class="case-story">
-
-                            <p class="case-intro">
-                                Behind the quiet Leicestershire
-                                fields stands HMP Ashwell… a
-                                prison long abandoned, yet never
-                                truly empty.
-                            </p>
-
-
-                            <p>
-                                Its cell blocks sit in silence,
-                                but the silence feels wrong —
-                                heavy, watching.
-                            </p>
-
-
-                            <p>
-                                Visitors report cold pockets
-                                that move on their own…
-                                distant footsteps echoing
-                                through corridors stripped bare…
-                                and murmured voices drifting
-                                from cells that haven’t held
-                                a prisoner in years.
-                            </p>
-
-
-                            <p>
-                                Some say the walls remember
-                                every fear, every outburst,
-                                every final moment that unfolded
-                                behind the bars.
-                            </p>
-
-
-                            <p>
-                                And when darkness settles over
-                                Ashwell… the past begins to stir.
-                            </p>
-
-                        </div>
-
-
-
-                        <!-- CASE INFORMATION -->
-
-                        <div class="case-meta">
-
-
-                            <div>
-
-                                <span>
-                                    CASE
-                                </span>
-
-                                <strong>
-                                    EP-001
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    LOCATION
-                                </span>
-
-                                <strong>
-                                    HMP Ashwell
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    STATUS
-                                </span>
-
-                                <strong>
-                                    PUBLISHED
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- FULL CASE BUTTON -->
+                    <div
+                        style="
+                            margin-top:28px;
+                        "
+                    >
 
                         <a
                             href="/investigations/hmp-ashwell.html"
-                            class="btn btn-primary"
+                            class="button button-primary"
                         >
-                            VIEW FULL INVESTIGATION
-                        </a>
 
+                            OPEN CASE FILE
 
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             PAST INVESTIGATIONS
-             ================================================= -->
-
-        <section
-            class="past-investigations section"
-            id="past-investigations"
-        >
-
-            <div class="container">
-
-
-                <div class="section-heading">
-
-                    <div class="section-label">
-                        CASE HISTORY
-                    </div>
-
-
-                    <h2>
-                        PAST INVESTIGATIONS
-                    </h2>
-
-
-                    <p>
-                        Previous investigations remain
-                        available as part of the Essex
-                        Paranormal case archive.
-                    </p>
-
-                </div>
-
-
-
-                <!-- =========================================
-                     FUTURE CASES WILL BE ADDED HERE
-                     ========================================= -->
-
-                <div
-                    class="investigation-archive-grid"
-                    id="past-investigation-list"
-                >
-
-
-                    <!--
-                    =================================================
-                    FUTURE INVESTIGATION EXAMPLE
-
-                    When EP-002 is ready, a new card can be added
-                    here without changing EP-001.
-
-                    =================================================
-
-                    <article class="archive-case-card">
-
-                        <div class="archive-case-image">
-
-                            <img
-                                src="../ep-002-image.png"
-                                alt="Investigation location"
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                        <div class="archive-case-content">
-
-                            <span class="archive-case-number">
-                                EP-002
+                            <span>
+                                →
                             </span>
 
-                            <h3>
-                                LOCATION NAME
-                            </h3>
-
-                            <p>
-                                Short investigation description.
-                            </p>
-
-                            <a
-                                href="/investigations/ep-002.html"
-                                class="btn btn-secondary"
-                            >
-                                VIEW INVESTIGATION
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                    -->
-
-
-                    <!-- =================================================
-                         CURRENTLY NO PAST CASES
-                         ================================================= -->
-
-                    <div class="archive-empty">
-
-
-                        <span class="archive-empty-number">
-                            ARCHIVE STATUS • 001
-                        </span>
-
-
-                        <h3>
-                            THE ARCHIVE IS JUST BEGINNING
-                        </h3>
-
-
-                        <p>
-                            HMP Ashwell is currently the first
-                            published investigation in the Essex
-                            Paranormal archive.
-                        </p>
-
+                        </a>
 
                     </div>
 
@@ -502,66 +985,19 @@
 
 
         <!-- =================================================
-             ARCHIVE INFORMATION
+             RETURN
              ================================================= -->
 
-        <section class="archive-information section">
-
-            <div class="container">
-
-
-                <div class="archive-information-inner">
-
-
-                    <div class="section-label">
-                        THE RECORD
-                    </div>
-
-
-                    <h2>
-                        EVERY INVESTIGATION
-                        <br>
-                        HAS A STORY.
-                    </h2>
-
-
-                    <p>
-                        As Essex Paranormal continues to
-                        investigate new locations, this archive
-                        will grow with each published case.
-                    </p>
-
-
-                    <p>
-                        Earlier investigations will remain
-                        available, creating a permanent record
-                        of the locations visited, evidence
-                        collected and findings reached.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             BOTTOM RETURN
-             ================================================= -->
-
-        <section class="archive-return">
+        <section class="archive-back">
 
             <div class="container">
 
                 <a
-                    href="/"
-                    class="btn btn-secondary"
+                    href="/#investigations"
+                    class="button button-outline"
                 >
 
-                    ←
-                    RETURN TO ESSEX PARANORMAL
+                    ← BACK TO ESSEX PARANORMAL
 
                 </a>
 
@@ -575,38 +1011,10 @@
 
 
     <!-- =====================================================
-         FOOTER
+         EXISTING SITE JAVASCRIPT
          ===================================================== -->
 
-    <footer class="site-footer">
-
-        <div class="container">
-
-            <p>
-
-                ©
-                <span data-current-year></span>
-                Essex Paranormal.
-                All rights reserved.
-
-            </p>
-
-
-            <p>
-                HONEST • REAL • UNBIASED
-            </p>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-         ===================================================== -->
-
-    <script src="../script.js"></script>
+    <script src="/script.js"></script>
 
 
 </body>
