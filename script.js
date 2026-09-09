@@ -3,7 +3,7 @@
 
 /* =========================================================
    ESSEX PARANORMAL
-   PUBLIC WEBSITE SCRIPT
+   COMPLETE PUBLIC WEBSITE SCRIPT
    ========================================================= */
 
 const API_BASE = "/api";
@@ -14,6 +14,7 @@ const API_BASE = "/api";
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
     initEntryScreen();
     initMobileNavigation();
     initSmoothNavigation();
@@ -24,22 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
     initImageFallbacks();
     initCurrentYear();
     initPageReady();
+
 });
 
 
 /* =========================================================
    CINEMATIC ENTRY
-   =========================================================
-   The approved cinematic itself is not changed.
-
-   When it finishes:
-   1. The intro fades.
-   2. It is removed.
-   3. The page is forced back to the top of Home.
    ========================================================= */
 
 function initEntryScreen() {
-    const entryScreen = document.getElementById("entry-screen");
+
+    const entryScreen =
+        document.getElementById("entry-screen");
+
 
     if (!entryScreen) {
         return;
@@ -47,65 +45,66 @@ function initEntryScreen() {
 
 
     /*
-     * Stop the browser restoring an old scroll position
-     * after returning to the page.
+     * Prevent the browser from restoring an
+     * old scroll position while the cinematic
+     * introduction is being displayed.
      */
 
     try {
+
         if ("scrollRestoration" in history) {
             history.scrollRestoration = "manual";
         }
+
     } catch (error) {
+
         /*
-         * Continue normally if the browser does not allow
-         * scrollRestoration to be changed.
+         * Continue normally if the browser does
+         * not allow scrollRestoration to be changed.
          */
+
     }
 
 
-    /*
-     * Immediately establish Home as the starting position.
-     */
-
     forceScrollTop();
 
-
-    /*
-     * Give the browser one frame to apply the position.
-     */
 
     window.requestAnimationFrame(() => {
         forceScrollTop();
     });
 
 
-    const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const reducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
 
     /*
-     * Keep the existing cinematic timing.
+     * Normal cinematic duration.
+     * Reduced-motion users receive a shorter
+     * introduction.
      */
 
-    const displayTime = reducedMotion ? 700 : 3000;
+    const displayTime =
+        reducedMotion
+            ? 700
+            : 3000;
 
 
     window.setTimeout(() => {
 
-        entryScreen.classList.add("is-hidden");
+        entryScreen.classList.add(
+            "is-hidden"
+        );
 
 
         window.setTimeout(() => {
 
-            entryScreen.remove();
+            if (entryScreen) {
+                entryScreen.remove();
+            }
 
-
-            /*
-             * Final safety check.
-             * Home is always where the visitor lands
-             * after the cinematic.
-             */
 
             forceScrollTop();
 
@@ -117,6 +116,7 @@ function initEntryScreen() {
         }, reducedMotion ? 50 : 850);
 
     }, displayTime);
+
 }
 
 
@@ -125,6 +125,11 @@ function initEntryScreen() {
    ========================================================= */
 
 function forceScrollTop() {
+
+    /*
+     * Do not interfere with genuine anchor
+     * navigation to another section.
+     */
 
     if (
         window.location.hash &&
@@ -139,6 +144,7 @@ function forceScrollTop() {
         left: 0,
         behavior: "auto"
     });
+
 }
 
 
@@ -149,91 +155,122 @@ function forceScrollTop() {
 function initMobileNavigation() {
 
     const menuToggle =
-        document.querySelector(".menu-toggle");
+        document.querySelector(
+            ".menu-toggle"
+        );
+
 
     const navigation =
-        document.getElementById("main-navigation");
+        document.getElementById(
+            "main-navigation"
+        );
 
 
-    if (!menuToggle || !navigation) {
+    if (
+        !menuToggle ||
+        !navigation
+    ) {
         return;
     }
 
 
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener(
+        "click",
+        () => {
 
-        const isOpen =
-            navigation.classList.toggle("open");
-
-
-        menuToggle.classList.toggle(
-            "open",
-            isOpen
-        );
+            const isOpen =
+                navigation.classList.toggle(
+                    "open"
+                );
 
 
-        menuToggle.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
+            menuToggle.classList.toggle(
+                "open",
+                isOpen
+            );
 
 
-        menuToggle.setAttribute(
-            "aria-label",
-            isOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
-        );
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
 
 
-        document.body.classList.toggle(
-            "menu-open",
-            isOpen
-        );
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Close navigation menu"
+                    : "Open navigation menu"
+            );
 
-    });
+
+            document.body.classList.toggle(
+                "menu-open",
+                isOpen
+            );
+
+        }
+    );
 
 
     /*
-     * Close the menu after selecting a navigation link.
+     * Close navigation after selecting
+     * a navigation link.
      */
 
     navigation
         .querySelectorAll("a")
         .forEach((link) => {
 
-            link.addEventListener("click", () => {
-                closeMobileNavigation();
-            });
+            link.addEventListener(
+                "click",
+                () => {
+                    closeMobileNavigation();
+                }
+            );
 
         });
 
 
     /*
-     * Escape key closes the mobile navigation.
+     * Escape closes the mobile menu.
      */
 
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener(
+        "keydown",
+        (event) => {
 
-        if (event.key === "Escape") {
-            closeMobileNavigation();
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeMobileNavigation();
+
+            }
+
         }
-
-    });
+    );
 
 
     /*
-     * If the browser is resized back to desktop,
-     * make sure the mobile menu is reset.
+     * Reset the mobile menu when returning
+     * to desktop width.
      */
 
-    window.addEventListener("resize", () => {
+    window.addEventListener(
+        "resize",
+        () => {
 
-        if (window.innerWidth > 900) {
-            closeMobileNavigation();
+            if (
+                window.innerWidth > 900
+            ) {
+
+                closeMobileNavigation();
+
+            }
+
         }
-
-    });
+    );
 
 }
 
@@ -245,25 +282,38 @@ function initMobileNavigation() {
 function closeMobileNavigation() {
 
     const menuToggle =
-        document.querySelector(".menu-toggle");
+        document.querySelector(
+            ".menu-toggle"
+        );
+
 
     const navigation =
-        document.getElementById("main-navigation");
+        document.getElementById(
+            "main-navigation"
+        );
 
 
     if (navigation) {
-        navigation.classList.remove("open");
+
+        navigation.classList.remove(
+            "open"
+        );
+
     }
 
 
     if (menuToggle) {
 
-        menuToggle.classList.remove("open");
+        menuToggle.classList.remove(
+            "open"
+        );
+
 
         menuToggle.setAttribute(
             "aria-expanded",
             "false"
         );
+
 
         menuToggle.setAttribute(
             "aria-label",
@@ -276,6 +326,7 @@ function closeMobileNavigation() {
     document.body.classList.remove(
         "menu-open"
     );
+
 }
 
 
@@ -293,81 +344,110 @@ function initSmoothNavigation() {
 
     links.forEach((link) => {
 
-        link.addEventListener("click", (event) => {
+        link.addEventListener(
+            "click",
+            (event) => {
 
-            const href =
-                link.getAttribute("href");
-
-
-            if (
-                !href ||
-                href === "#" ||
-                href === "#!"
-            ) {
-                return;
-            }
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
 
 
-            const target =
-                document.querySelector(href);
+                if (
+                    !href ||
+                    href === "#" ||
+                    href === "#!"
+                ) {
+
+                    return;
+
+                }
 
 
-            if (!target) {
-                return;
-            }
+                let target = null;
 
 
-            event.preventDefault();
+                try {
+
+                    target =
+                        document.querySelector(
+                            href
+                        );
+
+                } catch (error) {
+
+                    return;
+
+                }
 
 
-            const header =
-                document.querySelector(".site-header");
+                if (!target) {
+                    return;
+                }
 
 
-            const headerHeight =
-                header
-                    ? header.offsetHeight
-                    : 0;
+                event.preventDefault();
 
 
-            const targetPosition =
-                target.getBoundingClientRect().top +
-                window.scrollY -
-                headerHeight;
+                const header =
+                    document.querySelector(
+                        ".site-header"
+                    );
 
 
-            window.scrollTo({
-                top:
-                    Math.max(
-                        0,
-                        targetPosition
-                    ),
-                left: 0,
-                behavior: "smooth"
-            });
+                const headerHeight =
+                    header
+                        ? header.offsetHeight
+                        : 0;
 
 
-            /*
-             * Update the address bar without
-             * creating another browser-history entry.
-             */
+                const targetPosition =
+                    target
+                        .getBoundingClientRect()
+                        .top +
+                    window.scrollY -
+                    headerHeight;
 
-            try {
 
-                history.replaceState(
-                    null,
-                    "",
-                    href
-                );
+                window.scrollTo({
 
-            } catch (error) {
+                    top:
+                        Math.max(
+                            0,
+                            targetPosition
+                        ),
+
+                    left: 0,
+
+                    behavior: "smooth"
+
+                });
+
+
                 /*
-                 * Ignore browsers that prevent
-                 * history manipulation.
+                 * Update the address bar without
+                 * creating another history entry.
                  */
-            }
 
-        });
+                try {
+
+                    history.replaceState(
+                        null,
+                        "",
+                        href
+                    );
+
+                } catch (error) {
+
+                    /*
+                     * Ignore history errors.
+                     */
+
+                }
+
+            }
+        );
 
     });
 
@@ -381,7 +461,9 @@ function initSmoothNavigation() {
 function initHeaderScroll() {
 
     const header =
-        document.querySelector(".site-header");
+        document.querySelector(
+            ".site-header"
+        );
 
 
     if (!header) {
@@ -444,11 +526,26 @@ function initActiveNavigation() {
             .map((link) => {
 
                 const href =
-                    link.getAttribute("href");
+                    link.getAttribute(
+                        "href"
+                    );
 
 
-                const section =
-                    document.querySelector(href);
+                let section = null;
+
+
+                try {
+
+                    section =
+                        document.querySelector(
+                            href
+                        );
+
+                } catch (error) {
+
+                    return null;
+
+                }
 
 
                 if (!section) {
@@ -482,26 +579,33 @@ function initActiveNavigation() {
                 sections[0];
 
 
-            sections.forEach((item) => {
+            sections.forEach(
+                (item) => {
 
-                if (
-                    item.section.offsetTop <=
-                    scrollPosition
-                ) {
-                    current = item;
+                    if (
+                        item.section.offsetTop <=
+                        scrollPosition
+                    ) {
+
+                        current =
+                            item;
+
+                    }
+
                 }
+            );
 
-            });
 
+            links.forEach(
+                (link) => {
 
-            links.forEach((link) => {
+                    link.classList.toggle(
+                        "active",
+                        link === current.link
+                    );
 
-                link.classList.toggle(
-                    "active",
-                    link === current.link
-                );
-
-            });
+                }
+            );
 
         };
 
@@ -537,46 +641,111 @@ function initBackToTop() {
     }
 
 
-    buttons.forEach((button) => {
+    const updateVisibility =
+        () => {
 
-        button.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
+            const visible =
+                window.scrollY > 600;
 
 
-                window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: "smooth"
-                });
+            buttons.forEach(
+                (button) => {
+
+                    button.style.opacity =
+                        visible
+                            ? "1"
+                            : "0";
 
 
-                try {
+                    button.style.visibility =
+                        visible
+                            ? "visible"
+                            : "hidden";
 
-                    history.replaceState(
-                        null,
-                        "",
-                        "#home"
-                    );
 
-                } catch (error) {
-                    /*
-                     * Ignore history errors.
-                     */
+                    button.style.pointerEvents =
+                        visible
+                            ? "auto"
+                            : "none";
+
                 }
+            );
 
-            }
-        );
+        };
 
-    });
+
+    updateVisibility();
+
+
+    window.addEventListener(
+        "scroll",
+        updateVisibility,
+        {
+            passive: true
+        }
+    );
+
+
+    buttons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+
+                    window.scrollTo({
+
+                        top: 0,
+
+                        left: 0,
+
+                        behavior: "smooth"
+
+                    });
+
+
+                    try {
+
+                        history.replaceState(
+                            null,
+                            "",
+                            "#home"
+                        );
+
+                    } catch (error) {
+
+                        /*
+                         * Ignore history errors.
+                         */
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================================
    INVESTIGATIONS
+   =========================================================
+   
+   The homepage can contain a static featured
+   investigation without being overwritten.
+
+   The API is only used when an element with
+   [data-investigations] exists.
+
+   This means:
+   - Homepage featured case remains intact.
+   - Investigation archive can still use the API.
+   - Future investigations can be added safely.
    ========================================================= */
 
 async function initInvestigations() {
@@ -587,16 +756,15 @@ async function initInvestigations() {
         );
 
 
+    /*
+     * No API container on this page.
+     * Nothing needs to be loaded.
+     */
+
     if (!container) {
         return;
     }
 
-
-    /*
-     * Never invent investigation records.
-     * The public website only displays data
-     * actually published by the Control Room API.
-     */
 
     setInvestigationStatus(
         container,
@@ -611,19 +779,23 @@ async function initInvestigations() {
                 `${API_BASE}/investigations`,
                 {
                     method: "GET",
+
                     headers: {
                         "Accept":
                             "application/json"
                     },
+
                     cache: "no-store"
                 }
             );
 
 
         if (!response.ok) {
+
             throw new Error(
                 `Investigation request failed: ${response.status}`
             );
+
         }
 
 
@@ -638,9 +810,11 @@ async function initInvestigations() {
                 data.investigations
             )
         ) {
+
             throw new Error(
                 "Invalid investigation response."
             );
+
         }
 
 
@@ -677,7 +851,9 @@ function setInvestigationStatus(
 ) {
 
     container.innerHTML = `
+
         <div class="empty-state">
+
             <span class="empty-code">
                 ARCHIVE
             </span>
@@ -693,7 +869,9 @@ function setInvestigationStatus(
             <span class="empty-status">
                 ESSEX PARANORMAL
             </span>
+
         </div>
+
     `;
 
 }
@@ -711,6 +889,7 @@ function renderInvestigations(
     if (!investigations.length) {
 
         container.innerHTML = `
+
             <div class="empty-state">
 
                 <span class="empty-code">
@@ -732,6 +911,7 @@ function renderInvestigations(
                 </span>
 
             </div>
+
         `;
 
         return;
@@ -779,8 +959,32 @@ function renderInvestigationCard(
         "";
 
 
+    const id =
+        investigation.id ||
+        "";
+
+
+    const status =
+        investigation.status ||
+        "PUBLISHED";
+
+
     return `
+
         <article class="investigation-card">
+
+            <div class="investigation-card-top">
+
+                <span class="investigation-id">
+                    ${escapeHtml(id)}
+                </span>
+
+                <span class="investigation-status">
+                    ${escapeHtml(status)}
+                </span>
+
+            </div>
+
 
             <div class="investigation-card-content">
 
@@ -796,9 +1000,11 @@ function renderInvestigationCard(
                     ${escapeHtml(description)}
                 </p>
 
+
                 ${
                     location || date
                         ? `
+
                             <div class="investigation-card-meta">
 
                                 ${
@@ -811,6 +1017,7 @@ function renderInvestigationCard(
                                         : ""
                                 }
 
+
                                 ${
                                     date
                                         ? `
@@ -822,6 +1029,7 @@ function renderInvestigationCard(
                                 }
 
                             </div>
+
                         `
                         : ""
                 }
@@ -829,6 +1037,7 @@ function renderInvestigationCard(
             </div>
 
         </article>
+
     `;
 
 }
@@ -843,6 +1052,7 @@ function renderInvestigationUnavailable(
 ) {
 
     container.innerHTML = `
+
         <div class="empty-state">
 
             <span class="empty-code">
@@ -863,116 +1073,21 @@ function renderInvestigationUnavailable(
             </span>
 
         </div>
+
     `;
 
 }
 
 
 /* =========================================================
-   IMAGE FALLBACKS
-   ========================================================= */
-
-function initImageFallbacks() {
-
-    const images =
-        document.querySelectorAll(
-            "img"
-        );
-
-
-    images.forEach((image) => {
-
-        image.addEventListener(
-            "error",
-            () => {
-
-                image.classList.add(
-                    "image-error"
-                );
-
-
-                /*
-                 * Do not repeatedly trigger the
-                 * error handler if a fallback is
-                 * already being attempted.
-                 */
-
-                if (
-                    image.dataset.fallbackApplied ===
-                    "true"
-                ) {
-                    return;
-                }
-
-
-                image.dataset.fallbackApplied =
-                    "true";
-
-            },
-            {
-                once: true
-            }
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
-
-function initCurrentYear() {
-
-    const year =
-        String(
-            new Date().getFullYear()
-        );
-
-
-    document
-        .querySelectorAll(
-            "[data-current-year]"
-        )
-        .forEach((element) => {
-
-            element.textContent =
-                year;
-
-        });
-
-}
-
-
-/* =========================================================
-   PAGE READY
-   ========================================================= */
-
-function initPageReady() {
-
-    requestAnimationFrame(() => {
-
-        document.documentElement.classList.add(
-            "page-ready"
-        );
-
-        document.body.classList.add(
-            "page-ready"
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   SAFE HTML
+   HTML SAFETY
    ========================================================= */
 
 function escapeHtml(value) {
 
-    return String(value)
+    return String(
+        value ?? ""
+    )
         .replace(
             /&/g,
             "&amp;"
@@ -993,5 +1108,102 @@ function escapeHtml(value) {
             /'/g,
             "&#039;"
         );
+
+}
+
+
+/* =========================================================
+   IMAGE FALLBACKS
+   ========================================================= */
+
+function initImageFallbacks() {
+
+    const images =
+        document.querySelectorAll(
+            "img"
+        );
+
+
+    images.forEach(
+        (image) => {
+
+            image.addEventListener(
+                "error",
+                () => {
+
+                    image.classList.add(
+                        "image-error"
+                    );
+
+
+                    /*
+                     * Record that the image failed
+                     * without attempting to replace
+                     * the supplied image automatically.
+                     */
+
+                    image.dataset.fallbackApplied =
+                        "true";
+
+
+                    console.warn(
+                        "Essex Paranormal image could not be loaded:",
+                        image.getAttribute(
+                            "src"
+                        )
+                    );
+
+                },
+                {
+                    once: true
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT YEAR
+   ========================================================= */
+
+function initCurrentYear() {
+
+    document
+        .querySelectorAll(
+            "[data-current-year]"
+        )
+        .forEach(
+            (element) => {
+
+                element.textContent =
+                    new Date().getFullYear();
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   PAGE READY
+   ========================================================= */
+
+function initPageReady() {
+
+    /*
+     * Allow the CSS to reveal the page once
+     * the initial JavaScript setup has completed.
+     */
+
+    requestAnimationFrame(() => {
+
+        document.body.classList.add(
+            "page-ready"
+        );
+
+    });
 
 }
