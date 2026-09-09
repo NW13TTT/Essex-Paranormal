@@ -3388,3 +3388,377 @@ h3 {
     }
 
 }
+/* =========================================================
+   HOMEPAGE FEATURED INVESTIGATION
+   HMP ASHWELL
+   ========================================================= */
+
+.investigation-feature {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    min-width: 0;
+
+    margin-bottom: 28px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+    background:
+        rgba(5, 7, 8, 0.58);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.38);
+
+    transition:
+        border-color 0.35s ease,
+        transform 0.35s var(--ease);
+}
+
+.investigation-feature:hover {
+    border-color:
+        rgba(255, 106, 26, 0.38);
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =========================================================
+   FEATURE IMAGE
+   ========================================================= */
+
+.investigation-feature-image {
+    position: relative;
+
+    min-height: 520px;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+.investigation-feature-image::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.04),
+            rgba(0, 0, 0, 0.28)
+        );
+
+    pointer-events: none;
+}
+
+.investigation-feature-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    filter:
+        contrast(1.05)
+        brightness(0.82);
+
+    transition:
+        transform 0.9s var(--ease);
+}
+
+.investigation-feature:hover
+.investigation-feature-image img {
+    transform: scale(1.025);
+}
+
+
+/* =========================================================
+   FEATURE CONTENT
+   ========================================================= */
+
+.investigation-feature-content {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    padding:
+        clamp(32px, 5vw, 70px);
+}
+
+.investigation-feature-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 28px;
+}
+
+.investigation-feature-top .empty-code {
+    margin-bottom: 0;
+}
+
+.investigation-status {
+    flex-shrink: 0;
+
+    padding:
+        6px 10px;
+
+    border:
+        1px solid rgba(255, 106, 26, 0.35);
+
+    color: var(--orange);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+.investigation-feature-content .eyebrow {
+    margin-bottom: 12px;
+}
+
+.investigation-feature-content h3 {
+    margin-bottom: 12px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(42px, 5vw, 72px);
+
+    font-weight: 300;
+
+    letter-spacing:
+        -0.055em;
+
+    line-height: 0.9;
+
+    text-transform: uppercase;
+}
+
+.investigation-feature-content h3 span {
+    display: block;
+
+    color: var(--orange);
+}
+
+.investigation-feature-location {
+    margin-bottom: 25px;
+
+    color:
+        rgba(255, 255, 255, 0.42);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.18em;
+}
+
+.investigation-feature-content > p:not(.eyebrow):not(.investigation-feature-location) {
+    max-width: 570px;
+
+    margin-bottom: 30px;
+
+    color:
+        rgba(255, 255, 255, 0.60);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FEATURE META
+   ========================================================= */
+
+.investigation-feature-meta {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    margin-bottom: 32px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+}
+
+.investigation-feature-meta > div {
+    min-width: 0;
+
+    padding:
+        17px 14px;
+
+    border-right:
+        1px solid rgba(255, 255, 255, 0.08);
+}
+
+.investigation-feature-meta > div:last-child {
+    border-right: 0;
+}
+
+.investigation-feature-meta span,
+.investigation-feature-meta strong {
+    display: block;
+}
+
+.investigation-feature-meta span {
+    margin-bottom: 5px;
+
+    color:
+        rgba(255, 255, 255, 0.30);
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+.investigation-feature-meta strong {
+    color:
+        rgba(255, 255, 255, 0.75);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.05em;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ARCHIVE BUTTON
+   ========================================================= */
+
+.investigation-archive-action {
+    display: flex;
+
+    justify-content: center;
+
+    margin:
+        0 0 70px;
+}
+
+.investigation-archive-action .button {
+    min-width: 280px;
+}
+
+
+/* =========================================================
+   MOBILE FEATURED CASE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .investigation-feature {
+        grid-template-columns: 1fr;
+    }
+
+    .investigation-feature-image {
+        min-height: 420px;
+
+        aspect-ratio: 16 / 10;
+    }
+
+    .investigation-feature-content {
+        padding:
+            38px 30px 42px;
+    }
+
+}
+
+
+@media (max-width: 640px) {
+
+    .investigation-feature {
+        margin-bottom: 22px;
+    }
+
+    .investigation-feature-image {
+        min-height: 300px;
+
+        aspect-ratio: 4 / 3;
+    }
+
+    .investigation-feature-content {
+        padding:
+            30px 22px 35px;
+    }
+
+    .investigation-feature-top {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-bottom: 25px;
+    }
+
+    .investigation-feature-content h3 {
+        font-size:
+            clamp(42px, 14vw, 58px);
+    }
+
+    .investigation-feature-location {
+        font-size: 8px;
+
+        line-height: 1.6;
+    }
+
+    .investigation-feature-content > p:not(.eyebrow):not(.investigation-feature-location) {
+        font-size: 14px;
+    }
+
+    .investigation-feature-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .investigation-feature-meta > div {
+        border-right: 0;
+
+        border-bottom:
+            1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .investigation-feature-meta > div:last-child {
+        border-bottom: 0;
+    }
+
+    .investigation-archive-action {
+        margin-bottom: 50px;
+    }
+
+    .investigation-archive-action .button {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+}
