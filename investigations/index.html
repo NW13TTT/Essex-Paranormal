@@ -39,16 +39,17 @@
         href="/style.css"
     >
 
+
     <style>
 
         /* =====================================================
-           INVESTIGATION ARCHIVE PAGE
+           INVESTIGATION ARCHIVE
            ===================================================== */
 
         .archive-page {
 
             background:
-                #050505;
+                #050608;
 
             min-height:
                 100vh;
@@ -66,10 +67,13 @@
                 relative;
 
             padding:
-                145px 0 75px;
+                155px 0 80px;
 
             overflow:
                 hidden;
+
+            background:
+                #050608;
 
         }
 
@@ -87,9 +91,9 @@
 
             background:
                 radial-gradient(
-                    circle at 75% 45%,
-                    rgba(255,101,29,.08),
-                    transparent 32%
+                    circle at 78% 35%,
+                    rgba(114,255,80,.07),
+                    transparent 34%
                 );
 
             pointer-events:
@@ -107,7 +111,15 @@
                 2;
 
             max-width:
-                850px;
+                900px;
+
+        }
+
+
+        .archive-heading .eyebrow {
+
+            color:
+                #7cff57;
 
         }
 
@@ -115,26 +127,26 @@
         .archive-heading h1 {
 
             margin:
-                0 0 22px;
+                0 0 25px;
 
             color:
                 #fff;
 
             font-size:
                 clamp(
-                    3rem,
-                    8vw,
-                    7rem
+                    3.5rem,
+                    9vw,
+                    8rem
                 );
 
             line-height:
-                .9;
+                .88;
 
             font-weight:
                 900;
 
             letter-spacing:
-                -.055em;
+                -.06em;
 
             text-transform:
                 uppercase;
@@ -144,13 +156,16 @@
 
         .archive-heading h1 span {
 
+            display:
+                block;
+
             color:
-                #ff651d;
+                #7cff57;
 
         }
 
 
-        .archive-heading p:last-child {
+        .archive-heading p {
 
             max-width:
                 720px;
@@ -164,298 +179,118 @@
             font-size:
                 clamp(
                     1rem,
-                    1.7vw,
+                    1.6vw,
                     1.2rem
                 );
 
             line-height:
-                1.75;
+                1.8;
 
         }
 
 
         /* =====================================================
-           ARCHIVE FEATURE IMAGE
+           ARCHIVE DIVIDER
            ===================================================== */
 
-        .archive-feature {
+        .archive-divider {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                18px;
+
+            margin:
+                70px 0 35px;
+
+            color:
+                #666;
+
+            font-size:
+                .62rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .2em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .archive-divider::before {
+
+            content:
+                "";
+
+            width:
+                42px;
+
+            height:
+                1px;
+
+            background:
+                #7cff57;
+
+        }
+
+
+        /* =====================================================
+           FEATURED CASE
+           ===================================================== */
+
+        .featured-case {
 
             position:
                 relative;
 
-            margin-top:
-                45px;
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(
+                    0,
+                    1.35fr
+                )
+                minmax(
+                    280px,
+                    .65fr
+                );
+
+            min-height:
+                560px;
 
             border:
                 1px solid rgba(
                     255,
                     255,
                     255,
-                    .12
+                    .1
                 );
 
             background:
-                #080808;
+                #080a08;
 
             overflow:
                 hidden;
 
-            box-shadow:
-                0 30px 90px rgba(
-                    0,
-                    0,
-                    0,
-                    .55
-                );
-
         }
 
 
-        .archive-image {
-
-            display:
-                block;
-
-            width:
-                100%;
-
-            aspect-ratio:
-                16 / 9;
-
-            object-fit:
-                cover;
-
-            object-position:
-                center;
-
-            filter:
-                brightness(.7)
-                contrast(1.08);
-
-            transition:
-                transform 1s ease,
-                filter 1s ease;
-
-        }
-
-
-        .archive-feature:hover
-        .archive-image {
-
-            transform:
-                scale(1.02);
-
-            filter:
-                brightness(.78)
-                contrast(1.08);
-
-        }
-
-
-        /* =====================================================
-           IMAGE TITLE
-           ===================================================== */
-
-        .archive-image-overlay {
-
-            position:
-                absolute;
-
-            inset:
-                0;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            padding:
-                30px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(0,0,0,.08),
-                    rgba(0,0,0,.52)
-                );
-
-            pointer-events:
-                none;
-
-        }
-
-
-        .archive-title {
-
-            text-align:
-                center;
-
-            color:
-                #fff;
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-
-            font-size:
-                clamp(
-                    2.2rem,
-                    6vw,
-                    6rem
-                );
-
-            line-height:
-                1.05;
-
-            letter-spacing:
-                .08em;
-
-            text-transform:
-                uppercase;
-
-            text-shadow:
-                0 3px 30px #000;
-
-        }
-
-
-        .archive-title::before,
-        .archive-title::after {
-
-            content:
-                "";
-
-            display:
-                block;
-
-            width:
-                min(
-                    260px,
-                    55vw
-                );
-
-            height:
-                1px;
-
-            margin:
-                0 auto 22px;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .7
-                );
-
-        }
-
-
-        .archive-title::after {
-
-            margin:
-                22px auto 0;
-
-        }
-
-
-        /* =====================================================
-           ARCHIVE BUTTON
-           ===================================================== */
-
-        .archive-cta {
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            min-height:
-                82px;
-
-            padding:
-                20px 30px;
-
-            background:
-                #ff651d;
-
-            color:
-                #fff;
-
-            font-size:
-                .78rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .18em;
-
-            text-decoration:
-                none;
-
-            text-transform:
-                uppercase;
-
-            transition:
-                background .25s ease;
-
-        }
-
-
-        .archive-cta span {
-
-            margin-left:
-                22px;
-
-            font-size:
-                1.5rem;
-
-            line-height:
-                1;
-
-        }
-
-
-        .archive-cta:hover {
-
-            background:
-                #ff7b3b;
-
-        }
-
-
-        /* =====================================================
-           FEATURED INVESTIGATION
-           ===================================================== */
-
-        .featured-investigation {
+        .featured-case-image {
 
             position:
                 relative;
 
-            margin-top:
-                95px;
-
-            padding:
-                75px 0 110px;
-
-            border-top:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
+            min-height:
+                560px;
 
             overflow:
                 hidden;
@@ -463,7 +298,7 @@
         }
 
 
-        .featured-investigation::before {
+        .featured-case-image::after {
 
             content:
                 "";
@@ -477,20 +312,50 @@
             background:
                 linear-gradient(
                     90deg,
-                    #050505 0%,
-                    rgba(5,5,5,.9) 38%,
-                    rgba(5,5,5,.25) 100%
-                ),
-                url("/hmp-ashwell.PNG")
-                center / cover no-repeat;
-
-            opacity:
-                .42;
+                    rgba(0,0,0,.05),
+                    rgba(0,0,0,.15),
+                    #080a08
+                );
 
         }
 
 
-        .featured-content {
+        .featured-case-image img {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+            filter:
+                brightness(.62)
+                contrast(1.08);
+
+            transition:
+                transform
+                1s
+                ease;
+
+        }
+
+
+        .featured-case:hover
+        .featured-case-image img {
+
+            transform:
+                scale(1.035);
+
+        }
+
+
+        .featured-case-content {
 
             position:
                 relative;
@@ -498,21 +363,307 @@
             z-index:
                 2;
 
-            max-width:
-                620px;
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                center;
+
+            padding:
+                55px;
+
+            background:
+                #080a08;
 
         }
 
 
-        .featured-content .eyebrow {
+        .case-status {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            width:
+                fit-content;
+
+            margin-bottom:
+                25px;
+
+            padding:
+                8px 12px;
+
+            border:
+                1px solid rgba(
+                    124,
+                    255,
+                    87,
+                    .35
+                );
 
             color:
-                #ff651d;
+                #7cff57;
+
+            font-size:
+                .58rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .16em;
+
+            text-transform:
+                uppercase;
 
         }
 
 
-        .featured-content h2 {
+        .case-status::before {
+
+            content:
+                "";
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            margin-right:
+                9px;
+
+            border-radius:
+                50%;
+
+            background:
+                #7cff57;
+
+            box-shadow:
+                0 0 10px
+                rgba(
+                    124,
+                    255,
+                    87,
+                    .65
+                );
+
+        }
+
+
+        .featured-case-content h2 {
+
+            margin:
+                0 0 20px;
+
+            color:
+                #fff;
+
+            font-size:
+                clamp(
+                    2.8rem,
+                    5vw,
+                    5.5rem
+                );
+
+            line-height:
+                .88;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -.055em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .featured-case-content h2 span {
+
+            display:
+                block;
+
+            color:
+                #7cff57;
+
+        }
+
+
+        .featured-case-content p {
+
+            margin:
+                0 0 25px;
+
+            color:
+                #999;
+
+            font-size:
+                .92rem;
+
+            line-height:
+                1.8;
+
+        }
+
+
+        /* =====================================================
+           CASE DATA
+           ===================================================== */
+
+        .case-data {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            margin:
+                10px 0 30px;
+
+            border-top:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+            border-bottom:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+        }
+
+
+        .case-data-item {
+
+            padding:
+                17px 0;
+
+        }
+
+
+        .case-data-item:nth-child(odd) {
+
+            border-right:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+            padding-right:
+                18px;
+
+        }
+
+
+        .case-data-item:nth-child(even) {
+
+            padding-left:
+                18px;
+
+        }
+
+
+        .case-data-item span {
+
+            display:
+                block;
+
+            margin-bottom:
+                6px;
+
+            color:
+                #555;
+
+            font-size:
+                .55rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .14em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .case-data-item strong {
+
+            display:
+                block;
+
+            color:
+                #ddd;
+
+            font-size:
+                .72rem;
+
+            line-height:
+                1.4;
+
+        }
+
+
+        /* =====================================================
+           FUTURE CASES
+           ===================================================== */
+
+        .case-archive-section {
+
+            padding:
+                100px 0 120px;
+
+            background:
+                #050608;
+
+        }
+
+
+        .archive-section-heading {
+
+            max-width:
+                700px;
+
+            margin-bottom:
+                45px;
+
+        }
+
+
+        .archive-section-heading .eyebrow {
+
+            color:
+                #7cff57;
+
+        }
+
+
+        .archive-section-heading h2 {
 
             margin:
                 0 0 18px;
@@ -522,13 +673,16 @@
 
             font-size:
                 clamp(
-                    2.7rem,
-                    7vw,
-                    6rem
+                    2.5rem,
+                    5vw,
+                    5rem
                 );
 
             line-height:
-                .9;
+                .92;
+
+            font-weight:
+                900;
 
             letter-spacing:
                 -.05em;
@@ -539,18 +693,268 @@
         }
 
 
-        .featured-content h2 span {
+        .archive-section-heading h2 span {
 
             color:
-                #ff651d;
+                #7cff57;
 
         }
 
 
-        .featured-content p {
+        .archive-section-heading p {
+
+            margin:
+                0;
 
             color:
-                #aaa;
+                #777;
+
+            line-height:
+                1.8;
+
+        }
+
+
+        .case-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap:
+                1px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+        }
+
+
+        .case-placeholder {
+
+            min-height:
+                300px;
+
+            padding:
+                35px;
+
+            background:
+                #090b09;
+
+        }
+
+
+        .case-placeholder-number {
+
+            display:
+                block;
+
+            margin-bottom:
+                35px;
+
+            color:
+                #7cff57;
+
+            font-size:
+                .6rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .16em;
+
+        }
+
+
+        .case-placeholder h3 {
+
+            margin:
+                0 0 14px;
+
+            color:
+                #fff;
+
+            font-size:
+                1rem;
+
+            letter-spacing:
+                .08em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .case-placeholder p {
+
+            margin:
+                0;
+
+            color:
+                #666;
+
+            font-size:
+                .82rem;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .case-placeholder-status {
+
+            display:
+                inline-block;
+
+            margin-top:
+                30px;
+
+            padding:
+                7px 10px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+            color:
+                #555;
+
+            font-size:
+                .55rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .14em;
+
+        }
+
+
+        /* =====================================================
+           ARCHIVE PRINCIPLES
+           ===================================================== */
+
+        .archive-principles {
+
+            padding:
+                100px 0;
+
+            background:
+                #080a08;
+
+            border-top:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .07
+                );
+
+        }
+
+
+        .archive-principles-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap:
+                60px;
+
+        }
+
+
+        .archive-principle-number {
+
+            display:
+                block;
+
+            margin-bottom:
+                20px;
+
+            color:
+                #7cff57;
+
+            font-size:
+                .6rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .16em;
+
+        }
+
+
+        .archive-principle h3 {
+
+            margin:
+                0 0 14px;
+
+            color:
+                #fff;
+
+            font-size:
+                .95rem;
+
+            letter-spacing:
+                .08em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .archive-principle p {
+
+            margin:
+                0;
+
+            color:
+                #777;
+
+            font-size:
+                .82rem;
 
             line-height:
                 1.75;
@@ -559,81 +963,16 @@
 
 
         /* =====================================================
-           CASE INFORMATION
+           RETURN
            ===================================================== */
 
-        .case-card {
-
-            margin-top:
-                30px;
+        .archive-return {
 
             padding:
-                25px;
-
-            border:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .1
-                );
+                45px 0 90px;
 
             background:
-                rgba(
-                    0,
-                    0,
-                    0,
-                    .5
-                );
-
-            backdrop-filter:
-                blur(5px);
-
-        }
-
-
-        .case-card strong {
-
-            display:
-                block;
-
-            margin-bottom:
-                8px;
-
-            color:
-                #fff;
-
-            letter-spacing:
-                .12em;
-
-        }
-
-
-        .case-card span {
-
-            color:
-                #888;
-
-            font-size:
-                .78rem;
-
-            letter-spacing:
-                .1em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        /* =====================================================
-           BACK BUTTON
-           ===================================================== */
-
-        .archive-back {
-
-            padding:
-                35px 0 80px;
+                #050608;
 
         }
 
@@ -642,74 +981,166 @@
            MOBILE
            ===================================================== */
 
-        @media (max-width: 700px) {
+        @media (max-width: 900px) {
+
+            .featured-case {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .featured-case-image {
+
+                min-height:
+                    420px;
+
+            }
+
+
+            .featured-case-image::after {
+
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba(0,0,0,.05),
+                        #080a08
+                    );
+
+            }
+
+
+            .featured-case-content {
+
+                padding:
+                    45px;
+
+            }
+
+
+            .case-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .archive-principles-grid {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    45px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
 
             .archive-hero {
 
                 padding:
-                    125px 0 55px;
+                    125px 0 60px;
 
             }
 
 
-            .archive-image {
-
-                aspect-ratio:
-                    4 / 3;
-
-            }
-
-
-            .archive-image-overlay {
-
-                padding:
-                    18px;
-
-            }
-
-
-            .archive-title {
+            .archive-heading h1 {
 
                 font-size:
                     clamp(
-                        1.8rem,
-                        9vw,
-                        3.2rem
+                        3rem,
+                        15vw,
+                        5rem
                     );
 
             }
 
 
-            .archive-cta {
+            .featured-case-image {
 
                 min-height:
-                    74px;
-
-                font-size:
-                    .67rem;
+                    300px;
 
             }
 
 
-            .featured-investigation {
-
-                margin-top:
-                    55px;
+            .featured-case-content {
 
                 padding:
-                    60px 0 80px;
+                    30px 24px 35px;
 
             }
 
 
-            .featured-content h2 {
+            .featured-case-content h2 {
 
                 font-size:
                     clamp(
-                        2.5rem,
+                        2.6rem,
                         14vw,
-                        4.5rem
+                        4rem
                     );
+
+            }
+
+
+            .case-data {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .case-data-item:nth-child(odd) {
+
+                border-right:
+                    0;
+
+                border-bottom:
+                    1px solid rgba(
+                        255,
+                        255,
+                        255,
+                        .08
+                    );
+
+                padding-right:
+                    0;
+
+            }
+
+
+            .case-data-item:nth-child(even) {
+
+                padding-left:
+                    0;
+
+            }
+
+
+            .case-archive-section,
+            .archive-principles {
+
+                padding:
+                    75px 0;
+
+            }
+
+
+            .case-placeholder {
+
+                min-height:
+                    250px;
+
+                padding:
+                    28px 22px;
 
             }
 
@@ -801,11 +1232,9 @@
 
             </button>
 
-
         </div>
 
     </header>
-
 
 
     <!-- =====================================================
@@ -827,138 +1256,153 @@
                 <div class="archive-heading">
 
                     <p class="eyebrow">
-                        INVESTIGATIONS
+                        ESSEX PARANORMAL · INVESTIGATION ARCHIVE
                     </p>
 
 
                     <h1>
-                        RECENT
-                        <span>CASE FILES.</span>
+
+                        REAL CASES.
+
+                        <span>
+                            DOCUMENTED.
+                        </span>
+
                     </h1>
 
 
                     <p>
-                        Real investigations will appear here
-                        once they have been published and
-                        approved for public release.
+
+                        This is the Essex Paranormal investigation
+                        archive. Each published case is presented
+                        as a documented record of the location,
+                        research, investigation and evidence review.
+
                     </p>
 
                 </div>
 
 
+                <div class="archive-divider">
+
+                    FEATURED CASE FILE
+
+                </div>
+
 
                 <!-- =========================================
-                     ARCHIVE IMAGE
+                     FEATURED ASHWELL CASE
                      ========================================= -->
 
-                <div class="archive-feature">
-
-
-                    <img
-                        src="/investigation-archive.png"
-                        alt="Essex Paranormal Investigation Archive"
-                        class="archive-image"
-                        loading="eager"
-                        decoding="async"
-                    >
-
-
-                    <div
-                        class="archive-image-overlay"
-                        aria-hidden="true"
-                    >
-
-                        <div class="archive-title">
-
-                            Investigation<br>
-                            Archive
-
-                        </div>
-
-                    </div>
+                <article class="featured-case">
 
 
                     <a
-                        href="#featured"
-                        class="archive-cta"
+                        href="/investigations/hmp-ashwell.html"
+                        class="featured-case-image"
+                        aria-label="Open HMP Ashwell case file"
                     >
 
-                        VIEW INVESTIGATION ARCHIVE
-
-                        <span>
-                            →
-                        </span>
+                        <img
+                            src="/hmp-ashwell.PNG"
+                            alt="HMP Ashwell investigation location"
+                            loading="eager"
+                            decoding="async"
+                        >
 
                     </a>
 
 
-                </div>
+                    <div class="featured-case-content">
 
 
-            </div>
+                        <span class="case-status">
 
-        </section>
+                            FEATURED CASE
 
-
-
-        <!-- =================================================
-             FEATURED INVESTIGATION
-             ================================================= -->
-
-        <section
-            id="featured"
-            class="featured-investigation"
-        >
-
-            <div class="container">
-
-
-                <div class="featured-content">
-
-
-                    <p class="eyebrow">
-                        FEATURED INVESTIGATION
-                    </p>
-
-
-                    <h2>
-                        HMP
-                        <span>ASHWELL.</span>
-                    </h2>
-
-
-                    <p>
-
-                        A documented Essex Paranormal
-                        investigation presented as a full
-                        case file, bringing together the
-                        location, historical research,
-                        investigation material and evidence
-                        review.
-
-                    </p>
-
-
-                    <div class="case-card">
-
-                        <strong>
-                            HMP ASHWELL
-                        </strong>
-
-
-                        <span>
-                            Rutland · Featured Case ·
-                            Full investigation coming next
                         </span>
 
-                    </div>
+
+                        <h2>
+
+                            HMP
+
+                            <span>
+                                ASHWELL.
+                            </span>
+
+                        </h2>
 
 
-                    <div
-                        style="
-                            margin-top:28px;
-                        "
-                    >
+                        <p>
+
+                            A full Essex Paranormal case file
+                            examining the former HMP Ashwell site
+                            in Rutland, its historical setting,
+                            investigation approach and the
+                            principles used when reviewing unusual
+                            observations.
+
+                        </p>
+
+
+                        <div class="case-data">
+
+
+                            <div class="case-data-item">
+
+                                <span>
+                                    CASE
+                                </span>
+
+                                <strong>
+                                    EP-ASHWELL
+                                </strong>
+
+                            </div>
+
+
+                            <div class="case-data-item">
+
+                                <span>
+                                    LOCATION
+                                </span>
+
+                                <strong>
+                                    Rutland
+                                </strong>
+
+                            </div>
+
+
+                            <div class="case-data-item">
+
+                                <span>
+                                    SITE TYPE
+                                </span>
+
+                                <strong>
+                                    Former Prison
+                                </strong>
+
+                            </div>
+
+
+                            <div class="case-data-item">
+
+                                <span>
+                                    METHOD
+                                </span>
+
+                                <strong>
+                                    Evidence Led
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
 
                         <a
                             href="/investigations/hmp-ashwell.html"
@@ -973,24 +1417,245 @@
 
                         </a>
 
+
                     </div>
 
 
-                </div>
+                </article>
+
 
             </div>
 
         </section>
 
 
+        <!-- =================================================
+             CASE ARCHIVE
+             ================================================= -->
+
+        <section class="case-archive-section">
+
+            <div class="container">
+
+
+                <div class="archive-section-heading">
+
+                    <p class="eyebrow">
+                        CASE ARCHIVE
+                    </p>
+
+
+                    <h2>
+
+                        THE
+
+                        <span>
+                            RECORD.
+                        </span>
+
+                    </h2>
+
+
+                    <p>
+
+                        Additional investigations will be added
+                        here as they are completed, reviewed and
+                        approved for publication.
+
+                    </p>
+
+                </div>
+
+
+                <div class="case-grid">
+
+
+                    <article class="case-placeholder">
+
+                        <span class="case-placeholder-number">
+                            CASE 02
+                        </span>
+
+
+                        <h3>
+                            Investigation Pending
+                        </h3>
+
+
+                        <p>
+
+                            The next investigation will appear
+                            here once the case file has been
+                            completed and approved.
+
+                        </p>
+
+
+                        <span class="case-placeholder-status">
+                            NOT YET PUBLISHED
+                        </span>
+
+                    </article>
+
+
+                    <article class="case-placeholder">
+
+                        <span class="case-placeholder-number">
+                            CASE 03
+                        </span>
+
+
+                        <h3>
+                            Investigation Pending
+                        </h3>
+
+
+                        <p>
+
+                            A future investigation case file
+                            will be added to the archive.
+
+                        </p>
+
+
+                        <span class="case-placeholder-status">
+                            NOT YET PUBLISHED
+                        </span>
+
+                    </article>
+
+
+                    <article class="case-placeholder">
+
+                        <span class="case-placeholder-number">
+                            CASE 04
+                        </span>
+
+
+                        <h3>
+                            Investigation Pending
+                        </h3>
+
+
+                        <p>
+
+                            Further documented locations will
+                            be added as investigations progress.
+
+                        </p>
+
+
+                        <span class="case-placeholder-status">
+                            NOT YET PUBLISHED
+                        </span>
+
+                    </article>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ARCHIVE PRINCIPLES
+             ================================================= -->
+
+        <section class="archive-principles">
+
+            <div class="container">
+
+
+                <div class="archive-principles-grid">
+
+
+                    <article class="archive-principle">
+
+                        <span class="archive-principle-number">
+                            01.
+                        </span>
+
+
+                        <h3>
+                            Evidence First
+                        </h3>
+
+
+                        <p>
+
+                            Unusual observations are documented
+                            before conclusions are reached.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="archive-principle">
+
+                        <span class="archive-principle-number">
+                            02.
+                        </span>
+
+
+                        <h3>
+                            Question Everything
+                        </h3>
+
+
+                        <p>
+
+                            Natural explanations and environmental
+                            factors are considered alongside every
+                            unusual observation.
+
+                        </p>
+
+                    </article>
+
+
+                    <article class="archive-principle">
+
+                        <span class="archive-principle-number">
+                            03.
+                        </span>
+
+
+                        <h3>
+                            Stay Honest
+                        </h3>
+
+
+                        <p>
+
+                            An unexplained event is not automatically
+                            paranormal. The evidence determines what
+                            can responsibly be said.
+
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
 
         <!-- =================================================
              RETURN
              ================================================= -->
 
-        <section class="archive-back">
+        <section class="archive-return">
 
             <div class="container">
+
 
                 <a
                     href="/#investigations"
@@ -1001,13 +1666,13 @@
 
                 </a>
 
+
             </div>
 
         </section>
 
 
     </main>
-
 
 
     <!-- =====================================================
