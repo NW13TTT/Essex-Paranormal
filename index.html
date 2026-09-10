@@ -29,6 +29,7 @@
 
         /* =====================================================
            SOCIAL MEDIA FEATURE
+           ESSEX PARANORMAL ORANGE / BLACK DESIGN
            ===================================================== */
 
         .social-section {
@@ -37,7 +38,7 @@
             background:
                 radial-gradient(
                     circle at 50% 45%,
-                    rgba(124, 255, 87, 0.055),
+                    rgba(255, 106, 26, 0.055),
                     transparent 42%
                 ),
                 #050608;
@@ -53,7 +54,7 @@
                 linear-gradient(
                     90deg,
                     transparent 0%,
-                    rgba(255,255,255,.025) 50%,
+                    rgba(255, 255, 255, .025) 50%,
                     transparent 100%
                 );
         }
@@ -69,6 +70,7 @@
 
         .social-heading h2 {
             margin: 0 0 24px;
+            color: var(--white);
             font-size: clamp(3rem, 7vw, 7rem);
             line-height: .88;
             font-weight: 900;
@@ -79,7 +81,7 @@
 
         .social-heading h2 span {
             display: block;
-            color: var(--green);
+            color: var(--orange);
         }
 
 
@@ -114,10 +116,10 @@
             background:
                 linear-gradient(
                     135deg,
-                    rgba(255,255,255,.055),
-                    rgba(255,255,255,.018)
+                    rgba(255, 255, 255, .055),
+                    rgba(255, 255, 255, .018)
                 );
-            border: 1px solid rgba(255,255,255,.10);
+            border: 1px solid rgba(255, 255, 255, .10);
             transition:
                 transform .45s var(--ease),
                 border-color .45s var(--ease),
@@ -133,7 +135,7 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background: var(--green);
+            background: var(--orange);
             transform: scaleY(.18);
             transform-origin: bottom;
             transition:
@@ -149,7 +151,7 @@
             right: -90px;
             bottom: -110px;
             border-radius: 50%;
-            background: rgba(124,255,87,.07);
+            background: rgba(255, 106, 26, .07);
             transition:
                 transform .55s var(--ease);
         }
@@ -157,16 +159,16 @@
 
         .social-button:hover {
             transform: translateY(-7px);
-            border-color: rgba(124,255,87,.42);
+            border-color: rgba(255, 106, 26, .45);
             background:
                 linear-gradient(
                     135deg,
-                    rgba(124,255,87,.075),
-                    rgba(255,255,255,.025)
+                    rgba(255, 106, 26, .075),
+                    rgba(255, 255, 255, .025)
                 );
             box-shadow:
-                0 25px 70px rgba(0,0,0,.45),
-                0 0 35px rgba(124,255,87,.06);
+                0 25px 70px rgba(0, 0, 0, .45),
+                0 0 35px rgba(255, 106, 26, .08);
         }
 
 
@@ -189,12 +191,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(124,255,87,.35);
-            color: var(--green);
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: 1.65rem;
-            font-weight: 800;
-            letter-spacing: .04em;
+            color: var(--orange);
+            border: 1px solid rgba(255, 106, 26, .35);
             transition:
                 background .45s var(--ease),
                 color .45s var(--ease),
@@ -202,8 +200,16 @@
         }
 
 
+        .social-icon svg {
+            width: 36px;
+            height: 36px;
+            display: block;
+            fill: currentColor;
+        }
+
+
         .social-button:hover .social-icon {
-            background: var(--green);
+            background: var(--orange);
             color: #050608;
             transform: rotate(-4deg) scale(1.06);
         }
@@ -220,7 +226,7 @@
         .social-platform {
             display: block;
             margin-bottom: 5px;
-            color: var(--green);
+            color: var(--orange);
             font-family: "Barlow Condensed", sans-serif;
             font-size: .82rem;
             font-weight: 800;
@@ -251,7 +257,7 @@
             position: relative;
             z-index: 2;
             flex: 0 0 auto;
-            color: var(--green);
+            color: var(--orange);
             font-size: 1.5rem;
             transition:
                 transform .45s var(--ease);
@@ -282,7 +288,7 @@
             content: "";
             width: 55px;
             height: 1px;
-            background: var(--green);
+            background: var(--orange);
         }
 
 
@@ -292,9 +298,11 @@
                 margin-bottom: 35px;
             }
 
+
             .social-grid {
                 grid-template-columns: 1fr;
             }
+
 
             .social-button {
                 min-height: 145px;
@@ -313,27 +321,37 @@
                 );
             }
 
+
             .social-button {
                 min-height: 125px;
                 padding: 23px 20px;
                 gap: 17px;
             }
 
+
             .social-icon {
                 flex-basis: 55px;
                 width: 55px;
                 height: 55px;
-                font-size: 1.25rem;
             }
+
+
+            .social-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
 
             .social-content h3 {
                 font-size: 1.65rem;
             }
 
+
             .social-handle {
                 font-size: .76rem;
                 word-break: break-word;
             }
+
 
             .social-arrow {
                 font-size: 1.2rem;
@@ -1174,7 +1192,14 @@
                     >
 
                         <span class="social-icon">
-                            ▶
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
+                            </svg>
+
                         </span>
 
 
@@ -1215,7 +1240,14 @@
                     >
 
                         <span class="social-icon">
-                            ♪
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path d="M16.6 2c.2 1.7 1.1 3.1 2.7 4 1 .6 2.1.9 3.2.9v3.4c-1.5 0-3-.4-4.3-1.1v6.7c0 4-3.2 7.1-7.2 7.1-1.5 0-2.9-.4-4.1-1.2A7.1 7.1 0 0 1 3 15.7c0-4 3.2-7.1 7.2-7.1.4 0 .8 0 1.2.1v3.5a3.9 3.9 0 0 0-1.2-.2 3.7 3.7 0 1 0 3.7 3.7V2h2.7Z"/>
+                            </svg>
+
                         </span>
 
 
@@ -1256,7 +1288,14 @@
                     >
 
                         <span class="social-icon">
-                            ◎
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5ZM17.5 6.5a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/>
+                            </svg>
+
                         </span>
 
 
@@ -1297,7 +1336,14 @@
                     >
 
                         <span class="social-icon">
-                            f
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6h1.8V3.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1V10H8v3h2.6v8h2.9Z"/>
+                            </svg>
+
                         </span>
 
 
