@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <meta
         name="description"
-        content="Essex Paranormal Investigation Archive. Evidence-led investigations, case files and documented locations."
+        content="The Essex Paranormal investigation archive. Evidence-led investigations, documented case files and research."
     >
 
     <meta
@@ -25,1133 +19,24 @@
         content="#050608"
     >
 
-    <meta
-        name="color-scheme"
-        content="dark"
-    >
+    <title>Investigation Archive | Essex Paranormal</title>
 
-    <title>
-        Investigation Archive | Essex Paranormal
-    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <link
         rel="stylesheet"
         href="/style.css"
     >
-
-
-    <style>
-
-        /* =====================================================
-           INVESTIGATION ARCHIVE
-           ===================================================== */
-
-        .archive-page {
-
-            background:
-                #050608;
-
-            min-height:
-                100vh;
-
-        }
-
-
-        /* =====================================================
-           ARCHIVE HERO
-           ===================================================== */
-
-        .archive-hero {
-
-            position:
-                relative;
-
-            padding:
-                155px 0 80px;
-
-            overflow:
-                hidden;
-
-            background:
-                #050608;
-
-        }
-
-
-        .archive-hero::before {
-
-            content:
-                "";
-
-            position:
-                absolute;
-
-            inset:
-                0;
-
-            background:
-                radial-gradient(
-                    circle at 78% 35%,
-                    rgba(114,255,80,.07),
-                    transparent 34%
-                );
-
-            pointer-events:
-                none;
-
-        }
-
-
-        .archive-heading {
-
-            position:
-                relative;
-
-            z-index:
-                2;
-
-            max-width:
-                900px;
-
-        }
-
-
-        .archive-heading .eyebrow {
-
-            color:
-                #7cff57;
-
-        }
-
-
-        .archive-heading h1 {
-
-            margin:
-                0 0 25px;
-
-            color:
-                #fff;
-
-            font-size:
-                clamp(
-                    3.5rem,
-                    9vw,
-                    8rem
-                );
-
-            line-height:
-                .88;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                -.06em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .archive-heading h1 span {
-
-            display:
-                block;
-
-            color:
-                #7cff57;
-
-        }
-
-
-        .archive-heading p {
-
-            max-width:
-                720px;
-
-            margin:
-                0;
-
-            color:
-                #aaa;
-
-            font-size:
-                clamp(
-                    1rem,
-                    1.6vw,
-                    1.2rem
-                );
-
-            line-height:
-                1.8;
-
-        }
-
-
-        /* =====================================================
-           ARCHIVE DIVIDER
-           ===================================================== */
-
-        .archive-divider {
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            gap:
-                18px;
-
-            margin:
-                70px 0 35px;
-
-            color:
-                #666;
-
-            font-size:
-                .62rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .2em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .archive-divider::before {
-
-            content:
-                "";
-
-            width:
-                42px;
-
-            height:
-                1px;
-
-            background:
-                #7cff57;
-
-        }
-
-
-        /* =====================================================
-           FEATURED CASE
-           ===================================================== */
-
-        .featured-case {
-
-            position:
-                relative;
-
-            display:
-                grid;
-
-            grid-template-columns:
-                minmax(
-                    0,
-                    1.35fr
-                )
-                minmax(
-                    280px,
-                    .65fr
-                );
-
-            min-height:
-                560px;
-
-            border:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .1
-                );
-
-            background:
-                #080a08;
-
-            overflow:
-                hidden;
-
-        }
-
-
-        .featured-case-image {
-
-            position:
-                relative;
-
-            min-height:
-                560px;
-
-            overflow:
-                hidden;
-
-        }
-
-
-        .featured-case-image::after {
-
-            content:
-                "";
-
-            position:
-                absolute;
-
-            inset:
-                0;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(0,0,0,.05),
-                    rgba(0,0,0,.15),
-                    #080a08
-                );
-
-        }
-
-
-        .featured-case-image img {
-
-            display:
-                block;
-
-            width:
-                100%;
-
-            height:
-                100%;
-
-            object-fit:
-                cover;
-
-            filter:
-                brightness(.62)
-                contrast(1.08);
-
-            transition:
-                transform
-                1s
-                ease;
-
-        }
-
-
-        .featured-case:hover
-        .featured-case-image img {
-
-            transform:
-                scale(1.035);
-
-        }
-
-
-        .featured-case-content {
-
-            position:
-                relative;
-
-            z-index:
-                2;
-
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-            justify-content:
-                center;
-
-            padding:
-                55px;
-
-            background:
-                #080a08;
-
-        }
-
-
-        .case-status {
-
-            display:
-                inline-flex;
-
-            align-items:
-                center;
-
-            width:
-                fit-content;
-
-            margin-bottom:
-                25px;
-
-            padding:
-                8px 12px;
-
-            border:
-                1px solid rgba(
-                    124,
-                    255,
-                    87,
-                    .35
-                );
-
-            color:
-                #7cff57;
-
-            font-size:
-                .58rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .16em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .case-status::before {
-
-            content:
-                "";
-
-            width:
-                6px;
-
-            height:
-                6px;
-
-            margin-right:
-                9px;
-
-            border-radius:
-                50%;
-
-            background:
-                #7cff57;
-
-            box-shadow:
-                0 0 10px
-                rgba(
-                    124,
-                    255,
-                    87,
-                    .65
-                );
-
-        }
-
-
-        .featured-case-content h2 {
-
-            margin:
-                0 0 20px;
-
-            color:
-                #fff;
-
-            font-size:
-                clamp(
-                    2.8rem,
-                    5vw,
-                    5.5rem
-                );
-
-            line-height:
-                .88;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                -.055em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .featured-case-content h2 span {
-
-            display:
-                block;
-
-            color:
-                #7cff57;
-
-        }
-
-
-        .featured-case-content p {
-
-            margin:
-                0 0 25px;
-
-            color:
-                #999;
-
-            font-size:
-                .92rem;
-
-            line-height:
-                1.8;
-
-        }
-
-
-        /* =====================================================
-           CASE DATA
-           ===================================================== */
-
-        .case-data {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(
-                    2,
-                    minmax(
-                        0,
-                        1fr
-                    )
-                );
-
-            margin:
-                10px 0 30px;
-
-            border-top:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-            border-bottom:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-        }
-
-
-        .case-data-item {
-
-            padding:
-                17px 0;
-
-        }
-
-
-        .case-data-item:nth-child(odd) {
-
-            border-right:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-            padding-right:
-                18px;
-
-        }
-
-
-        .case-data-item:nth-child(even) {
-
-            padding-left:
-                18px;
-
-        }
-
-
-        .case-data-item span {
-
-            display:
-                block;
-
-            margin-bottom:
-                6px;
-
-            color:
-                #555;
-
-            font-size:
-                .55rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .14em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .case-data-item strong {
-
-            display:
-                block;
-
-            color:
-                #ddd;
-
-            font-size:
-                .72rem;
-
-            line-height:
-                1.4;
-
-        }
-
-
-        /* =====================================================
-           FUTURE CASES
-           ===================================================== */
-
-        .case-archive-section {
-
-            padding:
-                100px 0 120px;
-
-            background:
-                #050608;
-
-        }
-
-
-        .archive-section-heading {
-
-            max-width:
-                700px;
-
-            margin-bottom:
-                45px;
-
-        }
-
-
-        .archive-section-heading .eyebrow {
-
-            color:
-                #7cff57;
-
-        }
-
-
-        .archive-section-heading h2 {
-
-            margin:
-                0 0 18px;
-
-            color:
-                #fff;
-
-            font-size:
-                clamp(
-                    2.5rem,
-                    5vw,
-                    5rem
-                );
-
-            line-height:
-                .92;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                -.05em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .archive-section-heading h2 span {
-
-            color:
-                #7cff57;
-
-        }
-
-
-        .archive-section-heading p {
-
-            margin:
-                0;
-
-            color:
-                #777;
-
-            line-height:
-                1.8;
-
-        }
-
-
-        .case-grid {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(
-                    3,
-                    minmax(
-                        0,
-                        1fr
-                    )
-                );
-
-            gap:
-                1px;
-
-            border:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-        }
-
-
-        .case-placeholder {
-
-            min-height:
-                300px;
-
-            padding:
-                35px;
-
-            background:
-                #090b09;
-
-        }
-
-
-        .case-placeholder-number {
-
-            display:
-                block;
-
-            margin-bottom:
-                35px;
-
-            color:
-                #7cff57;
-
-            font-size:
-                .6rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .16em;
-
-        }
-
-
-        .case-placeholder h3 {
-
-            margin:
-                0 0 14px;
-
-            color:
-                #fff;
-
-            font-size:
-                1rem;
-
-            letter-spacing:
-                .08em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .case-placeholder p {
-
-            margin:
-                0;
-
-            color:
-                #666;
-
-            font-size:
-                .82rem;
-
-            line-height:
-                1.7;
-
-        }
-
-
-        .case-placeholder-status {
-
-            display:
-                inline-block;
-
-            margin-top:
-                30px;
-
-            padding:
-                7px 10px;
-
-            border:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .08
-                );
-
-            color:
-                #555;
-
-            font-size:
-                .55rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .14em;
-
-        }
-
-
-        /* =====================================================
-           ARCHIVE PRINCIPLES
-           ===================================================== */
-
-        .archive-principles {
-
-            padding:
-                100px 0;
-
-            background:
-                #080a08;
-
-            border-top:
-                1px solid rgba(
-                    255,
-                    255,
-                    255,
-                    .07
-                );
-
-        }
-
-
-        .archive-principles-grid {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(
-                    3,
-                    minmax(
-                        0,
-                        1fr
-                    )
-                );
-
-            gap:
-                60px;
-
-        }
-
-
-        .archive-principle-number {
-
-            display:
-                block;
-
-            margin-bottom:
-                20px;
-
-            color:
-                #7cff57;
-
-            font-size:
-                .6rem;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                .16em;
-
-        }
-
-
-        .archive-principle h3 {
-
-            margin:
-                0 0 14px;
-
-            color:
-                #fff;
-
-            font-size:
-                .95rem;
-
-            letter-spacing:
-                .08em;
-
-            text-transform:
-                uppercase;
-
-        }
-
-
-        .archive-principle p {
-
-            margin:
-                0;
-
-            color:
-                #777;
-
-            font-size:
-                .82rem;
-
-            line-height:
-                1.75;
-
-        }
-
-
-        /* =====================================================
-           RETURN
-           ===================================================== */
-
-        .archive-return {
-
-            padding:
-                45px 0 90px;
-
-            background:
-                #050608;
-
-        }
-
-
-        /* =====================================================
-           MOBILE
-           ===================================================== */
-
-        @media (max-width: 900px) {
-
-            .featured-case {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            .featured-case-image {
-
-                min-height:
-                    420px;
-
-            }
-
-
-            .featured-case-image::after {
-
-                background:
-                    linear-gradient(
-                        180deg,
-                        rgba(0,0,0,.05),
-                        #080a08
-                    );
-
-            }
-
-
-            .featured-case-content {
-
-                padding:
-                    45px;
-
-            }
-
-
-            .case-grid {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            .archive-principles-grid {
-
-                grid-template-columns:
-                    1fr;
-
-                gap:
-                    45px;
-
-            }
-
-        }
-
-
-        @media (max-width: 600px) {
-
-            .archive-hero {
-
-                padding:
-                    125px 0 60px;
-
-            }
-
-
-            .archive-heading h1 {
-
-                font-size:
-                    clamp(
-                        3rem,
-                        15vw,
-                        5rem
-                    );
-
-            }
-
-
-            .featured-case-image {
-
-                min-height:
-                    300px;
-
-            }
-
-
-            .featured-case-content {
-
-                padding:
-                    30px 24px 35px;
-
-            }
-
-
-            .featured-case-content h2 {
-
-                font-size:
-                    clamp(
-                        2.6rem,
-                        14vw,
-                        4rem
-                    );
-
-            }
-
-
-            .case-data {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            .case-data-item:nth-child(odd) {
-
-                border-right:
-                    0;
-
-                border-bottom:
-                    1px solid rgba(
-                        255,
-                        255,
-                        255,
-                        .08
-                    );
-
-                padding-right:
-                    0;
-
-            }
-
-
-            .case-data-item:nth-child(even) {
-
-                padding-left:
-                    0;
-
-            }
-
-
-            .case-archive-section,
-            .archive-principles {
-
-                padding:
-                    75px 0;
-
-            }
-
-
-            .case-placeholder {
-
-                min-height:
-                    250px;
-
-                padding:
-                    28px 22px;
-
-            }
-
-        }
-
-    </style>
-
 </head>
 
 
-<body class="archive-page">
+<body>
 
 
     <!-- =====================================================
@@ -1164,7 +49,7 @@
 
 
             <a
-                href="/#home"
+                href="/"
                 class="brand"
                 aria-label="Essex Paranormal home"
             >
@@ -1188,8 +73,12 @@
                 aria-label="Main navigation"
             >
 
-                <a href="/#home">
+                <a href="/">
                     HOME
+                </a>
+
+                <a href="/#upcoming-events">
+                    UPCOMING EVENTS
                 </a>
 
                 <a href="/#about">
@@ -1209,6 +98,10 @@
 
                 <a href="/#gallery">
                     GALLERY
+                </a>
+
+                <a href="/#community">
+                    JOIN US
                 </a>
 
                 <a href="/#contact">
@@ -1237,165 +130,301 @@
     </header>
 
 
-    <!-- =====================================================
-         MAIN
-         ===================================================== -->
-
     <main>
 
 
-        <!-- =================================================
-             ARCHIVE INTRO
-             ================================================= -->
+        <!-- =====================================================
+             ARCHIVE HERO
+             ===================================================== -->
 
-        <section class="archive-hero">
+        <section class="page-hero">
 
-            <div class="container">
+            <div class="hero-shade"></div>
+            <div class="hero-grid"></div>
+            <div class="scan-line"></div>
 
 
-                <div class="archive-heading">
+            <div class="container page-hero-container">
+
+
+                <div class="page-hero-content">
 
                     <p class="eyebrow">
-                        ESSEX PARANORMAL · INVESTIGATION ARCHIVE
+                        ESSEX PARANORMAL / CASE ARCHIVE
                     </p>
 
 
                     <h1>
-
-                        REAL CASES.
-
-                        <span>
-                            DOCUMENTED.
-                        </span>
-
+                        INVESTIGATION
+                        <span>ARCHIVE.</span>
                     </h1>
 
 
                     <p>
+                        Documented investigations, published case files and evidence-led research from Essex Paranormal.
+                    </p>
 
-                        This is the Essex Paranormal investigation
-                        archive. Each published case is presented
-                        as a documented record of the location,
-                        research, investigation and evidence review.
 
+                    <div class="page-hero-actions">
+
+                        <a
+                            href="/"
+                            class="button button-outline"
+                        >
+                            ← BACK TO HOME
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-status">
+
+                    <span class="status-dot"></span>
+
+                    ARCHIVE STATUS:
+                    <strong>ACTIVE</strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ARCHIVE INTRO
+             ===================================================== -->
+
+        <section class="section archive-intro">
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        CASE FILES
+                    </p>
+
+
+                    <h2>
+                        THE
+                        <span>RECORD.</span>
+                    </h2>
+
+
+                    <p>
+                        Each investigation is approached with an open mind and documented as accurately as possible. Findings are reviewed before publication, with conventional explanations considered alongside unexplained observations.
                     </p>
 
                 </div>
 
 
-                <div class="archive-divider">
+                <div class="archive-principles">
 
-                    FEATURED CASE FILE
+
+                    <div class="archive-principle">
+
+                        <span>
+                            01
+                        </span>
+
+                        <h3>
+                            OBSERVE
+                        </h3>
+
+                        <p>
+                            Record what happens without deciding what it means first.
+                        </p>
+
+                    </div>
+
+
+                    <div class="archive-principle">
+
+                        <span>
+                            02
+                        </span>
+
+                        <h3>
+                            DOCUMENT
+                        </h3>
+
+                        <p>
+                            Preserve relevant footage, audio, environmental information and observations.
+                        </p>
+
+                    </div>
+
+
+                    <div class="archive-principle">
+
+                        <span>
+                            03
+                        </span>
+
+                        <h3>
+                            REVIEW
+                        </h3>
+
+                        <p>
+                            Examine evidence carefully and consider alternative explanations.
+                        </p>
+
+                    </div>
+
+
+                    <div class="archive-principle">
+
+                        <span>
+                            04
+                        </span>
+
+                        <h3>
+                            REPORT
+                        </h3>
+
+                        <p>
+                            Present conclusions honestly, including when the answer remains unknown.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURED CASE
+             ===================================================== -->
+
+        <section class="section case-feature-section">
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        CASE FILE EP-001
+                    </p>
+
+
+                    <h2>
+                        HMP
+                        <span>ASHWELL.</span>
+                    </h2>
+
+
+                    <p>
+                        Featured investigation from the Essex Paranormal archive.
+                    </p>
 
                 </div>
 
 
-                <!-- =========================================
-                     FEATURED ASHWELL CASE
-                     ========================================= -->
-
-                <article class="featured-case">
+                <article class="case-feature">
 
 
-                    <a
-                        href="/investigations/hmp-ashwell.html"
-                        class="featured-case-image"
-                        aria-label="Open HMP Ashwell case file"
-                    >
+                    <div class="case-feature-image">
 
                         <img
                             src="/hmp-ashwell.PNG"
-                            alt="HMP Ashwell investigation location"
-                            loading="eager"
+                            alt="Former HMP Ashwell investigation location"
+                            loading="lazy"
                             decoding="async"
                         >
 
-                    </a>
+                        <div class="case-feature-image-overlay"></div>
 
 
-                    <div class="featured-case-content">
-
-
-                        <span class="case-status">
-
-                            FEATURED CASE
-
-                        </span>
-
-
-                        <h2>
-
-                            HMP
+                        <div class="case-image-label">
 
                             <span>
-                                ASHWELL.
+                                EP-001
                             </span>
 
-                        </h2>
+                            HMP ASHWELL
+
+                        </div>
+
+                    </div>
 
 
-                        <p>
+                    <div class="case-feature-content">
 
-                            A full Essex Paranormal case file
-                            examining the former HMP Ashwell site
-                            in Rutland, its historical setting,
-                            investigation approach and the
-                            principles used when reviewing unusual
-                            observations.
 
+                        <div class="case-feature-top">
+
+                            <span class="empty-code">
+                                CASE FILE / EP-001
+                            </span>
+
+
+                            <span class="investigation-status">
+                                PUBLISHED
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            HMP ASHWELL
+                        </h3>
+
+
+                        <p class="case-location">
+                            FORMER HM PRISON ASHWELL
                         </p>
 
 
-                        <div class="case-data">
+                        <p>
+                            An evidence-led investigation into the former prison site, examining its history, environment and reported experiences while maintaining a clear distinction between observation, interpretation and conclusion.
+                        </p>
 
 
-                            <div class="case-data-item">
+                        <div class="case-meta">
+
+
+                            <div>
 
                                 <span>
                                     CASE
                                 </span>
 
                                 <strong>
-                                    EP-ASHWELL
+                                    EP-001
                                 </strong>
 
                             </div>
 
 
-                            <div class="case-data-item">
+                            <div>
 
                                 <span>
-                                    LOCATION
+                                    STATUS
                                 </span>
 
                                 <strong>
-                                    Rutland
+                                    PUBLISHED
                                 </strong>
 
                             </div>
 
 
-                            <div class="case-data-item">
-
-                                <span>
-                                    SITE TYPE
-                                </span>
-
-                                <strong>
-                                    Former Prison
-                                </strong>
-
-                            </div>
-
-
-                            <div class="case-data-item">
+                            <div>
 
                                 <span>
                                     METHOD
                                 </span>
 
                                 <strong>
-                                    Evidence Led
+                                    EVIDENCE LED
                                 </strong>
 
                             </div>
@@ -1408,280 +437,538 @@
                             href="/investigations/hmp-ashwell.html"
                             class="button button-primary"
                         >
-
                             OPEN CASE FILE
-
-                            <span>
-                                →
-                            </span>
-
+                            <span>→</span>
                         </a>
-
 
                     </div>
 
-
                 </article>
-
 
             </div>
 
         </section>
 
 
-        <!-- =================================================
-             CASE ARCHIVE
-             ================================================= -->
+        <!-- =====================================================
+             FUTURE CASE FILES
+             ===================================================== -->
 
-        <section class="case-archive-section">
+        <section class="section archive-list-section">
 
             <div class="container">
 
 
-                <div class="archive-section-heading">
+                <div class="section-heading">
 
                     <p class="eyebrow">
-                        CASE ARCHIVE
+                        ARCHIVE
                     </p>
 
 
                     <h2>
-
-                        THE
-
-                        <span>
-                            RECORD.
-                        </span>
-
+                        FURTHER
+                        <span>INVESTIGATIONS.</span>
                     </h2>
 
 
                     <p>
-
-                        Additional investigations will be added
-                        here as they are completed, reviewed and
-                        approved for publication.
-
+                        Additional case files will be published following investigation, review and approval for public release.
                     </p>
 
                 </div>
 
 
-                <div class="case-grid">
+                <div class="case-list">
 
 
-                    <article class="case-placeholder">
+                    <!-- CASE 02 -->
 
-                        <span class="case-placeholder-number">
-                            CASE 02
-                        </span>
+                    <article class="case-list-item">
 
 
-                        <h3>
-                            Investigation Pending
-                        </h3>
+                        <div class="case-list-number">
+                            02
+                        </div>
 
 
-                        <p>
+                        <div class="case-list-content">
 
-                            The next investigation will appear
-                            here once the case file has been
-                            completed and approved.
-
-                        </p>
+                            <span class="empty-code">
+                                CASE FILE EP-002
+                            </span>
 
 
-                        <span class="case-placeholder-status">
-                            NOT YET PUBLISHED
-                        </span>
-
-                    </article>
+                            <h3>
+                                NEXT INVESTIGATION
+                            </h3>
 
 
-                    <article class="case-placeholder">
+                            <p>
+                                Investigation details will be published here once the case has been completed and reviewed.
+                            </p>
 
-                        <span class="case-placeholder-number">
-                            CASE 03
-                        </span>
-
-
-                        <h3>
-                            Investigation Pending
-                        </h3>
+                        </div>
 
 
-                        <p>
+                        <div class="case-list-status">
 
-                            A future investigation case file
-                            will be added to the archive.
+                            <span>
+                                STATUS
+                            </span>
 
-                        </p>
+                            <strong>
+                                PENDING
+                            </strong>
 
-
-                        <span class="case-placeholder-status">
-                            NOT YET PUBLISHED
-                        </span>
+                        </div>
 
                     </article>
 
 
-                    <article class="case-placeholder">
+                    <!-- CASE 03 -->
 
-                        <span class="case-placeholder-number">
-                            CASE 04
-                        </span>
+                    <article class="case-list-item">
 
 
-                        <h3>
-                            Investigation Pending
-                        </h3>
+                        <div class="case-list-number">
+                            03
+                        </div>
 
 
-                        <p>
+                        <div class="case-list-content">
 
-                            Further documented locations will
-                            be added as investigations progress.
+                            <span class="empty-code">
+                                CASE FILE EP-003
+                            </span>
 
-                        </p>
+
+                            <h3>
+                                FUTURE CASE FILE
+                            </h3>
 
 
-                        <span class="case-placeholder-status">
-                            NOT YET PUBLISHED
-                        </span>
+                            <p>
+                                A future investigation will be added to the archive when the evidence and documentation are ready for publication.
+                            </p>
+
+                        </div>
+
+
+                        <div class="case-list-status">
+
+                            <span>
+                                STATUS
+                            </span>
+
+                            <strong>
+                                PENDING
+                            </strong>
+
+                        </div>
 
                     </article>
 
+
+                    <!-- CASE 04 -->
+
+                    <article class="case-list-item">
+
+
+                        <div class="case-list-number">
+                            04
+                        </div>
+
+
+                        <div class="case-list-content">
+
+                            <span class="empty-code">
+                                CASE FILE EP-004
+                            </span>
+
+
+                            <h3>
+                                FUTURE CASE FILE
+                            </h3>
+
+
+                            <p>
+                                Further published investigations will appear here as the Essex Paranormal archive grows.
+                            </p>
+
+                        </div>
+
+
+                        <div class="case-list-status">
+
+                            <span>
+                                STATUS
+                            </span>
+
+                            <strong>
+                                PENDING
+                            </strong>
+
+                        </div>
+
+                    </article>
 
                 </div>
-
 
             </div>
 
         </section>
 
 
-        <!-- =================================================
-             ARCHIVE PRINCIPLES
-             ================================================= -->
+        <!-- =====================================================
+             INVESTIGATION PRINCIPLES
+             ===================================================== -->
 
-        <section class="archive-principles">
+        <section class="section archive-method-section">
 
             <div class="container">
 
 
-                <div class="archive-principles-grid">
+                <div class="archive-method-panel">
 
 
-                    <article class="archive-principle">
+                    <div class="archive-method-copy">
 
-                        <span class="archive-principle-number">
-                            01.
-                        </span>
+                        <p class="eyebrow">
+                            EVIDENCE STANDARD
+                        </p>
 
 
-                        <h3>
-                            Evidence First
-                        </h3>
+                        <h2>
+                            UNEXPLAINED
+                            DOES NOT
+                            <span>AUTOMATICALLY MEAN PARANORMAL.</span>
+                        </h2>
 
 
                         <p>
-
-                            Unusual observations are documented
-                            before conclusions are reached.
-
+                            Essex Paranormal approaches every case without a predetermined conclusion. Environmental conditions, equipment behaviour, human activity, historical context and other conventional explanations are considered before a paranormal interpretation is made.
                         </p>
-
-                    </article>
-
-
-                    <article class="archive-principle">
-
-                        <span class="archive-principle-number">
-                            02.
-                        </span>
-
-
-                        <h3>
-                            Question Everything
-                        </h3>
 
 
                         <p>
-
-                            Natural explanations and environmental
-                            factors are considered alongside every
-                            unusual observation.
-
+                            Where evidence remains inconclusive, it is reported as inconclusive. The archive exists to document what was experienced and recorded, not to manufacture an answer.
                         </p>
 
-                    </article>
+                    </div>
 
 
-                    <article class="archive-principle">
-
-                        <span class="archive-principle-number">
-                            03.
-                        </span>
+                    <div class="archive-method-data">
 
 
-                        <h3>
-                            Stay Honest
-                        </h3>
+                        <div>
+
+                            <span>
+                                APPROACH
+                            </span>
+
+                            <strong>
+                                EVIDENCE LED
+                            </strong>
+
+                        </div>
 
 
-                        <p>
+                        <div>
 
-                            An unexplained event is not automatically
-                            paranormal. The evidence determines what
-                            can responsibly be said.
+                            <span>
+                                POSITION
+                            </span>
 
-                        </p>
+                            <strong>
+                                OPEN MINDED
+                            </strong>
 
-                    </article>
+                        </div>
 
+
+                        <div>
+
+                            <span>
+                                REPORTING
+                            </span>
+
+                            <strong>
+                                TRANSPARENT
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                CONCLUSION
+                            </span>
+
+                            <strong>
+                                NO PRESET ANSWER
+                            </strong>
+
+                        </div>
+
+                    </div>
 
                 </div>
-
 
             </div>
 
         </section>
 
 
-        <!-- =================================================
-             RETURN
-             ================================================= -->
+        <!-- =====================================================
+             ARCHIVE FOOTER CTA
+             ===================================================== -->
 
-        <section class="archive-return">
+        <section class="section archive-cta-section">
 
             <div class="container">
 
 
-                <a
-                    href="/#investigations"
-                    class="button button-outline"
-                >
+                <div class="archive-cta">
 
-                    ← BACK TO ESSEX PARANORMAL
 
-                </a>
+                    <div>
 
+                        <p class="eyebrow">
+                            ESSEX PARANORMAL
+                        </p>
+
+
+                        <h2>
+                            FOLLOW THE
+                            <span>SEARCH.</span>
+                        </h2>
+
+
+                        <p>
+                            Explore the wider Essex Paranormal website, follow upcoming investigations or join the community.
+                        </p>
+
+                    </div>
+
+
+                    <div class="archive-cta-actions">
+
+                        <a
+                            href="/#upcoming-events"
+                            class="button button-primary"
+                        >
+                            UPCOMING EVENTS
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="/#community"
+                            class="button button-outline"
+                        >
+                            JOIN THE COMMUNITY
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </section>
-
 
     </main>
 
 
     <!-- =====================================================
-         EXISTING SITE JAVASCRIPT
+         FOOTER
          ===================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+
+            <div class="footer-main">
+
+
+                <div class="footer-brand">
+
+                    <span class="footer-logo-crop">
+
+                        <img
+                            src="/essex-paranormal-logo.png"
+                            alt="Essex Paranormal"
+                            decoding="async"
+                        >
+
+                    </span>
+
+
+                    <p>
+                        HONEST. REAL. UNBIASED.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <span>
+                        QUICK LINKS
+                    </span>
+
+
+                    <a href="/">
+                        HOME
+                    </a>
+
+
+                    <a href="/#upcoming-events">
+                        UPCOMING EVENTS
+                    </a>
+
+
+                    <a href="/#about">
+                        MEET LEWIS
+                    </a>
+
+
+                    <a href="/#experiences">
+                        EXPERIENCES
+                    </a>
+
+
+                    <a href="/investigations/">
+                        INVESTIGATIONS
+                    </a>
+
+
+                    <a href="/#gallery">
+                        GALLERY
+                    </a>
+
+
+                    <a href="/#community">
+                        JOIN US
+                    </a>
+
+
+                    <a href="/#contact">
+                        CONTACT
+                    </a>
+
+                </div>
+
+
+                <div class="footer-legal">
+
+                    <span>
+                        LEGAL
+                    </span>
+
+
+                    <a href="/legal.html#privacy">
+                        PRIVACY
+                    </a>
+
+
+                    <a href="/legal.html#cookies">
+                        COOKIES
+                    </a>
+
+
+                    <a href="/legal.html#terms">
+                        TERMS
+                    </a>
+
+
+                    <a href="/legal.html#disclaimer">
+                        DISCLAIMER
+                    </a>
+
+
+                    <a href="/legal.html#accessibility">
+                        ACCESSIBILITY
+                    </a>
+
+
+                    <a href="/legal.html#copyright">
+                        COPYRIGHT
+                    </a>
+
+
+                    <a href="/legal.html#media-rights">
+                        MEDIA RIGHTS
+                    </a>
+
+
+                    <a href="/legal.html#third-party">
+                        THIRD-PARTY SERVICES
+                    </a>
+
+                </div>
+
+
+                <div class="footer-philosophy">
+
+                    <span>
+                        OUR PHILOSOPHY
+                    </span>
+
+
+                    <p>
+                        REAL PEOPLE.<br>
+                        REAL PLACES.<br>
+                        REAL EXPERIENCES.<br>
+
+                        <strong>
+                            EVIDENCE BEFORE ASSUMPTION.
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+
+                <p>
+                    ©
+                    <span data-current-year>
+                        2026
+                    </span>
+                    ESSEX PARANORMAL.
+                    ALL RIGHTS RESERVED.
+                </p>
+
+
+                <span class="footer-truth">
+                    TRUTH LIES IN THE SHADOWS
+                </span>
+
+
+                <a
+                    href="/"
+                    class="back-to-top"
+                    aria-label="Back to Essex Paranormal home"
+                >
+                    ↑
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
 
     <script src="/script.js"></script>
 
-
 </body>
-
 </html>
