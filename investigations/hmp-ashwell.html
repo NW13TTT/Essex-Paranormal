@@ -759,6 +759,157 @@
 
 
         /* =====================================================
+           INVESTIGATION VIDEO
+           ===================================================== */
+
+        .case-video-section {
+
+            margin-top:
+                70px;
+
+            padding-top:
+                70px;
+
+            border-top:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .08
+                );
+
+        }
+
+
+        .case-video-heading {
+
+            max-width:
+                850px;
+
+            margin-bottom:
+                32px;
+
+        }
+
+
+        .case-video-heading h2 {
+
+            margin:
+                0 0 24px;
+
+            color:
+                #fff;
+
+            font-size:
+                clamp(
+                    2.4rem,
+                    5vw,
+                    5rem
+                );
+
+            line-height:
+                .92;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -.05em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .case-video-heading h2 span {
+
+            display:
+                block;
+
+            color:
+                #ff651d;
+
+        }
+
+
+        .case-video-heading p {
+
+            max-width:
+                720px;
+
+            margin:
+                0;
+
+            color:
+                #999;
+
+            font-size:
+                .95rem;
+
+            line-height:
+                1.8;
+
+        }
+
+
+        .case-video-frame {
+
+            position:
+                relative;
+
+            width:
+                100%;
+
+            aspect-ratio:
+                16 / 9;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .1
+                );
+
+            background:
+                #000;
+
+            box-shadow:
+                0 30px 80px rgba(
+                    0,
+                    0,
+                    0,
+                    .45
+                );
+
+        }
+
+
+        .case-video-frame iframe {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border:
+                0;
+
+        }
+
+
+        /* =====================================================
            EVIDENCE PRINCIPLES
            ===================================================== */
 
@@ -1018,6 +1169,17 @@
 
             }
 
+
+            .case-video-section {
+
+                margin-top:
+                    55px;
+
+                padding-top:
+                    55px;
+
+            }
+
         }
 
 
@@ -1140,6 +1302,26 @@
 
                 padding:
                     25px 20px;
+
+            }
+
+
+            .case-video-heading h2 {
+
+                font-size:
+                    clamp(
+                        2.2rem,
+                        12vw,
+                        3.5rem
+                    );
+
+            }
+
+
+            .case-video-heading p {
+
+                font-size:
+                    .88rem;
 
             }
 
@@ -1581,6 +1763,61 @@
 
 
                 </figure>
+
+
+                <!-- =========================================
+                     INVESTIGATION VIDEO
+                     ========================================= -->
+
+                <section
+                    class="case-video-section"
+                    aria-labelledby="ashwell-video-title"
+                >
+
+                    <div class="case-video-heading">
+
+                        <p class="case-label">
+                            VIDEO DOCUMENTATION
+                        </p>
+
+
+                        <h2 id="ashwell-video-title">
+
+                            HMP ASHWELL
+
+                            <span>
+                                INVESTIGATION VIDEO.
+                            </span>
+
+                        </h2>
+
+
+                        <p>
+
+                            Watch the HMP Ashwell investigation video
+                            documenting the location and the
+                            investigation carried out by Essex
+                            Paranormal.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="case-video-frame">
+
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/POBLYtz3A-Q"
+                            title="HMP Ashwell Investigation | Essex Paranormal"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                </section>
 
 
             </div>
