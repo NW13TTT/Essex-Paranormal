@@ -2,8 +2,7 @@
 
 /* =========================================================
    ESSEX PARANORMAL
-   COMPLETE WEBSITE SCRIPT
-   SELF-CONTAINED STABLE VERSION
+   STABLE WEBSITE SCRIPT
    ========================================================= */
 
 const API_BASE = "/api";
@@ -24,32 +23,23 @@ document.addEventListener("DOMContentLoaded", () => {
     initInvestigations();
     initImageFallbacks();
     initCurrentYear();
-    initPageReady();
 
     /*
-     * Apply website corrections after the original
-     * page structure is available.
+     * IMPORTANT:
+     * These corrections restore the original website
+     * structure rather than creating a new design.
      */
-    setTimeout(() => {
-        applyWebsiteCorrections();
-    }, 50);
+    restoreOriginalInvestigationLayout();
+    removeDuplicateArchive();
+    removeDuplicateAshwellImage();
+    ensureConstructionBanner();
+    ensureFacebookLink();
 
 });
 
 
 /* =========================================================
    CINEMATIC ENTRY SCREEN
-   =========================================================
-   
-   IMPORTANT:
-   This is deliberately self-contained.
-   
-   There is NO external JavaScript dependency.
-   
-   A failsafe is also included so the website can
-   never remain permanently trapped behind the
-   cinematic entry screen because of a JavaScript
-   timing problem.
    ========================================================= */
 
 function initEntryScreen() {
@@ -68,85 +58,80 @@ function initEntryScreen() {
         }
 
     } catch (error) {
-        /* Continue normally. */
+        /* Ignore browser restriction. */
     }
 
     forceScrollTop();
 
-    window.requestAnimationFrame(() => {
-        forceScrollTop();
-    });
+    const reducedMotion =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
 
-    let reducedMotion = false;
-
-    try {
-
-        reducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
-
-    } catch (error) {
-        reducedMotion = false;
-    }
-
-    /*
-     * Normal cinematic duration.
-     */
     const displayTime =
         reducedMotion
             ? 700
             : 3000;
 
+
     /*
-     * Normal exit.
+     * Normal cinematic exit.
      */
+
     window.setTimeout(() => {
 
-        removeEntryScreen(
+        hideEntryScreen(
             entryScreen,
             reducedMotion
         );
 
     }, displayTime);
 
+
     /*
-     * EMERGENCY FAILSAFE.
+     * Emergency failsafe.
      *
-     * If anything above fails, the website will
-     * still become accessible.
+     * The website MUST NEVER remain trapped
+     * behind the entry screen.
      */
+
     window.setTimeout(() => {
 
-        const currentEntryScreen =
+        const current =
             document.getElementById(
                 "entry-screen"
             );
 
-        if (currentEntryScreen) {
+        if (!current) {
+            return;
+        }
 
-            currentEntryScreen.classList.add(
-                "is-hidden"
-            );
+        current.classList.add(
+            "is-hidden"
+        );
 
-            window.setTimeout(() => {
+        current.style.opacity =
+            "0";
 
-                const screen =
-                    document.getElementById(
-                        "entry-screen"
-                    );
+        current.style.visibility =
+            "hidden";
 
-                if (screen) {
-                    screen.remove();
-                }
+        current.style.pointerEvents =
+            "none";
 
-                document.body.classList.remove(
-                    "entry-active"
+        window.setTimeout(() => {
+
+            const screen =
+                document.getElementById(
+                    "entry-screen"
                 );
 
-            }, 900);
+            if (screen) {
+                screen.remove();
+            }
 
-        }
+        }, 1000);
 
     }, 5000);
 
@@ -154,10 +139,10 @@ function initEntryScreen() {
 
 
 /* =========================================================
-   REMOVE ENTRY SCREEN
+   HIDE ENTRY SCREEN
    ========================================================= */
 
-function removeEntryScreen(
+function hideEntryScreen(
     entryScreen,
     reducedMotion
 ) {
@@ -170,21 +155,16 @@ function removeEntryScreen(
         "is-hidden"
     );
 
+    entryScreen.style.pointerEvents =
+        "none";
+
     window.setTimeout(() => {
 
         if (entryScreen) {
             entryScreen.remove();
         }
 
-        document.body.classList.remove(
-            "entry-active"
-        );
-
         forceScrollTop();
-
-        window.requestAnimationFrame(() => {
-            forceScrollTop();
-        });
 
     }, reducedMotion ? 50 : 850);
 
@@ -192,14 +172,14 @@ function removeEntryScreen(
 
 
 /* =========================================================
-   FORCE PAGE TO TOP
+   FORCE TOP
    ========================================================= */
 
 function forceScrollTop() {
 
     /*
-     * Do not interfere with genuine anchor
-     * navigation to another section.
+     * Never destroy a deliberate section
+     * link in the address bar.
      */
 
     if (
@@ -219,7 +199,10 @@ function forceScrollTop() {
 
     } catch (error) {
 
-        window.scrollTo(0, 0);
+        window.scrollTo(
+            0,
+            0
+        );
 
     }
 
@@ -248,6 +231,7 @@ function initMobileNavigation() {
     ) {
         return;
     }
+
 
     menuToggle.addEventListener(
         "click",
@@ -284,30 +268,23 @@ function initMobileNavigation() {
     );
 
 
-    /*
-     * Close menu when a navigation link
-     * is selected.
-     */
-
     navigation
         .querySelectorAll("a")
-        .forEach((link) => {
+        .forEach(
+            (link) => {
 
-            link.addEventListener(
-                "click",
-                () => {
+                link.addEventListener(
+                    "click",
+                    () => {
 
-                    closeMobileNavigation();
+                        closeMobileNavigation();
 
-                }
-            );
+                    }
+                );
 
-        });
+            }
+        );
 
-
-    /*
-     * Escape closes the menu.
-     */
 
     document.addEventListener(
         "keydown",
@@ -324,11 +301,6 @@ function initMobileNavigation() {
         }
     );
 
-
-    /*
-     * Reset mobile navigation when returning
-     * to desktop width.
-     */
 
     window.addEventListener(
         "resize",
@@ -398,109 +370,111 @@ function closeMobileNavigation() {
 
 
 /* =========================================================
-   SMOOTH HASH NAVIGATION
+   SMOOTH NAVIGATION
    ========================================================= */
 
 function initSmoothNavigation() {
 
-    const links =
-        document.querySelectorAll(
+    document
+        .querySelectorAll(
             'a[href^="#"]'
-        );
+        )
+        .forEach(
+            (link) => {
 
-    links.forEach((link) => {
+                link.addEventListener(
+                    "click",
+                    (event) => {
 
-        link.addEventListener(
-            "click",
-            (event) => {
+                        const href =
+                            link.getAttribute(
+                                "href"
+                            );
 
-                const href =
-                    link.getAttribute(
-                        "href"
-                    );
+                        if (
+                            !href ||
+                            href === "#" ||
+                            href === "#!"
+                        ) {
+                            return;
+                        }
 
-                if (
-                    !href ||
-                    href === "#" ||
-                    href === "#!"
-                ) {
-                    return;
-                }
+                        let target;
 
-                let target = null;
+                        try {
 
-                try {
+                            target =
+                                document.querySelector(
+                                    href
+                                );
 
-                    target =
-                        document.querySelector(
-                            href
-                        );
+                        } catch (error) {
 
-                } catch (error) {
+                            return;
 
-                    return;
+                        }
 
-                }
+                        if (!target) {
+                            return;
+                        }
 
-                if (!target) {
-                    return;
-                }
+                        event.preventDefault();
 
-                event.preventDefault();
+                        const header =
+                            document.querySelector(
+                                ".site-header"
+                            );
 
-                const header =
-                    document.querySelector(
-                        ".site-header"
-                    );
+                        const headerHeight =
+                            header
+                                ? header.offsetHeight
+                                : 0;
 
-                const headerHeight =
-                    header
-                        ? header.offsetHeight
-                        : 0;
+                        const position =
+                            target
+                                .getBoundingClientRect()
+                                .top +
+                            window.scrollY -
+                            headerHeight;
 
-                const targetPosition =
-                    target
-                        .getBoundingClientRect()
-                        .top +
-                    window.scrollY -
-                    headerHeight;
+                        window.scrollTo({
 
-                window.scrollTo({
+                            top:
+                                Math.max(
+                                    0,
+                                    position
+                                ),
 
-                    top:
-                        Math.max(
-                            0,
-                            targetPosition
-                        ),
+                            left: 0,
 
-                    left: 0,
+                            behavior:
+                                "smooth"
 
-                    behavior: "smooth"
+                        });
 
-                });
+                        try {
 
-                try {
+                            history.replaceState(
+                                null,
+                                "",
+                                href
+                            );
 
-                    history.replaceState(
-                        null,
-                        "",
-                        href
-                    );
+                        } catch (error) {
+                            /* Ignore history errors. */
+                        }
 
-                } catch (error) {
-                    /* Ignore history errors. */
-                }
+                    }
+                );
 
             }
         );
-
-    });
 
 }
 
 
 /* =========================================================
-   HEADER SCROLL EFFECT
+   HEADER SCROLL
    ========================================================= */
 
 function initHeaderScroll() {
@@ -514,7 +488,7 @@ function initHeaderScroll() {
         return;
     }
 
-    const updateHeader =
+    const update =
         () => {
 
             header.classList.toggle(
@@ -524,11 +498,11 @@ function initHeaderScroll() {
 
         };
 
-    updateHeader();
+    update();
 
     window.addEventListener(
         "scroll",
-        updateHeader,
+        update,
         {
             passive: true
         }
@@ -561,50 +535,53 @@ function initActiveNavigation() {
 
     const sections =
         links
-            .map((link) => {
+            .map(
+                (link) => {
 
-                const href =
-                    link.getAttribute(
-                        "href"
-                    );
-
-                let section = null;
-
-                try {
-
-                    section =
-                        document.querySelector(
-                            href
+                    const href =
+                        link.getAttribute(
+                            "href"
                         );
 
-                } catch (error) {
+                    let section;
 
-                    return null;
+                    try {
+
+                        section =
+                            document.querySelector(
+                                href
+                            );
+
+                    } catch (error) {
+
+                        return null;
+
+                    }
+
+                    if (!section) {
+                        return null;
+                    }
+
+                    return {
+                        link,
+                        section
+                    };
 
                 }
-
-                if (!section) {
-                    return null;
-                }
-
-                return {
-                    link,
-                    section
-                };
-
-            })
+            )
             .filter(Boolean);
 
     if (!sections.length) {
         return;
     }
 
-    const updateActiveNavigation =
+    const update =
         () => {
 
-            const scrollPosition =
+            const position =
                 window.scrollY +
-                window.innerHeight * 0.32;
+                window.innerHeight *
+                0.32;
 
             let current =
                 sections[0];
@@ -614,7 +591,7 @@ function initActiveNavigation() {
 
                     if (
                         item.section.offsetTop <=
-                        scrollPosition
+                        position
                     ) {
 
                         current =
@@ -638,11 +615,11 @@ function initActiveNavigation() {
 
         };
 
-    updateActiveNavigation();
+    update();
 
     window.addEventListener(
         "scroll",
-        updateActiveNavigation,
+        update,
         {
             passive: true
         }
@@ -666,7 +643,7 @@ function initBackToTop() {
         return;
     }
 
-    const updateVisibility =
+    const update =
         () => {
 
             const visible =
@@ -695,15 +672,16 @@ function initBackToTop() {
 
         };
 
-    updateVisibility();
+    update();
 
     window.addEventListener(
         "scroll",
-        updateVisibility,
+        update,
         {
             passive: true
         }
     );
+
 
     buttons.forEach(
         (button) => {
@@ -717,9 +695,7 @@ function initBackToTop() {
                     window.scrollTo({
 
                         top: 0,
-
                         left: 0,
-
                         behavior: "smooth"
 
                     });
@@ -746,42 +722,24 @@ function initBackToTop() {
 
 
 /* =========================================================
-   INVESTIGATIONS
+   INVESTIGATION API
    ========================================================= */
 
 async function initInvestigations() {
-
-    /*
-     * The public archive is deliberately UNDER
-     * CONSTRUCTION.
-     *
-     * Do not load API investigations onto the
-     * archive page.
-     */
-
-    const pathname =
-        window.location.pathname
-            .replace(/\/+$/, "");
-
-    if (
-        pathname === "/investigations"
-    ) {
-        return;
-    }
 
     const container =
         document.querySelector(
             "[data-investigations]"
         );
 
+    /*
+     * The homepage is STATIC.
+     * Do not overwrite the homepage case card.
+     */
+
     if (!container) {
         return;
     }
-
-    setInvestigationStatus(
-        container,
-        "LOADING INVESTIGATION ARCHIVE..."
-    );
 
     try {
 
@@ -789,23 +747,18 @@ async function initInvestigations() {
             await fetch(
                 `${API_BASE}/investigations`,
                 {
-                    method: "GET",
-
                     headers: {
                         "Accept":
                             "application/json"
                     },
-
                     cache: "no-store"
                 }
             );
 
         if (!response.ok) {
-
             throw new Error(
-                `Investigation request failed: ${response.status}`
+                `HTTP ${response.status}`
             );
-
         }
 
         const data =
@@ -813,14 +766,13 @@ async function initInvestigations() {
 
         if (
             !data ||
-            data.success !== true ||
             !Array.isArray(
                 data.investigations
             )
         ) {
 
             throw new Error(
-                "Invalid investigation response."
+                "Invalid investigation data."
             );
 
         }
@@ -833,55 +785,32 @@ async function initInvestigations() {
     } catch (error) {
 
         console.error(
-            "Unable to load investigations:",
+            "Investigation archive error:",
             error
         );
 
-        renderInvestigationUnavailable(
-            container
-        );
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <span class="empty-code">
+                    ARCHIVE STATUS
+                </span>
+
+                <h3>
+                    INVESTIGATION ARCHIVE UNDER CONSTRUCTION
+                </h3>
+
+                <p>
+                    New investigations will be published here
+                    as they are completed and reviewed.
+                </p>
+
+            </div>
+
+        `;
 
     }
-
-}
-
-
-/* =========================================================
-   INVESTIGATION STATUS
-   ========================================================= */
-
-function setInvestigationStatus(
-    container,
-    message
-) {
-
-    if (!container) {
-        return;
-    }
-
-    container.innerHTML = `
-
-        <div class="empty-state">
-
-            <span class="empty-code">
-                ARCHIVE
-            </span>
-
-            <h3>
-                ${escapeHtml(message)}
-            </h3>
-
-            <p>
-                Published investigations will appear here.
-            </p>
-
-            <span class="empty-status">
-                ESSEX PARANORMAL
-            </span>
-
-        </div>
-
-    `;
 
 }
 
@@ -895,10 +824,6 @@ function renderInvestigations(
     investigations
 ) {
 
-    if (!container) {
-        return;
-    }
-
     if (!investigations.length) {
 
         container.innerHTML = `
@@ -910,18 +835,13 @@ function renderInvestigations(
                 </span>
 
                 <h3>
-                    NO INVESTIGATIONS PUBLISHED YET
+                    INVESTIGATION ARCHIVE UNDER CONSTRUCTION
                 </h3>
 
                 <p>
-                    The investigation archive is currently empty.
-                    New investigations will appear here when
-                    they are published.
+                    New case files will be published here
+                    as investigations are completed and reviewed.
                 </p>
-
-                <span class="empty-status">
-                    CHECK BACK FOR FUTURE INVESTIGATIONS
-                </span>
 
             </div>
 
@@ -933,7 +853,7 @@ function renderInvestigations(
     container.innerHTML =
         investigations
             .map(
-                renderInvestigationCard
+                renderInvestigation
             )
             .join("");
 
@@ -941,91 +861,58 @@ function renderInvestigations(
 
 
 /* =========================================================
-   RENDER SINGLE INVESTIGATION
+   RENDER INVESTIGATION
    ========================================================= */
 
-function renderInvestigationCard(
+function renderInvestigation(
     investigation
 ) {
 
     const title =
         investigation.title ||
         investigation.name ||
-        "Untitled Investigation";
+        "Investigation";
 
     const description =
         investigation.description ||
         investigation.summary ||
-        "Investigation information will be published here.";
+        "";
 
     const location =
         investigation.location ||
         "";
 
-    const date =
-        investigation.date ||
-        investigation.investigation_date ||
-        "";
-
-    const id =
-        investigation.id ||
-        "";
-
-    const status =
-        investigation.status ||
-        "PUBLISHED";
-
     return `
 
         <article class="investigation-card">
 
-            <div class="investigation-card-top">
+            <p class="eyebrow">
+                INVESTIGATION
+            </p>
 
-                <span class="investigation-id">
-                    ${escapeHtml(id)}
-                </span>
+            <h3>
+                ${escapeHtml(title)}
+            </h3>
 
-                <span class="investigation-status">
-                    ${escapeHtml(status)}
-                </span>
+            ${
+                location
+                    ? `
+                        <span class="investigation-location">
+                            ${escapeHtml(location)}
+                        </span>
+                    `
+                    : ""
+            }
 
-            </div>
-
-            <div class="investigation-card-content">
-
-                <p class="eyebrow">
-                    INVESTIGATION
-                </p>
-
-                <h3>
-                    ${escapeHtml(title)}
-                </h3>
-
-                <p>
-                    ${escapeHtml(description)}
-                </p>
-
-                ${
-                    location
-                        ? `
-                            <span class="investigation-location">
-                                ${escapeHtml(location)}
-                            </span>
-                        `
-                        : ""
-                }
-
-                ${
-                    date
-                        ? `
-                            <span class="investigation-date">
-                                ${escapeHtml(date)}
-                            </span>
-                        `
-                        : ""
-                }
-
-            </div>
+            ${
+                description
+                    ? `
+                        <p>
+                            ${escapeHtml(description)}
+                        </p>
+                    `
+                    : ""
+            }
 
         </article>
 
@@ -1035,39 +922,258 @@ function renderInvestigationCard(
 
 
 /* =========================================================
-   INVESTIGATION UNAVAILABLE
+   RESTORE ORIGINAL HOMEPAGE INVESTIGATION CARD
+   =========================================================
+   
+   This is the important part.
+   
+   The current damaged homepage changed:
+   
+       investigation-feature
+   
+   into:
+   
+       ashwell-feature
+   
+   with a large injected image.
+   
+   We reverse that change here.
    ========================================================= */
 
-function renderInvestigationUnavailable(
-    container
-) {
+function restoreOriginalInvestigationLayout() {
 
-    if (!container) {
+    const damagedFeature =
+        document.querySelector(
+            ".ashwell-feature"
+        );
+
+    if (!damagedFeature) {
         return;
     }
 
-    container.innerHTML = `
 
-        <div class="empty-state">
+    /*
+     * Remove the injected HMP image.
+     */
 
-            <span class="empty-code">
-                ARCHIVE STATUS
-            </span>
+    damagedFeature
+        .querySelectorAll(
+            ".ashwell-image"
+        )
+        .forEach(
+            (image) => {
 
-            <h3>
-                INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-            </h3>
+                image.remove();
 
-            <p>
-                New investigations, stories and evidence
-                will be published here as they emerge.
-            </p>
+            }
+        );
 
-            <span class="empty-status">
-                ESSEX PARANORMAL
-            </span>
 
-        </div>
+    /*
+     * Restore the original feature class.
+     */
+
+    damagedFeature.classList.remove(
+        "ashwell-feature"
+    );
+
+    damagedFeature.classList.add(
+        "investigation-feature"
+    );
+
+
+    /*
+     * Restore original content class.
+     */
+
+    damagedFeature
+        .querySelectorAll(
+            ".ashwell-copy"
+        )
+        .forEach(
+            (element) => {
+
+                element.classList.remove(
+                    "ashwell-copy"
+                );
+
+                element.classList.add(
+                    "investigation-feature-content"
+                );
+
+            }
+        );
+
+
+    /*
+     * Restore original location class.
+     */
+
+    damagedFeature
+        .querySelectorAll(
+            ".ashwell-location"
+        )
+        .forEach(
+            (element) => {
+
+                element.classList.remove(
+                    "ashwell-location"
+                );
+
+                element.classList.add(
+                    "investigation-feature-location"
+                );
+
+            }
+        );
+
+
+    /*
+     * Restore original metadata class.
+     */
+
+    damagedFeature
+        .querySelectorAll(
+            ".ashwell-meta"
+        )
+        .forEach(
+            (element) => {
+
+                element.classList.remove(
+                    "ashwell-meta"
+                );
+
+                element.classList.add(
+                    "investigation-feature-meta"
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   REMOVE DUPLICATE ARCHIVE
+   ========================================================= */
+
+function removeDuplicateArchive() {
+
+    const investigationSection =
+        document.getElementById(
+            "investigations"
+        );
+
+    if (!investigationSection) {
+        return;
+    }
+
+
+    /*
+     * Remove the old second archive block.
+     */
+
+    investigationSection
+        .querySelectorAll(
+            ".featured-investigation"
+        )
+        .forEach(
+            (element) => {
+
+                element.remove();
+
+            }
+        );
+
+
+    /*
+     * Remove any archive action created
+     * by a previous correction layer.
+     */
+
+    investigationSection
+        .querySelectorAll(
+            ".homepage-archive-status"
+        )
+        .forEach(
+            (element) => {
+
+                element.remove();
+
+            }
+        );
+
+
+    /*
+     * There should now be exactly ONE
+     * investigation archive action.
+     */
+
+    let archive =
+        investigationSection.querySelector(
+            ".investigation-archive-action"
+        );
+
+
+    if (!archive) {
+
+        archive =
+            document.createElement(
+                "div"
+            );
+
+        archive.className =
+            "investigation-archive-action";
+
+        const feature =
+            investigationSection.querySelector(
+                ".investigation-feature"
+            );
+
+        if (feature) {
+
+            feature.insertAdjacentElement(
+                "afterend",
+                archive
+            );
+
+        } else {
+
+            investigationSection
+                .querySelector(
+                    ".container"
+                )
+                ?.appendChild(
+                    archive
+                );
+
+        }
+
+    }
+
+
+    /*
+     * Replace the inside of the archive
+     * with ONE clean status and ONE button.
+     */
+
+    archive.innerHTML = `
+
+        <span class="empty-code">
+            ARCHIVE STATUS
+        </span>
+
+        <p>
+            INVESTIGATION ARCHIVE UNDER CONSTRUCTION
+        </p>
+
+        <a
+            href="/investigations/"
+            class="button button-outline"
+        >
+            VIEW INVESTIGATION ARCHIVE
+            <span>→</span>
+        </a>
 
     `;
 
@@ -1075,421 +1181,133 @@ function renderInvestigationUnavailable(
 
 
 /* =========================================================
-   IMAGE FALLBACKS
+   REMOVE DUPLICATE ASHWELL IMAGE
+   =========================================================
+   
+   The HMP Ashwell case page currently contains:
+   
+   1. The correct hero image.
+   2. A second identical image panel.
+   
+   We keep #1 and remove #2.
    ========================================================= */
 
-function initImageFallbacks() {
+function removeDuplicateAshwellImage() {
 
-    const images =
-        document.querySelectorAll(
-            "img"
-        );
-
-    images.forEach(
-        (image) => {
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    image.classList.add(
-                        "image-error"
-                    );
-
-                    /*
-                     * Do not repeatedly trigger
-                     * the error handler.
-                     */
-                    image.onerror = null;
-
-                },
-                {
-                    once: true
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
-
-function initCurrentYear() {
-
-    const year =
-        new Date().getFullYear();
-
-    document
-        .querySelectorAll(
-            "[data-current-year]"
-        )
-        .forEach(
-            (element) => {
-
-                element.textContent =
-                    String(year);
-
-            }
-        );
+    const pathname =
+        window.location.pathname
+            .replace(/\/+$/, "");
 
     /*
-     * Also support the common footer
-     * year selector if present.
+     * Only run this on the HMP Ashwell
+     * case page.
      */
-
-    document
-        .querySelectorAll(
-            "#current-year, .current-year"
-        )
-        .forEach(
-            (element) => {
-
-                element.textContent =
-                    String(year);
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   PAGE READY
-   ========================================================= */
-
-function initPageReady() {
-
-    document.body.classList.add(
-        "page-ready"
-    );
-
-}
-
-
-/* =========================================================
-   WEBSITE CORRECTIONS
-   ========================================================= */
-
-function applyWebsiteCorrections() {
-
-    /*
-     * These functions preserve the approved
-     * website changes without relying on another
-     * JavaScript file.
-     */
-
-    addCorrectionStyles();
-    addConstructionBanner();
-    addAshwellPreview();
-    fixArchiveArea();
-    fixAshwellLinks();
-    fixFacebookLinks();
-
-}
-
-
-/* =========================================================
-   CORRECTION CSS
-   ========================================================= */
-
-function addCorrectionStyles() {
 
     if (
-        document.getElementById(
-            "essex-paranormal-corrections"
-        )
+        pathname !==
+        "/investigations/hmp-ashwell"
     ) {
         return;
     }
 
-    const style =
-        document.createElement(
-            "style"
+
+    /*
+     * Keep the case hero.
+     */
+
+    const hero =
+        document.querySelector(
+            ".case-hero-image"
         );
 
-    style.id =
-        "essex-paranormal-corrections";
 
-    style.textContent = `
+    /*
+     * Find image panels containing the
+     * same Ashwell photograph.
+     */
 
-        /*
-         * =====================================================
-         * ENTRY SCREEN FAILSAFE
-         * =====================================================
-         */
+    document
+        .querySelectorAll(
+            ".case-image-panel"
+        )
+        .forEach(
+            (panel) => {
 
-        #entry-screen {
-            pointer-events: none;
-        }
+                const image =
+                    panel.querySelector(
+                        "img"
+                    );
 
-        #entry-screen.is-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+                if (!image) {
+                    return;
+                }
 
+                const source =
+                    image.getAttribute(
+                        "src"
+                    ) || "";
 
-        /*
-         * =====================================================
-         * CONSTRUCTION TICKER
-         * =====================================================
-         */
+                if (
+                    source
+                        .toLowerCase()
+                        .includes(
+                            "hmp-ashwell"
+                        )
+                ) {
 
-        .construction-ticker {
-            position: relative;
-            z-index: 50;
-            width: 100%;
-            overflow: hidden;
-            background: #050608;
-            border-top: 1px solid rgba(255,106,26,.25);
-            border-bottom: 1px solid rgba(255,106,26,.25);
-            padding: 11px 0;
-        }
+                    panel.remove();
 
-        .construction-ticker-track {
-            display: flex;
-            width: max-content;
-            white-space: nowrap;
-            animation:
-                constructionTickerMove
-                24s
-                linear
-                infinite;
-            will-change: transform;
-        }
+                }
 
-        .construction-ticker-track span {
-            display: block;
-            flex-shrink: 0;
-            padding-right: 70px;
-            color: #ffffff;
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size: .72rem;
-            font-weight: 800;
-            letter-spacing: .14em;
-        }
-
-
-        /*
-         * LEFT TO RIGHT
-         */
-
-        @keyframes constructionTickerMove {
-
-            from {
-                transform:
-                    translateX(-50%);
             }
-
-            to {
-                transform:
-                    translateX(0);
-            }
-
-        }
+        );
 
 
-        /*
-         * =====================================================
-         * HMP ASHWELL FEATURE
-         * =====================================================
-         */
+    /*
+     * If there is another duplicate Ashwell
+     * image outside the hero, remove it too.
+     */
 
-        .ashwell-home-feature {
-            display: grid !important;
-            grid-template-columns:
-                minmax(0, .95fr)
-                minmax(0, 1.05fr) !important;
-            overflow: hidden;
-            border:
-                1px solid
-                rgba(255,255,255,.10);
-            background:
-                rgba(5,6,8,.62);
-            box-shadow:
-                0 20px 70px
-                rgba(0,0,0,.35);
-        }
-
-        .ashwell-home-image {
-            display: block;
-            position: relative;
-            overflow: hidden;
-            min-height: 500px;
-            background: #000;
-        }
-
-        .ashwell-home-image img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            min-height: 500px;
-            object-fit: cover;
-            object-position: center;
-            filter:
-                brightness(.82)
-                contrast(1.06);
-            transition:
-                transform .7s ease,
-                filter .7s ease;
-        }
-
-        .ashwell-home-image:hover img {
-            transform:
-                scale(1.035);
-            filter:
-                brightness(.94)
-                contrast(1.06);
-        }
+    let ashwellImages =
+        Array.from(
+            document.querySelectorAll(
+                'img[src*="hmp-ashwell"]'
+            )
+        );
 
 
-        /*
-         * =====================================================
-         * ARCHIVE STATUS
-         * =====================================================
-         */
+    if (
+        hero &&
+        ashwellImages.length > 1
+    ) {
 
-        .homepage-archive-status {
-            margin-top: 28px;
-            padding: 28px;
-            text-align: center;
-            border:
-                1px solid
-                rgba(255,106,26,.18);
-            background:
-                rgba(5,6,8,.82);
-        }
+        ashwellImages
+            .filter(
+                (image) =>
+                    image !== hero
+            )
+            .forEach(
+                (image) => {
 
-        .homepage-archive-status
-        .empty-code {
-            color: #ff6a1a;
-        }
+                    const panel =
+                        image.closest(
+                            ".case-image-panel"
+                        );
 
-        .homepage-archive-status p {
-            margin:
-                9px 0 18px;
-            color: #999;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: .16em;
-        }
+                    if (panel) {
 
+                        panel.remove();
 
-        /*
-         * =====================================================
-         * ASHWELL CASE IMAGE
-         * =====================================================
-         */
+                    } else {
 
-        .ashwell-home-image::after {
-            content:
-                "HMP ASHWELL • CASE EP-001";
-            position: absolute;
-            left: 18px;
-            bottom: 18px;
-            padding:
-                7px 10px;
-            background:
-                rgba(0,0,0,.72);
-            border:
-                1px solid
-                rgba(255,106,26,.35);
-            color:
-                #ffffff;
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size:
-                .68rem;
-            font-weight:
-                800;
-            letter-spacing:
-                .12em;
-            pointer-events:
-                none;
-        }
+                        image.remove();
 
+                    }
 
-        /*
-         * =====================================================
-         * MOBILE
-         * =====================================================
-         */
+                }
+            );
 
-        @media (max-width: 900px) {
-
-            .construction-ticker {
-                padding:
-                    9px 0;
-            }
-
-            .construction-ticker-track span {
-                font-size:
-                    .62rem;
-                letter-spacing:
-                    .10em;
-                padding-right:
-                    50px;
-            }
-
-            .ashwell-home-feature {
-                grid-template-columns:
-                    1fr !important;
-            }
-
-            .ashwell-home-image {
-                min-height:
-                    330px;
-                height:
-                    330px;
-            }
-
-            .ashwell-home-image img {
-                min-height:
-                    330px;
-            }
-
-            .homepage-archive-status {
-                margin-top:
-                    20px;
-                padding:
-                    22px 16px;
-            }
-
-        }
-
-
-        /*
-         * =====================================================
-         * REDUCED MOTION
-         * =====================================================
-         */
-
-        @media (prefers-reduced-motion: reduce) {
-
-            .construction-ticker-track {
-                animation:
-                    none;
-            }
-
-            .ashwell-home-image img {
-                transition:
-                    none;
-            }
-
-        }
-
-    `;
-
-    document.head.appendChild(
-        style
-    );
+    }
 
 }
 
@@ -1498,7 +1316,7 @@ function addCorrectionStyles() {
    CONSTRUCTION BANNER
    ========================================================= */
 
-function addConstructionBanner() {
+function ensureConstructionBanner() {
 
     if (
         document.querySelector(
@@ -1508,6 +1326,7 @@ function addConstructionBanner() {
         return;
     }
 
+
     const header =
         document.querySelector(
             ".site-header"
@@ -1516,6 +1335,7 @@ function addConstructionBanner() {
     if (!header) {
         return;
     }
+
 
     const ticker =
         document.createElement(
@@ -1535,6 +1355,7 @@ function addConstructionBanner() {
         "Website under construction"
     );
 
+
     ticker.innerHTML = `
 
         <div class="construction-ticker-track">
@@ -1551,343 +1372,127 @@ function addConstructionBanner() {
 
     `;
 
+
     header.insertAdjacentElement(
         "afterend",
         ticker
     );
 
-}
 
-
-/* =========================================================
-   HMP ASHWELL HOMEPAGE PREVIEW
-   ========================================================= */
-
-function addAshwellPreview() {
-
-    const investigations =
-        document.getElementById(
-            "investigations"
-        );
-
-    if (!investigations) {
-        return;
-    }
+    /*
+     * Only add the ticker CSS.
+     * Do NOT alter the website's existing
+     * visual design.
+     */
 
     if (
-        investigations.querySelector(
-            ".ashwell-home-image"
+        document.getElementById(
+            "construction-ticker-style"
         )
     ) {
         return;
     }
 
-    let feature =
-        investigations.querySelector(
-            ".investigation-feature"
-        );
 
-    if (!feature) {
-
-        feature =
-            investigations.querySelector(
-                "article"
-            );
-
-    }
-
-    if (!feature) {
-        return;
-    }
-
-    feature.classList.add(
-        "ashwell-home-feature"
-    );
-
-    const imageLink =
+    const style =
         document.createElement(
-            "a"
+            "style"
         );
 
-    imageLink.href =
-        "/investigations/hmp-ashwell.html";
+    style.id =
+        "construction-ticker-style";
 
-    imageLink.className =
-        "ashwell-home-image";
+    style.textContent = `
 
-    imageLink.setAttribute(
-        "aria-label",
-        "View HMP Ashwell case file"
-    );
+        .construction-ticker {
+            position: relative;
+            z-index: 20;
+            width: 100%;
+            overflow: hidden;
+            background: #050608;
+            border-top:
+                1px solid
+                rgba(255,106,26,.25);
+            border-bottom:
+                1px solid
+                rgba(255,106,26,.25);
+            padding: 10px 0;
+        }
 
-    imageLink.innerHTML = `
+        .construction-ticker-track {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation:
+                constructionTickerMove
+                24s
+                linear
+                infinite;
+        }
 
-        <img
-            src="/hmp-ashwell.PNG"
-            alt="HMP Ashwell investigation"
-            loading="lazy"
-            decoding="async"
-        >
+        .construction-ticker-track span {
+            display: block;
+            flex-shrink: 0;
+            padding-right: 70px;
+            color: var(--white);
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+        }
+
+        @keyframes constructionTickerMove {
+
+            from {
+                transform:
+                    translateX(-50%);
+            }
+
+            to {
+                transform:
+                    translateX(0);
+            }
+
+        }
+
+        .investigation-archive-action {
+            margin-top: 28px;
+            padding: 28px;
+            text-align: center;
+            border:
+                1px solid
+                rgba(255,106,26,.18);
+            background:
+                rgba(5,6,8,.72);
+        }
+
+        .investigation-archive-action p {
+            margin:
+                9px 0 18px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .16em;
+        }
+
+        .investigation-archive-action
+        .empty-code {
+            color: var(--orange);
+        }
+
+        #entry-screen.is-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
 
     `;
 
-    feature.insertBefore(
-        imageLink,
-        feature.firstChild
+    document.head.appendChild(
+        style
     );
-
-}
-
-
-/* =========================================================
-   FIX ARCHIVE AREA
-   =========================================================
-   
-   HOMEPAGE:
-   ONE archive action only.
-   
-   ARCHIVE PAGE:
-   left under construction.
-   ========================================================= */
-
-function fixArchiveArea() {
-
-    const investigations =
-        document.getElementById(
-            "investigations"
-        );
-
-    if (!investigations) {
-        return;
-    }
-
-    /*
-     * Remove old duplicate archive blocks.
-     */
-
-    investigations
-        .querySelectorAll(
-            ".investigation-archive-action"
-        )
-        .forEach(
-            (element) => {
-                element.remove();
-            }
-        );
-
-
-    /*
-     * Remove duplicate archive links.
-     */
-
-    const archiveLinks =
-        Array.from(
-            investigations.querySelectorAll(
-                'a[href="/investigations/"]'
-            )
-        );
-
-
-    if (
-        archiveLinks.length > 1
-    ) {
-
-        archiveLinks
-            .slice(1)
-            .forEach(
-                (link) => {
-
-                    const parent =
-                        link.closest(
-                            ".archive-action, .investigation-archive-action, .homepage-archive-status"
-                        );
-
-                    if (parent) {
-                        parent.remove();
-                    } else {
-                        link.remove();
-                    }
-
-                }
-            );
-
-    }
-
-
-    /*
-     * If the corrected archive block already
-     * exists, stop.
-     */
-
-    if (
-        investigations.querySelector(
-            ".homepage-archive-status"
-        )
-    ) {
-        return;
-    }
-
-
-    /*
-     * Find the one remaining archive link.
-     */
-
-    const archiveButton =
-        investigations.querySelector(
-            'a[href="/investigations/"]'
-        );
-
-
-    /*
-     * Create the single archive status panel.
-     */
-
-    const status =
-        document.createElement(
-            "div"
-        );
-
-    status.className =
-        "homepage-archive-status";
-
-    status.innerHTML = `
-
-        <span class="empty-code">
-            ARCHIVE STATUS
-        </span>
-
-        <p>
-            INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-        </p>
-
-    `;
-
-
-    if (archiveButton) {
-
-        status.appendChild(
-            archiveButton
-        );
-
-    } else {
-
-        const button =
-            document.createElement(
-                "a"
-            );
-
-        button.href =
-            "/investigations/";
-
-        button.className =
-            "button button-outline";
-
-        button.innerHTML = `
-            VIEW INVESTIGATION ARCHIVE
-            <span>→</span>
-        `;
-
-        status.appendChild(
-            button
-        );
-
-    }
-
-
-    /*
-     * Place it underneath the Ashwell feature.
-     */
-
-    const feature =
-        investigations.querySelector(
-            ".ashwell-home-feature"
-        );
-
-    if (feature) {
-
-        feature.insertAdjacentElement(
-            "afterend",
-            status
-        );
-
-    } else {
-
-        investigations.appendChild(
-            status
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ASHWELL LINKS
-   ========================================================= */
-
-function fixAshwellLinks() {
-
-    document
-        .querySelectorAll(
-            "a"
-        )
-        .forEach(
-            (link) => {
-
-                const text =
-                    (
-                        link.textContent ||
-                        ""
-                    ).toUpperCase();
-
-                const aria =
-                    (
-                        link.getAttribute(
-                            "aria-label"
-                        ) ||
-                        ""
-                    ).toUpperCase();
-
-                const href =
-                    link.getAttribute(
-                        "href"
-                    ) || "";
-
-
-                /*
-                 * Do not change the investigation
-                 * archive link.
-                 */
-
-                if (
-                    href ===
-                    "/investigations/"
-                ) {
-                    return;
-                }
-
-
-                /*
-                 * Only change links that clearly
-                 * refer to HMP Ashwell.
-                 */
-
-                if (
-                    text.includes(
-                        "ASHWELL"
-                    ) ||
-                    aria.includes(
-                        "ASHWELL"
-                    )
-                ) {
-
-                    link.href =
-                        "/investigations/hmp-ashwell.html";
-
-                }
-
-            }
-        );
 
 }
 
@@ -1896,15 +1501,11 @@ function fixAshwellLinks() {
    FACEBOOK
    ========================================================= */
 
-function fixFacebookLinks() {
+function ensureFacebookLink() {
 
     const facebookURL =
         "https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr";
 
-
-    /*
-     * Find Facebook links already present.
-     */
 
     document
         .querySelectorAll(
@@ -1925,88 +1526,83 @@ function fixFacebookLinks() {
             }
         );
 
-
-    /*
-     * If there is a social-media section but
-     * no Facebook link, add one.
-     */
-
-    const socialSection =
-        document.querySelector(
-            "#social-media, #social, .social-media, .social-section"
-        );
-
-    if (!socialSection) {
-        return;
-    }
+}
 
 
-    if (
-        socialSection.querySelector(
-            'a[href*="facebook.com"]'
+/* =========================================================
+   IMAGE FALLBACKS
+   ========================================================= */
+
+function initImageFallbacks() {
+
+    document
+        .querySelectorAll(
+            "img"
         )
-    ) {
-        return;
-    }
+        .forEach(
+            (image) => {
 
+                image.addEventListener(
+                    "error",
+                    () => {
 
-    /*
-     * Do not create a duplicate if the page
-     * already contains Facebook text.
-     */
+                        image.classList.add(
+                            "image-error"
+                        );
 
-    if (
-        socialSection.textContent
-            .toUpperCase()
-            .includes(
-                "FACEBOOK"
-            )
-    ) {
-        return;
-    }
+                        image.onerror =
+                            null;
 
+                    },
+                    {
+                        once: true
+                    }
+                );
 
-    const facebook =
-        document.createElement(
-            "a"
+            }
         );
 
-    facebook.href =
-        facebookURL;
+}
 
-    facebook.target =
-        "_blank";
 
-    facebook.rel =
-        "noopener noreferrer";
+/* =========================================================
+   CURRENT YEAR
+   ========================================================= */
 
-    facebook.className =
-        "social-button";
+function initCurrentYear() {
 
-    facebook.setAttribute(
-        "aria-label",
-        "Essex Paranormal on Facebook"
-    );
+    const year =
+        String(
+            new Date().getFullYear()
+        );
 
-    facebook.innerHTML = `
 
-        <span class="social-platform">
-            FACEBOOK
-        </span>
+    document
+        .querySelectorAll(
+            "[data-current-year]"
+        )
+        .forEach(
+            (element) => {
 
-        <h3>
-            ESSEX PARANORMAL
-        </h3>
+                element.textContent =
+                    year;
 
-        <span class="social-handle">
-            JOIN THE COMMUNITY
-        </span>
+            }
+        );
 
-    `;
 
-    socialSection.appendChild(
-        facebook
-    );
+    document
+        .querySelectorAll(
+            "#current-year, .current-year"
+        )
+        .forEach(
+            (element) => {
+
+                element.textContent =
+                    year;
+
+            }
+        );
 
 }
 
@@ -2018,22 +1614,27 @@ function fixFacebookLinks() {
 function escapeHtml(value) {
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -2043,69 +1644,5 @@ function escapeHtml(value) {
 
 
 /* =========================================================
-   GLOBAL EMERGENCY ENTRY FAILSAFE
-   =========================================================
-   
-   This runs independently of DOMContentLoaded.
-   
-   If the entry screen exists and for any reason
-   the normal startup sequence did not remove it,
-   this guarantees that it cannot block the website
-   indefinitely.
-   ========================================================= */
-
-(function emergencyEntryFailsafe() {
-
-    function unlockWebsite() {
-
-        const entry =
-            document.getElementById(
-                "entry-screen"
-            );
-
-        if (!entry) {
-            return;
-        }
-
-        entry.classList.add(
-            "is-hidden"
-        );
-
-        entry.style.pointerEvents =
-            "none";
-
-        entry.style.visibility =
-            "hidden";
-
-        window.setTimeout(() => {
-
-            const current =
-                document.getElementById(
-                    "entry-screen"
-                );
-
-            if (current) {
-                current.remove();
-            }
-
-        }, 1000);
-
-    }
-
-
-    /*
-     * Give the cinematic intro time to play,
-     * but never allow it to trap the visitor.
-     */
-
-    window.setTimeout(
-        unlockWebsite,
-        5200
-    );
-
-})();
-
-
-/* =========================================================
-   END OF ESSEX PARANORMAL SCRIPT
+   END
    ========================================================= */
