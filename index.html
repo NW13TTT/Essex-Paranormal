@@ -24,6 +24,325 @@
     >
 
     <link rel="stylesheet" href="/style.css">
+
+    <style>
+
+        /* =====================================================
+           SOCIAL MEDIA FEATURE
+           ===================================================== */
+
+        .social-section {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(124, 255, 87, 0.055),
+                    transparent 42%
+                ),
+                #050608;
+        }
+
+
+        .social-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    rgba(255,255,255,.025) 50%,
+                    transparent 100%
+                );
+        }
+
+
+        .social-heading {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            margin-bottom: 50px;
+        }
+
+
+        .social-heading h2 {
+            margin: 0 0 24px;
+            font-size: clamp(3rem, 7vw, 7rem);
+            line-height: .88;
+            font-weight: 900;
+            letter-spacing: -.055em;
+            text-transform: uppercase;
+        }
+
+
+        .social-heading h2 span {
+            display: block;
+            color: var(--green);
+        }
+
+
+        .social-heading p:last-child {
+            max-width: 700px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+
+        .social-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+
+        .social-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            min-height: 170px;
+            padding: 30px 34px;
+            overflow: hidden;
+            color: var(--white);
+            text-decoration: none;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.018)
+                );
+            border: 1px solid rgba(255,255,255,.10);
+            transition:
+                transform .45s var(--ease),
+                border-color .45s var(--ease),
+                box-shadow .45s var(--ease),
+                background .45s var(--ease);
+        }
+
+
+        .social-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--green);
+            transform: scaleY(.18);
+            transform-origin: bottom;
+            transition:
+                transform .45s var(--ease);
+        }
+
+
+        .social-button::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -90px;
+            bottom: -110px;
+            border-radius: 50%;
+            background: rgba(124,255,87,.07);
+            transition:
+                transform .55s var(--ease);
+        }
+
+
+        .social-button:hover {
+            transform: translateY(-7px);
+            border-color: rgba(124,255,87,.42);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,255,87,.075),
+                    rgba(255,255,255,.025)
+                );
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.45),
+                0 0 35px rgba(124,255,87,.06);
+        }
+
+
+        .social-button:hover::before {
+            transform: scaleY(1);
+        }
+
+
+        .social-button:hover::after {
+            transform: scale(1.7);
+        }
+
+
+        .social-icon {
+            position: relative;
+            z-index: 2;
+            flex: 0 0 72px;
+            width: 72px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(124,255,87,.35);
+            color: var(--green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: .04em;
+            transition:
+                background .45s var(--ease),
+                color .45s var(--ease),
+                transform .45s var(--ease);
+        }
+
+
+        .social-button:hover .social-icon {
+            background: var(--green);
+            color: #050608;
+            transform: rotate(-4deg) scale(1.06);
+        }
+
+
+        .social-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .social-platform {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .82rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+        }
+
+
+        .social-content h3 {
+            margin: 0 0 7px;
+            color: var(--white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(1.7rem, 3vw, 2.5rem);
+            line-height: .95;
+            font-weight: 800;
+            letter-spacing: -.025em;
+            text-transform: uppercase;
+        }
+
+
+        .social-handle {
+            display: block;
+            color: var(--muted);
+            font-size: .85rem;
+        }
+
+
+        .social-arrow {
+            position: relative;
+            z-index: 2;
+            flex: 0 0 auto;
+            color: var(--green);
+            font-size: 1.5rem;
+            transition:
+                transform .45s var(--ease);
+        }
+
+
+        .social-button:hover .social-arrow {
+            transform: translateX(7px);
+        }
+
+
+        .social-bottom-line {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 38px;
+            color: var(--muted-dark);
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+
+        .social-bottom-line::before {
+            content: "";
+            width: 55px;
+            height: 1px;
+            background: var(--green);
+        }
+
+
+        @media (max-width: 850px) {
+
+            .social-heading {
+                margin-bottom: 35px;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-button {
+                min-height: 145px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .social-heading h2 {
+                font-size: clamp(
+                    2.7rem,
+                    14vw,
+                    4.5rem
+                );
+            }
+
+            .social-button {
+                min-height: 125px;
+                padding: 23px 20px;
+                gap: 17px;
+            }
+
+            .social-icon {
+                flex-basis: 55px;
+                width: 55px;
+                height: 55px;
+                font-size: 1.25rem;
+            }
+
+            .social-content h3 {
+                font-size: 1.65rem;
+            }
+
+            .social-handle {
+                font-size: .76rem;
+                word-break: break-word;
+            }
+
+            .social-arrow {
+                font-size: 1.2rem;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -95,8 +414,6 @@
                 <a href="#gallery">
                     GALLERY
                 </a>
-
-                <!-- NEW COMMUNITY LINK -->
 
                 <a href="#community">
                     JOIN US
@@ -809,6 +1126,219 @@
 
 
         <!-- =================================================
+             SOCIAL MEDIA
+             ================================================= -->
+
+        <section
+            id="social"
+            class="section social-section"
+        >
+
+            <div class="container">
+
+                <div class="social-heading">
+
+                    <p class="eyebrow">
+                        FOLLOW THE INVESTIGATION
+                    </p>
+
+
+                    <h2>
+                        THE INVESTIGATION
+                        <span>CONTINUES.</span>
+                    </h2>
+
+
+                    <p>
+                        The investigation doesn't end when we
+                        leave the location. Follow Essex Paranormal
+                        across our social channels for investigation
+                        videos, evidence, experiences, behind the
+                        scenes, new case files and updates from
+                        the team.
+                    </p>
+
+                </div>
+
+
+                <div class="social-grid">
+
+                    <!-- YOUTUBE -->
+
+                    <a
+                        href="https://youtube.com/@essexparanormal666"
+                        class="social-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit Essex Paranormal on YouTube"
+                    >
+
+                        <span class="social-icon">
+                            ▶
+                        </span>
+
+
+                        <span class="social-content">
+
+                            <span class="social-platform">
+                                YOUTUBE
+                            </span>
+
+
+                            <h3>
+                                WATCH THE INVESTIGATIONS
+                            </h3>
+
+
+                            <span class="social-handle">
+                                @essexparanormal666
+                            </span>
+
+                        </span>
+
+
+                        <span class="social-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- TIKTOK -->
+
+                    <a
+                        href="https://www.tiktok.com/@essexparanormal"
+                        class="social-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit Essex Paranormal on TikTok"
+                    >
+
+                        <span class="social-icon">
+                            ♪
+                        </span>
+
+
+                        <span class="social-content">
+
+                            <span class="social-platform">
+                                TIKTOK
+                            </span>
+
+
+                            <h3>
+                                FOLLOW THE INVESTIGATION
+                            </h3>
+
+
+                            <span class="social-handle">
+                                @essexparanormal
+                            </span>
+
+                        </span>
+
+
+                        <span class="social-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="https://www.instagram.com/essex.paranormal/"
+                        class="social-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit Essex Paranormal on Instagram"
+                    >
+
+                        <span class="social-icon">
+                            ◎
+                        </span>
+
+
+                        <span class="social-content">
+
+                            <span class="social-platform">
+                                INSTAGRAM
+                            </span>
+
+
+                            <h3>
+                                SEE WHAT'S HAPPENING
+                            </h3>
+
+
+                            <span class="social-handle">
+                                @essex.paranormal
+                            </span>
+
+                        </span>
+
+
+                        <span class="social-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- FACEBOOK -->
+
+                    <a
+                        href="https://www.facebook.com/share/g/19KLo9qcjU/"
+                        class="social-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit Essex Paranormal on Facebook"
+                    >
+
+                        <span class="social-icon">
+                            f
+                        </span>
+
+
+                        <span class="social-content">
+
+                            <span class="social-platform">
+                                FACEBOOK
+                            </span>
+
+
+                            <h3>
+                                JOIN THE COMMUNITY
+                            </h3>
+
+
+                            <span class="social-handle">
+                                ESSEX PARANORMAL
+                            </span>
+
+                        </span>
+
+
+                        <span class="social-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="social-bottom-line">
+                    REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
              INVESTIGATIONS
              ================================================= -->
 
@@ -1469,8 +1999,6 @@
                     <a href="#gallery">
                         GALLERY
                     </a>
-
-                    <!-- NEW FORUM LINK -->
 
                     <a
                         href="https://essexparanormal.discourse.group/"
