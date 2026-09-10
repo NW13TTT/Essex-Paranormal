@@ -1,1209 +1,646 @@
 "use strict";
 
+/*
+ * ESSEX PARANORMAL
+ * Website correction layer
+ *
+ * This keeps the existing Essex Paranormal website behaviour
+ * and applies the approved homepage corrections:
+ *
+ * - Construction banner
+ * - HMP Ashwell homepage preview
+ * - Correct Ashwell case-file link
+ * - One Investigation Archive action
+ * - Archive marked UNDER CONSTRUCTION
+ * - Existing navigation retained
+ */
 
-/* =========================================================
-   ESSEX PARANORMAL
-   COMPLETE PUBLIC WEBSITE SCRIPT
-   ========================================================= */
+const ORIGINAL_SCRIPT =
+    "https://raw.githubusercontent.com/NW13TTT/Essex-Paranormal/3b895d72e334c5436a488b0b66250ec97fc3d0e9/script.js";
 
-const API_BASE = "/api";
-
-
-/* =========================================================
-   STARTUP
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    initEntryScreen();
-    initMobileNavigation();
-    initSmoothNavigation();
-    initHeaderScroll();
-    initActiveNavigation();
-    initBackToTop();
-    initInvestigations();
-    initImageFallbacks();
-    initCurrentYear();
-    initPageReady();
-
-});
-
-
-/* =========================================================
-   CINEMATIC ENTRY
-   ========================================================= */
-
-function initEntryScreen() {
-
-    const entryScreen =
-        document.getElementById("entry-screen");
-
-
-    if (!entryScreen) {
-        return;
-    }
-
+(function () {
+    "use strict";
 
     /*
-     * Prevent the browser from restoring an
-     * old scroll position while the cinematic
-     * introduction is being displayed.
+     * Load the original website JavaScript first.
+     * This preserves the existing navigation, animations,
+     * scrolling and other website behaviour.
      */
+    const originalScript = document.createElement("script");
 
-    try {
+    originalScript.src = ORIGINAL_SCRIPT;
+    originalScript.async = false;
 
-        if ("scrollRestoration" in history) {
-            history.scrollRestoration = "manual";
+    originalScript.onload = function () {
+        document.dispatchEvent(
+            new Event("EssexOriginalScriptLoaded")
+        );
+    };
+
+    document.head.appendChild(originalScript);
+
+    /*
+     * Add the approved visual correction CSS.
+     */
+    function addCorrectionStyles() {
+        if (document.getElementById("essex-paranormal-corrections")) {
+            return;
         }
 
-    } catch (error) {
+        const style = document.createElement("style");
 
-        /*
-         * Continue normally if the browser does
-         * not allow scrollRestoration to be changed.
-         */
+        style.id = "essex-paranormal-corrections";
 
-    }
+        style.textContent = `
+            /*
+             * WEBSITE UNDER CONSTRUCTION TICKER
+             */
 
-
-    forceScrollTop();
-
-
-    window.requestAnimationFrame(() => {
-        forceScrollTop();
-    });
-
-
-    const reducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-
-    /*
-     * Normal cinematic duration.
-     * Reduced-motion users receive a shorter
-     * introduction.
-     */
-
-    const displayTime =
-        reducedMotion
-            ? 700
-            : 3000;
-
-
-    window.setTimeout(() => {
-
-        entryScreen.classList.add(
-            "is-hidden"
-        );
-
-
-        window.setTimeout(() => {
-
-            if (entryScreen) {
-                entryScreen.remove();
+            .construction-ticker {
+                position: relative;
+                z-index: 50;
+                width: 100%;
+                overflow: hidden;
+                background: #050608;
+                border-top: 1px solid rgba(255,106,26,.25);
+                border-bottom: 1px solid rgba(255,106,26,.25);
+                padding: 11px 0;
             }
 
-
-            forceScrollTop();
-
-
-            window.requestAnimationFrame(() => {
-                forceScrollTop();
-            });
-
-        }, reducedMotion ? 50 : 850);
-
-    }, displayTime);
-
-}
-
-
-/* =========================================================
-   FORCE PAGE TO HOME TOP
-   ========================================================= */
-
-function forceScrollTop() {
-
-    /*
-     * Do not interfere with genuine anchor
-     * navigation to another section.
-     */
-
-    if (
-        window.location.hash &&
-        window.location.hash !== "#home"
-    ) {
-        return;
-    }
-
-
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto"
-    });
-
-}
-
-
-/* =========================================================
-   MOBILE NAVIGATION
-   ========================================================= */
-
-function initMobileNavigation() {
-
-    const menuToggle =
-        document.querySelector(
-            ".menu-toggle"
-        );
-
-
-    const navigation =
-        document.getElementById(
-            "main-navigation"
-        );
-
-
-    if (
-        !menuToggle ||
-        !navigation
-    ) {
-        return;
-    }
-
-
-    menuToggle.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                navigation.classList.toggle(
-                    "open"
-                );
-
-
-            menuToggle.classList.toggle(
-                "open",
-                isOpen
-            );
-
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-
-
-            menuToggle.setAttribute(
-                "aria-label",
-                isOpen
-                    ? "Close navigation menu"
-                    : "Open navigation menu"
-            );
-
-
-            document.body.classList.toggle(
-                "menu-open",
-                isOpen
-            );
-
-        }
-    );
-
-
-    /*
-     * Close navigation after selecting
-     * a navigation link.
-     */
-
-    navigation
-        .querySelectorAll("a")
-        .forEach((link) => {
-
-            link.addEventListener(
-                "click",
-                () => {
-                    closeMobileNavigation();
-                }
-            );
-
-        });
-
-
-    /*
-     * Escape closes the mobile menu.
-     */
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                closeMobileNavigation();
-
+            .construction-ticker-track {
+                display: flex;
+                width: max-content;
+                white-space: nowrap;
+                animation: constructionTickerMove 24s linear infinite;
+                will-change: transform;
             }
 
-        }
-    );
-
-
-    /*
-     * Reset the mobile menu when returning
-     * to desktop width.
-     */
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            if (
-                window.innerWidth > 900
-            ) {
-
-                closeMobileNavigation();
-
+            .construction-ticker-track span {
+                display: block;
+                flex-shrink: 0;
+                padding-right: 70px;
+                color: #ffffff;
+                font-family: "Barlow Condensed", sans-serif;
+                font-size: .72rem;
+                font-weight: 800;
+                letter-spacing: .14em;
             }
 
-        }
-    );
+            /*
+             * LEFT TO RIGHT
+             */
 
-}
-
-
-/* =========================================================
-   CLOSE MOBILE NAVIGATION
-   ========================================================= */
-
-function closeMobileNavigation() {
-
-    const menuToggle =
-        document.querySelector(
-            ".menu-toggle"
-        );
-
-
-    const navigation =
-        document.getElementById(
-            "main-navigation"
-        );
-
-
-    if (navigation) {
-
-        navigation.classList.remove(
-            "open"
-        );
-
-    }
-
-
-    if (menuToggle) {
-
-        menuToggle.classList.remove(
-            "open"
-        );
-
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-
-        menuToggle.setAttribute(
-            "aria-label",
-            "Open navigation menu"
-        );
-
-    }
-
-
-    document.body.classList.remove(
-        "menu-open"
-    );
-
-}
-
-
-/* =========================================================
-   SMOOTH HASH NAVIGATION
-   ========================================================= */
-
-function initSmoothNavigation() {
-
-    const links =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
-
-
-    links.forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            (event) => {
-
-                const href =
-                    link.getAttribute(
-                        "href"
-                    );
-
-
-                if (
-                    !href ||
-                    href === "#" ||
-                    href === "#!"
-                ) {
-
-                    return;
-
+            @keyframes constructionTickerMove {
+                from {
+                    transform: translateX(-50%);
                 }
 
-
-                let target = null;
-
-
-                try {
-
-                    target =
-                        document.querySelector(
-                            href
-                        );
-
-                } catch (error) {
-
-                    return;
-
+                to {
+                    transform: translateX(0);
                 }
-
-
-                if (!target) {
-                    return;
-                }
-
-
-                event.preventDefault();
-
-
-                const header =
-                    document.querySelector(
-                        ".site-header"
-                    );
-
-
-                const headerHeight =
-                    header
-                        ? header.offsetHeight
-                        : 0;
-
-
-                const targetPosition =
-                    target
-                        .getBoundingClientRect()
-                        .top +
-                    window.scrollY -
-                    headerHeight;
-
-
-                window.scrollTo({
-
-                    top:
-                        Math.max(
-                            0,
-                            targetPosition
-                        ),
-
-                    left: 0,
-
-                    behavior: "smooth"
-
-                });
-
-
-                /*
-                 * Update the address bar without
-                 * creating another history entry.
-                 */
-
-                try {
-
-                    history.replaceState(
-                        null,
-                        "",
-                        href
-                    );
-
-                } catch (error) {
-
-                    /*
-                     * Ignore history errors.
-                     */
-
-                }
-
             }
-        );
 
-    });
+            /*
+             * HMP ASHWELL HOMEPAGE PREVIEW
+             */
 
-}
+            .ashwell-home-feature {
+                display: grid !important;
+                grid-template-columns:
+                    minmax(0, .95fr)
+                    minmax(0, 1.05fr) !important;
 
+                overflow: hidden;
 
-/* =========================================================
-   HEADER SCROLL EFFECT
-   ========================================================= */
+                border: 1px solid rgba(255,255,255,.10);
 
-function initHeaderScroll() {
+                background:
+                    rgba(5,6,8,.62);
 
-    const header =
-        document.querySelector(
-            ".site-header"
-        );
+                box-shadow:
+                    0 20px 70px rgba(0,0,0,.35);
+            }
 
+            .ashwell-home-image {
+                display: block;
+                position: relative;
+                overflow: hidden;
+                min-height: 500px;
+                background: #000;
+            }
 
-    if (!header) {
-        return;
-    }
+            .ashwell-home-image img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                min-height: 500px;
 
+                object-fit: cover;
+                object-position: center;
 
-    const updateHeader =
-        () => {
+                filter:
+                    brightness(.82)
+                    contrast(1.06);
 
-            header.classList.toggle(
-                "scrolled",
-                window.scrollY > 40
-            );
+                transition:
+                    transform .7s ease,
+                    filter .7s ease;
+            }
 
-        };
+            .ashwell-home-image:hover img {
+                transform: scale(1.035);
 
+                filter:
+                    brightness(.94)
+                    contrast(1.06);
+            }
 
-    updateHeader();
+            /*
+             * ARCHIVE STATUS
+             */
 
+            .homepage-archive-status {
+                margin-top: 28px;
+                padding: 28px;
 
-    window.addEventListener(
-        "scroll",
-        updateHeader,
-        {
-            passive: true
-        }
-    );
+                text-align: center;
 
-}
+                border:
+                    1px solid
+                    rgba(255,106,26,.18);
 
+                background:
+                    rgba(5,6,8,.82);
+            }
 
-/* =========================================================
-   ACTIVE NAVIGATION
-   ========================================================= */
+            .homepage-archive-status .empty-code {
+                color: #ff6a1a;
+            }
 
-function initActiveNavigation() {
+            .homepage-archive-status p {
+                margin:
+                    9px 0 18px;
 
-    const navigation =
-        document.getElementById(
-            "main-navigation"
-        );
+                color: #999;
 
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: .16em;
+            }
 
-    if (!navigation) {
-        return;
-    }
+            /*
+             * MOBILE
+             */
 
+            @media (max-width: 900px) {
 
-    const links =
-        Array.from(
-            navigation.querySelectorAll(
-                'a[href^="#"]'
-            )
-        );
-
-
-    const sections =
-        links
-            .map((link) => {
-
-                const href =
-                    link.getAttribute(
-                        "href"
-                    );
-
-
-                let section = null;
-
-
-                try {
-
-                    section =
-                        document.querySelector(
-                            href
-                        );
-
-                } catch (error) {
-
-                    return null;
-
+                .construction-ticker {
+                    padding: 9px 0;
                 }
 
-
-                if (!section) {
-                    return null;
+                .construction-ticker-track span {
+                    font-size: .62rem;
+                    letter-spacing: .10em;
+                    padding-right: 50px;
                 }
 
-
-                return {
-                    link,
-                    section
-                };
-
-            })
-            .filter(Boolean);
-
-
-    if (!sections.length) {
-        return;
-    }
-
-
-    const updateActiveNavigation =
-        () => {
-
-            const scrollPosition =
-                window.scrollY +
-                window.innerHeight * 0.32;
-
-
-            let current =
-                sections[0];
-
-
-            sections.forEach(
-                (item) => {
-
-                    if (
-                        item.section.offsetTop <=
-                        scrollPosition
-                    ) {
-
-                        current =
-                            item;
-
-                    }
-
+                .ashwell-home-feature {
+                    grid-template-columns: 1fr !important;
                 }
-            );
 
-
-            links.forEach(
-                (link) => {
-
-                    link.classList.toggle(
-                        "active",
-                        link === current.link
-                    );
-
+                .ashwell-home-image {
+                    min-height: 330px;
+                    height: 330px;
                 }
-            );
 
-        };
-
-
-    updateActiveNavigation();
-
-
-    window.addEventListener(
-        "scroll",
-        updateActiveNavigation,
-        {
-            passive: true
-        }
-    );
-
-}
-
-
-/* =========================================================
-   BACK TO TOP
-   ========================================================= */
-
-function initBackToTop() {
-
-    const buttons =
-        document.querySelectorAll(
-            ".back-to-top"
-        );
-
-
-    if (!buttons.length) {
-        return;
-    }
-
-
-    const updateVisibility =
-        () => {
-
-            const visible =
-                window.scrollY > 600;
-
-
-            buttons.forEach(
-                (button) => {
-
-                    button.style.opacity =
-                        visible
-                            ? "1"
-                            : "0";
-
-
-                    button.style.visibility =
-                        visible
-                            ? "visible"
-                            : "hidden";
-
-
-                    button.style.pointerEvents =
-                        visible
-                            ? "auto"
-                            : "none";
-
+                .ashwell-home-image img {
+                    min-height: 330px;
                 }
-            );
 
-        };
-
-
-    updateVisibility();
-
-
-    window.addEventListener(
-        "scroll",
-        updateVisibility,
-        {
-            passive: true
-        }
-    );
-
-
-    buttons.forEach(
-        (button) => {
-
-            button.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-
-                    window.scrollTo({
-
-                        top: 0,
-
-                        left: 0,
-
-                        behavior: "smooth"
-
-                    });
-
-
-                    try {
-
-                        history.replaceState(
-                            null,
-                            "",
-                            "#home"
-                        );
-
-                    } catch (error) {
-
-                        /*
-                         * Ignore history errors.
-                         */
-
-                    }
-
+                .homepage-archive-status {
+                    margin-top: 20px;
+                    padding: 22px 16px;
                 }
-            );
+            }
 
-        }
-    );
+            /*
+             * REDUCED MOTION
+             */
 
-}
+            @media (prefers-reduced-motion: reduce) {
 
-
-/* =========================================================
-   INVESTIGATIONS
-   =========================================================
-   
-   The homepage can contain a static featured
-   investigation without being overwritten.
-
-   The API is only used when an element with
-   [data-investigations] exists.
-
-   This means:
-   - Homepage featured case remains intact.
-   - Investigation archive can still use the API.
-   - Future investigations can be added safely.
-   ========================================================= */
-
-async function initInvestigations() {
-
-    const container =
-        document.querySelector(
-            "[data-investigations]"
-        );
-
-
-    /*
-     * No API container on this page.
-     * Nothing needs to be loaded.
-     */
-
-    if (!container) {
-        return;
-    }
-
-
-    setInvestigationStatus(
-        container,
-        "LOADING INVESTIGATION ARCHIVE..."
-    );
-
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_BASE}/investigations`,
-                {
-                    method: "GET",
-
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    },
-
-                    cache: "no-store"
+                .construction-ticker-track {
+                    animation: none;
                 }
-            );
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Investigation request failed: ${response.status}`
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if (
-            !data ||
-            data.success !== true ||
-            !Array.isArray(
-                data.investigations
-            )
-        ) {
-
-            throw new Error(
-                "Invalid investigation response."
-            );
-
-        }
-
-
-        renderInvestigations(
-            container,
-            data.investigations
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load investigations:",
-            error
-        );
-
-
-        renderInvestigationUnavailable(
-            container
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   INVESTIGATION STATUS
-   ========================================================= */
-
-function setInvestigationStatus(
-    container,
-    message
-) {
-
-    container.innerHTML = `
-
-        <div class="empty-state">
-
-            <span class="empty-code">
-                ARCHIVE
-            </span>
-
-            <h3>
-                ${escapeHtml(message)}
-            </h3>
-
-            <p>
-                Published investigations will appear here.
-            </p>
-
-            <span class="empty-status">
-                ESSEX PARANORMAL
-            </span>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   RENDER INVESTIGATIONS
-   ========================================================= */
-
-function renderInvestigations(
-    container,
-    investigations
-) {
-
-    if (!investigations.length) {
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <span class="empty-code">
-                    ARCHIVE STATUS
-                </span>
-
-                <h3>
-                    NO INVESTIGATIONS PUBLISHED YET
-                </h3>
-
-                <p>
-                    The investigation archive is currently empty.
-                    New investigations will appear here when
-                    they are published.
-                </p>
-
-                <span class="empty-status">
-                    CHECK BACK FOR FUTURE INVESTIGATIONS
-                </span>
-
-            </div>
-
+                .ashwell-home-image img {
+                    transition: none;
+                }
+            }
         `;
 
-        return;
+        document.head.appendChild(style);
     }
 
+    /*
+     * Add construction banner.
+     */
+    function addConstructionBanner() {
+        if (document.querySelector(".construction-ticker")) {
+            return;
+        }
 
-    container.innerHTML =
-        investigations
-            .map(
-                renderInvestigationCard
+        const header =
+            document.querySelector(".site-header");
+
+        if (!header) {
+            return;
+        }
+
+        const ticker =
+            document.createElement("div");
+
+        ticker.className =
+            "construction-ticker";
+
+        ticker.setAttribute(
+            "role",
+            "status"
+        );
+
+        ticker.setAttribute(
+            "aria-label",
+            "Website under construction"
+        );
+
+        ticker.innerHTML = `
+            <div class="construction-ticker-track">
+
+                <span>
+                    WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE
+                </span>
+
+                <span aria-hidden="true">
+                    WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE
+                </span>
+
+            </div>
+        `;
+
+        header.insertAdjacentElement(
+            "afterend",
+            ticker
+        );
+    }
+
+    /*
+     * Create the HMP Ashwell homepage preview.
+     */
+    function addAshwellPreview() {
+        const investigations =
+            document.getElementById(
+                "investigations"
+            );
+
+        if (!investigations) {
+            return;
+        }
+
+        /*
+         * Do not add it twice.
+         */
+        if (
+            investigations.querySelector(
+                ".ashwell-home-image"
             )
-            .join("");
+        ) {
+            return;
+        }
 
-}
+        /*
+         * Find the existing investigation feature.
+         */
+        let feature =
+            investigations.querySelector(
+                ".investigation-feature"
+            );
 
+        /*
+         * Fallback selectors in case the
+         * existing HTML uses a different class.
+         */
+        if (!feature) {
+            feature =
+                investigations.querySelector(
+                    "article"
+                );
+        }
 
-/* =========================================================
-   RENDER SINGLE INVESTIGATION
-   ========================================================= */
+        if (!feature) {
+            return;
+        }
 
-function renderInvestigationCard(
-    investigation
-) {
+        /*
+         * Make the existing feature into
+         * the two-column Ashwell preview.
+         */
+        feature.classList.add(
+            "ashwell-home-feature"
+        );
 
-    const title =
-        investigation.title ||
-        investigation.name ||
-        "Untitled Investigation";
+        /*
+         * Create image link.
+         */
+        const imageLink =
+            document.createElement("a");
 
+        imageLink.href =
+            "/investigations/hmp-ashwell.html";
 
-    const description =
-        investigation.description ||
-        investigation.summary ||
-        "Investigation information will be published here.";
+        imageLink.className =
+            "ashwell-home-image";
 
+        imageLink.setAttribute(
+            "aria-label",
+            "View HMP Ashwell case file"
+        );
 
-    const location =
-        investigation.location ||
-        "";
+        imageLink.innerHTML = `
+            <img
+                src="/hmp-ashwell.PNG"
+                alt="HMP Ashwell investigation"
+                loading="lazy"
+                decoding="async"
+            >
+        `;
 
+        feature.insertBefore(
+            imageLink,
+            feature.firstChild
+        );
+    }
 
-    const date =
-        investigation.date ||
-        investigation.investigation_date ||
-        "";
+    /*
+     * Correct the homepage archive area.
+     *
+     * There must only be ONE archive action.
+     */
+    function fixArchiveArea() {
+        const investigations =
+            document.getElementById(
+                "investigations"
+            );
 
+        if (!investigations) {
+            return;
+        }
 
-    const id =
-        investigation.id ||
-        "";
+        /*
+         * Remove old duplicate archive blocks.
+         */
+        investigations
+            .querySelectorAll(
+                ".investigation-archive-action"
+            )
+            .forEach(function (element) {
+                element.remove();
+            });
 
+        /*
+         * Remove additional archive actions,
+         * but keep the first actual archive link.
+         */
+        const archiveLinks =
+            Array.from(
+                investigations.querySelectorAll(
+                    'a[href="/investigations/"]'
+                )
+            );
 
-    const status =
-        investigation.status ||
-        "PUBLISHED";
+        if (
+            archiveLinks.length > 1
+        ) {
+            archiveLinks
+                .slice(1)
+                .forEach(function (link) {
 
+                    const parent =
+                        link.closest(
+                            ".archive-action, .investigation-archive-action"
+                        );
 
-    return `
+                    if (parent) {
+                        parent.remove();
+                    } else {
+                        link.remove();
+                    }
+                });
+        }
 
-        <article class="investigation-card">
+        /*
+         * If our corrected archive block already
+         * exists, do nothing.
+         */
+        if (
+            investigations.querySelector(
+                ".homepage-archive-status"
+            )
+        ) {
+            return;
+        }
 
-            <div class="investigation-card-top">
+        /*
+         * Locate the first valid archive button.
+         */
+        const archiveButton =
+            investigations.querySelector(
+                'a[href="/investigations/"]'
+            );
 
-                <span class="investigation-id">
-                    ${escapeHtml(id)}
-                </span>
+        /*
+         * Create one archive status panel.
+         */
+        const status =
+            document.createElement("div");
 
-                <span class="investigation-status">
-                    ${escapeHtml(status)}
-                </span>
+        status.className =
+            "homepage-archive-status";
 
-            </div>
-
-
-            <div class="investigation-card-content">
-
-                <p class="eyebrow">
-                    INVESTIGATION
-                </p>
-
-                <h3>
-                    ${escapeHtml(title)}
-                </h3>
-
-                <p>
-                    ${escapeHtml(description)}
-                </p>
-
-
-                ${
-                    location || date
-                        ? `
-
-                            <div class="investigation-card-meta">
-
-                                ${
-                                    location
-                                        ? `
-                                            <span>
-                                                ${escapeHtml(location)}
-                                            </span>
-                                        `
-                                        : ""
-                                }
-
-
-                                ${
-                                    date
-                                        ? `
-                                            <span>
-                                                ${escapeHtml(date)}
-                                            </span>
-                                        `
-                                        : ""
-                                }
-
-                            </div>
-
-                        `
-                        : ""
-                }
-
-            </div>
-
-        </article>
-
-    `;
-
-}
-
-
-/* =========================================================
-   INVESTIGATION API UNAVAILABLE
-   ========================================================= */
-
-function renderInvestigationUnavailable(
-    container
-) {
-
-    container.innerHTML = `
-
-        <div class="empty-state">
-
+        status.innerHTML = `
             <span class="empty-code">
                 ARCHIVE STATUS
             </span>
 
-            <h3>
-                INVESTIGATION ARCHIVE TEMPORARILY UNAVAILABLE
-            </h3>
-
             <p>
-                The archive could not be loaded right now.
-                Please try again later.
+                INVESTIGATION ARCHIVE UNDER CONSTRUCTION
             </p>
+        `;
 
-            <span class="empty-status">
-                NO UNPUBLISHED CONTENT HAS BEEN INVENTED
-            </span>
+        if (archiveButton) {
 
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   HTML SAFETY
-   ========================================================= */
-
-function escapeHtml(value) {
-
-    return String(
-        value ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================================================
-   IMAGE FALLBACKS
-   ========================================================= */
-
-function initImageFallbacks() {
-
-    const images =
-        document.querySelectorAll(
-            "img"
-        );
-
-
-    images.forEach(
-        (image) => {
-
-            image.addEventListener(
-                "error",
-                () => {
-
-                    image.classList.add(
-                        "image-error"
-                    );
-
-
-                    /*
-                     * Record that the image failed
-                     * without attempting to replace
-                     * the supplied image automatically.
-                     */
-
-                    image.dataset.fallbackApplied =
-                        "true";
-
-
-                    console.warn(
-                        "Essex Paranormal image could not be loaded:",
-                        image.getAttribute(
-                            "src"
-                        )
-                    );
-
-                },
-                {
-                    once: true
-                }
+            /*
+             * Move the existing button into
+             * the single archive status panel.
+             */
+            status.appendChild(
+                archiveButton
             );
 
+        } else {
+
+            /*
+             * Create the button if the old
+             * homepage did not contain one.
+             */
+            const button =
+                document.createElement("a");
+
+            button.href =
+                "/investigations/";
+
+            button.className =
+                "button button-outline";
+
+            button.innerHTML = `
+                VIEW INVESTIGATION ARCHIVE
+                <span>→</span>
+            `;
+
+            status.appendChild(
+                button
+            );
         }
-    );
 
-}
+        /*
+         * Put the archive status after
+         * the main Ashwell feature.
+         */
+        const feature =
+            investigations.querySelector(
+                ".ashwell-home-feature"
+            );
 
+        if (feature) {
 
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
+            feature.insertAdjacentElement(
+                "afterend",
+                status
+            );
 
-function initCurrentYear() {
+        } else {
 
-    document
-        .querySelectorAll(
-            "[data-current-year]"
-        )
-        .forEach(
-            (element) => {
+            investigations.appendChild(
+                status
+            );
+        }
+    }
 
-                element.textContent =
-                    new Date().getFullYear();
+    /*
+     * Correct the Ashwell case-file links.
+     */
+    function fixAshwellLinks() {
+        const investigations =
+            document.getElementById(
+                "investigations"
+            );
 
+        if (!investigations) {
+            return;
+        }
+
+        /*
+         * Any link that visibly refers to the
+         * Ashwell case should use the correct URL.
+         */
+        investigations
+            .querySelectorAll("a")
+            .forEach(function (link) {
+
+                const text =
+                    (
+                        link.textContent || ""
+                    ).toUpperCase();
+
+                const aria =
+                    (
+                        link.getAttribute(
+                            "aria-label"
+                        ) || ""
+                    ).toUpperCase();
+
+                if (
+                    text.includes("ASHWELL") ||
+                    aria.includes("ASHWELL") ||
+                    text.includes("CASE FILE")
+                ) {
+                    /*
+                     * Do not touch the archive button.
+                     */
+                    if (
+                        link.getAttribute(
+                            "href"
+                        ) === "/investigations/"
+                    ) {
+                        return;
+                    }
+
+                    link.href =
+                        "/investigations/hmp-ashwell.html";
+                }
+            });
+    }
+
+    /*
+     * Run all corrections.
+     */
+    function applyCorrections() {
+        addCorrectionStyles();
+        addConstructionBanner();
+        addAshwellPreview();
+        fixArchiveArea();
+        fixAshwellLinks();
+    }
+
+    /*
+     * DOM ready.
+     */
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                setTimeout(
+                    applyCorrections,
+                    50
+                );
             }
         );
 
-}
+    } else {
 
-
-/* =========================================================
-   PAGE READY
-   ========================================================= */
-
-function initPageReady() {
+        setTimeout(
+            applyCorrections,
+            50
+        );
+    }
 
     /*
-     * Allow the CSS to reveal the page once
-     * the initial JavaScript setup has completed.
+     * Run again after the original
+     * website JavaScript has loaded.
      */
+    document.addEventListener(
+        "EssexOriginalScriptLoaded",
+        function () {
 
-    requestAnimationFrame(() => {
+            setTimeout(
+                applyCorrections,
+                100
+            );
+        }
+    );
 
-        document.body.classList.add(
-            "page-ready"
-        );
-
-    });
-
-}
+})();
