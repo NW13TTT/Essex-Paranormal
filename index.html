@@ -268,6 +268,228 @@
             background: var(--orange);
         }
 
+
+        /* =====================================================
+           UPCOMING EVENTS
+           ===================================================== */
+
+        .upcoming-events-section {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 80% 50%,
+                    rgba(255, 106, 26, .045),
+                    transparent 40%
+                ),
+                #050608;
+        }
+
+        .upcoming-events-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.018),
+                    transparent
+                );
+        }
+
+        .upcoming-event-card {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+            min-height: 520px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #090a0d;
+            box-shadow: 0 30px 90px rgba(0,0,0,.35);
+        }
+
+        .upcoming-event-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(32px, 5vw, 70px);
+        }
+
+        .upcoming-event-content h3 {
+            margin: 18px 0 25px;
+            color: var(--white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: .86;
+            font-weight: 900;
+            letter-spacing: -.045em;
+            text-transform: uppercase;
+        }
+
+        .upcoming-event-content > p {
+            max-width: 620px;
+            margin: 0 0 30px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .upcoming-event-details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .upcoming-event-details div {
+            padding: 18px 20px;
+            border-left: 2px solid var(--orange);
+            background: rgba(255,255,255,.025);
+        }
+
+        .upcoming-event-details span {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--orange);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .15em;
+        }
+
+        .upcoming-event-details strong {
+            display: block;
+            color: var(--white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.35rem;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .upcoming-event-content .button {
+            align-self: flex-start;
+        }
+
+        .upcoming-event-visual {
+            position: relative;
+            min-height: 520px;
+            overflow: hidden;
+            background:
+                linear-gradient(
+                    135deg,
+                    #17100b,
+                    #050608
+                );
+        }
+
+        .upcoming-event-visual::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    90deg,
+                    #090a0d 0%,
+                    rgba(9,10,13,.15) 35%,
+                    rgba(9,10,13,.20) 100%
+                ),
+                url("/essex-paranormal-feature.jpg.PNG")
+                center center / cover no-repeat;
+            filter: saturate(.65) contrast(1.05);
+            transform: scale(1.02);
+        }
+
+        .upcoming-event-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.10),
+                    rgba(0,0,0,.62)
+                );
+        }
+
+        .upcoming-event-mark {
+            position: absolute;
+            right: clamp(25px, 5vw, 60px);
+            bottom: clamp(25px, 5vw, 60px);
+            z-index: 2;
+            text-align: right;
+        }
+
+        .upcoming-event-mark span,
+        .upcoming-event-mark strong,
+        .upcoming-event-mark small {
+            display: block;
+        }
+
+        .upcoming-event-mark span {
+            color: var(--white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: .8;
+            font-weight: 900;
+            letter-spacing: -.05em;
+        }
+
+        .upcoming-event-mark strong {
+            margin-top: 8px;
+            color: var(--orange);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(1.4rem, 3vw, 2.6rem);
+            line-height: .9;
+            letter-spacing: .08em;
+        }
+
+        .upcoming-event-mark small {
+            margin-top: 12px;
+            color: rgba(255,255,255,.72);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .2em;
+        }
+
+        @media (max-width: 900px) {
+
+            .upcoming-event-card {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-visual {
+                min-height: 390px;
+                order: -1;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .upcoming-event-content {
+                padding: 30px 22px;
+            }
+
+            .upcoming-event-content h3 {
+                font-size: clamp(2.7rem, 14vw, 4.2rem);
+            }
+
+            .upcoming-event-details {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-visual {
+                min-height: 300px;
+            }
+
+        }
+
+
         @media (max-width: 850px) {
 
             .social-heading {
@@ -382,6 +604,10 @@
                     class="active"
                 >
                     HOME
+                </a>
+
+                <a href="#upcoming-events">
+                    UPCOMING EVENTS
                 </a>
 
                 <a href="#about">
@@ -510,7 +736,7 @@
 
 
                 <a
-                    href="#about"
+                    href="#upcoming-events"
                     class="scroll-cue"
                 >
 
@@ -534,6 +760,134 @@
                     </strong>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             UPCOMING EVENTS
+             ================================================= -->
+
+        <section
+            id="upcoming-events"
+            class="section upcoming-events-section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        UPCOMING EVENTS
+                    </p>
+
+
+                    <h2>
+                        THE ANCIENT
+                        <span>RAM INN.</span>
+                    </h2>
+
+
+                    <p>
+                        Essex Paranormal is heading to one of
+                        the UK's most notorious historic locations
+                        for a 24-hour live investigation.
+                    </p>
+
+                </div>
+
+
+                <article class="upcoming-event-card">
+
+                    <div class="upcoming-event-content">
+
+                        <span class="empty-code">
+                            NEXT INVESTIGATION
+                        </span>
+
+
+                        <h3>
+                            THE ANCIENT RAM INN
+                        </h3>
+
+
+                        <div class="upcoming-event-details">
+
+                            <div>
+
+                                <span>
+                                    DATE
+                                </span>
+
+                                <strong>
+                                    16–17 SEPTEMBER
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    DURATION
+                                </span>
+
+                                <strong>
+                                    24 HOURS LIVE
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+                            Follow Essex Paranormal as the
+                            investigation unfolds live from
+                            The Ancient Ram Inn. Updates,
+                            experiences and investigation
+                            content will follow across our
+                            channels.
+                        </p>
+
+
+                        <a
+                            href="#social"
+                            class="button button-primary"
+                        >
+                            FOLLOW THE INVESTIGATION
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+
+                    <div class="upcoming-event-visual">
+
+                        <div class="upcoming-event-overlay"></div>
+
+
+                        <div class="upcoming-event-mark">
+
+                            <span>
+                                16–17
+                            </span>
+
+                            <strong>
+                                SEPTEMBER
+                            </strong>
+
+                            <small>
+                                24 HOURS LIVE
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </article>
 
             </div>
 
@@ -1148,8 +1502,6 @@
 
                 <div class="social-grid">
 
-                    <!-- YOUTUBE -->
-
                     <a
                         href="https://youtube.com/@essexparanormal666"
                         class="social-button"
@@ -1195,8 +1547,6 @@
 
                     </a>
 
-
-                    <!-- TIKTOK -->
 
                     <a
                         href="https://www.tiktok.com/@essexparanormal"
@@ -1244,8 +1594,6 @@
                     </a>
 
 
-                    <!-- INSTAGRAM -->
-
                     <a
                         href="https://www.instagram.com/essex.paranormal/"
                         class="social-button"
@@ -1291,8 +1639,6 @@
 
                     </a>
 
-
-                    <!-- FACEBOOK -->
 
                     <a
                         href="https://www.facebook.com/share/g/19KLo9qcjU/"
@@ -2108,6 +2454,10 @@
 
                     <a href="#home">
                         HOME
+                    </a>
+
+                    <a href="#upcoming-events">
+                        UPCOMING EVENTS
                     </a>
 
                     <a href="#about">
