@@ -2,7 +2,11 @@
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
     <meta
         name="description"
@@ -16,7 +20,11 @@
     <title>Essex Paranormal | Evidence Before Assumption</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
@@ -29,7 +37,6 @@
 
         /* =====================================================
            SOCIAL MEDIA FEATURE
-           ESSEX PARANORMAL ORANGE / BLACK DESIGN
            ===================================================== */
 
         .social-section {
@@ -130,8 +137,7 @@
             background: var(--orange);
             transform: scaleY(.18);
             transform-origin: bottom;
-            transition:
-                transform .45s var(--ease);
+            transition: transform .45s var(--ease);
         }
 
         .social-button::after {
@@ -143,8 +149,7 @@
             bottom: -110px;
             border-radius: 50%;
             background: rgba(255, 106, 26, .07);
-            transition:
-                transform .55s var(--ease);
+            transition: transform .55s var(--ease);
         }
 
         .social-button:hover {
@@ -239,8 +244,7 @@
             flex: 0 0 auto;
             color: var(--orange);
             font-size: 1.5rem;
-            transition:
-                transform .45s var(--ease);
+            transition: transform .45s var(--ease);
         }
 
         .social-button:hover .social-arrow {
@@ -303,8 +307,10 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-            min-height: 520px;
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(0, 1fr);
+            min-height: 600px;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,.10);
             background: #090a0d;
@@ -341,7 +347,8 @@
 
         .upcoming-event-details {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
             gap: 14px;
             margin-bottom: 30px;
         }
@@ -375,86 +382,97 @@
             align-self: flex-start;
         }
 
-        .upcoming-event-visual {
+        /*
+         * REAL ANCIENT RAM INN VIDEO
+         */
+
+        .upcoming-event-video {
             position: relative;
-            min-height: 520px;
+            min-height: 600px;
             overflow: hidden;
-            background:
-                linear-gradient(
-                    135deg,
-                    #17100b,
-                    #050608
-                );
+            background: #000;
         }
 
-        .upcoming-event-visual::before {
+        .upcoming-event-video video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .upcoming-event-video::after {
             content: "";
             position: absolute;
             inset: 0;
+            pointer-events: none;
             background:
                 linear-gradient(
                     90deg,
-                    #090a0d 0%,
-                    rgba(9,10,13,.15) 35%,
-                    rgba(9,10,13,.20) 100%
+                    rgba(0,0,0,.35),
+                    transparent 45%,
+                    rgba(0,0,0,.18)
                 ),
-                url("/essex-paranormal-feature.jpg.PNG")
-                center center / cover no-repeat;
-            filter: saturate(.65) contrast(1.05);
-            transform: scale(1.02);
-        }
-
-        .upcoming-event-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background:
                 linear-gradient(
                     180deg,
-                    rgba(0,0,0,.10),
-                    rgba(0,0,0,.62)
+                    rgba(0,0,0,.05),
+                    rgba(0,0,0,.45)
                 );
         }
 
-        .upcoming-event-mark {
+        .upcoming-video-label {
             position: absolute;
-            right: clamp(25px, 5vw, 60px);
-            bottom: clamp(25px, 5vw, 60px);
-            z-index: 2;
+            left: 24px;
+            top: 24px;
+            z-index: 3;
+            padding: 9px 13px;
+            color: #fff;
+            background: rgba(0,0,0,.72);
+            border: 1px solid rgba(255,255,255,.18);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
+        }
+
+        .upcoming-video-caption {
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            z-index: 3;
+            max-width: 280px;
             text-align: right;
         }
 
-        .upcoming-event-mark span,
-        .upcoming-event-mark strong,
-        .upcoming-event-mark small {
+        .upcoming-video-caption strong {
             display: block;
-        }
-
-        .upcoming-event-mark span {
-            color: var(--white);
+            color: #fff;
             font-family: "Barlow Condensed", sans-serif;
-            font-size: clamp(3rem, 6vw, 6rem);
-            line-height: .8;
+            font-size: clamp(2rem, 4vw, 4rem);
+            line-height: .82;
             font-weight: 900;
-            letter-spacing: -.05em;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
         }
 
-        .upcoming-event-mark strong {
-            margin-top: 8px;
+        .upcoming-video-caption span {
+            display: block;
+            margin-top: 10px;
             color: var(--orange);
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: clamp(1.4rem, 3vw, 2.6rem);
-            line-height: .9;
-            letter-spacing: .08em;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .18em;
+            text-transform: uppercase;
         }
 
-        .upcoming-event-mark small {
-            margin-top: 12px;
-            color: rgba(255,255,255,.72);
-            font-size: .7rem;
-            font-weight: 800;
-            letter-spacing: .2em;
-        }
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
 
         @media (max-width: 900px) {
 
@@ -462,33 +480,12 @@
                 grid-template-columns: 1fr;
             }
 
-            .upcoming-event-visual {
-                min-height: 390px;
+            .upcoming-event-video {
+                min-height: 480px;
                 order: -1;
             }
 
         }
-
-        @media (max-width: 550px) {
-
-            .upcoming-event-content {
-                padding: 30px 22px;
-            }
-
-            .upcoming-event-content h3 {
-                font-size: clamp(2.7rem, 14vw, 4.2rem);
-            }
-
-            .upcoming-event-details {
-                grid-template-columns: 1fr;
-            }
-
-            .upcoming-event-visual {
-                min-height: 300px;
-            }
-
-        }
-
 
         @media (max-width: 850px) {
 
@@ -507,6 +504,41 @@
         }
 
         @media (max-width: 550px) {
+
+            .upcoming-event-content {
+                padding: 30px 22px;
+            }
+
+            .upcoming-event-content h3 {
+                font-size: clamp(
+                    2.7rem,
+                    14vw,
+                    4.2rem
+                );
+            }
+
+            .upcoming-event-details {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-video {
+                min-height: 360px;
+            }
+
+            .upcoming-video-label {
+                left: 15px;
+                top: 15px;
+                font-size: .62rem;
+            }
+
+            .upcoming-video-caption {
+                right: 15px;
+                bottom: 18px;
+            }
+
+            .upcoming-video-caption strong {
+                font-size: 2.5rem;
+            }
 
             .social-heading h2 {
                 font-size: clamp(
@@ -552,7 +584,9 @@
 
 </head>
 
+
 <body>
+
 
     <!-- =====================================================
          CINEMATIC ENTRY
@@ -572,45 +606,46 @@
 
     <header class="site-header">
 
-        <div class="container header-container">
+        <div class="container header-inner">
 
             <a
-                href="#home"
-                class="brand"
+                href="/"
+                class="site-logo"
                 aria-label="Essex Paranormal home"
             >
-
-                <span class="brand-logo-crop">
-
-                    <img
-                        src="/essex-paranormal-logo.png"
-                        alt="Essex Paranormal"
-                        class="brand-logo"
-                        decoding="async"
-                    >
-
-                </span>
-
+                <img
+                    src="/essex-paranormal-logo.png"
+                    alt="Essex Paranormal"
+                >
             </a>
+
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="main-navigation"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
 
             <nav
                 id="main-navigation"
+                class="main-navigation"
                 aria-label="Main navigation"
             >
 
-                <a
-                    href="#home"
-                    class="active"
-                >
-                    HOME
-                </a>
+                <a href="#home">HOME</a>
 
                 <a href="#upcoming-events">
                     UPCOMING EVENTS
                 </a>
 
-                <a href="#about">
+                <a href="#meet-lewis">
                     MEET LEWIS
                 </a>
 
@@ -636,31 +671,13 @@
 
             </nav>
 
-
-            <button
-                class="menu-toggle"
-                type="button"
-                aria-label="Open navigation menu"
-                aria-expanded="false"
-                aria-controls="main-navigation"
-            >
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
-
         </div>
 
     </header>
 
 
-    <!-- =====================================================
-         MAIN CONTENT
-         ===================================================== -->
-
     <main>
+
 
         <!-- =================================================
              HERO
@@ -671,97 +688,63 @@
             class="hero"
         >
 
-            <div class="hero-shade"></div>
-            <div class="hero-grid"></div>
-            <div class="scan-line"></div>
+            <div class="hero-content">
 
-            <div class="container hero-container">
+                <p class="eyebrow">
+                    HONEST. REAL. UNBIASED.
+                </p>
 
-                <div class="hero-content">
+                <h1>
+                    EVIDENCE
+                    <span>BEFORE</span>
+                    ASSUMPTION.
+                </h1>
 
-                    <p class="eyebrow">
-                        HONEST. REAL. UNBIASED.
-                    </p>
-
-
-                    <h1>
-                        <span>EVIDENCE</span>
-                        <strong>BEFORE</strong>
-                        <span>ASSUMPTION.</span>
-                    </h1>
-
-
-                    <p class="hero-description">
-                        Essex Paranormal is an independent
-                        investigation practice focused on
-                        evidence, truth and accountability.
-                    </p>
+                <p class="hero-description">
+                    Essex Paranormal is an independent
+                    investigation practice focused on evidence,
+                    truth and accountability.
+                </p>
 
 
-                    <div class="hero-actions">
+                <div class="hero-actions">
 
-                        <a
-                            href="#about"
-                            class="button button-primary"
-                        >
-                            MEET LEWIS
-                            <span>→</span>
-                        </a>
+                    <a
+                        href="#meet-lewis"
+                        class="button button-primary"
+                    >
+                        MEET LEWIS
+                    </a>
 
-
-                        <a
-                            href="#investigations"
-                            class="button button-outline"
-                        >
-                            VIEW INVESTIGATIONS
-                            <span>→</span>
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <div class="hero-side-note">
-
-                    <span class="vertical-line"></span>
-
-                    <div>
-                        REAL PEOPLE.<br>
-                        REAL PLACES.<br>
-                        REAL EXPERIENCES.
-                    </div>
-
-                </div>
-
-
-                <a
-                    href="#upcoming-events"
-                    class="scroll-cue"
-                >
-
-                    <span>
-                        SCROLL TO EXPLORE
-                    </span>
-
-                    <i></i>
-
-                </a>
-
-
-                <div class="hero-status">
-
-                    <span class="status-dot"></span>
-
-                    INVESTIGATION STATUS:
-
-                    <strong>
-                        ACTIVE
-                    </strong>
+                    <a
+                        href="#investigations"
+                        class="button button-secondary"
+                    >
+                        VIEW INVESTIGATIONS
+                    </a>
 
                 </div>
 
             </div>
+
+
+            <div class="hero-side-note">
+
+                REAL PEOPLE.<br>
+                REAL PLACES.<br>
+                REAL EXPERIENCES.
+
+            </div>
+
+
+            <a
+                href="#upcoming-events"
+                class="hero-scroll"
+                aria-label="Scroll to upcoming events"
+            >
+                <span></span>
+                SCROLL
+            </a>
 
         </section>
 
@@ -783,34 +766,34 @@
                         UPCOMING EVENTS
                     </p>
 
-
                     <h2>
-                        THE ANCIENT
-                        <span>RAM INN.</span>
+                        THE NEXT
+                        <span>INVESTIGATION.</span>
                     </h2>
-
-
-                    <p>
-                        Essex Paranormal is heading to one of
-                        the UK's most notorious historic locations
-                        for a 24-hour live investigation.
-                    </p>
 
                 </div>
 
 
                 <article class="upcoming-event-card">
 
+
                     <div class="upcoming-event-content">
 
-                        <span class="empty-code">
-                            NEXT INVESTIGATION
-                        </span>
-
+                        <p class="eyebrow">
+                            LIVE INVESTIGATION
+                        </p>
 
                         <h3>
-                            THE ANCIENT RAM INN
+                            THE ANCIENT
+                            RAM INN.
                         </h3>
+
+                        <p>
+                            Essex Paranormal heads to one of
+                            Britain's most notorious paranormal
+                            locations for an extended live
+                            investigation.
+                        </p>
 
 
                         <div class="upcoming-event-details">
@@ -843,45 +826,58 @@
                         </div>
 
 
-                        <p>
-                            Follow Essex Paranormal as the
-                            investigation unfolds live from
-                            The Ancient Ram Inn. Updates,
-                            experiences and investigation
-                            content will follow across our
-                            channels.
-                        </p>
-
-
                         <a
                             href="#social"
                             class="button button-primary"
                         >
                             FOLLOW THE INVESTIGATION
-                            <span>→</span>
                         </a>
 
                     </div>
 
 
-                    <div class="upcoming-event-visual">
+                    <!-- =====================================
+                         ACTUAL PROMOTIONAL VIDEO
+                         ===================================== -->
 
-                        <div class="upcoming-event-overlay"></div>
+                    <div class="upcoming-event-video">
+
+                        <span class="upcoming-video-label">
+                            ANCIENT RAM INN
+                        </span>
 
 
-                        <div class="upcoming-event-mark">
+                        <video
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            controls
+                            preload="metadata"
+                            poster="/essex-paranormal-feature.jpg.PNG"
+                            aria-label="Ancient Ram Inn promotional video"
+                        >
 
-                            <span>
-                                16–17
-                            </span>
+                            <source
+                                src="/ancient-ram-inn-promo.MP4"
+                                type="video/mp4"
+                            >
+
+                            Your browser does not support
+                            HTML5 video.
+
+                        </video>
+
+
+                        <div class="upcoming-video-caption">
 
                             <strong>
-                                SEPTEMBER
+                                24 HOURS
                             </strong>
 
-                            <small>
-                                24 HOURS LIVE
-                            </small>
+                            <span>
+                                LIVE INVESTIGATION
+                            </span>
 
                         </div>
 
@@ -899,245 +895,103 @@
              ================================================= -->
 
         <section
-            id="about"
-            class="section profile-section"
+            id="meet-lewis"
+            class="section"
         >
 
             <div class="container">
 
-                <div class="profile-layout">
+                <div class="section-heading">
 
-                    <div class="profile-copy">
+                    <p class="eyebrow">
+                        MEET LEWIS
+                    </p>
+
+                    <h2>
+                        THE PERSON
+                        <span>BEHIND THE INVESTIGATION.</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="bio-grid">
+
+                    <div class="bio-content">
 
                         <p class="eyebrow">
-                            MEET LEWIS
+                            OWNER & LEAD INVESTIGATOR
                         </p>
 
+                        <h3>
+                            LEWIS McDIARMID
+                        </h3>
 
-                        <h2>
-                            Biography -
-                            <span>Lewis McDiarmid</span>
-                        </h2>
-
-
-                        <p class="role">
-                            OWNER &amp; LEAD INVESTIGATOR,
-                            ESSEX PARANORMAL
+                        <p>
+                            I was born in East London and now live
+                            in Essex. Outside of investigations I'm
+                            very busy with travelling, music and
+                            media.
                         </p>
 
+                        <p>
+                            My interests span the paranormal and
+                            supernatural, music, performing arts,
+                            live shows, travelling, UFO phenomena
+                            and ancient civilisations.
+                        </p>
 
-                        <div class="bio-content">
+                        <p>
+                            Essex Paranormal was created around a
+                            simple principle: investigate properly,
+                            document honestly and allow the evidence
+                            to speak for itself.
+                        </p>
 
-                            <p>
-                                Essex Paranormal was originally
-                                created and run by Laura, who was
-                                passionate about the subject and
-                                built a truly unique team of people
-                                who explored and investigated the
-                                phenomena. She was heavily invested
-                                in truth and clarity, and she built
-                                Essex Paranormal on that ethos. The
-                                group eventually disbanded in the
-                                early 2000s after many team changes
-                                and a name change.
-                            </p>
-
-
-                            <p>
-                                Last year, after much thought and
-                                consideration, I decided to reboot
-                                Essex Paranormal and return it to
-                                its original ethos and principles.
-                            </p>
-
-
-                            <p>
-                                What makes Essex Paranormal
-                                different is that it is totally
-                                evidence-based and reality-based.
-                                No trickery, no staged events, no
-                                faked activity. I look at every angle
-                                of truth and fact to ensure honesty
-                                and accountability are always upheld.
-                            </p>
-
-
-                            <h3>
-                                Investigations &amp; Evidence
-                            </h3>
-
-
-                            <p>
-                                Essex Paranormal uses a minimum
-                                amount of equipment because I
-                                believe the most powerful tool is
-                                myself.
-                            </p>
-
-
-                            <p>
-                                I do use cameras, night-vision
-                                systems, field cameras and similar
-                                equipment to gain footage after dark.
-                                I also use trigger objects as a
-                                precursor to gaining interaction
-                                between realms.
-                            </p>
-
-
-                            <p>
-                                Ouija boards, crystal balls, sensory
-                                equipment, and historical information
-                                relating to the environment are also
-                                part of my process. Essex Paranormal
-                                also uses drones to gather information
-                                and aerial data of locations when
-                                required.
-                            </p>
-
-
-                            <h3>
-                                My Experiences &amp; Beliefs
-                            </h3>
-
-
-                            <p>
-                                My personal experiences are too many
-                                to mention, but throughout the site I
-                                will share as many as I can so people
-                                can read them and hopefully gain some
-                                insight into them all.
-                            </p>
-
-
-                            <p>
-                                I believe there is definitely something
-                                other than what we consciously choose
-                                to be aware of. I believe in what I see,
-                                feel, hear, and understand.
-                            </p>
-
-
-                            <p>
-                                Visitors to Essex Paranormal should
-                                understand that everything I do is
-                                based on truth, fact, and evidence-based
-                                material that I always endeavour to
-                                collect honestly. Nothing I say, do,
-                                share, or post will ever be fake,
-                                trickery, or false. Essex Paranormal
-                                is proud to be honest and truthful.
-                            </p>
-
-
-                            <h3>
-                                What Paranormal Investigation
-                                Means to Me
-                            </h3>
-
-
-                            <p>
-                                A paranormal investigation is an
-                                important part of my life and my
-                                journey to try and understand what
-                                else is out there. I love being able
-                                to explore and understand what the
-                                real answer is to life and the
-                                afterlife. If there really is a
-                                continuation from one stage of
-                                awareness to the next, then I will
-                                continue to pursue the search for it.
-                            </p>
-
-                        </div>
+                        <a
+                            href="#about"
+                            class="button button-secondary"
+                        >
+                            READ MORE
+                        </a>
 
                     </div>
 
 
-                    <div class="profile-visual">
+                    <div class="bio-image">
 
-                        <div class="profile-image-frame">
-
-                            <img
-                                src="/meet-lewis-biography.jpg"
-                                alt="Essex Paranormal investigator"
-                                class="profile-image"
-                                loading="lazy"
-                                decoding="async"
-                            >
-
-                            <span
-                                class="frame-corner frame-corner-top"
-                            ></span>
-
-                            <span
-                                class="frame-corner frame-corner-bottom"
-                            ></span>
-
-                        </div>
-
-
-                        <div class="profile-quote">
-
-                            <span></span>
-
-                            <p>
-                                “THE TRUTH EXISTS,
-                                EVEN WHEN NO ONE
-                                BELIEVES.”
-                            </p>
-
-                        </div>
-
-
-                        <div class="profile-identifiers">
-
-                            <div>
-                                <strong>
-                                    INVESTIGATOR
-                                </strong>
-
-                                <small>
-                                    Evidence Led
-                                </small>
-                            </div>
-
-
-                            <div>
-                                <strong>
-                                    DOCUMENTARY
-                                </strong>
-
-                                <small>
-                                    Truth Focused
-                                </small>
-                            </div>
-
-
-                            <div>
-                                <strong>
-                                    DRONE OPERATIONS
-                                </strong>
-
-                                <small>
-                                    Aerial Reconnaissance
-                                </small>
-                            </div>
-
-
-                            <div>
-                                <strong>
-                                    EXPLORER
-                                </strong>
-
-                                <small>
-                                    Always Seeking Answers
-                                </small>
-                            </div>
-
-                        </div>
+                        <img
+                            src="/meet-lewis-biography.jpg"
+                            alt="Lewis McDiarmid"
+                            loading="lazy"
+                        >
 
                     </div>
+
+                </div>
+
+
+                <div
+                    id="about"
+                    class="about-copy"
+                >
+
+                    <p>
+                        Paranormal investigation should not begin
+                        with an assumption of what happened.
+                    </p>
+
+                    <p>
+                        It should begin with a question.
+                    </p>
+
+                    <p>
+                        Every investigation is approached with
+                        observation, documentation and review.
+                        Experiences are recorded, evidence is
+                        examined and conclusions are kept separate
+                        from assumption.
+                    </p>
 
                 </div>
 
@@ -1152,7 +1006,7 @@
 
         <section
             id="experiences"
-            class="section destinations-section"
+            class="section section-dark"
         >
 
             <div class="container">
@@ -1160,190 +1014,121 @@
                 <div class="section-heading">
 
                     <p class="eyebrow">
-                        EXPLORE ESSEX PARANORMAL
+                        WHAT WE DO
                     </p>
 
-
                     <h2>
-                        REAL PLACES.
-                        <span>REAL STORIES.</span>
+                        EXPLORE THE
+                        <span>UNKNOWN.</span>
                     </h2>
+
+                    <p>
+                        Investigations, evidence, locations and
+                        media from Essex Paranormal.
+                    </p>
 
                 </div>
 
 
-                <div class="destination-grid">
+                <div class="feature-grid">
+
 
                     <a
-                        href="#experiences"
-                        class="destination-card"
+                        href="#investigations"
+                        class="feature-card"
                     >
 
-                        <div
-                            class="destination-image
-                            destination-image-experience"
-                        ></div>
+                        <span class="feature-number">
+                            01
+                        </span>
 
+                        <h3>
+                            EXPERIENCES
+                        </h3>
 
-                        <div class="destination-content">
+                        <p>
+                            Follow our investigations and
+                            experiences in real locations.
+                        </p>
 
-                            <span class="destination-number">
-                                01
-                            </span>
-
-
-                            <div class="destination-icon">
-                                ◎
-                            </div>
-
-
-                            <h3>
-                                EXPERIENCES
-                            </h3>
-
-
-                            <p>
-                                Personal accounts, moments
-                                and stories from a lifetime
-                                in the unknown.
-                            </p>
-
-
-                            <span class="card-link">
-                                EXPLORE →
-                            </span>
-
-                        </div>
+                        <span class="feature-link">
+                            EXPLORE →
+                        </span>
 
                     </a>
 
 
                     <a
                         href="#investigations"
-                        class="destination-card"
+                        class="feature-card"
                     >
 
-                        <div
-                            class="destination-image
-                            destination-image-investigation"
-                        ></div>
+                        <span class="feature-number">
+                            02
+                        </span>
 
+                        <h3>
+                            INVESTIGATIONS
+                        </h3>
 
-                        <div class="destination-content">
+                        <p>
+                            Read case information, methods,
+                            observations and findings.
+                        </p>
 
-                            <span class="destination-number">
-                                02
-                            </span>
-
-
-                            <div class="destination-icon">
-                                ◇
-                            </div>
-
-
-                            <h3>
-                                INVESTIGATIONS
-                            </h3>
-
-
-                            <p>
-                                Real locations. Real research.
-                                Real evidence.
-                            </p>
-
-
-                            <span class="card-link">
-                                VIEW INVESTIGATIONS →
-                            </span>
-
-                        </div>
+                        <span class="feature-link">
+                            VIEW CASES →
+                        </span>
 
                     </a>
 
 
                     <a
                         href="#gallery"
-                        class="destination-card"
+                        class="feature-card"
                     >
 
-                        <div
-                            class="destination-image
-                            destination-image-gallery"
-                        ></div>
+                        <span class="feature-number">
+                            03
+                        </span>
 
+                        <h3>
+                            GALLERY
+                        </h3>
 
-                        <div class="destination-content">
+                        <p>
+                            Images and media from investigations
+                            and locations.
+                        </p>
 
-                            <span class="destination-number">
-                                03
-                            </span>
-
-
-                            <div class="destination-icon">
-                                □
-                            </div>
-
-
-                            <h3>
-                                GALLERY
-                            </h3>
-
-
-                            <p>
-                                Photos, videos and audio
-                                from investigations and
-                                behind the scenes.
-                            </p>
-
-
-                            <span class="card-link">
-                                VIEW GALLERY →
-                            </span>
-
-                        </div>
+                        <span class="feature-link">
+                            VIEW GALLERY →
+                        </span>
 
                     </a>
 
 
                     <a
-                        href="#gallery"
-                        class="destination-card"
+                        href="#social"
+                        class="feature-card"
                     >
 
-                        <div
-                            class="destination-image
-                            destination-image-media"
-                        ></div>
+                        <span class="feature-number">
+                            04
+                        </span>
 
+                        <h3>
+                            PODCASTS & MEDIA
+                        </h3>
 
-                        <div class="destination-content">
+                        <p>
+                            Follow the latest videos, stories and
+                            investigation content.
+                        </p>
 
-                            <span class="destination-number">
-                                04
-                            </span>
-
-
-                            <div class="destination-icon">
-                                ◉
-                            </div>
-
-
-                            <h3>
-                                PODCASTS &amp; MEDIA
-                            </h3>
-
-
-                            <p>
-                                Discussions, features,
-                                podcasts and media appearances.
-                            </p>
-
-
-                            <span class="card-link">
-                                EXPLORE MEDIA →
-                            </span>
-
-                        </div>
+                        <span class="feature-link">
+                            WATCH & LISTEN →
+                        </span>
 
                     </a>
 
@@ -1355,27 +1140,25 @@
 
 
         <!-- =================================================
-             APPROACH
+             OUR APPROACH
              ================================================= -->
 
         <section
-            id="method"
-            class="section approach-section"
+            id="approach"
+            class="section"
         >
 
             <div class="container">
 
-                <div class="section-heading approach-heading">
+                <div class="section-heading">
 
                     <p class="eyebrow">
                         OUR APPROACH
                     </p>
 
-
                     <h2>
-                        OBSERVATION.
-                        DOCUMENTATION.
-                        <span>REVIEW.</span>
+                        EVIDENCE
+                        <span>FIRST.</span>
                     </h2>
 
                 </div>
@@ -1383,79 +1166,300 @@
 
                 <div class="approach-grid">
 
-                    <article class="approach-item">
 
-                        <div class="approach-icon">
-                            ◉
-                        </div>
+                    <article class="approach-card">
 
-
-                        <span class="approach-number">
-                            01.
+                        <span>
+                            01
                         </span>
-
 
                         <h3>
                             OBSERVATION
                         </h3>
 
-
                         <p>
-                            We observe with an open mind,
-                            not an open conclusion.
+                            We document the environment and
+                            circumstances before drawing
+                            conclusions.
                         </p>
 
                     </article>
 
 
-                    <article class="approach-item">
+                    <article class="approach-card">
 
-                        <div class="approach-icon">
-                            ◎
-                        </div>
-
-
-                        <span class="approach-number">
-                            02.
+                        <span>
+                            02
                         </span>
-
 
                         <h3>
                             DOCUMENTATION
                         </h3>
 
-
                         <p>
-                            Everything is recorded,
-                            examined and preserved.
+                            Evidence is recorded carefully,
+                            including relevant environmental
+                            conditions and equipment.
                         </p>
 
                     </article>
 
 
-                    <article class="approach-item">
+                    <article class="approach-card">
 
-                        <div class="approach-icon">
-                            ▤
-                        </div>
-
-
-                        <span class="approach-number">
-                            03.
+                        <span>
+                            03
                         </span>
-
 
                         <h3>
                             REVIEW
                         </h3>
 
-
                         <p>
-                            We analyse, question and
-                            seek the truth, always.
+                            Evidence is reviewed afterwards with
+                            an open mind and without forcing an
+                            explanation.
                         </p>
 
                     </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             INVESTIGATIONS
+             ================================================= -->
+
+        <section
+            id="investigations"
+            class="section section-dark"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        INVESTIGATIONS
+                    </p>
+
+                    <h2>
+                        CASE
+                        <span>FILES.</span>
+                    </h2>
+
+                    <p>
+                        Published investigations and evidence-led
+                        case information.
+                    </p>
+
+                </div>
+
+
+                <article class="investigation-feature">
+
+                    <div class="investigation-image">
+
+                        <img
+                            src="/hmp-ashwell.PNG"
+                            alt="HMP Ashwell"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+
+                    <div class="investigation-content">
+
+                        <p class="eyebrow">
+                            CASE FILE 001
+                        </p>
+
+                        <h3>
+                            HMP ASHWELL
+                        </h3>
+
+                        <p>
+                            A documented investigation at the
+                            former prison site, examining the
+                            location, its history and reported
+                            experiences.
+                        </p>
+
+                        <a
+                            href="/investigations/hmp-ashwell.html"
+                            class="button button-primary"
+                        >
+                            OPEN CASE FILE
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EVIDENCE
+             ================================================= -->
+
+        <section
+            id="evidence"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        EVIDENCE
+                    </p>
+
+                    <h2>
+                        LOOK AT THE
+                        <span>FACTS.</span>
+                    </h2>
+
+                    <p>
+                        Evidence should be examined carefully,
+                        questioned and placed into context.
+                    </p>
+
+                </div>
+
+
+                <div class="evidence-grid">
+
+
+                    <article class="evidence-card">
+
+                        <span>
+                            AUDIO
+                        </span>
+
+                        <h3>
+                            RECORDED PHENOMENA
+                        </h3>
+
+                        <p>
+                            Audio evidence is reviewed against
+                            environmental noise and alternative
+                            explanations.
+                        </p>
+
+                    </article>
+
+
+                    <article class="evidence-card">
+
+                        <span>
+                            VISUAL
+                        </span>
+
+                        <h3>
+                            PHOTOGRAPHIC EVIDENCE
+                        </h3>
+
+                        <p>
+                            Images are examined carefully rather
+                            than automatically treated as
+                            paranormal.
+                        </p>
+
+                    </article>
+
+
+                    <article class="evidence-card">
+
+                        <span>
+                            ENVIRONMENT
+                        </span>
+
+                        <h3>
+                            LOCATION DATA
+                        </h3>
+
+                        <p>
+                            Temperature, lighting, movement and
+                            surrounding conditions can all affect
+                            an investigation.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GALLERY
+             ================================================= -->
+
+        <section
+            id="gallery"
+            class="section section-dark"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="eyebrow">
+                        GALLERY
+                    </p>
+
+                    <h2>
+                        REAL PLACES.
+                        <span>REAL STORIES.</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="gallery-grid">
+
+                    <figure class="gallery-item">
+
+                        <img
+                            src="/essex-paranormal-feature.jpg.PNG"
+                            alt="Essex Paranormal investigation location"
+                            loading="lazy"
+                        >
+
+                    </figure>
+
+
+                    <figure class="gallery-item">
+
+                        <img
+                            src="/hmp-ashwell.PNG"
+                            alt="HMP Ashwell investigation location"
+                            loading="lazy"
+                        >
+
+                    </figure>
+
+
+                    <figure class="gallery-item">
+
+                        <img
+                            src="/essex-paranormal-intro.png"
+                            alt="Essex Paranormal"
+                            loading="lazy"
+                        >
+
+                    </figure>
 
                 </div>
 
@@ -1478,23 +1482,18 @@
                 <div class="social-heading">
 
                     <p class="eyebrow">
-                        FOLLOW THE INVESTIGATION
+                        FOLLOW THE INVESTIGATIONS
                     </p>
 
-
                     <h2>
-                        THE INVESTIGATION
-                        <span>CONTINUES.</span>
+                        STAY WITH
+                        <span>THE STORY.</span>
                     </h2>
 
-
                     <p>
-                        The investigation doesn't end when we
-                        leave the location. Follow Essex Paranormal
-                        across our social channels for investigation
-                        videos, evidence, experiences, behind the
-                        scenes, new case files and updates from
-                        the team.
+                        Follow Essex Paranormal across our social
+                        channels for investigations, updates,
+                        videos and behind-the-scenes content.
                     </p>
 
                 </div>
@@ -1502,12 +1501,15 @@
 
                 <div class="social-grid">
 
+
+                    <!-- YOUTUBE -->
+
                     <a
                         href="https://youtube.com/@essexparanormal666"
                         class="social-button"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Visit Essex Paranormal on YouTube"
+                        aria-label="Essex Paranormal on YouTube"
                     >
 
                         <span class="social-icon">
@@ -1516,7 +1518,7 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
-                                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
+                                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.8V8.2l6.4 3.8-6.4 3.8Z"/>
                             </svg>
 
                         </span>
@@ -1528,11 +1530,9 @@
                                 YOUTUBE
                             </span>
 
-
                             <h3>
-                                WATCH THE INVESTIGATIONS
+                                WATCH
                             </h3>
-
 
                             <span class="social-handle">
                                 @essexparanormal666
@@ -1548,12 +1548,14 @@
                     </a>
 
 
+                    <!-- TIKTOK -->
+
                     <a
                         href="https://www.tiktok.com/@essexparanormal"
                         class="social-button"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Visit Essex Paranormal on TikTok"
+                        aria-label="Essex Paranormal on TikTok"
                     >
 
                         <span class="social-icon">
@@ -1562,7 +1564,7 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
-                                <path d="M16.6 2c.2 1.7 1.1 3.1 2.7 4 1 .6 2.1.9 3.2.9v3.4c-1.5 0-3-.4-4.3-1.1v6.7c0 4-3.2 7.1-7.2 7.1-1.5 0-2.9-.4-4.1-1.2A7.1 7.1 0 0 1 3 15.7c0-4 3.2-7.1 7.2-7.1.4 0 .8 0 1.2.1v3.5a3.9 3.9 0 0 0-1.2-.2 3.7 3.7 0 1 0 3.7 3.7V2h2.7Z"/>
+                                <path d="M19.6 7.1a5.9 5.9 0 0 1-3.5-1.2v7.7a6.4 6.4 0 1 1-5.5-6.3v3.4a3.1 3.1 0 1 0 2.3 3V0h3.4a5.9 5.9 0 0 0 3.3 3.3v3.8Z"/>
                             </svg>
 
                         </span>
@@ -1574,11 +1576,9 @@
                                 TIKTOK
                             </span>
 
-
                             <h3>
-                                FOLLOW THE INVESTIGATION
+                                FOLLOW
                             </h3>
-
 
                             <span class="social-handle">
                                 @essexparanormal
@@ -1594,12 +1594,14 @@
                     </a>
 
 
+                    <!-- INSTAGRAM -->
+
                     <a
                         href="https://www.instagram.com/essex.paranormal/"
                         class="social-button"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Visit Essex Paranormal on Instagram"
+                        aria-label="Essex Paranormal on Instagram"
                     >
 
                         <span class="social-icon">
@@ -1608,7 +1610,7 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
-                                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5ZM17.5 6.5a1 1 0 1 1-1 1 1 1 0 0 1-1-1Z"/>
+                                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3.25a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1Z"/>
                             </svg>
 
                         </span>
@@ -1620,11 +1622,9 @@
                                 INSTAGRAM
                             </span>
 
-
                             <h3>
-                                SEE WHAT'S HAPPENING
+                                FOLLOW
                             </h3>
-
 
                             <span class="social-handle">
                                 @essex.paranormal
@@ -1640,12 +1640,14 @@
                     </a>
 
 
+                    <!-- FACEBOOK -->
+
                     <a
                         href="https://www.facebook.com/share/g/19KLo9qcjU/"
                         class="social-button"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="Visit Essex Paranormal on Facebook"
+                        aria-label="Essex Paranormal on Facebook"
                     >
 
                         <span class="social-icon">
@@ -1654,7 +1656,7 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
-                                <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.7-1.6h1.8V3.8c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1V10H8v3h2.6v8h2.9Z"/>
+                                <path d="M13.7 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V4a17 17 0 0 0-2.3-.1c-2.3 0-3.9 1.4-3.9 4v2.1H8.2v3h2.6v8h2.9Z"/>
                             </svg>
 
                         </span>
@@ -1666,14 +1668,12 @@
                                 FACEBOOK
                             </span>
 
-
                             <h3>
-                                JOIN THE COMMUNITY
+                                JOIN
                             </h3>
 
-
                             <span class="social-handle">
-                                ESSEX PARANORMAL
+                                Essex Paranormal
                             </span>
 
                         </span>
@@ -1689,446 +1689,8 @@
 
 
                 <div class="social-bottom-line">
-                    REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
-                </div>
 
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             INVESTIGATIONS
-             ================================================= -->
-
-        <section
-            id="investigations"
-            class="section investigations-section"
-        >
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        INVESTIGATIONS
-                    </p>
-
-
-                    <h2>
-                        RECENT
-                        <span>CASE FILES.</span>
-                    </h2>
-
-
-                    <p>
-                        Documented investigations, published
-                        case files and evidence-led research
-                        from Essex Paranormal.
-                    </p>
-
-                </div>
-
-
-                <article class="investigation-feature">
-
-                    <div class="investigation-feature-image">
-
-                        <img
-                            src="/hmp-ashwell.PNG"
-                            alt="HMP Ashwell investigation"
-                            loading="lazy"
-                            decoding="async"
-                        >
-
-                    </div>
-
-
-                    <div class="investigation-feature-content">
-
-                        <div class="investigation-feature-top">
-
-                            <span class="empty-code">
-                                CASE FILE EP-001
-                            </span>
-
-
-                            <span class="investigation-status">
-                                PUBLISHED
-                            </span>
-
-                        </div>
-
-
-                        <p class="eyebrow">
-                            FEATURED INVESTIGATION
-                        </p>
-
-
-                        <h3>
-                            HMP
-                            <span>ASHWELL.</span>
-                        </h3>
-
-
-                        <p class="investigation-feature-location">
-                            FORMER HM PRISON ASHWELL
-                        </p>
-
-
-                        <p>
-                            An evidence-led investigation into
-                            the former prison site, examining
-                            its history, environment and reported
-                            experiences while maintaining a
-                            clear distinction between observation,
-                            interpretation and conclusion.
-                        </p>
-
-
-                        <div class="investigation-feature-meta">
-
-                            <div>
-
-                                <span>
-                                    CASE
-                                </span>
-
-                                <strong>
-                                    EP-001
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    STATUS
-                                </span>
-
-                                <strong>
-                                    PUBLISHED
-                                </strong>
-
-                            </div>
-
-
-                            <div>
-
-                                <span>
-                                    APPROACH
-                                </span>
-
-                                <strong>
-                                    EVIDENCE LED
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <a
-                            href="/investigations/hmp-ashwell.html"
-                            class="button button-primary"
-                        >
-                            VIEW CASE FILE
-                            <span>→</span>
-                        </a>
-
-                    </div>
-
-                </article>
-
-
-                <div class="investigation-archive-action">
-
-                    <a
-                        href="/investigations/"
-                        class="button button-outline"
-                    >
-                        VIEW INVESTIGATION ARCHIVE
-                        <span>→</span>
-                    </a>
-
-                </div>
-
-
-                <div class="featured-investigation">
-
-                    <div class="featured-copy">
-
-                        <p class="eyebrow">
-                            INVESTIGATION ARCHIVE
-                        </p>
-
-
-                        <h3>
-                            MORE CASE FILES
-                            <span>COMING SOON.</span>
-                        </h3>
-
-
-                        <p>
-                            Further investigations will be
-                            published once they have been
-                            completed, reviewed and approved
-                            for public release.
-                        </p>
-
-
-                        <a
-                            href="/investigations/"
-                            class="button button-outline"
-                        >
-                            VIEW ARCHIVE
-                            <span>→</span>
-                        </a>
-
-                    </div>
-
-
-                    <div class="featured-visual">
-
-                        <div class="featured-overlay"></div>
-
-
-                        <p>
-                            SOME PLACES<br>
-                            SHOULD NEVER<br>
-                            BE FORGOTTEN.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             EVIDENCE
-             ================================================= -->
-
-        <section
-            id="evidence"
-            class="section evidence-section"
-        >
-
-            <div class="container">
-
-                <div class="section-heading evidence-heading">
-
-                    <p class="eyebrow">
-                        EVIDENCE
-                    </p>
-
-
-                    <h2>
-                        NOTHING IS
-                        <span>PREDETERMINED.</span>
-                    </h2>
-
-
-                    <p>
-                        Evidence is presented honestly and
-                        examined from multiple perspectives.
-                        Unexplained does not automatically
-                        mean paranormal.
-                    </p>
-
-                </div>
-
-
-                <div class="evidence-grid">
-
-                    <article class="evidence-item">
-
-                        <span>
-                            01 / VIDEO
-                        </span>
-
-
-                        <div class="evidence-icon">
-                            ▶
-                        </div>
-
-
-                        <h3>
-                            VIDEO
-                        </h3>
-
-
-                        <p>
-                            Recorded footage can be reviewed
-                            frame by frame and examined for
-                            environmental or technical causes.
-                        </p>
-
-                    </article>
-
-
-                    <article class="evidence-item">
-
-                        <span>
-                            02 / AUDIO
-                        </span>
-
-
-                        <div class="evidence-icon">
-                            ≋
-                        </div>
-
-
-                        <h3>
-                            AUDIO
-                        </h3>
-
-
-                        <p>
-                            Audio recordings are considered
-                            alongside environmental conditions,
-                            equipment limitations and possible
-                            conventional explanations.
-                        </p>
-
-                    </article>
-
-
-                    <article class="evidence-item">
-
-                        <span>
-                            03 / ENVIRONMENT
-                        </span>
-
-
-                        <div class="evidence-icon">
-                            ⌁
-                        </div>
-
-
-                        <h3>
-                            ENVIRONMENT
-                        </h3>
-
-
-                        <p>
-                            Temperature, surroundings, history,
-                            lighting, movement and other
-                            environmental factors form part
-                            of the investigation.
-                        </p>
-
-                    </article>
-
-
-                    <article class="evidence-item">
-
-                        <span>
-                            04 / REVIEW
-                        </span>
-
-
-                        <div class="evidence-icon">
-                            ≡
-                        </div>
-
-
-                        <h3>
-                            REVIEW
-                        </h3>
-
-
-                        <p>
-                            Findings are reviewed carefully
-                            before being described as evidence
-                            of paranormal activity.
-                        </p>
-
-                    </article>
-
-                </div>
-
-
-                <div class="philosophy-line">
-
-                    <span>REAL</span>
-                    LOCATIONS.
-                    <span>REAL</span>
-                    RESEARCH.
-                    <span>REAL</span>
-                    EVIDENCE.
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             GALLERY
-             ================================================= -->
-
-        <section
-            id="gallery"
-            class="section gallery-section"
-        >
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        GALLERY &amp; MEDIA
-                    </p>
-
-
-                    <h2>
-                        THE
-                        <span>ARCHIVE.</span>
-                    </h2>
-
-
-                    <p>
-                        Published photography, video, audio,
-                        podcasts and media will appear here
-                        as content is approved for public release.
-                    </p>
-
-                </div>
-
-
-                <div class="gallery-empty">
-
-                    <div class="gallery-mark">
-                        EP
-                    </div>
-
-
-                    <div>
-
-                        <span class="empty-code">
-                            MEDIA LIBRARY
-                        </span>
-
-
-                        <h3>
-                            Published media will appear here.
-                        </h3>
-
-
-                        <p>
-                            The public gallery is designed
-                            to receive approved media from
-                            the Essex Paranormal publishing
-                            system.
-                        </p>
-
-                    </div>
+                    FOLLOW THE EVIDENCE
 
                 </div>
 
@@ -2143,65 +1705,41 @@
 
         <section
             id="community"
-            class="section community-section"
+            class="section"
         >
 
             <div class="container">
 
                 <div class="community-panel">
 
-                    <div class="community-copy">
+                    <div>
 
                         <p class="eyebrow">
-                            JOIN THE COMMUNITY
+                            COMMUNITY
                         </p>
-
 
                         <h2>
-                            JOIN THE ESSEX
-                            <span>PARANORMAL COMMUNITY.</span>
+                            JOIN THE
+                            <span>CONVERSATION.</span>
                         </h2>
 
-
                         <p>
-                            Join our online community and become
-                            part of the conversation. Share your
-                            experiences, discuss investigations,
-                            examine evidence, discover locations
-                            and connect with others interested
-                            in the unexplained.
-                        </p>
-
-
-                        <div class="community-actions">
-
-                            <a
-                                href="https://essexparanormal.discourse.group/"
-                                class="button button-primary"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                JOIN OUR FORUM
-                                <span>→</span>
-                            </a>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="community-side">
-
-                        <span class="community-line"></span>
-
-
-                        <p>
-                            REAL PEOPLE.<br>
-                            REAL EXPERIENCES.<br>
-                            REAL CONVERSATIONS.
+                            Connect with other people interested
+                            in paranormal investigation, locations,
+                            evidence and experiences.
                         </p>
 
                     </div>
+
+
+                    <a
+                        href="https://essexparanormal.discourse.group/"
+                        class="button button-primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        JOIN OUR FORUM
+                    </a>
 
                 </div>
 
@@ -2216,64 +1754,54 @@
 
         <section
             id="contact"
-            class="section contact-section"
+            class="section section-dark"
         >
 
             <div class="container">
 
-                <div class="contact-panel">
+                <div class="section-heading">
 
-                    <div class="contact-copy">
+                    <p class="eyebrow">
+                        CONTACT
+                    </p>
 
-                        <p class="eyebrow">
-                            GET IN TOUCH
-                        </p>
+                    <h2>
+                        START A
+                        <span>CONVERSATION.</span>
+                    </h2>
 
-
-                        <h2>
-                            START A
-                            <span>CONVERSATION.</span>
-                        </h2>
-
-
-                        <p>
-                            Have a question, a location, a story,
-                            or something you think we should look
-                            into? We want to hear from you.
-                        </p>
-
-                    </div>
-
-
-                    <div class="contact-action">
-
-                        <a
-                            href="#contact-enquiry"
-                            class="button button-primary"
-                        >
-                            CONTACT ESSEX PARANORMAL
-                            <span>→</span>
-                        </a>
-
-
-                        <p>
-                            Enquiries are handled through the
-                            secure website contact system.
-                        </p>
-
-                    </div>
+                    <p>
+                        Have a question, location suggestion,
+                        investigation enquiry or something you
+                        would like Essex Paranormal to know about?
+                    </p>
 
                 </div>
 
 
-                <!-- =================================================
-                     CONTACT ENQUIRY FORM
-                     ================================================= -->
+                <div class="contact-layout">
 
-                <div
-                    id="contact-enquiry"
-                    class="contact-form-wrap"
-                >
+
+                    <div class="contact-intro">
+
+                        <h3>
+                            SEND AN ENQUIRY
+                        </h3>
+
+                        <p>
+                            Complete the form and your message
+                            will be sent to the Essex Paranormal
+                            team.
+                        </p>
+
+                        <p>
+                            Please provide enough information for
+                            us to understand your enquiry and
+                            respond appropriately.
+                        </p>
+
+                    </div>
+
 
                     <form
                         class="contact-form"
@@ -2302,64 +1830,22 @@
                         <input
                             type="hidden"
                             name="_next"
-                            value="https://essexparanormal.com/?contact=sent"
+                            value="https://essexparanormal.com/#contact"
                         >
-
-
-                        <div class="contact-form-grid">
-
-                            <div class="form-field">
-
-                                <label for="contact-name">
-                                    YOUR NAME
-                                </label>
-
-                                <input
-                                    id="contact-name"
-                                    type="text"
-                                    name="name"
-                                    placeholder="Your name"
-                                    autocomplete="name"
-                                    maxlength="100"
-                                    required
-                                >
-
-                            </div>
-
-
-                            <div class="form-field">
-
-                                <label for="contact-email">
-                                    EMAIL ADDRESS
-                                </label>
-
-                                <input
-                                    id="contact-email"
-                                    type="email"
-                                    name="email"
-                                    placeholder="Your email address"
-                                    autocomplete="email"
-                                    maxlength="160"
-                                    required
-                                >
-
-                            </div>
-
-                        </div>
 
 
                         <div class="form-field">
 
-                            <label for="contact-subject">
-                                SUBJECT
+                            <label for="name">
+                                NAME
                             </label>
 
                             <input
-                                id="contact-subject"
+                                id="name"
+                                name="name"
                                 type="text"
-                                name="subject"
-                                placeholder="What would you like to contact us about?"
-                                maxlength="180"
+                                placeholder="Your name"
+                                autocomplete="name"
                                 required
                             >
 
@@ -2368,41 +1854,62 @@
 
                         <div class="form-field">
 
-                            <label for="contact-message">
-                                YOUR MESSAGE
+                            <label for="email">
+                                EMAIL
+                            </label>
+
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="subject">
+                                SUBJECT
+                            </label>
+
+                            <input
+                                id="subject"
+                                name="subject"
+                                type="text"
+                                placeholder="What is your enquiry about?"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="message">
+                                MESSAGE
                             </label>
 
                             <textarea
-                                id="contact-message"
+                                id="message"
                                 name="message"
                                 rows="7"
-                                placeholder="Tell us what you would like to discuss..."
-                                maxlength="5000"
+                                placeholder="Tell us what you would like to know..."
                                 required
                             ></textarea>
 
                         </div>
 
 
-                        <div class="contact-form-footer">
-
-                            <p>
-                                Please provide as much relevant
-                                information as possible. We will
-                                review your enquiry and respond
-                                when appropriate.
-                            </p>
-
-
-                            <button
-                                type="submit"
-                                class="button button-primary"
-                            >
-                                SEND ENQUIRY
-                                <span>→</span>
-                            </button>
-
-                        </div>
+                        <button
+                            type="submit"
+                            class="button button-primary"
+                        >
+                            SEND ENQUIRY
+                        </button>
 
                     </form>
 
@@ -2411,6 +1918,7 @@
             </div>
 
         </section>
+
 
     </main>
 
@@ -2423,23 +1931,22 @@
 
         <div class="container">
 
-            <div class="footer-main">
+            <div class="footer-grid">
+
 
                 <div class="footer-brand">
 
-                    <span class="footer-logo-crop">
-
-                        <img
-                            src="/essex-paranormal-logo.png"
-                            alt="Essex Paranormal"
-                            decoding="async"
-                        >
-
-                    </span>
-
+                    <img
+                        src="/essex-paranormal-logo.png"
+                        alt="Essex Paranormal"
+                    >
 
                     <p>
                         HONEST. REAL. UNBIASED.
+                    </p>
+
+                    <p>
+                        Evidence before assumption.
                     </p>
 
                 </div>
@@ -2447,108 +1954,79 @@
 
                 <div class="footer-links">
 
-                    <span>
-                        QUICK LINKS
-                    </span>
-
+                    <h3>
+                        EXPLORE
+                    </h3>
 
                     <a href="#home">
-                        HOME
+                        Home
                     </a>
 
                     <a href="#upcoming-events">
-                        UPCOMING EVENTS
+                        Upcoming Events
                     </a>
 
-                    <a href="#about">
-                        MEET LEWIS
+                    <a href="#meet-lewis">
+                        Meet Lewis
                     </a>
 
                     <a href="#experiences">
-                        EXPERIENCES
+                        Experiences
                     </a>
 
                     <a href="#investigations">
-                        INVESTIGATIONS
+                        Investigations
                     </a>
 
                     <a href="#gallery">
-                        GALLERY
+                        Gallery
                     </a>
 
-                    <a
-                        href="https://essexparanormal.discourse.group/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        JOIN US
+                </div>
+
+
+                <div class="footer-links">
+
+                    <h3>
+                        COMMUNITY
+                    </h3>
+
+                    <a href="#community">
+                        Join Us
+                    </a>
+
+                    <a href="https://essexparanormal.discourse.group/">
+                        Forum
+                    </a>
+
+                    <a href="#social">
+                        Social Media
                     </a>
 
                     <a href="#contact">
-                        CONTACT
+                        Contact
                     </a>
 
                 </div>
 
 
-                <div class="footer-legal">
+                <div class="footer-links">
 
-                    <span>
+                    <h3>
                         LEGAL
-                    </span>
-
+                    </h3>
 
                     <a href="/legal.html#privacy">
-                        PRIVACY
-                    </a>
-
-                    <a href="/legal.html#cookies">
-                        COOKIES
+                        Privacy
                     </a>
 
                     <a href="/legal.html#terms">
-                        TERMS
+                        Terms
                     </a>
 
-                    <a href="/legal.html#disclaimer">
-                        DISCLAIMER
+                    <a href="/legal.html#cookies">
+                        Cookies
                     </a>
-
-                    <a href="/legal.html#accessibility">
-                        ACCESSIBILITY
-                    </a>
-
-                    <a href="/legal.html#copyright">
-                        COPYRIGHT
-                    </a>
-
-                    <a href="/legal.html#media-rights">
-                        MEDIA RIGHTS
-                    </a>
-
-                    <a href="/legal.html#third-party">
-                        THIRD-PARTY SERVICES
-                    </a>
-
-                </div>
-
-
-                <div class="footer-philosophy">
-
-                    <span>
-                        OUR PHILOSOPHY
-                    </span>
-
-
-                    <p>
-                        REAL PEOPLE.<br>
-                        REAL PLACES.<br>
-                        REAL EXPERIENCES.<br>
-
-                        <strong>
-                            EVIDENCE BEFORE ASSUMPTION.
-                        </strong>
-                    </p>
 
                 </div>
 
@@ -2558,33 +2036,32 @@
             <div class="footer-bottom">
 
                 <p>
-                    ©
-                    <span data-current-year>
-                        2026
-                    </span>
-                    ESSEX PARANORMAL.
-                    ALL RIGHTS RESERVED.
+                    © <span id="current-year">2026</span>
+                    Essex Paranormal. All rights reserved.
                 </p>
 
-
-                <span class="footer-truth">
-                    TRUTH LIES IN THE SHADOWS
-                </span>
-
-
-                <a
-                    href="#home"
-                    class="back-to-top"
-                    aria-label="Back to top"
-                >
-                    ↑
-                </a>
+                <p>
+                    REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
+                </p>
 
             </div>
 
         </div>
 
     </footer>
+
+
+    <!-- =====================================================
+         BACK TO TOP
+         ===================================================== -->
+
+    <button
+        id="back-to-top"
+        type="button"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
 
 
     <script src="/script.js"></script>
