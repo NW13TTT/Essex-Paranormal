@@ -20,19 +20,22 @@ document.addEventListener("DOMContentLoaded", () => {
     initHeaderScroll();
     initActiveNavigation();
     initBackToTop();
-    initInvestigations();
     initImageFallbacks();
     initCurrentYear();
 
     /*
-     * IMPORTANT:
-     * These corrections restore the original website
-     * structure rather than creating a new design.
+     * IMPORTANT
+     *
+     * This script does NOT rebuild the website.
+     * It does NOT remove the HMP Ashwell image.
+     * It does NOT rename the investigation card.
+     *
+     * The HTML remains the source of truth.
      */
-    restoreOriginalInvestigationLayout();
-    removeDuplicateArchive();
-    removeDuplicateAshwellImage();
+
     ensureConstructionBanner();
+    normaliseHomepageArchive();
+    fixAncientRamVideo();
     ensureFacebookLink();
 
 });
@@ -58,26 +61,29 @@ function initEntryScreen() {
         }
 
     } catch (error) {
-        /* Ignore browser restriction. */
+        /* Ignore browser restrictions. */
     }
 
     forceScrollTop();
 
-    const reducedMotion =
-        window.matchMedia &&
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        ).matches;
+    let reducedMotion = false;
+
+    try {
+
+        reducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+    } catch (error) {
+        reducedMotion = false;
+    }
 
     const displayTime =
         reducedMotion
             ? 700
             : 3000;
 
-
-    /*
-     * Normal cinematic exit.
-     */
 
     window.setTimeout(() => {
 
@@ -92,7 +98,7 @@ function initEntryScreen() {
     /*
      * Emergency failsafe.
      *
-     * The website MUST NEVER remain trapped
+     * The website must never remain trapped
      * behind the entry screen.
      */
 
@@ -172,14 +178,14 @@ function hideEntryScreen(
 
 
 /* =========================================================
-   FORCE TOP
+   FORCE PAGE TOP
    ========================================================= */
 
 function forceScrollTop() {
 
     /*
-     * Never destroy a deliberate section
-     * link in the address bar.
+     * Do not interfere with deliberate
+     * section navigation.
      */
 
     if (
@@ -320,20 +326,16 @@ function initMobileNavigation() {
 }
 
 
-/* =========================================================
-   CLOSE MOBILE NAVIGATION
-   ========================================================= */
-
 function closeMobileNavigation() {
-
-    const menuToggle =
-        document.querySelector(
-            ".menu-toggle"
-        );
 
     const navigation =
         document.getElementById(
             "main-navigation"
+        );
+
+    const menuToggle =
+        document.querySelector(
+            ".menu-toggle"
         );
 
     if (navigation) {
@@ -399,7 +401,7 @@ function initSmoothNavigation() {
                             return;
                         }
 
-                        let target;
+                        let target = null;
 
                         try {
 
@@ -447,8 +449,7 @@ function initSmoothNavigation() {
 
                             left: 0,
 
-                            behavior:
-                                "smooth"
+                            behavior: "smooth"
 
                         });
 
@@ -493,7 +494,7 @@ function initHeaderScroll() {
 
             header.classList.toggle(
                 "scrolled",
-                window.scrollY > 40
+                window.scrollY > 30
             );
 
         };
@@ -517,21 +518,16 @@ function initHeaderScroll() {
 
 function initActiveNavigation() {
 
-    const navigation =
-        document.getElementById(
-            "main-navigation"
-        );
-
-    if (!navigation) {
-        return;
-    }
-
     const links =
         Array.from(
-            navigation.querySelectorAll(
-                'a[href^="#"]'
+            document.querySelectorAll(
+                '#main-navigation a[href^="#"]'
             )
         );
+
+    if (!links.length) {
+        return;
+    }
 
     const sections =
         links
@@ -543,7 +539,7 @@ function initActiveNavigation() {
                             "href"
                         );
 
-                    let section;
+                    let section = null;
 
                     try {
 
@@ -575,13 +571,13 @@ function initActiveNavigation() {
         return;
     }
 
+
     const update =
         () => {
 
             const position =
                 window.scrollY +
-                window.innerHeight *
-                0.32;
+                window.innerHeight * 0.32;
 
             let current =
                 sections[0];
@@ -602,18 +598,20 @@ function initActiveNavigation() {
                 }
             );
 
-            links.forEach(
-                (link) => {
 
-                    link.classList.toggle(
+            sections.forEach(
+                (item) => {
+
+                    item.link.classList.toggle(
                         "active",
-                        link === current.link
+                        item === current
                     );
 
                 }
             );
 
         };
+
 
     update();
 
@@ -643,6 +641,7 @@ function initBackToTop() {
         return;
     }
 
+
     const update =
         () => {
 
@@ -652,25 +651,16 @@ function initBackToTop() {
             buttons.forEach(
                 (button) => {
 
-                    button.style.opacity =
+                    button.classList.toggle(
+                        "visible",
                         visible
-                            ? "1"
-                            : "0";
-
-                    button.style.visibility =
-                        visible
-                            ? "visible"
-                            : "hidden";
-
-                    button.style.pointerEvents =
-                        visible
-                            ? "auto"
-                            : "none";
+                    );
 
                 }
             );
 
         };
+
 
     update();
 
@@ -695,23 +685,13 @@ function initBackToTop() {
                     window.scrollTo({
 
                         top: 0,
+
                         left: 0,
+
                         behavior: "smooth"
 
                     });
 
-                    try {
-
-                        history.replaceState(
-                            null,
-                            "",
-                            "#home"
-                        );
-
-                    } catch (error) {
-                        /* Ignore history errors. */
-                    }
-
                 }
             );
 
@@ -722,329 +702,30 @@ function initBackToTop() {
 
 
 /* =========================================================
-   INVESTIGATION API
+   IMAGE FALLBACKS
    ========================================================= */
 
-async function initInvestigations() {
+function initImageFallbacks() {
 
-    const container =
-        document.querySelector(
-            "[data-investigations]"
-        );
-
-    /*
-     * The homepage is STATIC.
-     * Do not overwrite the homepage case card.
-     */
-
-    if (!container) {
-        return;
-    }
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_BASE}/investigations`,
-                {
-                    headers: {
-                        "Accept":
-                            "application/json"
-                    },
-                    cache: "no-store"
-                }
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-        }
-
-        const data =
-            await response.json();
-
-        if (
-            !data ||
-            !Array.isArray(
-                data.investigations
-            )
-        ) {
-
-            throw new Error(
-                "Invalid investigation data."
-            );
-
-        }
-
-        renderInvestigations(
-            container,
-            data.investigations
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Investigation archive error:",
-            error
-        );
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <span class="empty-code">
-                    ARCHIVE STATUS
-                </span>
-
-                <h3>
-                    INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-                </h3>
-
-                <p>
-                    New investigations will be published here
-                    as they are completed and reviewed.
-                </p>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER INVESTIGATIONS
-   ========================================================= */
-
-function renderInvestigations(
-    container,
-    investigations
-) {
-
-    if (!investigations.length) {
-
-        container.innerHTML = `
-
-            <div class="empty-state">
-
-                <span class="empty-code">
-                    ARCHIVE STATUS
-                </span>
-
-                <h3>
-                    INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-                </h3>
-
-                <p>
-                    New case files will be published here
-                    as investigations are completed and reviewed.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-    container.innerHTML =
-        investigations
-            .map(
-                renderInvestigation
-            )
-            .join("");
-
-}
-
-
-/* =========================================================
-   RENDER INVESTIGATION
-   ========================================================= */
-
-function renderInvestigation(
-    investigation
-) {
-
-    const title =
-        investigation.title ||
-        investigation.name ||
-        "Investigation";
-
-    const description =
-        investigation.description ||
-        investigation.summary ||
-        "";
-
-    const location =
-        investigation.location ||
-        "";
-
-    return `
-
-        <article class="investigation-card">
-
-            <p class="eyebrow">
-                INVESTIGATION
-            </p>
-
-            <h3>
-                ${escapeHtml(title)}
-            </h3>
-
-            ${
-                location
-                    ? `
-                        <span class="investigation-location">
-                            ${escapeHtml(location)}
-                        </span>
-                    `
-                    : ""
-            }
-
-            ${
-                description
-                    ? `
-                        <p>
-                            ${escapeHtml(description)}
-                        </p>
-                    `
-                    : ""
-            }
-
-        </article>
-
-    `;
-
-}
-
-
-/* =========================================================
-   RESTORE ORIGINAL HOMEPAGE INVESTIGATION CARD
-   =========================================================
-   
-   This is the important part.
-   
-   The current damaged homepage changed:
-   
-       investigation-feature
-   
-   into:
-   
-       ashwell-feature
-   
-   with a large injected image.
-   
-   We reverse that change here.
-   ========================================================= */
-
-function restoreOriginalInvestigationLayout() {
-
-    const damagedFeature =
-        document.querySelector(
-            ".ashwell-feature"
-        );
-
-    if (!damagedFeature) {
-        return;
-    }
-
-
-    /*
-     * Remove the injected HMP image.
-     */
-
-    damagedFeature
+    document
         .querySelectorAll(
-            ".ashwell-image"
+            "img"
         )
         .forEach(
             (image) => {
 
-                image.remove();
+                image.addEventListener(
+                    "error",
+                    () => {
 
-            }
-        );
+                        image.classList.add(
+                            "image-load-failed"
+                        );
 
-
-    /*
-     * Restore the original feature class.
-     */
-
-    damagedFeature.classList.remove(
-        "ashwell-feature"
-    );
-
-    damagedFeature.classList.add(
-        "investigation-feature"
-    );
-
-
-    /*
-     * Restore original content class.
-     */
-
-    damagedFeature
-        .querySelectorAll(
-            ".ashwell-copy"
-        )
-        .forEach(
-            (element) => {
-
-                element.classList.remove(
-                    "ashwell-copy"
-                );
-
-                element.classList.add(
-                    "investigation-feature-content"
-                );
-
-            }
-        );
-
-
-    /*
-     * Restore original location class.
-     */
-
-    damagedFeature
-        .querySelectorAll(
-            ".ashwell-location"
-        )
-        .forEach(
-            (element) => {
-
-                element.classList.remove(
-                    "ashwell-location"
-                );
-
-                element.classList.add(
-                    "investigation-feature-location"
-                );
-
-            }
-        );
-
-
-    /*
-     * Restore original metadata class.
-     */
-
-    damagedFeature
-        .querySelectorAll(
-            ".ashwell-meta"
-        )
-        .forEach(
-            (element) => {
-
-                element.classList.remove(
-                    "ashwell-meta"
-                );
-
-                element.classList.add(
-                    "investigation-feature-meta"
+                    },
+                    {
+                        once: true
+                    }
                 );
 
             }
@@ -1054,269 +735,41 @@ function restoreOriginalInvestigationLayout() {
 
 
 /* =========================================================
-   REMOVE DUPLICATE ARCHIVE
+   CURRENT YEAR
    ========================================================= */
 
-function removeDuplicateArchive() {
+function initCurrentYear() {
 
-    const investigationSection =
-        document.getElementById(
-            "investigations"
+    const year =
+        String(
+            new Date().getFullYear()
         );
-
-    if (!investigationSection) {
-        return;
-    }
-
-
-    /*
-     * Remove the old second archive block.
-     */
-
-    investigationSection
-        .querySelectorAll(
-            ".featured-investigation"
-        )
-        .forEach(
-            (element) => {
-
-                element.remove();
-
-            }
-        );
-
-
-    /*
-     * Remove any archive action created
-     * by a previous correction layer.
-     */
-
-    investigationSection
-        .querySelectorAll(
-            ".homepage-archive-status"
-        )
-        .forEach(
-            (element) => {
-
-                element.remove();
-
-            }
-        );
-
-
-    /*
-     * There should now be exactly ONE
-     * investigation archive action.
-     */
-
-    let archive =
-        investigationSection.querySelector(
-            ".investigation-archive-action"
-        );
-
-
-    if (!archive) {
-
-        archive =
-            document.createElement(
-                "div"
-            );
-
-        archive.className =
-            "investigation-archive-action";
-
-        const feature =
-            investigationSection.querySelector(
-                ".investigation-feature"
-            );
-
-        if (feature) {
-
-            feature.insertAdjacentElement(
-                "afterend",
-                archive
-            );
-
-        } else {
-
-            investigationSection
-                .querySelector(
-                    ".container"
-                )
-                ?.appendChild(
-                    archive
-                );
-
-        }
-
-    }
-
-
-    /*
-     * Replace the inside of the archive
-     * with ONE clean status and ONE button.
-     */
-
-    archive.innerHTML = `
-
-        <span class="empty-code">
-            ARCHIVE STATUS
-        </span>
-
-        <p>
-            INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-        </p>
-
-        <a
-            href="/investigations/"
-            class="button button-outline"
-        >
-            VIEW INVESTIGATION ARCHIVE
-            <span>→</span>
-        </a>
-
-    `;
-
-}
-
-
-/* =========================================================
-   REMOVE DUPLICATE ASHWELL IMAGE
-   =========================================================
-   
-   The HMP Ashwell case page currently contains:
-   
-   1. The correct hero image.
-   2. A second identical image panel.
-   
-   We keep #1 and remove #2.
-   ========================================================= */
-
-function removeDuplicateAshwellImage() {
-
-    const pathname =
-        window.location.pathname
-            .replace(/\/+$/, "");
-
-    /*
-     * Only run this on the HMP Ashwell
-     * case page.
-     */
-
-    if (
-        pathname !==
-        "/investigations/hmp-ashwell"
-    ) {
-        return;
-    }
-
-
-    /*
-     * Keep the case hero.
-     */
-
-    const hero =
-        document.querySelector(
-            ".case-hero-image"
-        );
-
-
-    /*
-     * Find image panels containing the
-     * same Ashwell photograph.
-     */
 
     document
         .querySelectorAll(
-            ".case-image-panel"
+            "[data-current-year]"
         )
         .forEach(
-            (panel) => {
+            (element) => {
 
-                const image =
-                    panel.querySelector(
-                        "img"
-                    );
-
-                if (!image) {
-                    return;
-                }
-
-                const source =
-                    image.getAttribute(
-                        "src"
-                    ) || "";
-
-                if (
-                    source
-                        .toLowerCase()
-                        .includes(
-                            "hmp-ashwell"
-                        )
-                ) {
-
-                    panel.remove();
-
-                }
+                element.textContent =
+                    year;
 
             }
         );
-
-
-    /*
-     * If there is another duplicate Ashwell
-     * image outside the hero, remove it too.
-     */
-
-    let ashwellImages =
-        Array.from(
-            document.querySelectorAll(
-                'img[src*="hmp-ashwell"]'
-            )
-        );
-
-
-    if (
-        hero &&
-        ashwellImages.length > 1
-    ) {
-
-        ashwellImages
-            .filter(
-                (image) =>
-                    image !== hero
-            )
-            .forEach(
-                (image) => {
-
-                    const panel =
-                        image.closest(
-                            ".case-image-panel"
-                        );
-
-                    if (panel) {
-
-                        panel.remove();
-
-                    } else {
-
-                        image.remove();
-
-                    }
-
-                }
-            );
-
-    }
 
 }
 
 
 /* =========================================================
-   CONSTRUCTION BANNER
+   WEBSITE UNDER CONSTRUCTION BANNER
    ========================================================= */
 
 function ensureConstructionBanner() {
+
+    /*
+     * Never create a second banner.
+     */
 
     if (
         document.querySelector(
@@ -1357,7 +810,6 @@ function ensureConstructionBanner() {
 
 
     ticker.innerHTML = `
-
         <div class="construction-ticker-track">
 
             <span>
@@ -1369,7 +821,6 @@ function ensureConstructionBanner() {
             </span>
 
         </div>
-
     `;
 
 
@@ -1379,28 +830,15 @@ function ensureConstructionBanner() {
     );
 
 
-    /*
-     * Only add the ticker CSS.
-     * Do NOT alter the website's existing
-     * visual design.
-     */
-
-    if (
-        document.getElementById(
-            "construction-ticker-style"
-        )
-    ) {
-        return;
-    }
-
-
     const style =
         document.createElement(
             "style"
         );
 
-    style.id =
-        "construction-ticker-style";
+    style.setAttribute(
+        "data-ep-construction",
+        "true"
+    );
 
     style.textContent = `
 
@@ -1410,82 +848,360 @@ function ensureConstructionBanner() {
             width: 100%;
             overflow: hidden;
             background: #050608;
-            border-top:
-                1px solid
-                rgba(255,106,26,.25);
-            border-bottom:
-                1px solid
-                rgba(255,106,26,.25);
-            padding: 10px 0;
+            border-top: 1px solid rgba(255,106,26,.25);
+            border-bottom: 1px solid rgba(255,106,26,.25);
+            padding: 11px 0;
         }
 
         .construction-ticker-track {
             display: flex;
             width: max-content;
             white-space: nowrap;
-            animation:
-                constructionTickerMove
-                24s
-                linear
-                infinite;
+            animation: epConstructionTicker 24s linear infinite;
+            will-change: transform;
         }
 
         .construction-ticker-track span {
             display: block;
             flex-shrink: 0;
             padding-right: 70px;
-            color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            color: #ffffff;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .14em;
         }
 
-        @keyframes constructionTickerMove {
+        @keyframes epConstructionTicker {
 
             from {
-                transform:
-                    translateX(-50%);
+                transform: translateX(-50%);
             }
 
             to {
-                transform:
-                    translateX(0);
+                transform: translateX(0);
             }
 
         }
 
-        .investigation-archive-action {
-            margin-top: 28px;
-            padding: 28px;
-            text-align: center;
-            border:
-                1px solid
-                rgba(255,106,26,.18);
-            background:
-                rgba(5,6,8,.72);
+        @media (max-width: 900px) {
+
+            .construction-ticker {
+                padding: 9px 0;
+            }
+
+            .construction-ticker-track span {
+                font-size: .62rem;
+                letter-spacing: .10em;
+                padding-right: 50px;
+            }
+
         }
 
-        .investigation-archive-action p {
-            margin:
-                9px 0 18px;
-            color: var(--muted);
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: .16em;
+        @media (prefers-reduced-motion: reduce) {
+
+            .construction-ticker-track {
+                animation: none;
+                transform: none;
+            }
+
         }
 
-        .investigation-archive-action
-        .empty-code {
-            color: var(--orange);
+    `;
+
+    document.head.appendChild(
+        style
+    );
+
+}
+
+
+/* =========================================================
+   HOMEPAGE ARCHIVE
+   ========================================================= */
+
+function normaliseHomepageArchive() {
+
+    const investigations =
+        document.getElementById(
+            "investigations"
+        );
+
+    if (!investigations) {
+        return;
+    }
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Do NOT remove the HMP Ashwell image.
+     * Do NOT rename the Ashwell feature.
+     * Do NOT replace the investigation card.
+     */
+
+
+    /*
+     * Remove obsolete archive blocks that were
+     * injected by previous correction scripts.
+     */
+
+    investigations
+        .querySelectorAll(
+            ".investigation-archive-action"
+        )
+        .forEach(
+            (element) => {
+
+                element.remove();
+
+            }
+        );
+
+
+    investigations
+        .querySelectorAll(
+            ".featured-investigation"
+        )
+        .forEach(
+            (element) => {
+
+                element.remove();
+
+            }
+        );
+
+
+    investigations
+        .querySelectorAll(
+            ".homepage-archive-status"
+        )
+        .forEach(
+            (element) => {
+
+                element.remove();
+
+            }
+        );
+
+
+    /*
+     * Keep exactly ONE existing archive-action.
+     */
+
+    const archiveBlocks =
+        Array.from(
+            investigations.querySelectorAll(
+                ".archive-action"
+            )
+        );
+
+
+    if (archiveBlocks.length > 1) {
+
+        archiveBlocks
+            .slice(1)
+            .forEach(
+                (element) => {
+
+                    element.remove();
+
+                }
+            );
+
+    }
+
+
+    let archive =
+        investigations.querySelector(
+            ".archive-action"
+        );
+
+
+    /*
+     * If the existing homepage has no archive
+     * action at all, create exactly one.
+     */
+
+    if (!archive) {
+
+        archive =
+            document.createElement(
+                "div"
+            );
+
+        archive.className =
+            "archive-action";
+
+        archive.innerHTML = `
+            <span class="empty-code">
+                ARCHIVE STATUS
+            </span>
+
+            <p>
+                INVESTIGATION ARCHIVE UNDER CONSTRUCTION
+            </p>
+
+            <a
+                href="/investigations/"
+                class="button button-outline"
+            >
+                VIEW INVESTIGATION ARCHIVE
+                <span>→</span>
+            </a>
+        `;
+
+
+        const feature =
+            investigations.querySelector(
+                ".ashwell-feature, .investigation-feature"
+            );
+
+        if (feature) {
+
+            feature.insertAdjacentElement(
+                "afterend",
+                archive
+            );
+
+        } else {
+
+            investigations
+                .querySelector(
+                    ".container"
+                )
+                ?.appendChild(
+                    archive
+                );
+
         }
 
-        #entry-screen.is-hidden {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
+    }
+
+
+    /*
+     * Make sure the single archive block
+     * has the correct wording.
+     */
+
+    const status =
+        archive.querySelector(
+            ".empty-code"
+        );
+
+    if (status) {
+
+        status.textContent =
+            "ARCHIVE STATUS";
+
+    }
+
+
+    const paragraph =
+        archive.querySelector(
+            "p"
+        );
+
+    if (paragraph) {
+
+        paragraph.textContent =
+            "INVESTIGATION ARCHIVE UNDER CONSTRUCTION";
+
+    }
+
+
+    const button =
+        archive.querySelector(
+            "a.button"
+        );
+
+    if (button) {
+
+        button.href =
+            "/investigations/";
+
+        button.innerHTML =
+            `
+                VIEW INVESTIGATION ARCHIVE
+                <span>→</span>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   ANCIENT RAM INN VIDEO
+   ========================================================= */
+
+function fixAncientRamVideo() {
+
+    const video =
+        document.querySelector(
+            '.upcoming-event-video video[src], .upcoming-event-video video'
+        );
+
+    if (!video) {
+        return;
+    }
+
+
+    const wrapper =
+        video.closest(
+            ".upcoming-event-video"
+        );
+
+    if (!wrapper) {
+        return;
+    }
+
+
+    /*
+     * The video must behave like a controlled
+     * 16:9 preview, not a giant vertical block.
+     */
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+    style.setAttribute(
+        "data-ep-ram-video",
+        "true"
+    );
+
+    style.textContent = `
+
+        .upcoming-event-video {
+            position: relative !important;
+            width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            min-height: 0 !important;
+            height: auto !important;
+            overflow: hidden !important;
+            background: #000 !important;
+        }
+
+        .upcoming-event-video video {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: block !important;
+            object-fit: cover !important;
+            background: #000 !important;
+        }
+
+        @media (max-width: 900px) {
+
+            .upcoming-event-video {
+                aspect-ratio: 16 / 9 !important;
+                min-height: 0 !important;
+                height: auto !important;
+            }
+
         }
 
     `;
@@ -1517,132 +1233,7 @@ function ensureFacebookLink() {
                 link.href =
                     facebookURL;
 
-                link.target =
-                    "_blank";
-
-                link.rel =
-                    "noopener noreferrer";
-
             }
         );
 
 }
-
-
-/* =========================================================
-   IMAGE FALLBACKS
-   ========================================================= */
-
-function initImageFallbacks() {
-
-    document
-        .querySelectorAll(
-            "img"
-        )
-        .forEach(
-            (image) => {
-
-                image.addEventListener(
-                    "error",
-                    () => {
-
-                        image.classList.add(
-                            "image-error"
-                        );
-
-                        image.onerror =
-                            null;
-
-                    },
-                    {
-                        once: true
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   CURRENT YEAR
-   ========================================================= */
-
-function initCurrentYear() {
-
-    const year =
-        String(
-            new Date().getFullYear()
-        );
-
-
-    document
-        .querySelectorAll(
-            "[data-current-year]"
-        )
-        .forEach(
-            (element) => {
-
-                element.textContent =
-                    year;
-
-            }
-        );
-
-
-    document
-        .querySelectorAll(
-            "#current-year, .current-year"
-        )
-        .forEach(
-            (element) => {
-
-                element.textContent =
-                    year;
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   HTML ESCAPING
-   ========================================================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================================================
-   END
-   ========================================================= */
