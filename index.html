@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-GB">
 <head>
 
@@ -58,6 +58,445 @@
     <style>
 
         /* =====================================================
+           CINEMATIC ENTRY INTRO
+           ===================================================== */
+
+        #entry-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background: #050608;
+        }
+
+        #entry-screen .entry-image {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        #entry-screen .entry-image::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.18),
+                    rgba(0,0,0,.46)
+                );
+            pointer-events: none;
+        }
+
+        .entry-content {
+            position: relative;
+            z-index: 5;
+            width: min(92vw, 900px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(12px) scale(.985);
+            animation:
+                entryContentIn
+                .95s
+                cubic-bezier(.22,.61,.36,1)
+                .55s
+                forwards;
+        }
+
+        .entry-logo {
+            width: min(72vw, 420px);
+            max-height: 34vh;
+            object-fit: contain;
+            display: block;
+            filter:
+                drop-shadow(
+                    0 0 22px
+                    rgba(255,255,255,.08)
+                );
+        }
+
+        .entry-tagline {
+            margin: 24px 0 0;
+            max-width: 820px;
+            color: #fff;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
+            font-size:
+                clamp(
+                    1.25rem,
+                    3.2vw,
+                    2.55rem
+                );
+            line-height: .98;
+            font-weight: 800;
+            letter-spacing: .055em;
+            text-transform: uppercase;
+            text-shadow:
+                0 2px 18px
+                rgba(0,0,0,.85);
+            opacity: 0;
+            transform: translateY(8px);
+            animation:
+                entryTaglineIn
+                .7s
+                ease
+                2.05s
+                forwards;
+        }
+
+        .entry-rain {
+            position: absolute;
+            inset: -30%;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            background-image:
+                repeating-linear-gradient(
+                    108deg,
+                    transparent 0,
+                    transparent 17px,
+                    rgba(220,240,255,.15) 18px,
+                    rgba(220,240,255,.15) 19px,
+                    transparent 20px,
+                    transparent 42px
+                );
+            background-size: 75px 75px;
+            transform:
+                translate3d(0,-8%,0)
+                rotate(.5deg);
+            animation:
+                entryRainIn
+                .55s
+                ease
+                .15s
+                forwards,
+                entryRainMove
+                .75s
+                linear
+                .7s
+                infinite;
+        }
+
+        .entry-mist {
+            position: absolute;
+            inset: -15%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(
+                    ellipse at 20% 72%,
+                    rgba(185,210,225,.10),
+                    transparent 34%
+                ),
+                radial-gradient(
+                    ellipse at 78% 58%,
+                    rgba(100,150,175,.08),
+                    transparent 38%
+                ),
+                radial-gradient(
+                    ellipse at 50% 100%,
+                    rgba(183,255,0,.035),
+                    transparent 42%
+                );
+            filter: blur(22px);
+            animation:
+                entryMistIn
+                1.2s
+                ease
+                .45s
+                forwards,
+                entryMistMove
+                6s
+                ease-in-out
+                1.2s
+                infinite
+                alternate;
+        }
+
+        .entry-lightning {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                rgba(225,240,255,.16);
+            mix-blend-mode: screen;
+        }
+
+        .entry-lightning.flash-one {
+            animation:
+                entryLightningOne
+                .28s
+                ease
+                1.9s
+                both;
+        }
+
+        .entry-lightning.flash-two {
+            animation:
+                entryLightningTwo
+                .22s
+                ease
+                4.45s
+                both;
+        }
+
+        .entry-green-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(
+                    circle at 50% 55%,
+                    rgba(183,255,0,.08),
+                    transparent 48%
+                );
+            animation:
+                entryGreenGlow
+                2.2s
+                ease
+                4.8s
+                forwards;
+        }
+
+        #entry-screen.is-hidden .entry-content {
+            animation: none;
+            opacity: 0;
+            transform:
+                translateY(-8px)
+                scale(1.015);
+            transition:
+                opacity .75s ease,
+                transform .85s ease;
+        }
+
+        #entry-screen.is-hidden .entry-rain,
+        #entry-screen.is-hidden .entry-mist,
+        #entry-screen.is-hidden .entry-green-glow {
+            animation: none;
+            opacity: 0;
+            transition:
+                opacity .55s ease;
+        }
+
+        #entry-screen.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                opacity .85s ease,
+                visibility 0s linear .85s;
+        }
+
+        @keyframes entryContentIn {
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+        @keyframes entryTaglineIn {
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+        @keyframes entryRainIn {
+
+            to {
+                opacity: .42;
+            }
+
+        }
+
+        @keyframes entryRainMove {
+
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position:
+                    -75px 75px;
+            }
+
+        }
+
+        @keyframes entryMistIn {
+
+            to {
+                opacity: 1;
+            }
+
+        }
+
+        @keyframes entryMistMove {
+
+            from {
+                transform:
+                    translate3d(-2%,0,0)
+                    scale(1);
+            }
+
+            to {
+                transform:
+                    translate3d(2%,-1%,0)
+                    scale(1.05);
+            }
+
+        }
+
+        @keyframes entryLightningOne {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            18% {
+                opacity: .34;
+            }
+
+            25% {
+                opacity: 0;
+            }
+
+            48% {
+                opacity: .12;
+            }
+
+            60% {
+                opacity: 0;
+            }
+
+        }
+
+        @keyframes entryLightningTwo {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            22% {
+                opacity: .20;
+            }
+
+            34% {
+                opacity: 0;
+            }
+
+            55% {
+                opacity: .08;
+            }
+
+            68% {
+                opacity: 0;
+            }
+
+        }
+
+        @keyframes entryGreenGlow {
+
+            0% {
+                opacity: 0;
+            }
+
+            35% {
+                opacity: .55;
+            }
+
+            65% {
+                opacity: .20;
+            }
+
+            100% {
+                opacity: .30;
+            }
+
+        }
+
+        @media (max-width:550px) {
+
+            .entry-logo {
+                width:
+                    min(
+                        78vw,
+                        330px
+                    );
+            }
+
+            .entry-tagline {
+                margin-top: 20px;
+                font-size:
+                    clamp(
+                        1.05rem,
+                        5.8vw,
+                        1.65rem
+                    );
+                letter-spacing: .045em;
+            }
+
+            .entry-rain {
+                background-size:
+                    55px 55px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .entry-content,
+            .entry-tagline,
+            .entry-rain,
+            .entry-mist,
+            .entry-lightning,
+            .entry-green-glow {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .entry-content {
+                opacity: 1;
+                transform: none;
+            }
+
+            .entry-tagline {
+                opacity: 1;
+                transform: none;
+            }
+
+            .entry-rain {
+                opacity: .18;
+            }
+
+            .entry-mist {
+                opacity: .45;
+            }
+
+        }
+
+
+        /* =====================================================
            UPCOMING EVENTS
            ===================================================== */
 
@@ -96,9 +535,13 @@
                 minmax(0,.95fr);
             min-height: 520px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,.10);
+            border:
+                1px solid
+                rgba(255,255,255,.10);
             background: #090a0d;
-            box-shadow: 0 30px 90px rgba(0,0,0,.35);
+            box-shadow:
+                0 30px 90px
+                rgba(0,0,0,.35);
         }
 
         .upcoming-event-content {
@@ -107,14 +550,26 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: clamp(32px,5vw,70px);
+            padding:
+                clamp(
+                    32px,
+                    5vw,
+                    70px
+                );
         }
 
         .upcoming-event-content h3 {
             margin: 18px 0 25px;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
-            font-size: clamp(3rem,6vw,6rem);
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
+            font-size:
+                clamp(
+                    3rem,
+                    6vw,
+                    6rem
+                );
             line-height: .86;
             font-weight: 900;
             letter-spacing: -.045em;
@@ -132,22 +587,30 @@
         .upcoming-event-details {
             display: grid;
             grid-template-columns:
-                repeat(2,minmax(0,1fr));
+                repeat(
+                    2,
+                    minmax(0,1fr)
+                );
             gap: 14px;
             margin-bottom: 30px;
         }
 
         .upcoming-event-details div {
             padding: 18px 20px;
-            border-left: 2px solid var(--orange);
-            background: rgba(255,255,255,.025);
+            border-left:
+                2px solid
+                var(--orange);
+            background:
+                rgba(255,255,255,.025);
         }
 
         .upcoming-event-details span {
             display: block;
             margin-bottom: 7px;
             color: var(--orange);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
             font-size: .75rem;
             font-weight: 800;
             letter-spacing: .15em;
@@ -156,16 +619,13 @@
         .upcoming-event-details strong {
             display: block;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
             font-size: 1.35rem;
             line-height: 1;
             font-weight: 800;
         }
-
-        /*
-         * Keep the Ancient Ram Inn promotional video contained.
-         * 16:9 works properly on desktop and mobile.
-         */
 
         .upcoming-event-video {
             position: relative !important;
@@ -205,22 +665,38 @@
                 minmax(300px,.8fr);
             gap: 30px;
             align-items: stretch;
-            padding: clamp(28px,5vw,60px);
-            border: 1px solid rgba(255,255,255,.10);
+            padding:
+                clamp(
+                    28px,
+                    5vw,
+                    60px
+                );
+            border:
+                1px solid
+                rgba(255,255,255,.10);
             background:
                 linear-gradient(
                     135deg,
                     rgba(255,255,255,.045),
                     rgba(255,255,255,.012)
                 );
-            box-shadow: 0 30px 90px rgba(0,0,0,.30);
+            box-shadow:
+                0 30px 90px
+                rgba(0,0,0,.30);
         }
 
         .community-copy h2 {
             margin: 0 0 20px;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
-            font-size: clamp(3rem,6vw,6rem);
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
+            font-size:
+                clamp(
+                    3rem,
+                    6vw,
+                    6rem
+                );
             line-height: .88;
             font-weight: 900;
             letter-spacing: -.05em;
@@ -243,7 +719,9 @@
             justify-content: center;
             align-items: flex-start;
             padding-left: 30px;
-            border-left: 1px solid rgba(255,255,255,.10);
+            border-left:
+                1px solid
+                rgba(255,255,255,.10);
         }
 
         .community-action .eyebrow {
@@ -276,8 +754,15 @@
         .social-heading h2 {
             margin: 0 0 20px;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
-            font-size: clamp(3rem,6vw,6rem);
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
+            font-size:
+                clamp(
+                    3rem,
+                    6vw,
+                    6rem
+                );
             line-height: .88;
             font-weight: 900;
             letter-spacing: -.05em;
@@ -298,7 +783,10 @@
         .social-grid {
             display: grid;
             grid-template-columns:
-                repeat(3,minmax(0,1fr));
+                repeat(
+                    3,
+                    minmax(0,1fr)
+                );
             gap: 18px;
         }
 
@@ -312,8 +800,11 @@
             overflow: hidden;
             color: var(--white);
             text-decoration: none;
-            border: 1px solid rgba(255,255,255,.10);
-            background: rgba(255,255,255,.025);
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+            background:
+                rgba(255,255,255,.025);
             transition:
                 transform .35s var(--ease),
                 border-color .35s ease,
@@ -330,13 +821,15 @@
             background: var(--orange);
             transform: scaleY(.25);
             transform-origin: bottom;
-            transition: transform .35s var(--ease);
+            transition:
+                transform .35s var(--ease);
         }
 
         .social-button:hover {
             transform: translateY(-5px);
             border-color: var(--border-orange);
-            background: rgba(183,255,0,.045);
+            background:
+                rgba(183,255,0,.045);
         }
 
         .social-button:hover::before {
@@ -344,13 +837,16 @@
         }
 
         .social-icon {
-            flex: 0 0 58px;
+            flex:
+                0 0 58px;
             width: 58px;
             height: 58px;
             display: grid;
             place-items: center;
             color: var(--orange);
-            border: 1px solid var(--border-orange);
+            border:
+                1px solid
+                var(--border-orange);
         }
 
         .social-icon svg {
@@ -369,7 +865,9 @@
             display: block;
             margin-bottom: 4px;
             color: var(--orange);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
             font-size: .72rem;
             font-weight: 900;
             letter-spacing: .16em;
@@ -378,7 +876,9 @@
         .social-content h3 {
             margin: 0 0 5px;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
             font-size: 1.55rem;
             line-height: .95;
             font-weight: 800;
@@ -419,9 +919,12 @@
             }
 
             .community-action {
-                padding: 25px 0 0;
+                padding:
+                    25px 0 0;
                 border-left: 0;
-                border-top: 1px solid rgba(255,255,255,.10);
+                border-top:
+                    1px solid
+                    rgba(255,255,255,.10);
             }
 
             .social-grid {
@@ -438,7 +941,12 @@
             }
 
             .upcoming-event-content h3 {
-                font-size: clamp(2.7rem,14vw,4.2rem);
+                font-size:
+                    clamp(
+                        2.7rem,
+                        14vw,
+                        4.2rem
+                    );
             }
 
             .upcoming-event-details {
@@ -463,8 +971,12 @@
             width: 100%;
             overflow: hidden;
             background: #050608;
-            border-top: 1px solid rgba(183,255,0,.25);
-            border-bottom: 1px solid rgba(183,255,0,.25);
+            border-top:
+                1px solid
+                rgba(183,255,0,.25);
+            border-bottom:
+                1px solid
+                rgba(183,255,0,.25);
             padding: 11px 0;
         }
 
@@ -472,7 +984,11 @@
             display: flex;
             width: max-content;
             white-space: nowrap;
-            animation: constructionTickerMove 24s linear infinite;
+            animation:
+                constructionTickerMove
+                24s
+                linear
+                infinite;
         }
 
         .construction-ticker-track span {
@@ -480,7 +996,9 @@
             flex-shrink: 0;
             padding-right: 70px;
             color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family:
+                "Barlow Condensed",
+                sans-serif;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .14em;
@@ -489,11 +1007,13 @@
         @keyframes constructionTickerMove {
 
             from {
-                transform: translateX(-50%);
+                transform:
+                    translateX(-50%);
             }
 
             to {
-                transform: translateX(0);
+                transform:
+                    translateX(0);
             }
 
         }
@@ -539,7 +1059,9 @@
             min-height: 500px;
             object-fit: cover;
             object-position: center;
-            filter: brightness(.78) contrast(1.08);
+            filter:
+                brightness(.78)
+                contrast(1.08);
             transition:
                 transform .7s ease,
                 filter .7s ease;
@@ -547,7 +1069,9 @@
 
         .investigation-feature-image:hover img {
             transform: scale(1.035);
-            filter: brightness(.9) contrast(1.08);
+            filter:
+                brightness(.9)
+                contrast(1.08);
         }
 
         .investigation-feature-content {
@@ -564,8 +1088,11 @@
             margin-top: 32px;
             padding: 30px;
             text-align: center;
-            border: 1px solid rgba(183,255,0,.18);
-            background: rgba(5,6,8,.72);
+            border:
+                1px solid
+                rgba(183,255,0,.18);
+            background:
+                rgba(5,6,8,.72);
         }
 
         .investigation-archive-action p {
@@ -634,7 +1161,8 @@
         .button,
         .social-button,
         .menu-toggle {
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color:
+                transparent;
         }
 
         .button {
@@ -649,7 +1177,9 @@
             text-decoration: none !important;
             white-space: nowrap !important;
             line-height: 1 !important;
-            font-family: "Barlow Condensed", sans-serif !important;
+            font-family:
+                "Barlow Condensed",
+                sans-serif !important;
             font-size: .78rem !important;
             font-weight: 800 !important;
             letter-spacing: .14em !important;
@@ -671,18 +1201,23 @@
         .button-primary {
             color: #050608 !important;
             background: var(--orange) !important;
-            border: 1px solid var(--orange) !important;
+            border:
+                1px solid
+                var(--orange) !important;
         }
 
         .button-outline {
             color: var(--white) !important;
             background: transparent !important;
-            border: 1px solid rgba(255,255,255,.35) !important;
+            border:
+                1px solid
+                rgba(255,255,255,.35) !important;
         }
 
         .button:hover,
         .button:focus-visible {
-            transform: translateY(-2px) !important;
+            transform:
+                translateY(-2px) !important;
             outline: none !important;
         }
 
@@ -695,8 +1230,10 @@
 
         .button-outline:hover,
         .button-outline:focus-visible {
-            background: var(--orange) !important;
-            border-color: var(--orange) !important;
+            background:
+                var(--orange) !important;
+            border-color:
+                var(--orange) !important;
             color: #050608 !important;
         }
 
@@ -738,6 +1275,39 @@
     >
 
         <div class="entry-image"></div>
+
+        <div class="entry-mist"></div>
+
+        <div class="entry-green-glow"></div>
+
+        <div class="entry-rain"></div>
+
+        <div
+            class="entry-lightning flash-one"
+            aria-hidden="true"
+        ></div>
+
+        <div
+            class="entry-lightning flash-two"
+            aria-hidden="true"
+        ></div>
+
+
+        <div class="entry-content">
+
+            <img
+                src="/essex-paranormal-logo.png"
+                alt="Essex Paranormal"
+                class="entry-logo"
+                decoding="async"
+            >
+
+            <p class="entry-tagline">
+                THE UK'S MOST TERRIFIED
+                PARANORMAL INVESTIGATOR!
+            </p>
+
+        </div>
 
     </div>
 
@@ -1274,8 +1844,13 @@
                                 decoding="async"
                             >
 
-                            <span class="frame-corner frame-corner-top"></span>
-                            <span class="frame-corner frame-corner-bottom"></span>
+                            <span
+                                class="frame-corner frame-corner-top"
+                            ></span>
+
+                            <span
+                                class="frame-corner frame-corner-bottom"
+                            ></span>
 
                         </div>
 
@@ -1515,7 +2090,9 @@
 
             <div class="container">
 
-                <div class="section-heading approach-heading">
+                <div
+                    class="section-heading approach-heading"
+                >
 
                     <p class="eyebrow">
                         OUR APPROACH
@@ -1631,10 +2208,6 @@
                 </div>
 
 
-                <!-- =================================================
-                     FEATURED INVESTIGATION: HMP ASHWELL
-                     ================================================= -->
-
                 <article class="investigation-feature">
 
                     <a
@@ -1653,9 +2226,13 @@
                     </a>
 
 
-                    <div class="investigation-feature-content">
+                    <div
+                        class="investigation-feature-content"
+                    >
 
-                        <div class="investigation-feature-top">
+                        <div
+                            class="investigation-feature-top"
+                        >
 
                             <span class="empty-code">
                                 CASE FILE EP-001
@@ -1692,7 +2269,9 @@
                         </p>
 
 
-                        <div class="investigation-feature-meta">
+                        <div
+                            class="investigation-feature-meta"
+                        >
 
                             <div>
                                 <span>CASE</span>
@@ -1725,11 +2304,9 @@
                 </article>
 
 
-                <!-- =================================================
-                     SINGLE INVESTIGATION ARCHIVE
-                     ================================================= -->
-
-                <div class="investigation-archive-action">
+                <div
+                    class="investigation-archive-action"
+                >
 
                     <span class="empty-code">
                         ARCHIVE STATUS
@@ -1766,7 +2343,9 @@
             <div class="container">
 
 
-                <div class="section-heading evidence-heading">
+                <div
+                    class="section-heading evidence-heading"
+                >
 
                     <p class="eyebrow">
                         EVIDENCE
@@ -2076,10 +2655,6 @@
                 <div class="social-grid">
 
 
-                    <!-- =================================================
-                         TIKTOK
-                         ================================================= -->
-
                     <a
                         href="https://www.tiktok.com/@essexparanormal"
                         class="social-button"
@@ -2125,10 +2700,6 @@
 
                     </a>
 
-
-                    <!-- =================================================
-                         YOUTUBE
-                         ================================================= -->
 
                     <a
                         href="https://youtube.com/@essexparanormal666"
@@ -2176,10 +2747,6 @@
                     </a>
 
 
-                    <!-- =================================================
-                         INSTAGRAM
-                         ================================================= -->
-
                     <a
                         href="https://www.instagram.com/essex.paranormal/"
                         class="social-button"
@@ -2225,10 +2792,6 @@
 
                     </a>
 
-
-                    <!-- =================================================
-                         FACEBOOK
-                         ================================================= -->
 
                     <a
                         href="https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr"
@@ -2690,7 +3253,10 @@
 
                 if (!window.location.hash) {
 
-                    window.scrollTo(0, 0);
+                    window.scrollTo(
+                        0,
+                        0
+                    );
 
                 }
 
