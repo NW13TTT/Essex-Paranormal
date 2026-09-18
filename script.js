@@ -54,6 +54,7 @@ function initEntryScreen() {
         return;
     }
 
+
     try {
 
         if ("scrollRestoration" in history) {
@@ -64,7 +65,14 @@ function initEntryScreen() {
         /* Ignore browser restrictions. */
     }
 
+
+    /*
+     * Keep the page at the very top while
+     * the cinematic introduction is playing.
+     */
+
     forceScrollTop();
+
 
     let reducedMotion = false;
 
@@ -76,13 +84,32 @@ function initEntryScreen() {
             ).matches;
 
     } catch (error) {
+
         reducedMotion = false;
+
     }
 
-    const displayTime =
-        reducedMotion
-            ? 700
-            : 3000;
+
+    /*
+     * Lock page scrolling while the intro
+     * is visible.
+     *
+     * The existing CSS controls the actual
+     * cinematic effects.
+     */
+
+    document.body.classList.add(
+        "entry-active"
+    );
+
+
+    /*
+     * The cinematic introduction now lasts
+     * exactly 7.5 seconds before the existing
+     * fade-out begins.
+     */
+
+    const displayTime = 7500;
 
 
     window.setTimeout(() => {
@@ -98,8 +125,9 @@ function initEntryScreen() {
     /*
      * Emergency failsafe.
      *
-     * The website must never remain trapped
-     * behind the entry screen.
+     * This is deliberately longer than the
+     * normal 7.5 second introduction so it
+     * cannot cut the cinematic sequence short.
      */
 
     window.setTimeout(() => {
@@ -110,8 +138,15 @@ function initEntryScreen() {
             );
 
         if (!current) {
+
+            document.body.classList.remove(
+                "entry-active"
+            );
+
             return;
+
         }
+
 
         current.classList.add(
             "is-hidden"
@@ -126,6 +161,12 @@ function initEntryScreen() {
         current.style.pointerEvents =
             "none";
 
+
+        document.body.classList.remove(
+            "entry-active"
+        );
+
+
         window.setTimeout(() => {
 
             const screen =
@@ -139,7 +180,7 @@ function initEntryScreen() {
 
         }, 1000);
 
-    }, 5000);
+    }, 9000);
 
 }
 
@@ -157,12 +198,30 @@ function hideEntryScreen(
         return;
     }
 
+
     entryScreen.classList.add(
         "is-hidden"
     );
 
     entryScreen.style.pointerEvents =
         "none";
+
+
+    /*
+     * Release the page after the intro
+     * begins fading away.
+     */
+
+    document.body.classList.remove(
+        "entry-active"
+    );
+
+
+    /*
+     * Allow the existing CSS transition
+     * to complete before removing the
+     * entry screen from the document.
+     */
 
     window.setTimeout(() => {
 
@@ -195,12 +254,17 @@ function forceScrollTop() {
         return;
     }
 
+
     try {
 
         window.scrollTo({
+
             top: 0,
+
             left: 0,
+
             behavior: "auto"
+
         });
 
     } catch (error) {
@@ -401,6 +465,7 @@ function initSmoothNavigation() {
                             return;
                         }
 
+
                         let target = null;
 
                         try {
@@ -416,11 +481,14 @@ function initSmoothNavigation() {
 
                         }
 
+
                         if (!target) {
                             return;
                         }
 
+
                         event.preventDefault();
+
 
                         const header =
                             document.querySelector(
@@ -432,12 +500,14 @@ function initSmoothNavigation() {
                                 ? header.offsetHeight
                                 : 0;
 
+
                         const position =
                             target
                                 .getBoundingClientRect()
                                 .top +
                             window.scrollY -
                             headerHeight;
+
 
                         window.scrollTo({
 
@@ -452,6 +522,7 @@ function initSmoothNavigation() {
                             behavior: "smooth"
 
                         });
+
 
                         try {
 
@@ -489,6 +560,7 @@ function initHeaderScroll() {
         return;
     }
 
+
     const update =
         () => {
 
@@ -499,7 +571,9 @@ function initHeaderScroll() {
 
         };
 
+
     update();
+
 
     window.addEventListener(
         "scroll",
@@ -529,6 +603,7 @@ function initActiveNavigation() {
         return;
     }
 
+
     const sections =
         links
             .map(
@@ -554,9 +629,11 @@ function initActiveNavigation() {
 
                     }
 
+
                     if (!section) {
                         return null;
                     }
+
 
                     return {
                         link,
@@ -566,6 +643,7 @@ function initActiveNavigation() {
                 }
             )
             .filter(Boolean);
+
 
     if (!sections.length) {
         return;
@@ -579,8 +657,10 @@ function initActiveNavigation() {
                 window.scrollY +
                 window.innerHeight * 0.32;
 
+
             let current =
                 sections[0];
+
 
             sections.forEach(
                 (item) => {
@@ -615,6 +695,7 @@ function initActiveNavigation() {
 
     update();
 
+
     window.addEventListener(
         "scroll",
         update,
@@ -648,6 +729,7 @@ function initBackToTop() {
             const visible =
                 window.scrollY > 600;
 
+
             buttons.forEach(
                 (button) => {
 
@@ -663,6 +745,7 @@ function initBackToTop() {
 
 
     update();
+
 
     window.addEventListener(
         "scroll",
@@ -681,6 +764,7 @@ function initBackToTop() {
                 (event) => {
 
                     event.preventDefault();
+
 
                     window.scrollTo({
 
@@ -745,6 +829,7 @@ function initCurrentYear() {
             new Date().getFullYear()
         );
 
+
     document
         .querySelectorAll(
             "[data-current-year]"
@@ -798,10 +883,12 @@ function ensureConstructionBanner() {
     ticker.className =
         "construction-ticker";
 
+
     ticker.setAttribute(
         "role",
         "status"
     );
+
 
     ticker.setAttribute(
         "aria-label",
@@ -835,10 +922,12 @@ function ensureConstructionBanner() {
             "style"
         );
 
+
     style.setAttribute(
         "data-ep-construction",
         "true"
     );
+
 
     style.textContent = `
 
@@ -848,8 +937,8 @@ function ensureConstructionBanner() {
             width: 100%;
             overflow: hidden;
             background: #050608;
-            border-top: 1px solid rgba(255,106,26,.25);
-            border-bottom: 1px solid rgba(255,106,26,.25);
+            border-top: 1px solid rgba(183,255,0,.25);
+            border-bottom: 1px solid rgba(183,255,0,.25);
             padding: 11px 0;
         }
 
@@ -908,6 +997,7 @@ function ensureConstructionBanner() {
         }
 
     `;
+
 
     document.head.appendChild(
         style
@@ -1030,8 +1120,10 @@ function normaliseHomepageArchive() {
                 "div"
             );
 
+
         archive.className =
             "archive-action";
+
 
         archive.innerHTML = `
             <span class="empty-code">
@@ -1056,6 +1148,7 @@ function normaliseHomepageArchive() {
             investigations.querySelector(
                 ".ashwell-feature, .investigation-feature"
             );
+
 
         if (feature) {
 
@@ -1089,6 +1182,7 @@ function normaliseHomepageArchive() {
             ".empty-code"
         );
 
+
     if (status) {
 
         status.textContent =
@@ -1101,6 +1195,7 @@ function normaliseHomepageArchive() {
         archive.querySelector(
             "p"
         );
+
 
     if (paragraph) {
 
@@ -1115,10 +1210,12 @@ function normaliseHomepageArchive() {
             "a.button"
         );
 
+
     if (button) {
 
         button.href =
             "/investigations/";
+
 
         button.innerHTML =
             `
@@ -1152,6 +1249,7 @@ function fixAncientRamVideo() {
             ".upcoming-event-video"
         );
 
+
     if (!wrapper) {
         return;
     }
@@ -1167,10 +1265,12 @@ function fixAncientRamVideo() {
             "style"
         );
 
+
     style.setAttribute(
         "data-ep-ram-video",
         "true"
     );
+
 
     style.textContent = `
 
@@ -1205,6 +1305,7 @@ function fixAncientRamVideo() {
         }
 
     `;
+
 
     document.head.appendChild(
         style
