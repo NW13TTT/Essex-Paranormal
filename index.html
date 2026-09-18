@@ -57,139 +57,106 @@
     <style>
 
         /* =====================================================
-           CINEMATIC ENTRY INTRO
+           CINEMATIC 7.5 SECOND ENTRY INTRO
            ===================================================== */
+
+        body.entry-active {
+            overflow: hidden;
+        }
+
+        body.entry-active > *:not(#entry-screen) {
+            visibility: hidden;
+        }
+
+        body.entry-active #entry-screen {
+            visibility: visible;
+        }
 
         #entry-screen {
             position: fixed;
             inset: 0;
-            z-index: 99999;
-            display: grid;
-            place-items: center;
+            z-index: 999999;
             overflow: hidden;
             background: #000;
             opacity: 1;
             visibility: visible;
-            pointer-events: none;
+            pointer-events: auto;
             transition:
-                opacity .85s ease,
+                opacity .9s ease,
                 visibility 0s linear 0s;
         }
 
         #entry-screen.is-hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
             transition:
-                opacity .85s ease,
-                visibility 0s linear .85s;
+                opacity .9s ease,
+                visibility 0s linear .9s;
         }
 
         #entry-screen .entry-image {
             position: absolute;
-            inset: 0;
+            inset: -2%;
             overflow: hidden;
+
             background:
                 url("/essex-paranormal-intro.png")
                 center center / cover no-repeat;
+
+            transform: scale(1.035);
+
+            animation:
+                entryCamera
+                7.5s
+                ease-out
+                forwards;
         }
 
+        /* Cinematic darkness over the artwork */
         #entry-screen .entry-image::before {
             content: "";
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
+
             background:
+                radial-gradient(
+                    ellipse at center,
+                    transparent 20%,
+                    rgba(0,0,0,.12) 55%,
+                    rgba(0,0,0,.58) 100%
+                ),
                 linear-gradient(
                     180deg,
-                    rgba(0,0,0,.14) 0%,
-                    rgba(0,0,0,.24) 45%,
-                    rgba(0,0,0,.58) 100%
+                    rgba(0,0,0,.08),
+                    rgba(0,0,0,.28)
                 );
         }
 
+        /* Very subtle cinematic scan / film texture */
         #entry-screen .entry-image::after {
             content: "";
             position: absolute;
             inset: 0;
-            z-index: 6;
+            z-index: 8;
             pointer-events: none;
-            opacity: .18;
+
+            opacity: .12;
+
             background:
                 repeating-linear-gradient(
                     0deg,
-                    rgba(255,255,255,.018) 0,
-                    rgba(255,255,255,.018) 1px,
+                    rgba(255,255,255,.025) 0,
+                    rgba(255,255,255,.025) 1px,
                     transparent 1px,
                     transparent 4px
                 );
+
             mix-blend-mode: screen;
         }
 
-        /* =====================================================
-           INTRO CONTENT
-           ===================================================== */
-
-        .entry-content {
-            position: relative;
-            z-index: 7;
-            width: min(92vw,900px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            opacity: 0;
-            transform:
-                translateY(18px)
-                scale(.97);
-            animation:
-                entryContentIn
-                1.05s
-                cubic-bezier(.22,.61,.36,1)
-                .55s
-                forwards;
-        }
-
-        .entry-logo {
-            width: min(72vw,430px);
-            max-height: 34vh;
-            object-fit: contain;
-            display: block;
-            filter:
-                drop-shadow(0 0 12px rgba(255,255,255,.10))
-                drop-shadow(0 0 35px rgba(183,255,0,.08));
-        }
-
-        .entry-tagline {
-            margin: 25px 0 0;
-            max-width: 850px;
-            color: #fff;
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size:
-                clamp(
-                    1.15rem,
-                    3.2vw,
-                    2.55rem
-                );
-            line-height: .98;
-            font-weight: 800;
-            letter-spacing: .055em;
-            text-transform: uppercase;
-            text-shadow:
-                0 2px 12px rgba(0,0,0,.95),
-                0 0 25px rgba(0,0,0,.8);
-            opacity: 0;
-            transform: translateY(10px);
-            animation:
-                entryTaglineIn
-                .75s
-                ease
-                2.05s
-                forwards;
-        }
 
         /* =====================================================
            REALISTIC LAYERED RAIN
@@ -198,13 +165,20 @@
         .entry-rain {
             position: absolute;
             inset: -25%;
-            z-index: 3;
+
+            z-index: 5;
+
             pointer-events: none;
+
             opacity: 0;
-            transform: rotate(.7deg);
+
+            transform:
+                rotate(.7deg)
+                scale(1.08);
+
             animation:
                 entryRainIn
-                .6s
+                .7s
                 ease
                 .15s
                 forwards;
@@ -213,130 +187,183 @@
         .entry-rain-layer {
             position: absolute;
             inset: 0;
+
             pointer-events: none;
+
             background-repeat: repeat;
-            transform: translate3d(0,-12%,0);
+
+            transform:
+                translate3d(0,-12%,0);
         }
 
+
+        /* Distant rain */
         .entry-rain-far {
-            opacity: .22;
+            opacity: .18;
+
             background-image:
                 repeating-linear-gradient(
                     106deg,
                     transparent 0,
-                    transparent 24px,
-                    rgba(215,235,245,.11) 25px,
-                    rgba(215,235,245,.11) 26px,
                     transparent 27px,
-                    transparent 65px
-                );
-            background-size: 90px 90px;
-            filter: blur(.35px);
-            animation:
-                rainFar
-                1.45s
-                linear
-                infinite;
-        }
-
-        .entry-rain-mid {
-            opacity: .34;
-            background-image:
-                repeating-linear-gradient(
-                    106deg,
-                    transparent 0,
-                    transparent 17px,
-                    rgba(225,242,250,.17) 18px,
-                    rgba(225,242,250,.17) 19px,
-                    transparent 20px,
-                    transparent 45px
-                );
-            background-size: 65px 65px;
-            animation:
-                rainMid
-                .9s
-                linear
-                infinite;
-        }
-
-        .entry-rain-near {
-            opacity: .48;
-            background-image:
-                repeating-linear-gradient(
-                    106deg,
-                    transparent 0,
-                    transparent 31px,
-                    rgba(235,245,250,.22) 32px,
-                    rgba(235,245,250,.22) 34px,
-                    transparent 35px,
+                    rgba(215,235,245,.14) 28px,
+                    rgba(215,235,245,.14) 29px,
+                    transparent 30px,
                     transparent 72px
                 );
-            background-size: 105px 105px;
-            filter: blur(.15px);
+
+            background-size:
+                105px
+                105px;
+
+            filter:
+                blur(.45px);
+
             animation:
-                rainNear
-                .58s
+                rainFar
+                1.5s
                 linear
                 infinite;
         }
 
+
+        /* Mid rain */
+        .entry-rain-mid {
+            opacity: .30;
+
+            background-image:
+                repeating-linear-gradient(
+                    106deg,
+                    transparent 0,
+                    transparent 20px,
+                    rgba(225,242,250,.20) 21px,
+                    rgba(225,242,250,.20) 23px,
+                    transparent 24px,
+                    transparent 54px
+                );
+
+            background-size:
+                76px
+                76px;
+
+            filter:
+                blur(.22px);
+
+            animation:
+                rainMid
+                .92s
+                linear
+                infinite;
+        }
+
+
+        /* Foreground rain */
+        .entry-rain-near {
+            opacity: .42;
+
+            background-image:
+                repeating-linear-gradient(
+                    106deg,
+                    transparent 0,
+                    transparent 36px,
+                    rgba(240,248,252,.28) 37px,
+                    rgba(240,248,252,.28) 40px,
+                    transparent 41px,
+                    transparent 88px
+                );
+
+            background-size:
+                118px
+                118px;
+
+            filter:
+                blur(.12px);
+
+            animation:
+                rainNear
+                .62s
+                linear
+                infinite;
+        }
+
+
+        /* Soft ground splash atmosphere */
         .entry-rain-splash {
             position: absolute;
             inset: 0;
-            opacity: .22;
+
+            pointer-events: none;
+
+            opacity: .18;
+
             background:
                 radial-gradient(
-                    ellipse at 20% 85%,
-                    rgba(220,235,245,.13),
-                    transparent 16%
+                    ellipse at 18% 87%,
+                    rgba(220,235,245,.14),
+                    transparent 17%
                 ),
                 radial-gradient(
-                    ellipse at 74% 92%,
-                    rgba(220,235,245,.10),
-                    transparent 17%
+                    ellipse at 76% 92%,
+                    rgba(220,235,245,.12),
+                    transparent 19%
                 );
-            filter: blur(4px);
+
+            filter:
+                blur(5px);
         }
 
+
         /* =====================================================
-           MIST
+           SLOW MOVING MIST
            ===================================================== */
 
         .entry-mist {
             position: absolute;
-            inset: -18%;
-            z-index: 2;
+            inset: -20%;
+
+            z-index: 4;
+
             pointer-events: none;
+
             opacity: 0;
+
             background:
                 radial-gradient(
-                    ellipse at 15% 72%,
-                    rgba(195,215,225,.14),
+                    ellipse at 14% 74%,
+                    rgba(205,225,232,.15),
                     transparent 34%
                 ),
                 radial-gradient(
-                    ellipse at 80% 58%,
-                    rgba(115,155,175,.12),
-                    transparent 38%
+                    ellipse at 82% 62%,
+                    rgba(145,185,200,.11),
+                    transparent 39%
                 ),
                 radial-gradient(
-                    ellipse at 48% 94%,
-                    rgba(183,255,0,.035),
-                    transparent 43%
+                    ellipse at 50% 96%,
+                    rgba(183,255,0,.025),
+                    transparent 44%
                 );
-            filter: blur(24px);
+
+            filter:
+                blur(27px);
+
+            mix-blend-mode:
+                screen;
+
             animation:
                 entryMistIn
-                1.35s
+                1.4s
                 ease
-                .35s
+                .4s
                 forwards,
                 entryMistMove
                 7s
                 ease-in-out
-                1.2s
-                infinite alternate;
+                1s
+                infinite
+                alternate;
         }
+
 
         /* =====================================================
            LIGHTNING
@@ -345,154 +372,159 @@
         .entry-lightning {
             position: absolute;
             inset: 0;
-            z-index: 4;
+
+            z-index: 6;
+
             pointer-events: none;
+
             opacity: 0;
+
             background:
-                rgba(225,240,255,.20);
-            mix-blend-mode: screen;
+                radial-gradient(
+                    ellipse at 58% 25%,
+                    rgba(240,248,255,.25),
+                    transparent 46%
+                ),
+                rgba(225,240,255,.08);
+
+            mix-blend-mode:
+                screen;
         }
 
         .entry-lightning.flash-one {
             animation:
                 entryLightningOne
-                .34s
+                .38s
                 ease
-                1.9s
+                2.15s
                 both;
         }
 
         .entry-lightning.flash-two {
             animation:
                 entryLightningTwo
-                .27s
+                .30s
                 ease
-                4.45s
+                4.55s
                 both;
         }
 
+
         /* =====================================================
-           GREEN ATMOSPHERE
+           SUBTLE NEON GREEN ATMOSPHERE
            ===================================================== */
 
         .entry-green-glow {
             position: absolute;
             inset: 0;
-            z-index: 1;
+
+            z-index: 3;
+
             pointer-events: none;
+
             opacity: 0;
+
             background:
                 radial-gradient(
-                    circle at 50% 55%,
-                    rgba(183,255,0,.09),
+                    circle at 50% 58%,
+                    rgba(183,255,0,.075),
                     transparent 48%
                 );
+
+            mix-blend-mode:
+                screen;
+
             animation:
                 entryGreenGlow
-                2.4s
+                2.7s
                 ease
-                4.7s
+                3.8s
                 forwards;
         }
 
-        /* =====================================================
-           INTRO EXIT
-           ===================================================== */
-
-        #entry-screen.is-hidden .entry-content {
-            animation: none;
-            opacity: 0;
-            transform:
-                translateY(-10px)
-                scale(1.025);
-            transition:
-                opacity .7s ease,
-                transform .85s ease;
-        }
-
-        #entry-screen.is-hidden .entry-rain,
-        #entry-screen.is-hidden .entry-mist,
-        #entry-screen.is-hidden .entry-green-glow {
-            animation: none;
-            opacity: 0;
-            transition: opacity .55s ease;
-        }
 
         /* =====================================================
-           INTRO KEYFRAMES
+           KEYFRAMES
            ===================================================== */
 
-        @keyframes entryContentIn {
+        @keyframes entryCamera {
 
-            to {
-                opacity: 1;
+            from {
                 transform:
-                    translateY(0)
-                    scale(1);
+                    scale(1.035);
             }
-
-        }
-
-        @keyframes entryTaglineIn {
 
             to {
-                opacity: 1;
-                transform: translateY(0);
+                transform:
+                    scale(1.085);
             }
 
         }
+
 
         @keyframes entryRainIn {
 
+            from {
+                opacity: 0;
+            }
+
             to {
                 opacity: 1;
             }
 
         }
+
 
         @keyframes rainFar {
 
             from {
                 background-position:
-                    0 -30px;
+                    0 -120px;
             }
 
             to {
                 background-position:
-                    -90px 90px;
+                    -105px 150px;
             }
 
         }
+
 
         @keyframes rainMid {
 
             from {
                 background-position:
-                    0 -40px;
+                    0 -100px;
             }
 
             to {
                 background-position:
-                    -65px 65px;
+                    -76px 115px;
             }
 
         }
+
 
         @keyframes rainNear {
 
             from {
                 background-position:
-                    0 -60px;
+                    0 -140px;
             }
 
             to {
                 background-position:
-                    -105px 105px;
+                    -118px 165px;
             }
 
         }
 
+
         @keyframes entryMistIn {
+
+            from {
+                opacity: 0;
+            }
 
             to {
                 opacity: 1;
@@ -500,21 +532,23 @@
 
         }
 
+
         @keyframes entryMistMove {
 
             from {
                 transform:
-                    translate3d(-3%,0,0)
+                    translate3d(-3%,1%,0)
                     scale(1);
             }
 
             to {
                 transform:
-                    translate3d(3%,-1.5%,0)
-                    scale(1.06);
+                    translate3d(4%,-2%,0)
+                    scale(1.08);
             }
 
         }
+
 
         @keyframes entryLightningOne {
 
@@ -524,23 +558,23 @@
             }
 
             12% {
-                opacity: .38;
+                opacity: .25;
             }
 
-            19% {
+            18% {
+                opacity: .035;
+            }
+
+            29% {
+                opacity: .42;
+            }
+
+            39% {
                 opacity: 0;
             }
 
-            32% {
-                opacity: .16;
-            }
-
-            42% {
-                opacity: 0;
-            }
-
-            58% {
-                opacity: .08;
+            56% {
+                opacity: .10;
             }
 
             68% {
@@ -549,6 +583,7 @@
 
         }
 
+
         @keyframes entryLightningTwo {
 
             0%,
@@ -556,23 +591,24 @@
                 opacity: 0;
             }
 
-            18% {
-                opacity: .25;
+            14% {
+                opacity: .30;
             }
 
-            29% {
-                opacity: 0;
+            23% {
+                opacity: .035;
             }
 
-            48% {
-                opacity: .10;
+            37% {
+                opacity: .17;
             }
 
-            61% {
+            51% {
                 opacity: 0;
             }
 
         }
+
 
         @keyframes entryGreenGlow {
 
@@ -580,51 +616,51 @@
                 opacity: 0;
             }
 
-            30% {
-                opacity: .45;
+            35% {
+                opacity: .48;
             }
 
-            65% {
+            70% {
                 opacity: .18;
             }
 
             100% {
-                opacity: .30;
+                opacity: .27;
             }
 
         }
+
+
+        /* =====================================================
+           MOBILE INTRO
+           ===================================================== */
 
         @media (max-width:550px) {
 
-            .entry-logo {
-                width:
-                    min(
-                        78vw,
-                        335px
-                    );
-            }
-
-            .entry-tagline {
-                margin-top: 20px;
-                font-size:
-                    clamp(
-                        1.02rem,
-                        5.7vw,
-                        1.65rem
-                    );
-                letter-spacing: .045em;
+            #entry-screen .entry-image {
+                background-position:
+                    center center;
             }
 
             .entry-rain {
-                inset: -35%;
+                inset:
+                    -35%;
+            }
+
+            .entry-rain-near {
+                opacity: .34;
             }
 
         }
 
+
+        /* =====================================================
+           REDUCED MOTION
+           ===================================================== */
+
         @media (prefers-reduced-motion: reduce) {
 
-            .entry-content,
-            .entry-tagline,
+            #entry-screen .entry-image,
             .entry-rain,
             .entry-mist,
             .entry-lightning,
@@ -633,25 +669,20 @@
                 transition: none !important;
             }
 
-            .entry-content {
-                opacity: 1;
-                transform: none;
-            }
-
-            .entry-tagline {
-                opacity: 1;
+            #entry-screen .entry-image {
                 transform: none;
             }
 
             .entry-rain {
-                opacity: .20;
+                opacity: .16;
             }
 
             .entry-mist {
-                opacity: .45;
+                opacity: .40;
             }
 
         }
+
 
         /* =====================================================
            UPCOMING EVENTS
@@ -804,6 +835,7 @@
             background: #000 !important;
         }
 
+
         /* =====================================================
            COMMUNITY
            ===================================================== */
@@ -890,6 +922,7 @@
             font-size: .82rem;
             line-height: 1.7;
         }
+
 
         /* =====================================================
            SOCIAL MEDIA
@@ -1051,6 +1084,7 @@
             font-size: 1.25rem;
         }
 
+
         /* =====================================================
            CONSTRUCTION TICKER
            ===================================================== */
@@ -1105,6 +1139,7 @@
             }
 
         }
+
 
         /* =====================================================
            HMP ASHWELL HOMEPAGE FEATURE
@@ -1184,6 +1219,7 @@
             letter-spacing: .14em;
         }
 
+
         /* =====================================================
            BUTTON CONSISTENCY
            ===================================================== */
@@ -1262,6 +1298,7 @@
             border-color: var(--orange) !important;
             color: #050608 !important;
         }
+
 
         /* =====================================================
            RESPONSIVE
@@ -1399,6 +1436,7 @@
                 aria-hidden="true"
             ></div>
 
+
             <div
                 class="entry-rain"
                 aria-hidden="true"
@@ -1418,39 +1456,28 @@
 
                 <div
                     class="entry-rain-splash"
+                    aria-hidden="true"
                 ></div>
 
             </div>
+
 
             <div
                 class="entry-lightning flash-one"
                 aria-hidden="true"
             ></div>
 
+
             <div
                 class="entry-lightning flash-two"
                 aria-hidden="true"
             ></div>
 
+
             <div
                 class="entry-green-glow"
                 aria-hidden="true"
             ></div>
-
-            <div class="entry-content">
-
-                <img
-                    src="/essex-paranormal-logo.png"
-                    alt="Essex Paranormal"
-                    class="entry-logo"
-                    decoding="async"
-                >
-
-                <p class="entry-tagline">
-                    THE UK’S MOST TERRIFIED PARANORMAL INVESTIGATOR!
-                </p>
-
-            </div>
 
         </div>
 
