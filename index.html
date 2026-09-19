@@ -54,614 +54,155 @@
         href="/style.css"
     >
 
+
     <style>
 
         /* =====================================================
-           CINEMATIC 7.5 SECOND ENTRY INTRO
+           UPCOMING EVENTS
            ===================================================== */
 
-        body.entry-active {
-            overflow: hidden;
-        }
-
-        body.entry-active > *:not(#entry-screen) {
-            visibility: hidden;
-        }
-
-        body.entry-active #entry-screen {
-            visibility: visible;
-        }
+        /* =====================================================
+           CINEMATIC ENTRY INTRO
+           Logo and tagline are baked into the supplied intro image.
+           No separate logo or tagline is rendered here.
+           ===================================================== */
 
         #entry-screen {
             position: fixed;
             inset: 0;
-            z-index: 999999;
+            z-index: 99999;
             overflow: hidden;
-            background: #000;
+            background: #050608;
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transition:
-                opacity .9s ease,
-                visibility 0s linear 0s;
-        }
-
-        #entry-screen.is-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition:
-                opacity .9s ease,
-                visibility 0s linear .9s;
+            transition: opacity .9s ease, visibility 0s linear .9s;
         }
 
         #entry-screen .entry-image {
             position: absolute;
-            inset: -2%;
+            inset: 0;
             overflow: hidden;
-
-            background:
-                url("/essex-paranormal-intro.png")
-                center center / cover no-repeat;
-
-            transform: scale(1.035);
-
-            animation:
-                entryCamera
-                7.5s
-                ease-out
-                forwards;
+            background-image: url("/essex-paranormal-intro.PNG");
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            animation: entryCamera 7.5s ease-out forwards;
         }
 
-        /* Cinematic darkness over the artwork */
         #entry-screen .entry-image::before {
             content: "";
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-
             background:
-                radial-gradient(
-                    ellipse at center,
-                    transparent 20%,
-                    rgba(0,0,0,.12) 55%,
-                    rgba(0,0,0,.58) 100%
-                ),
-                linear-gradient(
-                    180deg,
-                    rgba(0,0,0,.08),
-                    rgba(0,0,0,.28)
-                );
+                radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,.26) 100%),
+                linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.20));
         }
 
-        /* Very subtle cinematic scan / film texture */
-        #entry-screen .entry-image::after {
-            content: "";
+        #entry-rain-canvas {
             position: absolute;
-            inset: 0;
-            z-index: 8;
-            pointer-events: none;
-
-            opacity: .12;
-
-            background:
-                repeating-linear-gradient(
-                    0deg,
-                    rgba(255,255,255,.025) 0,
-                    rgba(255,255,255,.025) 1px,
-                    transparent 1px,
-                    transparent 4px
-                );
-
-            mix-blend-mode: screen;
-        }
-
-
-        /* =====================================================
-           REALISTIC LAYERED RAIN
-           ===================================================== */
-
-        .entry-rain {
-            position: absolute;
-            inset: -25%;
-
+            inset: -3%;
             z-index: 5;
-
+            width: 106%;
+            height: 106%;
             pointer-events: none;
-
-            opacity: 0;
-
-            transform:
-                rotate(.7deg)
-                scale(1.08);
-
-            animation:
-                entryRainIn
-                .7s
-                ease
-                .15s
-                forwards;
+            opacity: .72;
         }
-
-        .entry-rain-layer {
-            position: absolute;
-            inset: 0;
-
-            pointer-events: none;
-
-            background-repeat: repeat;
-
-            transform:
-                translate3d(0,-12%,0);
-        }
-
-
-        /* Distant rain */
-        .entry-rain-far {
-            opacity: .18;
-
-            background-image:
-                repeating-linear-gradient(
-                    106deg,
-                    transparent 0,
-                    transparent 27px,
-                    rgba(215,235,245,.14) 28px,
-                    rgba(215,235,245,.14) 29px,
-                    transparent 30px,
-                    transparent 72px
-                );
-
-            background-size:
-                105px
-                105px;
-
-            filter:
-                blur(.45px);
-
-            animation:
-                rainFar
-                1.5s
-                linear
-                infinite;
-        }
-
-
-        /* Mid rain */
-        .entry-rain-mid {
-            opacity: .30;
-
-            background-image:
-                repeating-linear-gradient(
-                    106deg,
-                    transparent 0,
-                    transparent 20px,
-                    rgba(225,242,250,.20) 21px,
-                    rgba(225,242,250,.20) 23px,
-                    transparent 24px,
-                    transparent 54px
-                );
-
-            background-size:
-                76px
-                76px;
-
-            filter:
-                blur(.22px);
-
-            animation:
-                rainMid
-                .92s
-                linear
-                infinite;
-        }
-
-
-        /* Foreground rain */
-        .entry-rain-near {
-            opacity: .42;
-
-            background-image:
-                repeating-linear-gradient(
-                    106deg,
-                    transparent 0,
-                    transparent 36px,
-                    rgba(240,248,252,.28) 37px,
-                    rgba(240,248,252,.28) 40px,
-                    transparent 41px,
-                    transparent 88px
-                );
-
-            background-size:
-                118px
-                118px;
-
-            filter:
-                blur(.12px);
-
-            animation:
-                rainNear
-                .62s
-                linear
-                infinite;
-        }
-
-
-        /* Soft ground splash atmosphere */
-        .entry-rain-splash {
-            position: absolute;
-            inset: 0;
-
-            pointer-events: none;
-
-            opacity: .18;
-
-            background:
-                radial-gradient(
-                    ellipse at 18% 87%,
-                    rgba(220,235,245,.14),
-                    transparent 17%
-                ),
-                radial-gradient(
-                    ellipse at 76% 92%,
-                    rgba(220,235,245,.12),
-                    transparent 19%
-                );
-
-            filter:
-                blur(5px);
-        }
-
-
-        /* =====================================================
-           SLOW MOVING MIST
-           ===================================================== */
 
         .entry-mist {
             position: absolute;
-            inset: -20%;
-
-            z-index: 4;
-
+            inset: -15%;
+            z-index: 6;
             pointer-events: none;
-
-            opacity: 0;
-
+            opacity: .20;
             background:
-                radial-gradient(
-                    ellipse at 14% 74%,
-                    rgba(205,225,232,.15),
-                    transparent 34%
-                ),
-                radial-gradient(
-                    ellipse at 82% 62%,
-                    rgba(145,185,200,.11),
-                    transparent 39%
-                ),
-                radial-gradient(
-                    ellipse at 50% 96%,
-                    rgba(183,255,0,.025),
-                    transparent 44%
-                );
-
-            filter:
-                blur(27px);
-
-            mix-blend-mode:
-                screen;
-
-            animation:
-                entryMistIn
-                1.4s
-                ease
-                .4s
-                forwards,
-                entryMistMove
-                7s
-                ease-in-out
-                1s
-                infinite
-                alternate;
+                radial-gradient(ellipse at 20% 65%, rgba(210,225,225,.16), transparent 42%),
+                radial-gradient(ellipse at 78% 55%, rgba(190,215,215,.12), transparent 45%),
+                radial-gradient(ellipse at 50% 90%, rgba(220,230,230,.10), transparent 48%);
+            filter: blur(25px);
+            animation: entryMistMove 8s ease-in-out infinite alternate;
         }
-
-
-        /* =====================================================
-           LIGHTNING
-           ===================================================== */
 
         .entry-lightning {
             position: absolute;
             inset: 0;
-
-            z-index: 6;
-
+            z-index: 8;
             pointer-events: none;
-
             opacity: 0;
-
             background:
-                radial-gradient(
-                    ellipse at 58% 25%,
-                    rgba(240,248,255,.25),
-                    transparent 46%
-                ),
-                rgba(225,240,255,.08);
-
-            mix-blend-mode:
-                screen;
+                radial-gradient(ellipse at 52% 38%, rgba(220,240,255,.42), transparent 48%),
+                rgba(205,225,245,.10);
+            mix-blend-mode: screen;
         }
 
         .entry-lightning.flash-one {
-            animation:
-                entryLightningOne
-                .38s
-                ease
-                2.15s
-                both;
+            animation: entryLightningOne 7.5s linear forwards;
         }
 
         .entry-lightning.flash-two {
-            animation:
-                entryLightningTwo
-                .30s
-                ease
-                4.55s
-                both;
+            animation: entryLightningTwo 7.5s linear forwards;
         }
-
-
-        /* =====================================================
-           SUBTLE NEON GREEN ATMOSPHERE
-           ===================================================== */
 
         .entry-green-glow {
             position: absolute;
-            inset: 0;
-
-            z-index: 3;
-
+            inset: -20%;
+            z-index: 7;
             pointer-events: none;
-
-            opacity: 0;
-
-            background:
-                radial-gradient(
-                    circle at 50% 58%,
-                    rgba(183,255,0,.075),
-                    transparent 48%
-                );
-
-            mix-blend-mode:
-                screen;
-
-            animation:
-                entryGreenGlow
-                2.7s
-                ease
-                3.8s
-                forwards;
+            opacity: .16;
+            background: radial-gradient(ellipse at 50% 55%, rgba(183,255,0,.12), transparent 48%);
+            filter: blur(45px);
+            animation: entryGreenPulse 4s ease-in-out infinite alternate;
         }
 
-
-        /* =====================================================
-           KEYFRAMES
-           ===================================================== */
+        #entry-screen.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
         @keyframes entryCamera {
-
-            from {
-                transform:
-                    scale(1.035);
-            }
-
-            to {
-                transform:
-                    scale(1.085);
-            }
-
+            0% { transform: scale(1.015); }
+            100% { transform: scale(1.075); }
         }
-
-
-        @keyframes entryRainIn {
-
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-
-        }
-
-
-        @keyframes rainFar {
-
-            from {
-                background-position:
-                    0 -120px;
-            }
-
-            to {
-                background-position:
-                    -105px 150px;
-            }
-
-        }
-
-
-        @keyframes rainMid {
-
-            from {
-                background-position:
-                    0 -100px;
-            }
-
-            to {
-                background-position:
-                    -76px 115px;
-            }
-
-        }
-
-
-        @keyframes rainNear {
-
-            from {
-                background-position:
-                    0 -140px;
-            }
-
-            to {
-                background-position:
-                    -118px 165px;
-            }
-
-        }
-
-
-        @keyframes entryMistIn {
-
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-
-        }
-
 
         @keyframes entryMistMove {
-
-            from {
-                transform:
-                    translate3d(-3%,1%,0)
-                    scale(1);
-            }
-
-            to {
-                transform:
-                    translate3d(4%,-2%,0)
-                    scale(1.08);
-            }
-
+            0% { transform: translate3d(-2%, 1%, 0) scale(1); }
+            100% { transform: translate3d(3%, -2%, 0) scale(1.06); }
         }
 
+        @keyframes entryGreenPulse {
+            0% { opacity: .10; }
+            100% { opacity: .20; }
+        }
 
         @keyframes entryLightningOne {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            12% {
-                opacity: .25;
-            }
-
-            18% {
-                opacity: .035;
-            }
-
-            29% {
-                opacity: .42;
-            }
-
-            39% {
-                opacity: 0;
-            }
-
-            56% {
-                opacity: .10;
-            }
-
-            68% {
-                opacity: 0;
-            }
-
+            0%, 25%, 100% { opacity: 0; }
+            29% { opacity: .08; }
+            29.5% { opacity: .55; }
+            30% { opacity: .04; }
+            30.3% { opacity: .30; }
+            31% { opacity: 0; }
         }
-
 
         @keyframes entryLightningTwo {
-
-            0%,
-            100% {
-                opacity: 0;
-            }
-
-            14% {
-                opacity: .30;
-            }
-
-            23% {
-                opacity: .035;
-            }
-
-            37% {
-                opacity: .17;
-            }
-
-            51% {
-                opacity: 0;
-            }
-
+            0%, 58%, 100% { opacity: 0; }
+            62% { opacity: .06; }
+            62.4% { opacity: .42; }
+            63% { opacity: .03; }
+            63.4% { opacity: .22; }
+            64% { opacity: 0; }
         }
 
-
-        @keyframes entryGreenGlow {
-
-            0% {
-                opacity: 0;
+        @media (max-width: 550px) {
+            #entry-rain-canvas {
+                opacity: .64;
             }
-
-            35% {
-                opacity: .48;
-            }
-
-            70% {
-                opacity: .18;
-            }
-
-            100% {
-                opacity: .27;
-            }
-
         }
-
-
-        /* =====================================================
-           MOBILE INTRO
-           ===================================================== */
-
-        @media (max-width:550px) {
-
-            #entry-screen .entry-image {
-                background-position:
-                    center center;
-            }
-
-            .entry-rain {
-                inset:
-                    -35%;
-            }
-
-            .entry-rain-near {
-                opacity: .34;
-            }
-
-        }
-
-
-        /* =====================================================
-           REDUCED MOTION
-           ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
-
             #entry-screen .entry-image,
-            .entry-rain,
             .entry-mist,
             .entry-lightning,
             .entry-green-glow {
@@ -669,24 +210,10 @@
                 transition: none !important;
             }
 
-            #entry-screen .entry-image {
-                transform: none;
+            #entry-rain-canvas {
+                opacity: .28;
             }
-
-            .entry-rain {
-                opacity: .16;
-            }
-
-            .entry-mist {
-                opacity: .40;
-            }
-
         }
-
-
-        /* =====================================================
-           UPCOMING EVENTS
-           ===================================================== */
 
         .upcoming-events-section {
             position: relative;
@@ -723,13 +250,9 @@
                 minmax(0,.95fr);
             min-height: 520px;
             overflow: hidden;
-            border:
-                1px solid
-                rgba(255,255,255,.10);
+            border: 1px solid rgba(255,255,255,.10);
             background: #090a0d;
-            box-shadow:
-                0 30px 90px
-                rgba(0,0,0,.35);
+            box-shadow: 0 30px 90px rgba(0,0,0,.35);
         }
 
         .upcoming-event-content {
@@ -738,26 +261,14 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding:
-                clamp(
-                    32px,
-                    5vw,
-                    70px
-                );
+            padding: clamp(32px,5vw,70px);
         }
 
         .upcoming-event-content h3 {
             margin: 18px 0 25px;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size:
-                clamp(
-                    3rem,
-                    6vw,
-                    6rem
-                );
+            font-family: "Barlow Condensed",sans-serif;
+            font-size: clamp(3rem,6vw,6rem);
             line-height: .86;
             font-weight: 900;
             letter-spacing: -.045em;
@@ -775,30 +286,22 @@
         .upcoming-event-details {
             display: grid;
             grid-template-columns:
-                repeat(
-                    2,
-                    minmax(0,1fr)
-                );
+                repeat(2,minmax(0,1fr));
             gap: 14px;
             margin-bottom: 30px;
         }
 
         .upcoming-event-details div {
             padding: 18px 20px;
-            border-left:
-                2px solid
-                var(--orange);
-            background:
-                rgba(255,255,255,.025);
+            border-left: 2px solid var(--orange);
+            background: rgba(255,255,255,.025);
         }
 
         .upcoming-event-details span {
             display: block;
             margin-bottom: 7px;
             color: var(--orange);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            font-family: "Barlow Condensed",sans-serif;
             font-size: .75rem;
             font-weight: 800;
             letter-spacing: .15em;
@@ -807,13 +310,16 @@
         .upcoming-event-details strong {
             display: block;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            font-family: "Barlow Condensed",sans-serif;
             font-size: 1.35rem;
             line-height: 1;
             font-weight: 800;
         }
+
+        /*
+         * Keep the Ancient Ram Inn promotional video contained.
+         * 16:9 works properly on desktop and mobile.
+         */
 
         .upcoming-event-video {
             position: relative !important;
@@ -837,7 +343,7 @@
 
 
         /* =====================================================
-           COMMUNITY
+           COMMUNITY / FORUM
            ===================================================== */
 
         .community-section {
@@ -853,38 +359,22 @@
                 minmax(300px,.8fr);
             gap: 30px;
             align-items: stretch;
-            padding:
-                clamp(
-                    28px,
-                    5vw,
-                    60px
-                );
-            border:
-                1px solid
-                rgba(255,255,255,.10);
+            padding: clamp(28px,5vw,60px);
+            border: 1px solid rgba(255,255,255,.10);
             background:
                 linear-gradient(
                     135deg,
                     rgba(255,255,255,.045),
                     rgba(255,255,255,.012)
                 );
-            box-shadow:
-                0 30px 90px
-                rgba(0,0,0,.30);
+            box-shadow: 0 30px 90px rgba(0,0,0,.30);
         }
 
         .community-copy h2 {
             margin: 0 0 20px;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size:
-                clamp(
-                    3rem,
-                    6vw,
-                    6rem
-                );
+            font-family: "Barlow Condensed",sans-serif;
+            font-size: clamp(3rem,6vw,6rem);
             line-height: .88;
             font-weight: 900;
             letter-spacing: -.05em;
@@ -907,9 +397,7 @@
             justify-content: center;
             align-items: flex-start;
             padding-left: 30px;
-            border-left:
-                1px solid
-                rgba(255,255,255,.10);
+            border-left: 1px solid rgba(255,255,255,.10);
         }
 
         .community-action .eyebrow {
@@ -942,15 +430,8 @@
         .social-heading h2 {
             margin: 0 0 20px;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
-            font-size:
-                clamp(
-                    3rem,
-                    6vw,
-                    6rem
-                );
+            font-family: "Barlow Condensed",sans-serif;
+            font-size: clamp(3rem,6vw,6rem);
             line-height: .88;
             font-weight: 900;
             letter-spacing: -.05em;
@@ -971,10 +452,7 @@
         .social-grid {
             display: grid;
             grid-template-columns:
-                repeat(
-                    3,
-                    minmax(0,1fr)
-                );
+                repeat(3,minmax(0,1fr));
             gap: 18px;
         }
 
@@ -988,11 +466,8 @@
             overflow: hidden;
             color: var(--white);
             text-decoration: none;
-            border:
-                1px solid
-                rgba(255,255,255,.10);
-            background:
-                rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.025);
             transition:
                 transform .35s var(--ease),
                 border-color .35s ease,
@@ -1009,15 +484,13 @@
             background: var(--orange);
             transform: scaleY(.25);
             transform-origin: bottom;
-            transition:
-                transform .35s var(--ease);
+            transition: transform .35s var(--ease);
         }
 
         .social-button:hover {
             transform: translateY(-5px);
             border-color: var(--border-orange);
-            background:
-                rgba(183,255,0,.045);
+            background: rgba(183,255,0,.045);
         }
 
         .social-button:hover::before {
@@ -1031,9 +504,7 @@
             display: grid;
             place-items: center;
             color: var(--orange);
-            border:
-                1px solid
-                var(--border-orange);
+            border: 1px solid var(--border-orange);
         }
 
         .social-icon svg {
@@ -1052,9 +523,7 @@
             display: block;
             margin-bottom: 4px;
             color: var(--orange);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            font-family: "Barlow Condensed",sans-serif;
             font-size: .72rem;
             font-weight: 900;
             letter-spacing: .16em;
@@ -1063,9 +532,7 @@
         .social-content h3 {
             margin: 0 0 5px;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            font-family: "Barlow Condensed",sans-serif;
             font-size: 1.55rem;
             line-height: .95;
             font-weight: 800;
@@ -1086,7 +553,62 @@
 
 
         /* =====================================================
-           CONSTRUCTION TICKER
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width:900px) {
+
+            .upcoming-event-card {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-video {
+                min-height: 0 !important;
+                height: auto !important;
+                order: -1;
+            }
+
+            .community-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .community-action {
+                padding: 25px 0 0;
+                border-left: 0;
+                border-top: 1px solid rgba(255,255,255,.10);
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width:550px) {
+
+            .upcoming-event-content {
+                padding: 30px 22px;
+            }
+
+            .upcoming-event-content h3 {
+                font-size: clamp(2.7rem,14vw,4.2rem);
+            }
+
+            .upcoming-event-details {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-video {
+                min-height: 0 !important;
+                height: auto !important;
+            }
+
+        }
+
+
+        /* =====================================================
+           WEBSITE UNDER CONSTRUCTION TICKER
            ===================================================== */
 
         .construction-ticker {
@@ -1095,12 +617,8 @@
             width: 100%;
             overflow: hidden;
             background: #050608;
-            border-top:
-                1px solid
-                rgba(183,255,0,.25);
-            border-bottom:
-                1px solid
-                rgba(183,255,0,.25);
+            border-top: 1px solid rgba(183,255,0,.25);
+            border-bottom: 1px solid rgba(183,255,0,.25);
             padding: 11px 0;
         }
 
@@ -1108,11 +626,7 @@
             display: flex;
             width: max-content;
             white-space: nowrap;
-            animation:
-                constructionTickerMove
-                24s
-                linear
-                infinite;
+            animation: constructionTickerMove 24s linear infinite;
         }
 
         .construction-ticker-track span {
@@ -1120,9 +634,7 @@
             flex-shrink: 0;
             padding-right: 70px;
             color: var(--white);
-            font-family:
-                "Barlow Condensed",
-                sans-serif;
+            font-family: "Barlow Condensed",sans-serif;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .14em;
@@ -1142,7 +654,7 @@
 
 
         /* =====================================================
-           HMP ASHWELL HOMEPAGE FEATURE
+           HMP ASHWELL HOMEPAGE IMAGE
            ===================================================== */
 
         .investigation-feature {
@@ -1181,9 +693,7 @@
             min-height: 500px;
             object-fit: cover;
             object-position: center;
-            filter:
-                brightness(.78)
-                contrast(1.08);
+            filter: brightness(.78) contrast(1.08);
             transition:
                 transform .7s ease,
                 filter .7s ease;
@@ -1191,9 +701,7 @@
 
         .investigation-feature-image:hover img {
             transform: scale(1.035);
-            filter:
-                brightness(.9)
-                contrast(1.08);
+            filter: brightness(.9) contrast(1.08);
         }
 
         .investigation-feature-content {
@@ -1201,15 +709,17 @@
             z-index: 2;
         }
 
+
+        /* =====================================================
+           SINGLE INVESTIGATION ARCHIVE ACTION
+           ===================================================== */
+
         .investigation-archive-action {
             margin-top: 32px;
             padding: 30px;
             text-align: center;
-            border:
-                1px solid
-                rgba(183,255,0,.18);
-            background:
-                rgba(5,6,8,.72);
+            border: 1px solid rgba(183,255,0,.18);
+            background: rgba(5,6,8,.72);
         }
 
         .investigation-archive-action p {
@@ -1217,6 +727,57 @@
             color: var(--muted);
             font-size: .76rem;
             letter-spacing: .14em;
+        }
+
+
+        /* =====================================================
+           TICKER / INVESTIGATION MOBILE
+           ===================================================== */
+
+        @media (max-width:900px) {
+
+            .construction-ticker {
+                padding: 9px 0;
+            }
+
+            .construction-ticker-track span {
+                font-size: .62rem;
+                letter-spacing: .10em;
+                padding-right: 50px;
+            }
+
+            .investigation-feature {
+                grid-template-columns: 1fr;
+            }
+
+            .investigation-feature-image {
+                min-height: 300px;
+                height: 300px;
+            }
+
+            .investigation-feature-image img {
+                min-height: 300px;
+                height: 300px;
+            }
+
+            .investigation-archive-action {
+                padding: 24px 18px;
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .construction-ticker-track {
+                animation: none;
+                transform: none;
+            }
+
+            .investigation-feature-image img {
+                transition: none;
+            }
+
         }
 
 
@@ -1242,9 +803,7 @@
             text-decoration: none !important;
             white-space: nowrap !important;
             line-height: 1 !important;
-            font-family:
-                "Barlow Condensed",
-                sans-serif !important;
+            font-family: "Barlow Condensed", sans-serif !important;
             font-size: .78rem !important;
             font-weight: 800 !important;
             letter-spacing: .14em !important;
@@ -1266,17 +825,13 @@
         .button-primary {
             color: #050608 !important;
             background: var(--orange) !important;
-            border:
-                1px solid
-                var(--orange) !important;
+            border: 1px solid var(--orange) !important;
         }
 
         .button-outline {
             color: var(--white) !important;
             background: transparent !important;
-            border:
-                1px solid
-                rgba(255,255,255,.35) !important;
+            border: 1px solid rgba(255,255,255,.35) !important;
         }
 
         .button:hover,
@@ -1299,93 +854,7 @@
             color: #050608 !important;
         }
 
-
-        /* =====================================================
-           RESPONSIVE
-           ===================================================== */
-
-        @media (max-width:900px) {
-
-            .upcoming-event-card {
-                grid-template-columns: 1fr;
-            }
-
-            .upcoming-event-video {
-                min-height: 0 !important;
-                height: auto !important;
-                order: -1;
-            }
-
-            .community-panel {
-                grid-template-columns: 1fr;
-            }
-
-            .community-action {
-                padding:
-                    25px 0 0;
-                border-left: 0;
-                border-top:
-                    1px solid
-                    rgba(255,255,255,.10);
-            }
-
-            .social-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .investigation-feature {
-                grid-template-columns: 1fr;
-            }
-
-            .investigation-feature-image {
-                min-height: 300px;
-                height: 300px;
-            }
-
-            .investigation-feature-image img {
-                min-height: 300px;
-                height: 300px;
-            }
-
-            .construction-ticker {
-                padding: 9px 0;
-            }
-
-            .construction-ticker-track span {
-                font-size: .62rem;
-                letter-spacing: .10em;
-                padding-right: 50px;
-            }
-
-        }
-
         @media (max-width:550px) {
-
-            .upcoming-event-content {
-                padding: 30px 22px;
-            }
-
-            .upcoming-event-content h3 {
-                font-size:
-                    clamp(
-                        2.7rem,
-                        14vw,
-                        4.2rem
-                    );
-            }
-
-            .upcoming-event-details {
-                grid-template-columns: 1fr;
-            }
-
-            .upcoming-event-video {
-                min-height: 0 !important;
-                height: auto !important;
-            }
-
-            .investigation-archive-action {
-                padding: 24px 18px;
-            }
 
             .button {
                 min-height: 48px !important;
@@ -1396,18 +865,10 @@
 
         }
 
-        @media (prefers-reduced-motion: reduce) {
 
-            .construction-ticker-track {
-                animation: none;
-                transform: none;
-            }
-
-            .investigation-feature-image img {
-                transition: none;
-            }
-
-        }
+        /* =====================================================
+           PAGE LOAD POSITION
+           ===================================================== */
 
         html {
             scroll-behavior: smooth;
@@ -1420,8 +881,9 @@
 
 <body>
 
+
     <!-- =====================================================
-         7.5 SECOND CINEMATIC ENTRY
+         ENTRY SCREEN
          ===================================================== -->
 
     <div
@@ -1431,53 +893,17 @@
 
         <div class="entry-image">
 
-            <div
-                class="entry-mist"
+            <canvas
+                id="entry-rain-canvas"
                 aria-hidden="true"
-            ></div>
+            ></canvas>
 
+            <div class="entry-mist" aria-hidden="true"></div>
 
-            <div
-                class="entry-rain"
-                aria-hidden="true"
-            >
+            <div class="entry-lightning flash-one" aria-hidden="true"></div>
+            <div class="entry-lightning flash-two" aria-hidden="true"></div>
 
-                <div
-                    class="entry-rain-layer entry-rain-far"
-                ></div>
-
-                <div
-                    class="entry-rain-layer entry-rain-mid"
-                ></div>
-
-                <div
-                    class="entry-rain-layer entry-rain-near"
-                ></div>
-
-                <div
-                    class="entry-rain-splash"
-                    aria-hidden="true"
-                ></div>
-
-            </div>
-
-
-            <div
-                class="entry-lightning flash-one"
-                aria-hidden="true"
-            ></div>
-
-
-            <div
-                class="entry-lightning flash-two"
-                aria-hidden="true"
-            ></div>
-
-
-            <div
-                class="entry-green-glow"
-                aria-hidden="true"
-            ></div>
+            <div class="entry-green-glow" aria-hidden="true"></div>
 
         </div>
 
@@ -1575,7 +1001,7 @@
 
 
     <!-- =====================================================
-         WEBSITE UNDER CONSTRUCTION
+         WEBSITE UNDER CONSTRUCTION TICKER
          ===================================================== -->
 
     <div
@@ -1601,6 +1027,7 @@
 
     <main>
 
+
         <!-- =====================================================
              HERO
              ===================================================== -->
@@ -1623,6 +1050,7 @@
                         HONEST. REAL. UNBIASED.
                     </p>
 
+
                     <h1>
 
                         <span>
@@ -1639,10 +1067,12 @@
 
                     </h1>
 
+
                     <p class="hero-description">
                         Essex Paranormal is an independent investigation practice
                         focused on evidence, truth and accountability.
                     </p>
+
 
                     <div class="hero-actions">
 
@@ -1653,6 +1083,7 @@
                             MEET LEWIS
                             <span>→</span>
                         </a>
+
 
                         <a
                             href="#investigations"
@@ -1741,15 +1172,18 @@
 
                 <article class="upcoming-event-card">
 
+
                     <div class="upcoming-event-content">
 
                         <span class="empty-code">
                             NEXT INVESTIGATION
                         </span>
 
+
                         <h3>
                             THE ANCIENT RAM INN
                         </h3>
+
 
                         <p class="upcoming-event-description">
                             Essex Paranormal heads to one of
@@ -1757,6 +1191,7 @@
                             locations for an extended live
                             investigation.
                         </p>
+
 
                         <div class="upcoming-event-details">
 
@@ -1772,6 +1207,7 @@
 
                             </div>
 
+
                             <div>
 
                                 <span>
@@ -1785,6 +1221,7 @@
                             </div>
 
                         </div>
+
 
                         <a
                             href="#social"
@@ -1840,27 +1277,33 @@
 
                 <div class="profile-layout">
 
+
                     <div class="profile-copy">
 
                         <p class="eyebrow">
                             MEET LEWIS
                         </p>
 
+
                         <h2>
                             Biography -
                             <span>Lewis McDiarmid</span>
                         </h2>
 
+
                         <p class="role">
                             OWNER &amp; LEAD INVESTIGATOR, ESSEX PARANORMAL
                         </p>
 
+
                         <div class="bio-content">
+
 
                             <p>
                                 My name is Lewis McDiarmid, and I am the owner
                                 and lead investigator of Essex Paranormal.
                             </p>
+
 
                             <p>
                                 I have always had an interest in the paranormal
@@ -1871,12 +1314,14 @@
                                 and does not show.
                             </p>
 
+
                             <p>
                                 Essex Paranormal is built around honesty, truth
                                 and accountability. I will never deliberately
                                 mislead people about an investigation or
                                 manufacture evidence for entertainment.
                             </p>
+
 
                             <p>
                                 Essex Paranormal was originally created by my
@@ -1888,11 +1333,13 @@
                                 many team changes and a name change.
                             </p>
 
+
                             <p>
                                 Last year, after much thought and consideration,
                                 I decided to reboot Essex Paranormal and return
                                 it to its original ethos and principles.
                             </p>
+
 
                             <p>
                                 What makes Essex Paranormal different is that it
@@ -1902,14 +1349,17 @@
                                 honesty and accountability are always upheld.
                             </p>
 
+
                             <h3>
                                 Investigations &amp; Evidence
                             </h3>
+
 
                             <p>
                                 Essex Paranormal uses a minimum amount of equipment
                                 because I believe the most powerful tool is myself.
                             </p>
+
 
                             <p>
                                 I do use cameras, night-vision systems, field
@@ -1917,6 +1367,7 @@
                                 after dark. I also use trigger objects as a
                                 precursor to gaining interaction between realms.
                             </p>
+
 
                             <p>
                                 Ouija boards, crystal balls, sensory equipment,
@@ -1926,9 +1377,11 @@
                                 and aerial data of locations when required.
                             </p>
 
+
                             <h3>
                                 My Experiences &amp; Beliefs
                             </h3>
+
 
                             <p>
                                 My personal experiences are too many to mention,
@@ -1937,11 +1390,13 @@
                                 some insight into them all.
                             </p>
 
+
                             <p>
                                 I believe there is definitely something other
                                 than what we consciously choose to be aware of.
                                 I believe in what I see, feel, hear, and understand.
                             </p>
+
 
                             <p>
                                 Visitors to Essex Paranormal should understand
@@ -1953,9 +1408,11 @@
                                 and truthful.
                             </p>
 
+
                             <h3>
                                 What Paranormal Investigation Means to Me
                             </h3>
+
 
                             <p>
                                 A paranormal investigation is an important part
@@ -1985,13 +1442,8 @@
                                 decoding="async"
                             >
 
-                            <span
-                                class="frame-corner frame-corner-top"
-                            ></span>
-
-                            <span
-                                class="frame-corner frame-corner-bottom"
-                            ></span>
+                            <span class="frame-corner frame-corner-top"></span>
+                            <span class="frame-corner frame-corner-bottom"></span>
 
                         </div>
 
@@ -2066,6 +1518,7 @@
 
 
                 <div class="destination-grid">
+
 
                     <a
                         href="#experiences"
@@ -2246,6 +1699,7 @@
 
                 <div class="approach-grid">
 
+
                     <article class="approach-item">
 
                         <div class="approach-icon">
@@ -2345,6 +1799,10 @@
                 </div>
 
 
+                <!-- =================================================
+                     FEATURED INVESTIGATION: HMP ASHWELL
+                     ================================================= -->
+
                 <article class="investigation-feature">
 
                     <a
@@ -2435,6 +1893,10 @@
                 </article>
 
 
+                <!-- =================================================
+                     SINGLE INVESTIGATION ARCHIVE
+                     ================================================= -->
+
                 <div class="investigation-archive-action">
 
                     <span class="empty-code">
@@ -2471,6 +1933,7 @@
 
             <div class="container">
 
+
                 <div class="section-heading evidence-heading">
 
                     <p class="eyebrow">
@@ -2492,6 +1955,7 @@
 
 
                 <div class="evidence-grid">
+
 
                     <article class="evidence-item">
 
@@ -2603,7 +2067,7 @@
 
 
         <!-- =====================================================
-             GALLERY
+             GALLERY & MEDIA
              ===================================================== -->
 
         <section
@@ -2613,16 +2077,19 @@
 
             <div class="container">
 
+
                 <div class="section-heading">
 
                     <p class="eyebrow">
                         GALLERY &amp; MEDIA
                     </p>
 
+
                     <h2>
                         THE
                         <span>ARCHIVE.</span>
                     </h2>
+
 
                     <p>
                         The Essex Paranormal gallery and media archive is
@@ -2637,9 +2104,11 @@
 
                 <div class="gallery-empty">
 
+
                     <div class="gallery-mark">
                         EP
                     </div>
+
 
                     <div>
 
@@ -2647,9 +2116,11 @@
                             WEBSITE BUILD IN PROGRESS
                         </span>
 
+
                         <h3>
                             GALLERY &amp; MEDIA ARCHIVE UNDER CONSTRUCTION.
                         </h3>
+
 
                         <p>
                             This section is currently being built for the
@@ -2669,7 +2140,7 @@
 
 
         <!-- =====================================================
-             COMMUNITY
+             COMMUNITY / JOIN US
              ===================================================== -->
 
         <section
@@ -2679,7 +2150,9 @@
 
             <div class="container">
 
+
                 <div class="community-panel">
+
 
                     <div class="community-copy">
 
@@ -2687,10 +2160,12 @@
                             JOIN THE COMMUNITY
                         </p>
 
+
                         <h2>
                             FOLLOW THE
                             <span>INVESTIGATION.</span>
                         </h2>
+
 
                         <p>
                             Join the Essex Paranormal community forum to discuss
@@ -2707,10 +2182,12 @@
                             ESSEX PARANORMAL FORUM
                         </p>
 
+
                         <p>
                             Take part in the conversation and stay connected
                             with the team.
                         </p>
+
 
                         <a
                             href="https://essexparanormal.discourse.group/"
@@ -2732,7 +2209,7 @@
 
 
         <!-- =====================================================
-             SOCIAL
+             SOCIAL MEDIA
              ===================================================== -->
 
         <section
@@ -2742,16 +2219,19 @@
 
             <div class="container">
 
+
                 <div class="social-heading">
 
                     <p class="eyebrow">
                         FOLLOW ESSEX PARANORMAL
                     </p>
 
+
                     <h2>
                         STAY
                         <span>CONNECTED.</span>
                     </h2>
+
 
                     <p>
                         Follow the team for investigation updates, new evidence,
@@ -2762,6 +2242,11 @@
 
 
                 <div class="social-grid">
+
+
+                    <!-- =================================================
+                         TIKTOK
+                         ================================================= -->
 
                     <a
                         href="https://www.tiktok.com/@essexparanormal"
@@ -2809,6 +2294,10 @@
                     </a>
 
 
+                    <!-- =================================================
+                         YOUTUBE
+                         ================================================= -->
+
                     <a
                         href="https://youtube.com/@essexparanormal666"
                         class="social-button"
@@ -2855,6 +2344,10 @@
                     </a>
 
 
+                    <!-- =================================================
+                         INSTAGRAM
+                         ================================================= -->
+
                     <a
                         href="https://www.instagram.com/essex.paranormal/"
                         class="social-button"
@@ -2900,6 +2393,10 @@
 
                     </a>
 
+
+                    <!-- =================================================
+                         FACEBOOK
+                         ================================================= -->
 
                     <a
                         href="https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr"
@@ -2964,7 +2461,9 @@
 
             <div class="container">
 
+
                 <div class="contact-panel">
+
 
                     <div class="contact-copy">
 
@@ -2972,10 +2471,12 @@
                             CONTACT
                         </p>
 
+
                         <h2>
                             GET IN
                             <span>TOUCH.</span>
                         </h2>
+
 
                         <p>
                             Have a question about an investigation, want to
@@ -2996,6 +2497,7 @@
                             <span>→</span>
                         </a>
 
+
                         <p>
                             Enquiries are handled through the secure website
                             contact system.
@@ -3010,6 +2512,7 @@
                     id="contact-enquiry"
                     class="contact-form-wrap"
                 >
+
 
                     <form
                         class="contact-form"
@@ -3043,6 +2546,7 @@
 
 
                         <div class="contact-form-grid">
+
 
                             <div class="form-field">
 
@@ -3158,7 +2662,9 @@
 
         <div class="container">
 
+
             <div class="footer-main">
+
 
                 <div class="footer-brand">
 
@@ -3171,6 +2677,7 @@
                         >
 
                     </span>
+
 
                     <p>
                         HONEST. REAL. UNBIASED.
@@ -3185,33 +2692,41 @@
                         QUICK LINKS
                     </span>
 
+
                     <a href="#home">
                         HOME
                     </a>
+
 
                     <a href="#upcoming-events">
                         UPCOMING EVENTS
                     </a>
 
+
                     <a href="#about">
                         MEET LEWIS
                     </a>
+
 
                     <a href="#experiences">
                         EXPERIENCES
                     </a>
 
+
                     <a href="#investigations">
                         INVESTIGATIONS
                     </a>
+
 
                     <a href="#gallery">
                         GALLERY
                     </a>
 
+
                     <a href="#community">
                         JOIN US
                     </a>
+
 
                     <a href="#contact">
                         CONTACT
@@ -3226,33 +2741,41 @@
                         LEGAL
                     </span>
 
+
                     <a href="/legal.html#privacy">
                         PRIVACY
                     </a>
+
 
                     <a href="/legal.html#cookies">
                         COOKIES
                     </a>
 
+
                     <a href="/legal.html#terms">
                         TERMS
                     </a>
+
 
                     <a href="/legal.html#disclaimer">
                         DISCLAIMER
                     </a>
 
+
                     <a href="/legal.html#accessibility">
                         ACCESSIBILITY
                     </a>
+
 
                     <a href="/legal.html#copyright">
                         COPYRIGHT
                     </a>
 
+
                     <a href="/legal.html#media-rights">
                         MEDIA RIGHTS
                     </a>
+
 
                     <a href="/legal.html#third-party">
                         THIRD-PARTY SERVICES
@@ -3266,6 +2789,7 @@
                     <span>
                         OUR PHILOSOPHY
                     </span>
+
 
                     <p>
                         REAL PEOPLE.<br>
@@ -3285,6 +2809,7 @@
 
             <div class="footer-bottom">
 
+
                 <p>
                     ©
                     <span data-current-year>
@@ -3293,9 +2818,11 @@
                     ESSEX PARANORMAL. ALL RIGHTS RESERVED.
                 </p>
 
+
                 <span class="footer-truth">
                     TRUTH LIES IN THE SHADOWS
                 </span>
+
 
                 <a
                     href="#home"
@@ -3326,20 +2853,20 @@
 
             }
 
+
             function resetPagePosition() {
 
                 if (!window.location.hash) {
 
-                    window.scrollTo(
-                        0,
-                        0
-                    );
+                    window.scrollTo(0, 0);
 
                 }
 
             }
 
+
             resetPagePosition();
+
 
             window.addEventListener(
                 "load",
@@ -3357,12 +2884,292 @@
                 }
             );
 
+
             window.addEventListener(
                 "pageshow",
                 function () {
 
                     resetPagePosition();
 
+                }
+            );
+
+        }());
+
+    </script>
+
+
+    <!-- =====================================================
+         CINEMATIC RAIN
+         ===================================================== -->
+
+    <script>
+
+        (function () {
+
+            const canvas =
+                document.getElementById(
+                    "entry-rain-canvas"
+                );
+
+            if (!canvas) {
+                return;
+            }
+
+            const ctx =
+                canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            let width = 0;
+            let height = 0;
+            let drops = [];
+            let animationFrame = null;
+
+            const reducedMotion =
+                window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+
+            function createDrops() {
+
+                const amount =
+                    Math.min(
+                        420,
+                        Math.max(
+                            180,
+                            Math.floor(
+                                (width * height) / 7000
+                            )
+                        )
+                    );
+
+                drops = [];
+
+
+                for (
+                    let i = 0;
+                    i < amount;
+                    i++
+                ) {
+
+                    const depth =
+                        Math.random();
+
+
+                    drops.push({
+
+                        x:
+                            Math.random() * width,
+
+                        y:
+                            Math.random() * height,
+
+                        length:
+                            depth < .35
+                                ? 4 + Math.random() * 8
+                                : depth < .75
+                                    ? 8 + Math.random() * 14
+                                    : 14 + Math.random() * 24,
+
+                        speed:
+                            depth < .35
+                                ? 3 + Math.random() * 3
+                                : depth < .75
+                                    ? 5 + Math.random() * 5
+                                    : 8 + Math.random() * 8,
+
+                        opacity:
+                            depth < .35
+                                ? .10 + Math.random() * .16
+                                : depth < .75
+                                    ? .16 + Math.random() * .20
+                                    : .22 + Math.random() * .30,
+
+                        width:
+                            depth < .75
+                                ? .45 + Math.random() * .45
+                                : .7 + Math.random() * .8,
+
+                        wind:
+                            .55 + Math.random() * .35
+
+                    });
+
+                }
+
+            }
+
+
+            function resize() {
+
+                const dpr =
+                    Math.min(
+                        window.devicePixelRatio || 1,
+                        2
+                    );
+
+
+                width =
+                    window.innerWidth;
+
+                height =
+                    window.innerHeight;
+
+
+                canvas.width =
+                    Math.floor(
+                        width * dpr
+                    );
+
+                canvas.height =
+                    Math.floor(
+                        height * dpr
+                    );
+
+
+                canvas.style.width =
+                    width + "px";
+
+                canvas.style.height =
+                    height + "px";
+
+
+                ctx.setTransform(
+                    dpr,
+                    0,
+                    0,
+                    dpr,
+                    0,
+                    0
+                );
+
+
+                createDrops();
+
+            }
+
+
+            function draw() {
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    width,
+                    height
+                );
+
+
+                for (
+                    const drop of drops
+                ) {
+
+                    const dx =
+                        drop.length *
+                        drop.wind;
+
+                    const dy =
+                        drop.length;
+
+
+                    ctx.beginPath();
+
+                    ctx.moveTo(
+                        drop.x,
+                        drop.y
+                    );
+
+                    ctx.lineTo(
+                        drop.x + dx,
+                        drop.y + dy
+                    );
+
+
+                    ctx.lineWidth =
+                        drop.width;
+
+
+                    ctx.strokeStyle =
+                        `rgba(225,235,240,${drop.opacity})`;
+
+
+                    ctx.stroke();
+
+
+                    drop.x +=
+                        drop.wind *
+                        drop.speed *
+                        .55;
+
+                    drop.y +=
+                        drop.speed;
+
+
+                    if (
+                        drop.y >
+                            height + 40 ||
+                        drop.x >
+                            width + 80
+                    ) {
+
+                        drop.y =
+                            -40 -
+                            Math.random() *
+                            120;
+
+                        drop.x =
+                            Math.random() *
+                            width *
+                            .9;
+
+                    }
+
+                }
+
+
+                if (!reducedMotion) {
+
+                    animationFrame =
+                        requestAnimationFrame(
+                            draw
+                        );
+
+                }
+
+            }
+
+
+            window.addEventListener(
+                "resize",
+                resize,
+                {
+                    passive: true
+                }
+            );
+
+
+            resize();
+            draw();
+
+
+            window.addEventListener(
+                "pagehide",
+                function () {
+
+                    if (animationFrame) {
+
+                        cancelAnimationFrame(
+                            animationFrame
+                        );
+
+                    }
+
+                },
+                {
+                    once: true
                 }
             );
 
