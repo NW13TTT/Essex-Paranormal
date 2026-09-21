@@ -29,9 +29,7 @@
         content="dark"
     >
 
-    <title>
-        Essex Paranormal | Evidence Before Assumption
-    </title>
+    <title>Essex Paranormal | Evidence Before Assumption</title>
 
     <link
         rel="preconnect"
@@ -54,12 +52,176 @@
         href="/style.css"
     >
 
-
     <style>
 
-        /* =====================================================
+        /* =========================================================
+           ESSEX PARANORMAL MASTER OVERRIDES
+           GREEN / BLACK / WHITE
+           ZERO ORANGE
+           ========================================================= */
+
+        :root {
+            --ep-green: #c0ff4f;
+            --ep-green-bright: #d5ff78;
+            --ep-green-dark: #7fae20;
+            --ep-black: #050608;
+            --ep-panel: #090b0d;
+            --ep-white: #ffffff;
+            --ep-muted: rgba(255,255,255,.68);
+            --ep-border: rgba(192,255,79,.22);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            overflow-x: hidden;
+            background: var(--ep-black);
+            color: var(--ep-white);
+        }
+
+        img,
+        video {
+            max-width: 100%;
+        }
+
+        a,
+        button,
+        input,
+        textarea {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .site-header {
+            position: relative;
+            z-index: 9000;
+        }
+
+        .brand-logo-crop {
+            display: block;
+            width: 78px;
+            height: 58px;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .brand-logo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* =========================================================
+           GLOBAL GREEN OVERRIDES
+           ========================================================= */
+
+        .eyebrow,
+        .section-heading h2 span,
+        .community-copy h2 span,
+        .social-heading h2 span,
+        .feature-number,
+        .method-card > span,
+        .evidence-card > span,
+        .case-meta span,
+        .social-platform,
+        .social-icon,
+        .social-arrow {
+            color: var(--ep-green) !important;
+        }
+
+        .button-primary {
+            background: var(--ep-green) !important;
+            border-color: var(--ep-green) !important;
+            color: #050608 !important;
+        }
+
+        .button-primary:hover {
+            background: var(--ep-green-bright) !important;
+            border-color: var(--ep-green-bright) !important;
+            color: #050608 !important;
+        }
+
+        .button-secondary {
+            border-color: rgba(192,255,79,.55) !important;
+            color: var(--ep-white) !important;
+        }
+
+        .button-secondary:hover {
+            border-color: var(--ep-green) !important;
+            color: var(--ep-green) !important;
+        }
+
+        /* =========================================================
+           CONSTRUCTION TICKER
+           ========================================================= */
+
+        .construction-ticker {
+            position: relative;
+            z-index: 500;
+            width: 100%;
+            overflow: hidden;
+            background: #050608;
+            border-top: 1px solid rgba(192,255,79,.22);
+            border-bottom: 1px solid rgba(192,255,79,.22);
+            padding: 11px 0;
+        }
+
+        .construction-ticker-track {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: epTicker 28s linear infinite;
+        }
+
+        .construction-ticker-track span {
+            display: block;
+            flex-shrink: 0;
+            padding-right: 80px;
+            color: rgba(255,255,255,.82);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+        }
+
+        @keyframes epTicker {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-scroll {
+            z-index: 10;
+        }
+
+        /* =========================================================
            UPCOMING EVENTS
-           ===================================================== */
+           ========================================================= */
 
         .upcoming-events-section {
             position: relative;
@@ -67,8 +229,8 @@
             background:
                 radial-gradient(
                     circle at 80% 50%,
-                    rgba(255,106,26,.045),
-                    transparent 40%
+                    rgba(192,255,79,.045),
+                    transparent 42%
                 ),
                 #050608;
         }
@@ -98,7 +260,7 @@
             overflow: hidden;
             border: 1px solid rgba(255,255,255,.10);
             background: #090a0d;
-            box-shadow: 0 30px 90px rgba(0,0,0,.35);
+            box-shadow: 0 30px 90px rgba(0,0,0,.4);
         }
 
         .upcoming-event-content {
@@ -112,8 +274,8 @@
 
         .upcoming-event-content h3 {
             margin: 18px 0 25px;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: clamp(3rem,6vw,6rem);
             line-height: .86;
             font-weight: 900;
@@ -124,30 +286,29 @@
         .upcoming-event-description {
             max-width: 620px;
             margin: 0 0 30px;
-            color: var(--muted);
+            color: var(--ep-muted);
             font-size: 1rem;
             line-height: 1.8;
         }
 
         .upcoming-event-details {
             display: grid;
-            grid-template-columns:
-                repeat(2,minmax(0,1fr));
+            grid-template-columns: repeat(2,minmax(0,1fr));
             gap: 14px;
             margin-bottom: 30px;
         }
 
         .upcoming-event-details div {
             padding: 18px 20px;
-            border-left: 2px solid var(--orange);
+            border-left: 2px solid var(--ep-green);
             background: rgba(255,255,255,.025);
         }
 
         .upcoming-event-details span {
             display: block;
             margin-bottom: 7px;
-            color: var(--orange);
-            font-family: "Barlow Condensed",sans-serif;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .75rem;
             font-weight: 800;
             letter-spacing: .15em;
@@ -155,8 +316,8 @@
 
         .upcoming-event-details strong {
             display: block;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 1.35rem;
             line-height: 1;
             font-weight: 800;
@@ -182,10 +343,9 @@
             background: #000 !important;
         }
 
-
-        /* =====================================================
+        /* =========================================================
            COMPLETED STAMP
-           ===================================================== */
+           ========================================================= */
 
         .completed-stamp {
             position: absolute;
@@ -199,8 +359,8 @@
             padding: 13px 22px;
             border: 4px solid #d40000;
             color: #d40000;
-            background: rgba(0,0,0,.82);
-            font-family: "Barlow Condensed",sans-serif;
+            background: rgba(0,0,0,.86);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 1.55rem;
             font-weight: 900;
             letter-spacing: .14em;
@@ -209,8 +369,7 @@
             box-shadow:
                 0 0 0 2px rgba(212,0,0,.18),
                 0 15px 35px rgba(0,0,0,.5);
-            text-shadow:
-                0 0 8px rgba(212,0,0,.35);
+            text-shadow: 0 0 8px rgba(212,0,0,.35);
             pointer-events: none;
         }
 
@@ -221,14 +380,150 @@
             border: 1px solid rgba(212,0,0,.75);
         }
 
+        /* =========================================================
+           HMP ASHWELL FEATURE
+           ========================================================= */
 
-        /* =====================================================
-           COMMUNITY / FORUM
-           ===================================================== */
+        .featured-investigation {
+            display: grid;
+            grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #090a0d;
+            box-shadow: 0 30px 80px rgba(0,0,0,.35);
+        }
+
+        .featured-investigation-image {
+            min-height: 460px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .featured-investigation-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .featured-investigation-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(30px,5vw,60px);
+        }
+
+        .featured-investigation-content h3 {
+            margin: 14px 0 20px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem,5vw,5.5rem);
+            line-height: .88;
+            font-weight: 900;
+            letter-spacing: -.045em;
+        }
+
+        .featured-investigation-content p {
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        .case-meta {
+            display: grid;
+            gap: 5px;
+            margin: 25px 0 30px;
+            padding: 18px 20px;
+            border-left: 2px solid var(--ep-green);
+            background: rgba(255,255,255,.025);
+        }
+
+        .case-meta strong {
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: .04em;
+        }
+
+        .case-status-grid {
+            display: grid;
+            grid-template-columns: repeat(3,minmax(0,1fr));
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+
+        .case-status-grid div {
+            padding: 13px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.025);
+        }
+
+        .case-status-grid small {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+        }
+
+        .case-status-grid strong {
+            color: var(--ep-white);
+            font-size: .75rem;
+            line-height: 1.3;
+        }
+
+        /* =========================================================
+           ARCHIVE COMING SOON
+           ========================================================= */
+
+        .archive-coming-soon,
+        .gallery-coming-soon {
+            margin-top: 28px;
+            padding: clamp(28px,5vw,55px);
+            border: 1px solid rgba(192,255,79,.18);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(192,255,79,.035),
+                    rgba(255,255,255,.012)
+                );
+        }
+
+        .archive-coming-soon h3,
+        .gallery-coming-soon h3 {
+            margin: 12px 0 16px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(2rem,4vw,3.8rem);
+            line-height: .95;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .archive-coming-soon p,
+        .gallery-coming-soon p {
+            max-width: 850px;
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        .archive-coming-soon strong,
+        .gallery-coming-soon strong {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .82rem;
+            font-weight: 900;
+            letter-spacing: .15em;
+        }
+
+        /* =========================================================
+           COMMUNITY
+           ========================================================= */
 
         .community-section {
-            position: relative;
-            overflow: hidden;
             background: #050608;
         }
 
@@ -238,7 +533,6 @@
                 minmax(0,1.2fr)
                 minmax(300px,.8fr);
             gap: 30px;
-            align-items: stretch;
             padding: clamp(28px,5vw,60px);
             border: 1px solid rgba(255,255,255,.10);
             background:
@@ -252,8 +546,8 @@
 
         .community-copy h2 {
             margin: 0 0 20px;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: clamp(3rem,6vw,6rem);
             line-height: .88;
             font-weight: 900;
@@ -261,13 +555,9 @@
             text-transform: uppercase;
         }
 
-        .community-copy h2 span {
-            color: var(--orange);
-        }
-
         .community-copy p {
             max-width: 720px;
-            color: var(--muted);
+            color: var(--ep-muted);
             line-height: 1.8;
         }
 
@@ -280,59 +570,23 @@
             border-left: 1px solid rgba(255,255,255,.10);
         }
 
-        .community-action .eyebrow {
-            margin-bottom: 12px;
-        }
-
         .community-action p {
             margin: 0 0 22px;
-            color: var(--muted-dark);
-            font-size: .82rem;
+            color: rgba(255,255,255,.58);
             line-height: 1.7;
         }
 
-
-        /* =====================================================
-           SOCIAL MEDIA
-           ===================================================== */
+        /* =========================================================
+           SOCIAL
+           ========================================================= */
 
         .social-section {
-            position: relative;
-            overflow: hidden;
             background: #050608;
-        }
-
-        .social-heading {
-            max-width: 850px;
-            margin-bottom: 42px;
-        }
-
-        .social-heading h2 {
-            margin: 0 0 20px;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
-            font-size: clamp(3rem,6vw,6rem);
-            line-height: .88;
-            font-weight: 900;
-            letter-spacing: -.05em;
-            text-transform: uppercase;
-        }
-
-        .social-heading h2 span {
-            color: var(--orange);
-        }
-
-        .social-heading p {
-            max-width: 700px;
-            margin: 0;
-            color: var(--muted);
-            line-height: 1.8;
         }
 
         .social-grid {
             display: grid;
-            grid-template-columns:
-                repeat(4,minmax(0,1fr));
+            grid-template-columns: repeat(4,minmax(0,1fr));
             gap: 18px;
         }
 
@@ -344,7 +598,7 @@
             min-height: 150px;
             padding: 25px;
             overflow: hidden;
-            color: var(--white);
+            color: var(--ep-white);
             text-decoration: none;
             border: 1px solid rgba(255,255,255,.10);
             background: rgba(255,255,255,.025);
@@ -361,7 +615,7 @@
             top: 0;
             bottom: 0;
             width: 3px;
-            background: var(--orange);
+            background: var(--ep-green);
             transform: scaleY(.25);
             transform-origin: bottom;
             transition: transform .35s ease;
@@ -369,8 +623,8 @@
 
         .social-button:hover {
             transform: translateY(-5px);
-            border-color: var(--border-orange);
-            background: rgba(255,106,26,.045);
+            border-color: var(--ep-green);
+            background: rgba(192,255,79,.045);
         }
 
         .social-button:hover::before {
@@ -383,8 +637,7 @@
             height: 58px;
             display: grid;
             place-items: center;
-            color: var(--orange);
-            border: 1px solid var(--border-orange);
+            border: 1px solid rgba(192,255,79,.35);
         }
 
         .social-icon svg {
@@ -402,8 +655,7 @@
         .social-platform {
             display: block;
             margin-bottom: 4px;
-            color: var(--orange);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .72rem;
             font-weight: 900;
             letter-spacing: .16em;
@@ -411,8 +663,8 @@
 
         .social-content h3 {
             margin: 0 0 5px;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 1.55rem;
             line-height: .95;
             font-weight: 800;
@@ -421,66 +673,99 @@
 
         .social-handle {
             display: block;
-            color: var(--muted-dark);
+            color: rgba(255,255,255,.48);
             font-size: .76rem;
             overflow-wrap: anywhere;
         }
 
         .social-arrow {
-            color: var(--orange);
             font-size: 1.25rem;
         }
 
+        /* =========================================================
+           FOOTER
+           ========================================================= */
 
-        /* =====================================================
-           WEBSITE UNDER CONSTRUCTION TICKER
-           ===================================================== */
-
-        .construction-ticker {
+        .site-footer {
             position: relative;
-            z-index: 20;
-            width: 100%;
-            overflow: hidden;
-            background: #050608;
-            border-top: 1px solid rgba(255,106,26,.25);
-            border-bottom: 1px solid rgba(255,106,26,.25);
-            padding: 11px 0;
+            background: #030405;
+            border-top: 1px solid rgba(192,255,79,.18);
         }
 
-        .construction-ticker-track {
-            display: flex;
-            width: max-content;
-            white-space: nowrap;
-            animation: constructionTickerMove 24s linear infinite;
+        .footer-grid {
+            display: grid;
+            grid-template-columns:
+                1.35fr
+                1fr
+                1fr
+                1fr;
+            gap: 40px;
+            padding: 70px 0 50px;
         }
 
-        .construction-ticker-track span {
+        .footer-brand img {
             display: block;
-            flex-shrink: 0;
-            padding-right: 70px;
-            color: var(--white);
-            font-family: "Barlow Condensed",sans-serif;
-            font-size: .72rem;
+            width: 105px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .75rem;
             font-weight: 800;
             letter-spacing: .14em;
         }
 
-        @keyframes constructionTickerMove {
-
-            from {
-                transform: translateX(-50%);
-            }
-
-            to {
-                transform: translateX(0);
-            }
-
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
         }
 
+        .footer-links h3 {
+            margin: 0 0 10px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .82rem;
+            font-weight: 900;
+            letter-spacing: .15em;
+        }
 
-        /* =====================================================
-           CINEMATIC ENTRY INTRO
-           ===================================================== */
+        .footer-links a {
+            color: rgba(255,255,255,.65);
+            text-decoration: none;
+            font-size: .82rem;
+            transition: color .2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--ep-green);
+        }
+
+        .footer-links p {
+            margin: 0;
+            color: rgba(255,255,255,.55);
+            font-size: .82rem;
+            line-height: 1.7;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,.08);
+            color: rgba(255,255,255,.42);
+            font-size: .68rem;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           CINEMATIC INTRO
+           BLUE IS ALLOWED ONLY HERE
+           ========================================================= */
 
         #entry-screen {
             position: fixed !important;
@@ -509,7 +794,6 @@
             background-position: center center !important;
             background-repeat: no-repeat !important;
             background-size: cover !important;
-            isolation: isolate;
             transform: scale(1.012);
         }
 
@@ -570,40 +854,7 @@
                     transparent 42%
                 );
             filter: blur(24px);
-            transform:
-                translate3d(-2%,1%,0)
-                scale(1.08);
-            animation:
-                entry-mist-drift
-                9s
-                ease-in-out
-                infinite
-                alternate;
-        }
-
-        #entry-screen .entry-lightning {
-            position: absolute;
-            inset: -5%;
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0;
-            background:
-                rgba(190,225,255,.18);
-            mix-blend-mode: screen;
-        }
-
-        #entry-screen .flash-one {
-            animation:
-                entry-lightning-one
-                5.1s
-                infinite;
-        }
-
-        #entry-screen .flash-two {
-            animation:
-                entry-lightning-two
-                7.4s
-                infinite;
+            animation: epMist 9s ease-in-out infinite alternate;
         }
 
         #entry-screen .entry-blue-glow {
@@ -624,6 +875,24 @@
                     rgba(0,17,55,.16)
                 );
             mix-blend-mode: screen;
+        }
+
+        #entry-screen .entry-lightning {
+            position: absolute;
+            inset: -5%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+            background: rgba(190,225,255,.18);
+            mix-blend-mode: screen;
+        }
+
+        #entry-screen .flash-one {
+            animation: epLightningOne 5.1s infinite;
+        }
+
+        #entry-screen .flash-two {
+            animation: epLightningTwo 7.4s infinite;
         }
 
         #entry-screen .entry-content {
@@ -650,7 +919,7 @@
         #entry-screen .entry-loading-label {
             margin-bottom: 8px;
             color: rgba(255,255,255,.86);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .72rem;
             font-weight: 800;
             letter-spacing: .20em;
@@ -664,8 +933,7 @@
             overflow: hidden;
             border: 1px solid rgba(100,175,255,.55);
             background: rgba(0,0,0,.68);
-            box-shadow:
-                0 0 20px rgba(35,125,255,.22);
+            box-shadow: 0 0 20px rgba(35,125,255,.22);
         }
 
         #entry-screen .entry-loading-fill {
@@ -679,15 +947,14 @@
                     #2d8cff,
                     #9ed3ff
                 );
-            box-shadow:
-                0 0 16px rgba(45,140,255,.95);
+            box-shadow: 0 0 16px rgba(45,140,255,.95);
             transition: width .08s linear;
         }
 
         #entry-screen .entry-loading-percent {
             margin-top: 7px;
             color: rgba(255,255,255,.68);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .65rem;
             font-weight: 700;
             letter-spacing: .18em;
@@ -698,7 +965,7 @@
             left: 25px;
             bottom: 22px;
             color: rgba(255,255,255,.58);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .62rem;
             font-weight: 700;
             letter-spacing: .15em;
@@ -711,7 +978,7 @@
             right: 25px;
             bottom: 22px;
             color: rgba(255,255,255,.58);
-            font-family: "Barlow Condensed",sans-serif;
+            font-family: "Barlow Condensed", sans-serif;
             font-size: .62rem;
             font-weight: 700;
             letter-spacing: .15em;
@@ -725,8 +992,7 @@
             pointer-events: none !important;
         }
 
-        @keyframes entry-mist-drift {
-
+        @keyframes epMist {
             from {
                 transform:
                     translate3d(-2%,1%,0)
@@ -738,11 +1004,9 @@
                     translate3d(3%,-2%,0)
                     scale(1.13);
             }
-
         }
 
-        @keyframes entry-lightning-one {
-
+        @keyframes epLightningOne {
             0%,
             67%,
             100% {
@@ -768,11 +1032,9 @@
             70.8% {
                 opacity: 0;
             }
-
         }
 
-        @keyframes entry-lightning-two {
-
+        @keyframes epLightningTwo {
             0%,
             35%,
             100% {
@@ -790,13 +1052,24 @@
             37% {
                 opacity: 0;
             }
-
         }
 
+        /* =========================================================
+           MOBILE / TABLET
+           ========================================================= */
 
-        /* =====================================================
-           RESPONSIVE
-           ===================================================== */
+        @media (max-width:1100px) {
+
+            .social-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
 
         @media (max-width:900px) {
 
@@ -805,9 +1078,19 @@
             }
 
             .upcoming-event-video {
-                min-height: 0 !important;
-                height: auto !important;
                 order: -1;
+            }
+
+            .featured-investigation {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-investigation-image {
+                min-height: 360px;
+            }
+
+            .case-status-grid {
+                grid-template-columns: 1fr 1fr 1fr;
             }
 
             .community-panel {
@@ -820,10 +1103,6 @@
                 border-top: 1px solid rgba(255,255,255,.10);
             }
 
-            .social-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
             .completed-stamp {
                 top: 18px;
                 right: 18px;
@@ -834,8 +1113,30 @@
 
         }
 
+        @media (max-width:700px) {
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 50px 0 35px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+
+            .case-status-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
 
         @media (max-width:550px) {
+
+            .brand-logo-crop {
+                width: 64px;
+                height: 52px;
+            }
 
             .upcoming-event-content {
                 padding: 30px 22px;
@@ -847,11 +1148,6 @@
 
             .upcoming-event-details {
                 grid-template-columns: 1fr;
-            }
-
-            .upcoming-event-video {
-                min-height: 0 !important;
-                height: auto !important;
             }
 
             .social-grid {
@@ -882,13 +1178,26 @@
 
         }
 
+        @media (prefers-reduced-motion: reduce) {
 
-        /* =====================================================
-           PAGE LOAD POSITION
-           ===================================================== */
+            html {
+                scroll-behavior: auto;
+            }
 
-        html {
-            scroll-behavior: smooth;
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+
+            #entry-rain-canvas,
+            #entry-screen .entry-mist,
+            #entry-screen .entry-lightning {
+                display: none !important;
+            }
+
         }
 
     </style>
@@ -899,9 +1208,9 @@
 <body>
 
 
-    <!-- =====================================================
-         CINEMATIC ENTRY SCREEN
-         ===================================================== -->
+    <!-- =========================================================
+         CINEMATIC ENTRY
+         ========================================================= -->
 
     <div
         id="entry-screen"
@@ -935,7 +1244,6 @@
                 aria-hidden="true"
             ></div>
 
-
             <div class="entry-content">
 
                 <div class="entry-loading">
@@ -962,7 +1270,6 @@
 
                 </div>
 
-
                 <div class="entry-bottom-copy">
                     REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
                 </div>
@@ -978,9 +1285,9 @@
     </div>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          HEADER
-         ===================================================== -->
+         ========================================================= -->
 
     <header class="site-header">
 
@@ -1039,7 +1346,7 @@
                 </a>
 
                 <a href="#community">
-                    JOIN US
+                    JOIN US / FORUM
                 </a>
 
                 <a href="#contact">
@@ -1068,9 +1375,9 @@
     </header>
 
 
-    <!-- =====================================================
-         WEBSITE UNDER CONSTRUCTION TICKER
-         ===================================================== -->
+    <!-- =========================================================
+         CONSTRUCTION NOTICE
+         ========================================================= -->
 
     <div
         class="construction-ticker"
@@ -1166,7 +1473,7 @@
 
 
         <!-- =====================================================
-             UPCOMING EVENTS
+             ANCIENT RAM INN
              ===================================================== -->
 
         <section
@@ -1188,9 +1495,9 @@
                     </h2>
 
                     <p>
-                        Essex Paranormal is heading to one of
-                        the UK's most notorious historic locations
-                        for a 24-hour live investigation.
+                        Essex Paranormal heads to one of Britain's
+                        most notorious paranormal locations for an
+                        extended live investigation.
                     </p>
 
                 </div>
@@ -1210,15 +1517,13 @@
 
                     <div class="upcoming-event-content">
 
-                        <span class="empty-code">
-                            NEXT INVESTIGATION
+                        <span class="eyebrow">
+                            ANCIENT RAM INN
                         </span>
-
 
                         <h3>
                             THE ANCIENT RAM INN
                         </h3>
-
 
                         <p class="upcoming-event-description">
                             Essex Paranormal heads to one of
@@ -1277,7 +1582,7 @@
                             loop
                             playsinline
                             controls
-                            preload="auto"
+                            preload="metadata"
                             aria-label="Ancient Ram Inn promotional video"
                         >
 
@@ -1301,6 +1606,7 @@
 
         <!-- =====================================================
              MEET LEWIS
+             ORIGINAL SAVED BIOGRAPHY PRESERVED
              ===================================================== -->
 
         <section
@@ -1312,33 +1618,27 @@
 
                 <div class="profile-layout">
 
-
                     <div class="profile-copy">
 
                         <p class="eyebrow">
                             MEET LEWIS
                         </p>
 
-
                         <h2>
                             Biography -
                             <span>Lewis McDiarmid</span>
                         </h2>
 
-
                         <p class="role">
                             OWNER &amp; LEAD INVESTIGATOR, ESSEX PARANORMAL
                         </p>
 
-
                         <div class="bio-content">
-
 
                             <p>
                                 My name is Lewis McDiarmid, and I am the owner
                                 and lead investigator of Essex Paranormal.
                             </p>
-
 
                             <p>
                                 I have always had an interest in the paranormal
@@ -1349,14 +1649,12 @@
                                 and does not show.
                             </p>
 
-
                             <p>
                                 Essex Paranormal is built around honesty, truth
                                 and accountability. I will never deliberately
                                 mislead people about an investigation or
                                 manufacture evidence for entertainment.
                             </p>
-
 
                             <p>
                                 Essex Paranormal was originally created by my
@@ -1368,13 +1666,11 @@
                                 many team changes and a name change.
                             </p>
 
-
                             <p>
                                 Last year, after much thought and consideration,
                                 I decided to reboot Essex Paranormal and return
                                 it to its original ethos and principles.
                             </p>
-
 
                             <p>
                                 What makes Essex Paranormal different is that it
@@ -1384,17 +1680,14 @@
                                 honesty and accountability are always upheld.
                             </p>
 
-
                             <h3>
                                 Investigations &amp; Evidence
                             </h3>
-
 
                             <p>
                                 Essex Paranormal uses a minimum amount of equipment
                                 because I believe the most powerful tool is myself.
                             </p>
-
 
                             <p>
                                 I do use cameras, night-vision systems, field
@@ -1402,7 +1695,6 @@
                                 after dark. I also use trigger objects as a
                                 precursor to gaining interaction between realms.
                             </p>
-
 
                             <p>
                                 Ouija boards, crystal balls, sensory equipment,
@@ -1412,39 +1704,46 @@
                                 and aerial data of locations when required.
                             </p>
 
-
                             <h3>
                                 My Experiences &amp; Beliefs
                             </h3>
 
-
                             <p>
-                                My experiences throughout my life have shaped
-                                the way I investigate. I believe every report
-                                deserves to be treated with respect, but that
-                                does not mean every experience should immediately
-                                be accepted as paranormal.
+                                My personal experiences are too many to mention,
+                                but throughout the site I will share as many as
+                                I can so people can read them and hopefully gain
+                                some insight into them all.
                             </p>
 
-
                             <p>
-                                I believe evidence should be examined carefully,
-                                alternative explanations considered and conclusions
-                                reached honestly.
+                                I believe there is definitely something other
+                                than what we consciously choose to be aware of.
+                                I believe in what I see, feel, hear, and understand.
                             </p>
 
-
                             <p>
-                                If something cannot be explained, I will say that
-                                it cannot be explained. If something has an
-                                ordinary explanation, I will say that too.
+                                Visitors to Essex Paranormal should understand
+                                that everything I do is based on truth, fact,
+                                and evidence-based material that I always
+                                endeavour to collect honestly. Nothing I say,
+                                do, share, or post will ever be fake, trickery,
+                                or false. Essex Paranormal is proud to be honest
+                                and truthful.
                             </p>
 
+                            <h3>
+                                What Paranormal Investigation Means to Me
+                            </h3>
 
                             <p>
-                                The objective is simple:
-                                investigate properly, document honestly and allow
-                                the evidence to speak for itself.
+                                A paranormal investigation is an important part
+                                of my life and my journey to try and understand
+                                what else is out there. I love being able to
+                                explore and understand what the real answer is
+                                to life and the afterlife. If there really is a
+                                continuation from one stage of awareness to the
+                                next, then I will continue to pursue the search
+                                for it.
                             </p>
 
                         </div>
@@ -1452,14 +1751,56 @@
                     </div>
 
 
-                    <div class="profile-media">
+                    <div class="profile-visual">
 
-                        <img
-                            src="/meet-lewis-biography.jpg"
-                            alt="Lewis McDiarmid, Owner and Lead Investigator of Essex Paranormal"
-                            loading="lazy"
-                            decoding="async"
-                        >
+                        <div class="profile-image-frame">
+
+                            <img
+                                src="/meet-lewis-biography.jpg"
+                                alt="Lewis McDiarmid, Owner and Lead Investigator of Essex Paranormal"
+                                class="profile-image"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <span class="frame-corner frame-corner-top"></span>
+                            <span class="frame-corner frame-corner-bottom"></span>
+
+                        </div>
+
+                        <div class="profile-quote">
+
+                            <span></span>
+
+                            <p>
+                                “THE TRUTH EXISTS, EVEN WHEN NO ONE BELIEVES.”
+                            </p>
+
+                        </div>
+
+                        <div class="profile-identifiers">
+
+                            <div>
+                                <strong>INVESTIGATOR</strong>
+                                <small>Evidence Led</small>
+                            </div>
+
+                            <div>
+                                <strong>DOCUMENTARY</strong>
+                                <small>Truth Focused</small>
+                            </div>
+
+                            <div>
+                                <strong>DRONE OPERATIONS</strong>
+                                <small>Aerial Reconnaissance</small>
+                            </div>
+
+                            <div>
+                                <strong>EXPLORER</strong>
+                                <small>Always Seeking Answers</small>
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -1567,7 +1908,7 @@
 
 
         <!-- =====================================================
-             APPROACH
+             METHOD
              ===================================================== -->
 
         <section
@@ -1602,9 +1943,7 @@
 
                     <article class="method-card">
 
-                        <span>
-                            01
-                        </span>
+                        <span>01</span>
 
                         <h3>
                             RESEARCH
@@ -1620,9 +1959,7 @@
 
                     <article class="method-card">
 
-                        <span>
-                            02
-                        </span>
+                        <span>02</span>
 
                         <h3>
                             OBSERVE
@@ -1638,9 +1975,7 @@
 
                     <article class="method-card">
 
-                        <span>
-                            03
-                        </span>
+                        <span>03</span>
 
                         <h3>
                             REVIEW
@@ -1657,9 +1992,7 @@
 
                     <article class="method-card">
 
-                        <span>
-                            04
-                        </span>
+                        <span>04</span>
 
                         <h3>
                             REPORT
@@ -1693,7 +2026,7 @@
                 <div class="section-heading">
 
                     <p class="eyebrow">
-                        INVESTIGATIONS
+                        FEATURED INVESTIGATION
                     </p>
 
                     <h2>
@@ -1726,7 +2059,7 @@
                     <div class="featured-investigation-content">
 
                         <span class="eyebrow">
-                            CASE FILE 01
+                            CASE FILE EP-001
                         </span>
 
                         <h3>
@@ -1734,21 +2067,29 @@
                         </h3>
 
                         <p>
-                            An evidence-led investigation into one
-                            of the UK's former prison sites, examining
+                            An evidence-led investigation into the
+                            former HM Prison Ashwell, examining
                             reported experiences while considering
                             historical and environmental context.
                         </p>
 
-                        <div class="case-meta">
 
-                            <span>
-                                LOCATION
-                            </span>
+                        <div class="case-status-grid">
 
-                            <strong>
-                                FORMER HMP ASHWELL
-                            </strong>
+                            <div>
+                                <small>LOCATION</small>
+                                <strong>FORMER HM PRISON ASHWELL</strong>
+                            </div>
+
+                            <div>
+                                <small>STATUS</small>
+                                <strong>PUBLISHED</strong>
+                            </div>
+
+                            <div>
+                                <small>APPROACH</small>
+                                <strong>EVIDENCE LED</strong>
+                            </div>
 
                         </div>
 
@@ -1889,7 +2230,7 @@
 
 
         <!-- =====================================================
-             GALLERY
+             GALLERY / MEDIA
              ===================================================== -->
 
         <section
@@ -1940,7 +2281,7 @@
 
 
         <!-- =====================================================
-             COMMUNITY
+             JOIN US / FORUM
              ===================================================== -->
 
         <section
@@ -1955,7 +2296,7 @@
                     <div class="community-copy">
 
                         <p class="eyebrow">
-                            JOIN US
+                            JOIN US / FORUM
                         </p>
 
                         <h2>
@@ -2006,7 +2347,7 @@
 
 
         <!-- =====================================================
-             SOCIAL
+             SOCIAL MEDIA
              ===================================================== -->
 
         <section
@@ -2016,7 +2357,7 @@
 
             <div class="container">
 
-                <div class="social-heading">
+                <div class="section-heading">
 
                     <p class="eyebrow">
                         SOCIAL MEDIA
@@ -2039,6 +2380,8 @@
                 <div class="social-grid">
 
 
+                    <!-- TIKTOK -->
+
                     <a
                         href="#"
                         class="social-button"
@@ -2051,7 +2394,9 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
+
                                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-3.9h-3.12v13.1a2.9 2.9 0 1 1-2-2.76V10a6 6 0 1 0 5.12 5.93V9.28a7.9 7.9 0 0 0 4.77 1.6V7.77a4.83 4.83 0 0 1-1-.08z"/>
+
                             </svg>
 
                         </div>
@@ -2079,6 +2424,8 @@
                     </a>
 
 
+                    <!-- YOUTUBE -->
+
                     <a
                         href="#"
                         class="social-button"
@@ -2091,7 +2438,9 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
+
                                 <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.6 15.8V8.2l6.5 3.8-6.5 3.8z"/>
+
                             </svg>
 
                         </div>
@@ -2119,6 +2468,8 @@
                     </a>
 
 
+                    <!-- INSTAGRAM -->
+
                     <a
                         href="#"
                         class="social-button"
@@ -2131,7 +2482,9 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
+
                                 <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.5 6.5A1 1 0 1 1 16.5 7a1 1 0 0 1 1-1z"/>
+
                             </svg>
 
                         </div>
@@ -2159,6 +2512,8 @@
                     </a>
 
 
+                    <!-- FACEBOOK -->
+
                     <a
                         href="https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr"
                         class="social-button"
@@ -2173,7 +2528,9 @@
                                 viewBox="0 0 24 24"
                                 aria-hidden="true"
                             >
+
                                 <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.5-4 4.1V10H8.7v3h2.7v8h2.1z"/>
+
                             </svg>
 
                         </div>
@@ -2339,6 +2696,17 @@
                     </div>
 
 
+                    <p class="form-privacy-note">
+                        By submitting this form, you agree that the
+                        information provided may be used to respond
+                        to your enquiry. See our
+                        <a href="/privacy-policy.html">
+                            Privacy Policy
+                        </a>
+                        for details.
+                    </p>
+
+
                     <button
                         type="submit"
                         class="button button-primary"
@@ -2356,9 +2724,9 @@
     </main>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          FOOTER
-         ===================================================== -->
+         ========================================================= -->
 
     <footer class="site-footer">
 
@@ -2366,6 +2734,8 @@
 
             <div class="footer-grid">
 
+
+                <!-- BRAND -->
 
                 <div class="footer-brand">
 
@@ -2380,8 +2750,14 @@
                         HONEST • REAL • UNBIASED
                     </p>
 
+                    <p>
+                        Evidence before assumption.
+                    </p>
+
                 </div>
 
+
+                <!-- QUICK LINKS -->
 
                 <div class="footer-links">
 
@@ -2394,11 +2770,15 @@
                     </a>
 
                     <a href="#upcoming-events">
-                        UPCOMING EVENT
+                        UPCOMING EVENTS
                     </a>
 
                     <a href="#about">
                         MEET LEWIS
+                    </a>
+
+                    <a href="#experiences">
+                        EXPERIENCES
                     </a>
 
                     <a href="#investigations">
@@ -2409,6 +2789,10 @@
                         GALLERY
                     </a>
 
+                    <a href="#community">
+                        JOIN US / FORUM
+                    </a>
+
                     <a href="#contact">
                         CONTACT
                     </a>
@@ -2416,20 +2800,64 @@
                 </div>
 
 
+                <!-- INVESTIGATIONS -->
+
                 <div class="footer-links">
 
                     <h3>
-                        ESSEX PARANORMAL
+                        INVESTIGATIONS
                     </h3>
 
-                    <p>
-                        Evidence before assumption.
-                    </p>
+                    <a href="/investigations/hmp-ashwell.html">
+                        HMP ASHWELL
+                    </a>
 
-                    <p>
-                        Real people. Real places.
-                        Real experiences.
-                    </p>
+                    <a href="/investigations/">
+                        INVESTIGATION ARCHIVE
+                    </a>
+
+                    <a href="#upcoming-events">
+                        UPCOMING INVESTIGATIONS
+                    </a>
+
+                    <a href="#evidence">
+                        EVIDENCE
+                    </a>
+
+                </div>
+
+
+                <!-- LEGAL -->
+
+                <div class="footer-links">
+
+                    <h3>
+                        LEGAL
+                    </h3>
+
+                    <a href="/privacy-policy.html">
+                        PRIVACY POLICY
+                    </a>
+
+                    <a href="/cookie-policy.html">
+                        COOKIE POLICY
+                    </a>
+
+                    <a href="/terms.html">
+                        TERMS &amp; CONDITIONS
+                    </a>
+
+                    <a href="/disclaimer.html">
+                        PARANORMAL / INVESTIGATION DISCLAIMER
+                    </a>
+
+                    <a href="/copyright.html">
+                        COPYRIGHT &amp; MEDIA RIGHTS
+                    </a>
+
+                    <a href="/accessibility.html">
+                        ACCESSIBILITY
+                    </a>
 
                 </div>
 
@@ -2439,7 +2867,8 @@
             <div class="footer-bottom">
 
                 <span>
-                    © <span id="current-year"></span>
+                    ©
+                    <span id="current-year"></span>
                     ESSEX PARANORMAL. ALL RIGHTS RESERVED.
                 </span>
 
@@ -2454,16 +2883,15 @@
     </footer>
 
 
-    <!-- =====================================================
-         ENTRY SCREEN / RAIN / LOADING
-         ===================================================== -->
+    <!-- =========================================================
+         CINEMATIC INTRO ENGINE
+         ========================================================= -->
 
     <script>
 
         (function () {
 
             "use strict";
-
 
             const entry =
                 document.getElementById("entry-screen");
@@ -2477,23 +2905,47 @@
             const percent =
                 document.getElementById("entry-loading-percent");
 
-
             if (!entry || !canvas) {
                 return;
             }
 
-
             window.scrollTo(0, 0);
 
+            const reducedMotion =
+                window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches;
+
+            if (reducedMotion) {
+
+                if (fill) {
+                    fill.style.width = "100%";
+                }
+
+                if (percent) {
+                    percent.textContent = "100%";
+                }
+
+                window.setTimeout(function () {
+
+                    entry.classList.add("is-hidden");
+
+                }, 650);
+
+                return;
+            }
 
             const ctx =
                 canvas.getContext("2d");
 
+            if (!ctx) {
+                return;
+            }
 
             let width = 0;
             let height = 0;
-            let animationFrame = null;
 
+            let animationFrame = null;
 
             const drops = [];
 
@@ -2506,13 +2958,11 @@
                         2
                     );
 
-
                 width =
                     window.innerWidth;
 
                 height =
                     window.innerHeight;
-
 
                 canvas.width =
                     width * ratio;
@@ -2520,13 +2970,11 @@
                 canvas.height =
                     height * ratio;
 
-
                 canvas.style.width =
                     width + "px";
 
                 canvas.style.height =
                     height + "px";
-
 
                 ctx.setTransform(
                     ratio,
@@ -2537,16 +2985,13 @@
                     0
                 );
 
-
                 drops.length = 0;
-
 
                 const count =
                     Math.max(
-                        100,
-                        Math.floor(width / 9)
+                        120,
+                        Math.floor(width / 8)
                     );
-
 
                 for (
                     let i = 0;
@@ -2564,19 +3009,19 @@
 
                         length:
                             10 +
-                            Math.random() * 30,
+                            Math.random() * 32,
 
                         speed:
-                            8 +
+                            7 +
                             Math.random() * 15,
 
                         opacity:
-                            .16 +
-                            Math.random() * .58,
+                            .15 +
+                            Math.random() * .55,
 
                         width:
-                            .45 +
-                            Math.random() * 1.1
+                            .4 +
+                            Math.random() * 1.15
 
                     });
 
@@ -2594,11 +3039,9 @@
                     height
                 );
 
-
                 for (const drop of drops) {
 
                     drop.y += drop.speed;
-
 
                     if (
                         drop.y >
@@ -2613,10 +3056,8 @@
 
                     }
 
-
                     const angle =
                         -0.18;
-
 
                     const endX =
                         drop.x +
@@ -2627,7 +3068,6 @@
                         drop.y +
                         drop.length;
 
-
                     const gradient =
                         ctx.createLinearGradient(
                             drop.x,
@@ -2635,7 +3075,6 @@
                             endX,
                             endY
                         );
-
 
                     gradient.addColorStop(
                         0,
@@ -2651,7 +3090,6 @@
                         1,
                         "rgba(110,180,255,0)"
                     );
-
 
                     ctx.beginPath();
 
@@ -2675,7 +3113,6 @@
 
                 }
 
-
                 animationFrame =
                     requestAnimationFrame(
                         drawRain
@@ -2696,9 +3133,9 @@
             );
 
 
-            /* =================================================
+            /* =====================================================
                LOADING BAR
-               ================================================= */
+               ===================================================== */
 
             const duration = 2750;
 
@@ -2717,12 +3154,10 @@
                         1
                     );
 
-
                 const value =
                     Math.round(
                         progress * 100
                     );
-
 
                 if (fill) {
 
@@ -2731,14 +3166,12 @@
 
                 }
 
-
                 if (percent) {
 
                     percent.textContent =
                         value + "%";
 
                 }
-
 
                 if (progress < 1) {
 
@@ -2756,31 +3189,39 @@
             );
 
 
-            /* =================================================
-               DO NOT FIGHT SCRIPT.JS
-
-               script.js already controls the normal
-               entry-screen fade at approximately 3 seconds.
-               The loading bar finishes just before that.
-               ================================================= */
-
+            /*
+             * Stop the rain engine once the intro has disappeared.
+             * This prevents unnecessary animation work after entry.
+             */
 
             window.setTimeout(
                 function () {
 
                     if (fill) {
-
-                        fill.style.width =
-                            "100%";
-
+                        fill.style.width = "100%";
                     }
 
                     if (percent) {
-
-                        percent.textContent =
-                            "100%";
-
+                        percent.textContent = "100%";
                     }
+
+                    window.setTimeout(
+                        function () {
+
+                            if (animationFrame) {
+
+                                cancelAnimationFrame(
+                                    animationFrame
+                                );
+
+                                animationFrame =
+                                    null;
+
+                            }
+
+                        },
+                        1100
+                    );
 
                 },
                 duration
@@ -2792,9 +3233,9 @@
     </script>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          CURRENT YEAR
-         ===================================================== -->
+         ========================================================= -->
 
     <script>
 
@@ -2804,7 +3245,6 @@
                 document.getElementById(
                     "current-year"
                 );
-
 
             if (year) {
 
@@ -2818,9 +3258,9 @@
     </script>
 
 
-    <!-- =====================================================
+    <!-- =========================================================
          EXISTING SITE SCRIPT
-         ===================================================== -->
+         ========================================================= -->
 
     <script
         src="/script.js"
