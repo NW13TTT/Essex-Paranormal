@@ -388,7 +388,7 @@
         }
 
         /* =========================================================
-           HMP ASHWELL FEATURE
+           INVESTIGATION CARDS
            ========================================================= */
 
         .featured-investigation {
@@ -433,6 +433,38 @@
         .featured-investigation-content p {
             color: var(--ep-muted);
             line-height: 1.8;
+        }
+
+        /*
+         * Published investigations are deliberately separate cards.
+         * Two cards sit beside each other on desktop and stack on
+         * smaller screens.
+         */
+
+        .investigation-cards {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 24px;
+            margin-top: 34px;
+        }
+
+        .investigation-cards .featured-investigation {
+            grid-template-columns: 1fr;
+            height: 100%;
+        }
+
+        .investigation-cards .featured-investigation-image {
+            min-height: 320px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .investigation-cards .featured-investigation-content {
+            min-height: 100%;
+            padding: clamp(28px,4vw,46px);
+        }
+
+        .investigation-cards .featured-investigation-content h3 {
+            font-size: clamp(2.8rem,4vw,4.5rem);
         }
 
         .case-meta {
@@ -481,7 +513,7 @@
         }
 
         /* =========================================================
-           ARCHIVE COMING SOON
+           ARCHIVE
            ========================================================= */
 
         .archive-coming-soon,
@@ -524,6 +556,10 @@
             font-size: .82rem;
             font-weight: 900;
             letter-spacing: .15em;
+        }
+
+        .archive-coming-soon .button {
+            margin-top: 24px;
         }
 
         /* =========================================================
@@ -1088,6 +1124,10 @@
                 order: -1;
             }
 
+            .investigation-cards {
+                grid-template-columns: 1fr;
+            }
+
             .featured-investigation {
                 grid-template-columns: 1fr;
             }
@@ -1613,7 +1653,6 @@
 
         <!-- =====================================================
              MEET LEWIS
-             ORIGINAL SAVED BIOGRAPHY PRESERVED
              ===================================================== -->
 
         <section
@@ -2033,86 +2072,181 @@
                 <div class="section-heading">
 
                     <p class="eyebrow">
-                        FEATURED INVESTIGATION
+                        FEATURED INVESTIGATIONS
                     </p>
 
                     <h2>
-                        HMP
-                        <span>ASHWELL.</span>
+                        RECENT
+                        <span>CASE FILES.</span>
                     </h2>
 
                     <p>
-                        A full investigation case file is available
-                        for the former HMP Ashwell site.
+                        Published investigation case files from
+                        Essex Paranormal.
                     </p>
 
                 </div>
 
 
-                <article class="featured-investigation">
-
-                    <div class="featured-investigation-image">
-
-                        <img
-                            src="/hmp-ashwell.PNG"
-                            alt="Former HMP Ashwell prison entrance"
-                            loading="lazy"
-                            decoding="async"
-                        >
-
-                    </div>
+                <div class="investigation-cards">
 
 
-                    <div class="featured-investigation-content">
+                    <!-- =================================================
+                         EP-001 HMP ASHWELL
+                         ================================================= -->
 
-                        <span class="eyebrow">
-                            CASE FILE EP-001
-                        </span>
+                    <article class="featured-investigation">
 
-                        <h3>
-                            HMP ASHWELL
-                        </h3>
+                        <div class="featured-investigation-image">
 
-                        <p>
-                            An evidence-led investigation into the
-                            former HM Prison Ashwell, examining
-                            reported experiences while considering
-                            historical and environmental context.
-                        </p>
-
-
-                        <div class="case-status-grid">
-
-                            <div>
-                                <small>LOCATION</small>
-                                <strong>FORMER HM PRISON ASHWELL</strong>
-                            </div>
-
-                            <div>
-                                <small>STATUS</small>
-                                <strong>PUBLISHED</strong>
-                            </div>
-
-                            <div>
-                                <small>APPROACH</small>
-                                <strong>EVIDENCE LED</strong>
-                            </div>
+                            <img
+                                src="/hmp-ashwell.PNG"
+                                alt="Former HMP Ashwell prison"
+                                loading="lazy"
+                                decoding="async"
+                            >
 
                         </div>
 
 
-                        <a
-                            href="/investigations/hmp-ashwell.html"
-                            class="button button-primary"
-                        >
-                            VIEW CASE FILE
-                            <span>→</span>
-                        </a>
+                        <div class="featured-investigation-content">
 
-                    </div>
+                            <span class="eyebrow">
+                                CASE FILE EP-001
+                            </span>
 
-                </article>
+                            <h3>
+                                HMP ASHWELL
+                            </h3>
 
+                            <p>
+                                An evidence-led investigation into the
+                                former HM Prison Ashwell, examining
+                                reported experiences while considering
+                                historical and environmental context.
+                            </p>
+
+
+                            <div class="case-status-grid">
+
+                                <div>
+                                    <small>LOCATION</small>
+                                    <strong>
+                                        FORMER HM PRISON ASHWELL
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <small>STATUS</small>
+                                    <strong>
+                                        PUBLISHED
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <small>APPROACH</small>
+                                    <strong>
+                                        EVIDENCE LED
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="/investigations/hmp-ashwell.html"
+                                class="button button-primary"
+                            >
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         EP-002 GRAIN BATTERY TOWER
+                         ================================================= -->
+
+                    <article class="featured-investigation">
+
+                        <div class="featured-investigation-image">
+
+                            <img
+                                src="/investigations/grain-battery-01.JPG"
+                                alt="Grain Battery Tower sea fort"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                        </div>
+
+
+                        <div class="featured-investigation-content">
+
+                            <span class="eyebrow">
+                                CASE FILE EP-002
+                            </span>
+
+                            <h3>
+                                GRAIN BATTERY TOWER
+                            </h3>
+
+                            <p>
+                                An overnight lockdown paranormal
+                                investigation at Grain Battery Tower,
+                                focusing on audio phenomena, movement,
+                                environmental changes and potential
+                                intelligent communication.
+                            </p>
+
+
+                            <div class="case-status-grid">
+
+                                <div>
+                                    <small>LOCATION</small>
+                                    <strong>
+                                        GRAIN, KENT
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <small>STATUS</small>
+                                    <strong>
+                                        PUBLISHED
+                                    </strong>
+                                </div>
+
+                                <div>
+                                    <small>METHOD</small>
+                                    <strong>
+                                        OVERNIGHT LOCKDOWN
+                                    </strong>
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="/investigations/grain-battery.html"
+                                class="button button-primary"
+                            >
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- =================================================
+                     INVESTIGATION ARCHIVE
+                     ================================================= -->
 
                 <div class="archive-coming-soon">
 
@@ -2121,21 +2255,23 @@
                     </span>
 
                     <h3>
-                        CASE FILES COMING SOON.
+                        BROWSE THE CASE FILES.
                     </h3>
 
                     <p>
-                        The Essex Paranormal investigation archive
-                        is currently under construction while the
-                        website build is being completed. New case
-                        files will be added as investigations are
-                        completed, reviewed and prepared for
-                        publication.
+                        Browse the Essex Paranormal investigation
+                        archive, including published case files,
+                        investigation reports and future
+                        investigations as they are added.
                     </p>
 
-                    <strong>
-                        WEBSITE BUILD IN PROGRESS
-                    </strong>
+                    <a
+                        href="/investigations/"
+                        class="button button-secondary"
+                    >
+                        VIEW INVESTIGATION ARCHIVE
+                        <span>→</span>
+                    </a>
 
                 </div>
 
@@ -2819,16 +2955,12 @@
                         HMP ASHWELL
                     </a>
 
+                    <a href="/investigations/grain-battery.html">
+                        GRAIN BATTERY TOWER
+                    </a>
+
                     <a href="/investigations/">
                         INVESTIGATION ARCHIVE
-                    </a>
-
-                    <a href="#upcoming-events">
-                        UPCOMING INVESTIGATIONS
-                    </a>
-
-                    <a href="#evidence">
-                        EVIDENCE
                     </a>
 
                 </div>
