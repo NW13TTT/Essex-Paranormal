@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Grain Battery investigation by Essex Paranormal. Location photography, field documentation and investigation records from Grain Battery."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050608"
+    >
+
+    <title>
+        Grain Battery | Essex Paranormal
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           GRAIN BATTERY
+           CASE PAGE
+           ========================================================= */
+
+        :root {
+
+            --grain-green: #B7FF00;
+            --grain-green-bright: #D4FF4F;
+
+            --grain-black: #050608;
+            --grain-black-soft: #090B0D;
+            --grain-black-panel: #0D0F11;
+
+            --grain-white: #FFFFFF;
+            --grain-text: rgba(255,255,255,0.84);
+            --grain-muted: rgba(255,255,255,0.62);
+
+            --grain-border: rgba(183,255,0,0.24);
+            --grain-border-soft: rgba(255,255,255,0.10);
+
+        }
+
+
+        /* =========================================================
+           PAGE
+           ========================================================= */
+
+        .grain-page {
+
+            width: 100%;
+            min-height: 100vh;
+
+            background:
+                var(--grain-black);
+
+            color:
+                var(--grain-white);
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .grain-container {
+
+            width:
+                min(1180px, calc(100% - 40px));
+
+            margin:
+                0 auto;
+
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .grain-hero {
+
+            position:
+                relative;
+
+            min-height:
+                78vh;
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            overflow:
+                hidden;
+
+            background:
+                #000;
+
+        }
+
+
+        .grain-hero-image {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+            object-position:
+                center center;
+
+            filter:
+                brightness(0.48)
+                contrast(1.08);
+
+            transform:
+                scale(1.02);
+
+        }
+
+
+        .grain-hero-overlay {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,0.12) 0%,
+                    rgba(0,0,0,0.25) 42%,
+                    rgba(5,6,8,0.98) 100%
+                );
+
+            z-index:
+                1;
+
+        }
+
+
+        .grain-hero-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            width:
+                100%;
+
+            padding:
+                160px 0 80px;
+
+        }
+
+
+        .grain-kicker {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            color:
+                var(--grain-green);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.72rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.20em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-kicker::before {
+
+            content:
+                "";
+
+            width:
+                38px;
+
+            height:
+                2px;
+
+            background:
+                var(--grain-green);
+
+        }
+
+
+        .grain-hero h1 {
+
+            margin:
+                18px 0 22px;
+
+            max-width:
+                1100px;
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                clamp(4rem, 11vw, 10rem);
+
+            line-height:
+                0.80;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -0.065em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-hero h1 span {
+
+            display:
+                block;
+
+            color:
+                var(--grain-green);
+
+        }
+
+
+        .grain-hero-description {
+
+            max-width:
+                760px;
+
+            margin:
+                0;
+
+            color:
+                var(--grain-text);
+
+            font-size:
+                1.08rem;
+
+            line-height:
+                1.85;
+
+        }
+
+
+        /* =========================================================
+           CASE INFORMATION
+           ========================================================= */
+
+        .grain-case-meta {
+
+            background:
+                var(--grain-black-soft);
+
+            border-top:
+                1px solid var(--grain-border-soft);
+
+            border-bottom:
+                1px solid var(--grain-border-soft);
+
+        }
+
+
+        .grain-case-meta-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+        }
+
+
+        .grain-meta-item {
+
+            padding:
+                24px 20px;
+
+            border-right:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .grain-meta-item:last-child {
+
+            border-right:
+                0;
+
+        }
+
+
+        .grain-meta-label {
+
+            display:
+                block;
+
+            margin-bottom:
+                8px;
+
+            color:
+                var(--grain-green);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.66rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.16em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-meta-value {
+
+            display:
+                block;
+
+            color:
+                var(--grain-white);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                1rem;
+
+            font-weight:
+                800;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =========================================================
+           SECTIONS
+           ========================================================= */
+
+        .grain-section {
+
+            padding:
+                clamp(70px, 9vw, 125px) 0;
+
+        }
+
+
+        .grain-section-panel {
+
+            background:
+                var(--grain-black-panel);
+
+            border-top:
+                1px solid rgba(255,255,255,0.055);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.055);
+
+        }
+
+
+        .grain-section-heading {
+
+            max-width:
+                900px;
+
+            margin-bottom:
+                48px;
+
+        }
+
+
+        .grain-section-label {
+
+            display:
+                block;
+
+            margin-bottom:
+                14px;
+
+            color:
+                var(--grain-green);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.68rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.20em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-section-heading h2 {
+
+            margin:
+                0;
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                clamp(3rem, 6vw, 6rem);
+
+            line-height:
+                0.88;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -0.045em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-section-heading h2 span {
+
+            color:
+                var(--grain-green);
+
+        }
+
+
+        /* =========================================================
+           COPY
+           ========================================================= */
+
+        .grain-copy {
+
+            max-width:
+                900px;
+
+            color:
+                var(--grain-text);
+
+            font-size:
+                1rem;
+
+            line-height:
+                1.9;
+
+        }
+
+
+        .grain-copy p {
+
+            margin:
+                0 0 22px;
+
+        }
+
+
+        .grain-copy p:last-child {
+
+            margin-bottom:
+                0;
+
+        }
+
+
+        /* =========================================================
+           FEATURE GRID
+           ========================================================= */
+
+        .grain-feature-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.2fr 0.8fr;
+
+            gap:
+                clamp(35px, 6vw, 90px);
+
+            align-items:
+                start;
+
+        }
+
+
+        .grain-note {
+
+            padding:
+                30px;
+
+            border-left:
+                3px solid var(--grain-green);
+
+            background:
+                rgba(183,255,0,0.035);
+
+        }
+
+
+        .grain-note strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                10px;
+
+            color:
+                var(--grain-green);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                1.2rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.08em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-note p {
+
+            margin:
+                0;
+
+            color:
+                var(--grain-muted);
+
+            line-height:
+                1.8;
+
+        }
+
+
+        /* =========================================================
+           GALLERY
+           ========================================================= */
+
+        .grain-gallery {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(12, minmax(0, 1fr));
+
+            gap:
+                18px;
+
+        }
+
+
+        .grain-photo {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            margin:
+                0;
+
+            min-height:
+                280px;
+
+            background:
+                #000;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .grain-photo:nth-child(1) {
+
+            grid-column:
+                span 8;
+
+            min-height:
+                500px;
+
+        }
+
+
+        .grain-photo:nth-child(2) {
+
+            grid-column:
+                span 4;
+
+            min-height:
+                500px;
+
+        }
+
+
+        .grain-photo:nth-child(3),
+        .grain-photo:nth-child(4),
+        .grain-photo:nth-child(5),
+        .grain-photo:nth-child(6) {
+
+            grid-column:
+                span 3;
+
+        }
+
+
+        .grain-photo img {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+            transition:
+                transform 0.6s ease,
+                filter 0.6s ease;
+
+        }
+
+
+        .grain-photo:hover img {
+
+            transform:
+                scale(1.04);
+
+            filter:
+                brightness(1.06);
+
+        }
+
+
+        .grain-photo figcaption {
+
+            position:
+                absolute;
+
+            left:
+                0;
+
+            right:
+                0;
+
+            bottom:
+                0;
+
+            padding:
+                42px 18px 16px;
+
+            color:
+                #fff;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,0.90)
+                );
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.72rem;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                0.13em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        /* =========================================================
+           TEAM / DOCUMENTATION CARDS
+           ========================================================= */
+
+        .grain-card-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap:
+                18px;
+
+        }
+
+
+        .grain-card {
+
+            padding:
+                30px;
+
+            background:
+                #050608;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .grain-card-label {
+
+            display:
+                block;
+
+            margin-bottom:
+                10px;
+
+            color:
+                var(--grain-green);
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.65rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.16em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-card h3 {
+
+            margin:
+                0 0 12px;
+
+            color:
+                #fff;
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                1.8rem;
+
+            font-weight:
+                900;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-card p {
+
+            margin:
+                0;
+
+            color:
+                var(--grain-muted);
+
+            line-height:
+                1.75;
+
+        }
+
+
+        /* =========================================================
+           CLOSING SECTION
+           ========================================================= */
+
+        .grain-closing {
+
+            max-width:
+                900px;
+
+        }
+
+
+        .grain-closing h2 {
+
+            margin:
+                0 0 30px;
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                clamp(3rem, 6vw, 6rem);
+
+            line-height:
+                0.88;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                -0.045em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .grain-closing h2 span {
+
+            color:
+                var(--grain-green);
+
+        }
+
+
+        /* =========================================================
+           BUTTONS
+           ========================================================= */
+
+        .grain-actions {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                14px;
+
+            margin-top:
+                45px;
+
+        }
+
+
+        .grain-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                0 22px;
+
+            border:
+                1px solid var(--grain-border);
+
+            color:
+                #fff;
+
+            background:
+                rgba(183,255,0,0.035);
+
+            text-decoration:
+                none;
+
+            font-family:
+                "Barlow Condensed",
+                Arial,
+                sans-serif;
+
+            font-size:
+                0.75rem;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                0.13em;
+
+            text-transform:
+                uppercase;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+
+        }
+
+
+        .grain-button:hover {
+
+            background:
+                var(--grain-green);
+
+            border-color:
+                var(--grain-green);
+
+            color:
+                #050608;
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .grain-case-meta-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .grain-meta-item:nth-child(2) {
+
+                border-right:
+                    0;
+
+            }
+
+
+            .grain-meta-item:nth-child(-n+2) {
+
+                border-bottom:
+                    1px solid rgba(255,255,255,0.08);
+
+            }
+
+
+            .grain-feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .grain-gallery {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+
+            .grain-photo,
+            .grain-photo:nth-child(1),
+            .grain-photo:nth-child(2),
+            .grain-photo:nth-child(3),
+            .grain-photo:nth-child(4),
+            .grain-photo:nth-child(5),
+            .grain-photo:nth-child(6) {
+
+                grid-column:
+                    span 1;
+
+                min-height:
+                    320px;
+
+            }
+
+
+            .grain-photo:nth-child(1),
+            .grain-photo:nth-child(2) {
+
+                min-height:
+                    420px;
+
+            }
+
+        }
+
+
+        @media (max-width: 560px) {
+
+            .grain-container {
+
+                width:
+                    calc(100% - 28px);
+
+            }
+
+
+            .grain-hero {
+
+                min-height:
+                    72vh;
+
+            }
+
+
+            .grain-hero-content {
+
+                padding:
+                    120px 0 58px;
+
+            }
+
+
+            .grain-hero h1 {
+
+                font-size:
+                    clamp(4rem, 19vw, 6rem);
+
+            }
+
+
+            .grain-hero-description {
+
+                font-size:
+                    0.95rem;
+
+                line-height:
+                    1.75;
+
+            }
+
+
+            .grain-case-meta-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .grain-meta-item {
+
+                padding:
+                    18px 12px;
+
+            }
+
+
+            .grain-meta-value {
+
+                font-size:
+                    0.9rem;
+
+            }
+
+
+            .grain-gallery {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .grain-photo,
+            .grain-photo:nth-child(1),
+            .grain-photo:nth-child(2) {
+
+                min-height:
+                    300px;
+
+            }
+
+
+            .grain-card-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .grain-note {
+
+                padding:
+                    24px;
+
+            }
+
+
+            .grain-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .grain-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUCED MOTION
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .grain-photo img,
+            .grain-button {
+
+                transition:
+                    none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<main class="grain-page">
+
+
+    <!-- =========================================================
+         HERO
+         ========================================================= -->
+
+    <section class="grain-hero">
+
+        <img
+            class="grain-hero-image"
+            src="/grain-battery/grain-battery-01.jpg"
+            alt="Grain Battery and surrounding foreshore at sunset"
+            fetchpriority="high"
+        >
+
+        <div class="grain-hero-overlay"></div>
+
+        <div class="grain-hero-content">
+
+            <div class="grain-container">
+
+                <span class="grain-kicker">
+                    Essex Paranormal · Investigation
+                </span>
+
+                <h1>
+                    Grain
+                    <span>Battery.</span>
+                </h1>
+
+                <p class="grain-hero-description">
+                    A photographic record of Grain Battery, its coastal
+                    surroundings, the structure itself and the Essex
+                    Paranormal team during field work at the location.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         CASE INFORMATION
+         ========================================================= -->
+
+    <section class="grain-case-meta">
+
+        <div class="grain-container grain-case-meta-grid">
+
+            <div class="grain-meta-item">
+
+                <span class="grain-meta-label">
+                    Case
+                </span>
+
+                <strong class="grain-meta-value">
+                    EP-002
+                </strong>
+
+            </div>
+
+
+            <div class="grain-meta-item">
+
+                <span class="grain-meta-label">
+                    Location
+                </span>
+
+                <strong class="grain-meta-value">
+                    Grain Battery
+                </strong>
+
+            </div>
+
+
+            <div class="grain-meta-item">
+
+                <span class="grain-meta-label">
+                    Investigation
+                </span>
+
+                <strong class="grain-meta-value">
+                    Field Documentation
+                </strong>
+
+            </div>
+
+
+            <div class="grain-meta-item">
+
+                <span class="grain-meta-label">
+                    Approach
+                </span>
+
+                <strong class="grain-meta-value">
+                    Evidence Led
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         LOCATION
+         ========================================================= -->
+
+    <section class="grain-section">
+
+        <div class="grain-container">
+
+            <div class="grain-section-heading">
+
+                <span class="grain-section-label">
+                    01 · The Location
+                </span>
+
+                <h2>
+                    Documenting
+                    <span>the Site.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="grain-feature-grid">
+
+                <div class="grain-copy">
+
+                    <p>
+                        The photographs document Grain Battery as encountered
+                        by Essex Paranormal, including the coastal setting,
+                        defensive structure, exposed concretework, access
+                        areas and surrounding foreshore.
+                    </p>
+
+                    <p>
+                        The photographic record includes wide establishing
+                        views alongside closer photographs of the structure.
+                        This provides visual context for the location rather
+                        than presenting isolated details without their
+                        surroundings.
+                    </p>
+
+                    <p>
+                        The images are intended to preserve what was physically
+                        present during the visit and provide a visual record
+                        of the environment in which the investigation took
+                        place.
+                    </p>
+
+                </div>
+
+
+                <aside class="grain-note">
+
+                    <strong>
+                        Location Record
+                    </strong>
+
+                    <p>
+                        These photographs are presented primarily as
+                        documentation of the location and investigation.
+                        An image is not automatically treated as paranormal
+                        evidence simply because it was captured during an
+                        investigation.
+                    </p>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         STRUCTURE / PHOTOGRAPHY
+         ========================================================= -->
+
+    <section class="grain-section grain-section-panel">
+
+        <div class="grain-container">
+
+            <div class="grain-section-heading">
+
+                <span class="grain-section-label">
+                    02 · The Structure
+                </span>
+
+                <h2>
+                    Concrete.
+                    <span>Brick. Water.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="grain-gallery">
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-01.jpg"
+                        alt="Grain Battery and surrounding foreshore at sunset"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Establishing View · Foreshore
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-03.jpg"
+                        alt="Access area and concrete structure at Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Access &amp; Structure
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-04.jpg"
+                        alt="Interior concrete area and graffiti at Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Interior Detail
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-05.jpg"
+                        alt="Large artwork across a Grain Battery structure"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Structure Detail
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-06.jpg"
+                        alt="Aerial view of Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Aerial Overview
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-02.jpg"
+                        alt="Essex Paranormal team at Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Team At Location
+                    </figcaption>
+
+                </figure>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         INVESTIGATION
+         ========================================================= -->
+
+    <section class="grain-section">
+
+        <div class="grain-container">
+
+            <div class="grain-section-heading">
+
+                <span class="grain-section-label">
+                    03 · The Investigation
+                </span>
+
+                <h2>
+                    On
+                    <span>Location.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="grain-feature-grid">
+
+                <div class="grain-copy">
+
+                    <p>
+                        The field photographs show members of the Essex
+                        Paranormal team moving through the location, examining
+                        access points and carrying investigation equipment.
+                    </p>
+
+                    <p>
+                        The record contains both documentary and posed
+                        photographs. Their purpose is to show the people,
+                        equipment and physical environment involved in the
+                        visit.
+                    </p>
+
+                    <p>
+                        The photographic material can also provide useful
+                        visual context when reviewing the wider investigation,
+                        particularly where the physical surroundings may be
+                        relevant to observations or reported experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="grain-card-grid">
+
+                    <article class="grain-card">
+
+                        <span class="grain-card-label">
+                            Documentation
+                        </span>
+
+                        <h3>
+                            People
+                        </h3>
+
+                        <p>
+                            Team photographs place the investigation in
+                            context and document who was present during
+                            the field work.
+                        </p>
+
+                    </article>
+
+
+                    <article class="grain-card">
+
+                        <span class="grain-card-label">
+                            Documentation
+                        </span>
+
+                        <h3>
+                            Equipment
+                        </h3>
+
+                        <p>
+                            Equipment and access photographs help document
+                            how the location was approached and examined.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         ENVIRONMENT
+         ========================================================= -->
+
+    <section class="grain-section grain-section-panel">
+
+        <div class="grain-container">
+
+            <div class="grain-section-heading">
+
+                <span class="grain-section-label">
+                    04 · The Environment
+                </span>
+
+                <h2>
+                    Foreshore
+                    <span>&amp; Surroundings.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="grain-copy">
+
+                <p>
+                    The coastal setting forms an important part of the visual
+                    record. Tide, open water, weather, changing light and
+                    the exposed structure all form part of the physical
+                    environment documented during the visit.
+                </p>
+
+                <p>
+                    Wide photographs and the aerial view provide additional
+                    context around the structure rather than treating the
+                    building as an isolated location.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         TEAM
+         ========================================================= -->
+
+    <section class="grain-section">
+
+        <div class="grain-container">
+
+            <div class="grain-section-heading">
+
+                <span class="grain-section-label">
+                    05 · The Team
+                </span>
+
+                <h2>
+                    The People Behind
+                    <span>the Investigation.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="grain-gallery">
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-02.jpg"
+                        alt="Essex Paranormal team at Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Essex Paranormal Team
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-07.jpg"
+                        alt="Essex Paranormal team member at Grain Battery"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Field Work
+                    </figcaption>
+
+                </figure>
+
+
+                <figure class="grain-photo">
+
+                    <img
+                        src="/grain-battery/grain-battery-08.jpg"
+                        alt="Grain Battery investigation equipment and environment"
+                        loading="lazy"
+                    >
+
+                    <figcaption>
+                        Investigation Environment
+                    </figcaption>
+
+                </figure>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         PHOTOGRAPHIC RECORD
+         ========================================================= -->
+
+    <section class="grain-section grain-section-panel">
+
+        <div class="grain-container">
+
+            <div class="grain-closing">
+
+                <span class="grain-section-label">
+                    06 · Investigation Record
+                </span>
+
+                <h2>
+                    Honest.
+                    Real.
+                    <span>Unbiased.</span>
+                </h2>
+
+
+                <div class="grain-copy">
+
+                    <p>
+                        This page is a photographic record of Grain Battery
+                        and the Essex Paranormal investigation environment.
+                        The images document the location and the people
+                        present without automatically assigning a paranormal
+                        explanation to anything visible within them.
+                    </p>
+
+                    <p>
+                        Where specific photographs are later reviewed as
+                        part of an evidence assessment, those findings can
+                        be documented separately with the relevant context,
+                        methodology and explanation.
+                    </p>
+
+                    <p>
+                        Essex Paranormal's approach is to distinguish
+                        documentation from interpretation and to remain
+                        honest about what an image can and cannot establish.
+                    </p>
+
+                </div>
+
+
+                <div class="grain-actions">
+
+                    <a
+                        class="grain-button"
+                        href="/investigations/"
+                    >
+                        Back To Investigation Archive
+                    </a>
+
+
+                    <a
+                        class="grain-button"
+                        href="/#contact"
+                    >
+                        Contact Essex Paranormal
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script src="/script.js"></script>
+
+</body>
+
+</html>
