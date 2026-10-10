@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -8,7 +7,6 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#050608">
     <meta name="color-scheme" content="dark">
-
     <title>Essex Paranormal | Evidence Before Assumption</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,12 +15,6 @@
     <link rel="stylesheet" href="/style.css">
 
     <style>
-        /* =========================================================
-           ESSEX PARANORMAL MASTER OVERRIDES
-           GREEN / BLACK / WHITE
-           ZERO ORANGE
-           ========================================================= */
-
         :root {
             --ep-green: #c0ff4f;
             --ep-green-bright: #d5ff78;
@@ -55,8 +47,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* HEADER */
-
         .site-header {
             position: relative;
             z-index: 9000;
@@ -76,8 +66,6 @@
             height: 100%;
             object-fit: contain;
         }
-
-        /* GLOBAL GREEN OVERRIDES */
 
         .eyebrow,
         .section-heading h2 span,
@@ -115,8 +103,6 @@
             color: var(--ep-green) !important;
         }
 
-        /* CONSTRUCTION TICKER */
-
         .construction-ticker {
             position: relative;
             z-index: 500;
@@ -151,8 +137,6 @@
             to { transform: translateX(-50%); }
         }
 
-        /* HERO */
-
         .hero {
             position: relative;
             overflow: hidden;
@@ -166,8 +150,6 @@
         .hero-scroll {
             z-index: 10;
         }
-
-        /* UPCOMING EVENTS */
 
         .upcoming-events-section {
             position: relative;
@@ -277,8 +259,6 @@
             background: #000 !important;
         }
 
-        /* COMPLETED STAMP */
-
         .completed-stamp {
             position: absolute;
             top: 28px;
@@ -309,8 +289,6 @@
             inset: 5px;
             border: 1px solid rgba(212,0,0,.75);
         }
-
-        /* INVESTIGATION CARDS */
 
         .featured-investigation {
             display: grid;
@@ -427,8 +405,6 @@
             line-height: 1.3;
         }
 
-        /* ARCHIVE */
-
         .archive-coming-soon {
             margin-top: 28px;
             padding: clamp(28px,5vw,55px);
@@ -456,24 +432,10 @@
             margin-top: 24px;
         }
 
-        /* GALLERY */
-
-        .gallery-content {
-            padding: clamp(24px,4vw,40px);
-            border: 1px solid rgba(192,255,79,.18);
-            background: linear-gradient(135deg, rgba(192,255,79,.035), rgba(255,255,255,.012));
-        }
-
-        .gallery-content p {
-            max-width: 850px;
-            margin: 0;
-            color: var(--ep-muted);
-            line-height: 1.8;
-        }
-
         /* COMMUNITY */
 
-        .community-section {
+        .community-section,
+        .social-section {
             background: #050608;
         }
 
@@ -517,12 +479,6 @@
             margin: 0 0 22px;
             color: rgba(255,255,255,.58);
             line-height: 1.7;
-        }
-
-        /* SOCIAL */
-
-        .social-section {
-            background: #050608;
         }
 
         .social-grid {
@@ -694,7 +650,7 @@
             line-height: 1.5;
         }
 
-        /* CINEMATIC INTRO: BLUE IS ALLOWED ONLY HERE */
+        /* CINEMATIC INTRO */
 
         #entry-screen {
             position: fixed !important;
@@ -898,8 +854,6 @@
             37% { opacity: 0; }
         }
 
-        /* MOBILE / TABLET */
-
         @media (max-width:1100px) {
             .social-grid {
                 grid-template-columns: 1fr 1fr;
@@ -1058,13 +1012,8 @@
                     <div id="entry-loading-percent" class="entry-loading-percent">0%</div>
                 </div>
 
-                <div class="entry-bottom-copy">
-                    REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
-                </div>
-
-                <div class="entry-bottom-copy-right">
-                    TRUTH LIES IN THE SHADOWS.
-                </div>
+                <div class="entry-bottom-copy">REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.</div>
+                <div class="entry-bottom-copy-right">TRUTH LIES IN THE SHADOWS.</div>
             </div>
         </div>
     </div>
@@ -1219,10 +1168,7 @@
                         <p class="role">OWNER &amp; LEAD INVESTIGATOR, ESSEX PARANORMAL</p>
 
                         <div class="bio-content">
-                            <p>
-                                My name is Lewis McDiarmid, and I am the owner
-                                and lead investigator of Essex Paranormal.
-                            </p>
+                            <p>My name is Lewis McDiarmid, and I am the owner and lead investigator of Essex Paranormal.</p>
 
                             <p>
                                 I have always had an interest in the paranormal
@@ -1384,31 +1330,19 @@
                     <article class="feature-card">
                         <span class="feature-number">01</span>
                         <h3>PRIVATE INVESTIGATIONS</h3>
-                        <p>
-                            Focused investigations of locations
-                            where unexplained activity has been
-                            reported or experienced.
-                        </p>
+                        <p>Focused investigations of locations where unexplained activity has been reported or experienced.</p>
                     </article>
 
                     <article class="feature-card">
                         <span class="feature-number">02</span>
                         <h3>HISTORIC LOCATIONS</h3>
-                        <p>
-                            Research-led investigations that
-                            consider the history, people and
-                            circumstances surrounding each location.
-                        </p>
+                        <p>Research-led investigations that consider the history, people and circumstances surrounding each location.</p>
                     </article>
 
                     <article class="feature-card">
                         <span class="feature-number">03</span>
                         <h3>EVIDENCE REVIEW</h3>
-                        <p>
-                            Photographs, video, audio and other
-                            observations are reviewed carefully
-                            before conclusions are reached.
-                        </p>
+                        <p>Photographs, video, audio and other observations are reviewed carefully before conclusions are reached.</p>
                     </article>
                 </div>
             </div>
@@ -1559,7 +1493,6 @@
                             </a>
                         </div>
                     </article>
-
                 </div>
 
                 <!-- INVESTIGATION ARCHIVE -->
@@ -1595,10 +1528,7 @@
                         <span>EVIDENCE.</span>
                     </h2>
 
-                    <p>
-                        Evidence will be published as individual
-                        investigations are completed and reviewed.
-                    </p>
+                    <p>Evidence will be published as individual investigations are completed and reviewed.</p>
                 </div>
 
                 <div class="evidence-grid">
@@ -1624,7 +1554,8 @@
         </section>
 
         <!-- GALLERY / MEDIA
-             Construction notice removed. Gallery section and navigation remain. -->
+             PLACEHOLDER REMOVED.
+             Gallery heading and navigation target retained. -->
 
         <section id="gallery" class="section gallery-section">
             <div class="container">
@@ -1635,15 +1566,6 @@
                         MEDIA
                         <span>ARCHIVE.</span>
                     </h2>
-                </div>
-
-                <div class="gallery-content">
-                    <p>
-                        Explore photographs, videos and media from
-                        Essex Paranormal investigations. New material
-                        can be added here as investigations are
-                        completed and evidence is reviewed.
-                    </p>
                 </div>
             </div>
         </section>
@@ -1682,9 +1604,7 @@
                             features are currently being prepared.
                         </p>
 
-                        <a href="#social" class="button button-primary">
-                            FOLLOW ESSEX PARANORMAL
-                        </a>
+                        <a href="#social" class="button button-primary">FOLLOW ESSEX PARANORMAL</a>
                     </div>
                 </div>
             </div>
@@ -1711,25 +1631,19 @@
 
                 <div class="social-grid">
 
-                    <!-- TIKTOK -->
-
                     <a href="#" class="social-button" aria-label="Essex Paranormal TikTok">
                         <div class="social-icon">
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-3.9h-3.12v13.1a2.9 2.9 0 1 1-2-2.76V10a6 6 0 1 0 5.12 5.93V9.28a7.9 7.9 0 0 0 4.77 1.6V7.77a4.83 4.83 0 0 1-1-.08z"/>
                             </svg>
                         </div>
-
                         <div class="social-content">
                             <span class="social-platform">TIKTOK</span>
                             <h3>ESSEX PARANORMAL</h3>
                             <span class="social-handle">FOLLOW THE INVESTIGATION</span>
                         </div>
-
                         <span class="social-arrow">→</span>
                     </a>
-
-                    <!-- YOUTUBE -->
 
                     <a href="#" class="social-button" aria-label="Essex Paranormal YouTube">
                         <div class="social-icon">
@@ -1737,17 +1651,13 @@
                                 <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.6 15.8V8.2l6.5 3.8-6.5 3.8z"/>
                             </svg>
                         </div>
-
                         <div class="social-content">
                             <span class="social-platform">YOUTUBE</span>
                             <h3>ESSEX PARANORMAL</h3>
                             <span class="social-handle">INVESTIGATIONS &amp; VIDEO</span>
                         </div>
-
                         <span class="social-arrow">→</span>
                     </a>
-
-                    <!-- INSTAGRAM -->
 
                     <a href="#" class="social-button" aria-label="Essex Paranormal Instagram">
                         <div class="social-icon">
@@ -1755,17 +1665,13 @@
                                 <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.5 6.5A1 1 0 1 1 16.5 7a1 1 0 0 1 1-1z"/>
                             </svg>
                         </div>
-
                         <div class="social-content">
                             <span class="social-platform">INSTAGRAM</span>
                             <h3>ESSEX PARANORMAL</h3>
                             <span class="social-handle">PHOTOGRAPHS &amp; UPDATES</span>
                         </div>
-
                         <span class="social-arrow">→</span>
                     </a>
-
-                    <!-- FACEBOOK -->
 
                     <a href="https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr" class="social-button" target="_blank" rel="noopener noreferrer" aria-label="Essex Paranormal Facebook">
                         <div class="social-icon">
@@ -1773,13 +1679,11 @@
                                 <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.5-4 4.1V10H8.7v3h2.7v8h2.1z"/>
                             </svg>
                         </div>
-
                         <div class="social-content">
                             <span class="social-platform">FACEBOOK</span>
                             <h3>COMMUNITY</h3>
                             <span class="social-handle">JOIN THE ESSEX PARANORMAL GROUP</span>
                         </div>
-
                         <span class="social-arrow">→</span>
                     </a>
 
@@ -1858,16 +1762,11 @@
         <div class="container">
             <div class="footer-grid">
 
-                <!-- BRAND -->
-
                 <div class="footer-brand">
                     <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" loading="lazy" decoding="async">
-
                     <p>HONEST • REAL • UNBIASED</p>
                     <p>Evidence before assumption.</p>
                 </div>
-
-                <!-- QUICK LINKS -->
 
                 <div class="footer-links">
                     <h3>QUICK LINKS</h3>
@@ -1881,16 +1780,12 @@
                     <a href="#contact">CONTACT</a>
                 </div>
 
-                <!-- INVESTIGATIONS -->
-
                 <div class="footer-links">
                     <h3>INVESTIGATIONS</h3>
                     <a href="/investigations/hmp-ashwell.html">HMP ASHWELL</a>
                     <a href="/investigations/grain-battery.html">GRAIN BATTERY TOWER</a>
                     <a href="/investigations/">INVESTIGATION ARCHIVE</a>
                 </div>
-
-                <!-- LEGAL -->
 
                 <div class="footer-links">
                     <h3>LEGAL</h3>
@@ -1906,11 +1801,9 @@
 
             <div class="footer-bottom">
                 <span>
-                    ©
-                    <span id="current-year"></span>
+                    © <span id="current-year"></span>
                     ESSEX PARANORMAL. ALL RIGHTS RESERVED.
                 </span>
-
                 <span>HONEST • REAL • UNBIASED</span>
             </div>
         </div>
@@ -1936,13 +1829,8 @@
             const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
             if (reducedMotion) {
-                if (fill) {
-                    fill.style.width = "100%";
-                }
-
-                if (percent) {
-                    percent.textContent = "100%";
-                }
+                if (fill) fill.style.width = "100%";
+                if (percent) percent.textContent = "100%";
 
                 window.setTimeout(function () {
                     entry.classList.add("is-hidden");
@@ -1960,7 +1848,6 @@
             let width = 0;
             let height = 0;
             let animationFrame = null;
-
             const drops = [];
 
             function resizeCanvas() {
@@ -1975,7 +1862,6 @@
                 canvas.style.height = height + "px";
 
                 ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
                 drops.length = 0;
 
                 const count = Math.max(120, Math.floor(width / 8));
@@ -2008,7 +1894,6 @@
                     const endY = drop.y + drop.length;
 
                     const gradient = ctx.createLinearGradient(drop.x, drop.y, endX, endY);
-
                     gradient.addColorStop(0, "rgba(180,220,255,0)");
                     gradient.addColorStop(.35, `rgba(180,220,255,${drop.opacity})`);
                     gradient.addColorStop(1, "rgba(110,180,255,0)");
@@ -2029,8 +1914,6 @@
 
             window.addEventListener("resize", resizeCanvas, { passive: true });
 
-            /* LOADING BAR */
-
             const duration = 2750;
             const start = performance.now();
 
@@ -2039,13 +1922,8 @@
                 const progress = Math.min(elapsed / duration, 1);
                 const value = Math.round(progress * 100);
 
-                if (fill) {
-                    fill.style.width = value + "%";
-                }
-
-                if (percent) {
-                    percent.textContent = value + "%";
-                }
+                if (fill) fill.style.width = value + "%";
+                if (percent) percent.textContent = value + "%";
 
                 if (progress < 1) {
                     requestAnimationFrame(updateLoader);
@@ -2054,19 +1932,9 @@
 
             requestAnimationFrame(updateLoader);
 
-            /*
-             * Stop the rain engine once the intro has disappeared.
-             * This prevents unnecessary animation work after entry.
-             */
-
             window.setTimeout(function () {
-                if (fill) {
-                    fill.style.width = "100%";
-                }
-
-                if (percent) {
-                    percent.textContent = "100%";
-                }
+                if (fill) fill.style.width = "100%";
+                if (percent) percent.textContent = "100%";
 
                 window.setTimeout(function () {
                     if (animationFrame) {
