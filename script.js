@@ -1,3 +1,4 @@
+
 "use strict";
 
 /* =========================================================
@@ -54,7 +55,6 @@ function initEntryScreen() {
         return;
     }
 
-
     try {
 
         if ("scrollRestoration" in history) {
@@ -65,14 +65,12 @@ function initEntryScreen() {
         /* Ignore browser restrictions. */
     }
 
-
     /*
      * Keep the page at the very top while
      * the cinematic introduction is playing.
      */
 
     forceScrollTop();
-
 
     let reducedMotion = false;
 
@@ -89,7 +87,6 @@ function initEntryScreen() {
 
     }
 
-
     /*
      * Lock page scrolling while the intro
      * is visible.
@@ -102,15 +99,12 @@ function initEntryScreen() {
         "entry-active"
     );
 
-
     /*
-     * The cinematic introduction now lasts
-     * exactly 7.5 seconds before the existing
-     * fade-out begins.
+     * The cinematic introduction lasts
+     * 7.5 seconds before the fade-out begins.
      */
 
     const displayTime = 7500;
-
 
     window.setTimeout(() => {
 
@@ -121,13 +115,11 @@ function initEntryScreen() {
 
     }, displayTime);
 
-
     /*
      * Emergency failsafe.
      *
      * This is deliberately longer than the
-     * normal 7.5 second introduction so it
-     * cannot cut the cinematic sequence short.
+     * normal 7.5 second introduction.
      */
 
     window.setTimeout(() => {
@@ -147,25 +139,17 @@ function initEntryScreen() {
 
         }
 
-
         current.classList.add(
             "is-hidden"
         );
 
-        current.style.opacity =
-            "0";
-
-        current.style.visibility =
-            "hidden";
-
-        current.style.pointerEvents =
-            "none";
-
+        current.style.opacity = "0";
+        current.style.visibility = "hidden";
+        current.style.pointerEvents = "none";
 
         document.body.classList.remove(
             "entry-active"
         );
-
 
         window.setTimeout(() => {
 
@@ -198,14 +182,11 @@ function hideEntryScreen(
         return;
     }
 
-
     entryScreen.classList.add(
         "is-hidden"
     );
 
-    entryScreen.style.pointerEvents =
-        "none";
-
+    entryScreen.style.pointerEvents = "none";
 
     /*
      * Release the page after the intro
@@ -215,7 +196,6 @@ function hideEntryScreen(
     document.body.classList.remove(
         "entry-active"
     );
-
 
     /*
      * Allow the existing CSS transition
@@ -254,25 +234,17 @@ function forceScrollTop() {
         return;
     }
 
-
     try {
 
         window.scrollTo({
-
             top: 0,
-
             left: 0,
-
             behavior: "auto"
-
         });
 
     } catch (error) {
 
-        window.scrollTo(
-            0,
-            0
-        );
+        window.scrollTo(0, 0);
 
     }
 
@@ -301,7 +273,6 @@ function initMobileNavigation() {
     ) {
         return;
     }
-
 
     menuToggle.addEventListener(
         "click",
@@ -337,51 +308,38 @@ function initMobileNavigation() {
         }
     );
 
-
     navigation
         .querySelectorAll("a")
-        .forEach(
-            (link) => {
+        .forEach((link) => {
 
-                link.addEventListener(
-                    "click",
-                    () => {
+            link.addEventListener(
+                "click",
+                () => {
 
-                        closeMobileNavigation();
+                    closeMobileNavigation();
 
-                    }
-                );
+                }
+            );
 
-            }
-        );
-
+        });
 
     document.addEventListener(
         "keydown",
         (event) => {
 
-            if (
-                event.key === "Escape"
-            ) {
-
+            if (event.key === "Escape") {
                 closeMobileNavigation();
-
             }
 
         }
     );
 
-
     window.addEventListener(
         "resize",
         () => {
 
-            if (
-                window.innerWidth > 900
-            ) {
-
+            if (window.innerWidth > 900) {
                 closeMobileNavigation();
-
             }
 
         }
@@ -445,102 +403,91 @@ function initSmoothNavigation() {
         .querySelectorAll(
             'a[href^="#"]'
         )
-        .forEach(
-            (link) => {
+        .forEach((link) => {
 
-                link.addEventListener(
-                    "click",
-                    (event) => {
+            link.addEventListener(
+                "click",
+                (event) => {
 
-                        const href =
-                            link.getAttribute(
-                                "href"
-                            );
+                    const href =
+                        link.getAttribute(
+                            "href"
+                        );
 
-                        if (
-                            !href ||
-                            href === "#" ||
-                            href === "#!"
-                        ) {
-                            return;
-                        }
+                    if (
+                        !href ||
+                        href === "#" ||
+                        href === "#!"
+                    ) {
+                        return;
+                    }
 
+                    let target = null;
 
-                        let target = null;
+                    try {
 
-                        try {
-
-                            target =
-                                document.querySelector(
-                                    href
-                                );
-
-                        } catch (error) {
-
-                            return;
-
-                        }
-
-
-                        if (!target) {
-                            return;
-                        }
-
-
-                        event.preventDefault();
-
-
-                        const header =
+                        target =
                             document.querySelector(
-                                ".site-header"
-                            );
-
-                        const headerHeight =
-                            header
-                                ? header.offsetHeight
-                                : 0;
-
-
-                        const position =
-                            target
-                                .getBoundingClientRect()
-                                .top +
-                            window.scrollY -
-                            headerHeight;
-
-
-                        window.scrollTo({
-
-                            top:
-                                Math.max(
-                                    0,
-                                    position
-                                ),
-
-                            left: 0,
-
-                            behavior: "smooth"
-
-                        });
-
-
-                        try {
-
-                            history.replaceState(
-                                null,
-                                "",
                                 href
                             );
 
-                        } catch (error) {
-                            /* Ignore history errors. */
-                        }
+                    } catch (error) {
+
+                        return;
 
                     }
-                );
 
-            }
-        );
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    const header =
+                        document.querySelector(
+                            ".site-header"
+                        );
+
+                    const headerHeight =
+                        header
+                            ? header.offsetHeight
+                            : 0;
+
+                    const position =
+                        target
+                            .getBoundingClientRect()
+                            .top +
+                        window.scrollY -
+                        headerHeight;
+
+                    window.scrollTo({
+
+                        top: Math.max(
+                            0,
+                            position
+                        ),
+
+                        left: 0,
+                        behavior: "smooth"
+
+                    });
+
+                    try {
+
+                        history.replaceState(
+                            null,
+                            "",
+                            href
+                        );
+
+                    } catch (error) {
+                        /* Ignore history errors. */
+                    }
+
+                }
+            );
+
+        });
 
 }
 
@@ -560,20 +507,16 @@ function initHeaderScroll() {
         return;
     }
 
+    const update = () => {
 
-    const update =
-        () => {
+        header.classList.toggle(
+            "scrolled",
+            window.scrollY > 30
+        );
 
-            header.classList.toggle(
-                "scrolled",
-                window.scrollY > 30
-            );
-
-        };
-
+    };
 
     update();
-
 
     window.addEventListener(
         "scroll",
@@ -603,98 +546,77 @@ function initActiveNavigation() {
         return;
     }
 
-
     const sections =
         links
-            .map(
-                (link) => {
+            .map((link) => {
 
-                    const href =
-                        link.getAttribute(
-                            "href"
+                const href =
+                    link.getAttribute(
+                        "href"
+                    );
+
+                let section = null;
+
+                try {
+
+                    section =
+                        document.querySelector(
+                            href
                         );
 
-                    let section = null;
+                } catch (error) {
 
-                    try {
-
-                        section =
-                            document.querySelector(
-                                href
-                            );
-
-                    } catch (error) {
-
-                        return null;
-
-                    }
-
-
-                    if (!section) {
-                        return null;
-                    }
-
-
-                    return {
-                        link,
-                        section
-                    };
+                    return null;
 
                 }
-            )
-            .filter(Boolean);
 
+                if (!section) {
+                    return null;
+                }
+
+                return {
+                    link,
+                    section
+                };
+
+            })
+            .filter(Boolean);
 
     if (!sections.length) {
         return;
     }
 
+    const update = () => {
 
-    const update =
-        () => {
+        const position =
+            window.scrollY +
+            window.innerHeight * 0.32;
 
-            const position =
-                window.scrollY +
-                window.innerHeight * 0.32;
+        let current = sections[0];
 
+        sections.forEach((item) => {
 
-            let current =
-                sections[0];
+            if (
+                item.section.offsetTop <=
+                position
+            ) {
+                current = item;
+            }
 
+        });
 
-            sections.forEach(
-                (item) => {
+        sections.forEach((item) => {
 
-                    if (
-                        item.section.offsetTop <=
-                        position
-                    ) {
-
-                        current =
-                            item;
-
-                    }
-
-                }
+            item.link.classList.toggle(
+                "active",
+                item === current
             );
 
+        });
 
-            sections.forEach(
-                (item) => {
-
-                    item.link.classList.toggle(
-                        "active",
-                        item === current
-                    );
-
-                }
-            );
-
-        };
-
+    };
 
     update();
-
 
     window.addEventListener(
         "scroll",
@@ -722,30 +644,23 @@ function initBackToTop() {
         return;
     }
 
+    const update = () => {
 
-    const update =
-        () => {
+        const visible =
+            window.scrollY > 600;
 
-            const visible =
-                window.scrollY > 600;
+        buttons.forEach((button) => {
 
-
-            buttons.forEach(
-                (button) => {
-
-                    button.classList.toggle(
-                        "visible",
-                        visible
-                    );
-
-                }
+            button.classList.toggle(
+                "visible",
+                visible
             );
 
-        };
+        });
 
+    };
 
     update();
-
 
     window.addEventListener(
         "scroll",
@@ -755,32 +670,26 @@ function initBackToTop() {
         }
     );
 
+    buttons.forEach((button) => {
 
-    buttons.forEach(
-        (button) => {
+        button.addEventListener(
+            "click",
+            (event) => {
 
-            button.addEventListener(
-                "click",
-                (event) => {
+                event.preventDefault();
 
-                    event.preventDefault();
+                window.scrollTo({
 
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
 
-                    window.scrollTo({
+                });
 
-                        top: 0,
+            }
+        );
 
-                        left: 0,
-
-                        behavior: "smooth"
-
-                    });
-
-                }
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -792,28 +701,24 @@ function initBackToTop() {
 function initImageFallbacks() {
 
     document
-        .querySelectorAll(
-            "img"
-        )
-        .forEach(
-            (image) => {
+        .querySelectorAll("img")
+        .forEach((image) => {
 
-                image.addEventListener(
-                    "error",
-                    () => {
+            image.addEventListener(
+                "error",
+                () => {
 
-                        image.classList.add(
-                            "image-load-failed"
-                        );
+                    image.classList.add(
+                        "image-load-failed"
+                    );
 
-                    },
-                    {
-                        once: true
-                    }
-                );
+                },
+                {
+                    once: true
+                }
+            );
 
-            }
-        );
+        });
 
 }
 
@@ -829,19 +734,15 @@ function initCurrentYear() {
             new Date().getFullYear()
         );
 
-
     document
         .querySelectorAll(
             "[data-current-year]"
         )
-        .forEach(
-            (element) => {
+        .forEach((element) => {
 
-                element.textContent =
-                    year;
+            element.textContent = year;
 
-            }
-        );
+        });
 
 }
 
@@ -864,7 +765,6 @@ function ensureConstructionBanner() {
         return;
     }
 
-
     const header =
         document.querySelector(
             ".site-header"
@@ -874,7 +774,6 @@ function ensureConstructionBanner() {
         return;
     }
 
-
     const ticker =
         document.createElement(
             "div"
@@ -883,18 +782,15 @@ function ensureConstructionBanner() {
     ticker.className =
         "construction-ticker";
 
-
     ticker.setAttribute(
         "role",
         "status"
     );
 
-
     ticker.setAttribute(
         "aria-label",
         "Website under construction"
     );
-
 
     ticker.innerHTML = `
         <div class="construction-ticker-track">
@@ -910,24 +806,20 @@ function ensureConstructionBanner() {
         </div>
     `;
 
-
     header.insertAdjacentElement(
         "afterend",
         ticker
     );
-
 
     const style =
         document.createElement(
             "style"
         );
 
-
     style.setAttribute(
         "data-ep-construction",
         "true"
     );
-
 
     style.textContent = `
 
@@ -998,10 +890,7 @@ function ensureConstructionBanner() {
 
     `;
 
-
-    document.head.appendChild(
-        style
-    );
+    document.head.appendChild(style);
 
 }
 
@@ -1021,209 +910,30 @@ function normaliseHomepageArchive() {
         return;
     }
 
-
     /*
-     * IMPORTANT:
+     * The HTML is the source of truth.
      *
-     * Do NOT remove the HMP Ashwell image.
-     * Do NOT rename the Ashwell feature.
-     * Do NOT replace the investigation card.
+     * Keep the existing featured investigation cards.
+     * Keep the correct .archive-coming-soon panel.
+     *
+     * Remove only obsolete archive blocks that were
+     * injected by previous versions of this script.
+     *
+     * Do not create a replacement archive block here.
+     * Do not rewrite archive wording here.
      */
 
-
-    /*
-     * Remove obsolete archive blocks that were
-     * injected by previous correction scripts.
-     */
-
     investigations
         .querySelectorAll(
-            ".investigation-archive-action"
-        )
-        .forEach(
-            (element) => {
-
-                element.remove();
-
-            }
-        );
-
-
-    investigations
-        .querySelectorAll(
-            ".featured-investigation"
-        )
-        .forEach(
-            (element) => {
-
-                element.remove();
-
-            }
-        );
-
-
-    investigations
-        .querySelectorAll(
+            ".archive-action, " +
+            ".investigation-archive-action, " +
             ".homepage-archive-status"
         )
-        .forEach(
-            (element) => {
+        .forEach((element) => {
 
-                element.remove();
+            element.remove();
 
-            }
-        );
-
-
-    /*
-     * Keep exactly ONE existing archive-action.
-     */
-
-    const archiveBlocks =
-        Array.from(
-            investigations.querySelectorAll(
-                ".archive-action"
-            )
-        );
-
-
-    if (archiveBlocks.length > 1) {
-
-        archiveBlocks
-            .slice(1)
-            .forEach(
-                (element) => {
-
-                    element.remove();
-
-                }
-            );
-
-    }
-
-
-    let archive =
-        investigations.querySelector(
-            ".archive-action"
-        );
-
-
-    /*
-     * If the existing homepage has no archive
-     * action at all, create exactly one.
-     */
-
-    if (!archive) {
-
-        archive =
-            document.createElement(
-                "div"
-            );
-
-
-        archive.className =
-            "archive-action";
-
-
-        archive.innerHTML = `
-            <span class="empty-code">
-                ARCHIVE STATUS
-            </span>
-
-            <p>
-                INVESTIGATION ARCHIVE UNDER CONSTRUCTION
-            </p>
-
-            <a
-                href="/investigations/"
-                class="button button-outline"
-            >
-                VIEW INVESTIGATION ARCHIVE
-                <span>→</span>
-            </a>
-        `;
-
-
-        const feature =
-            investigations.querySelector(
-                ".ashwell-feature, .investigation-feature"
-            );
-
-
-        if (feature) {
-
-            feature.insertAdjacentElement(
-                "afterend",
-                archive
-            );
-
-        } else {
-
-            investigations
-                .querySelector(
-                    ".container"
-                )
-                ?.appendChild(
-                    archive
-                );
-
-        }
-
-    }
-
-
-    /*
-     * Make sure the single archive block
-     * has the correct wording.
-     */
-
-    const status =
-        archive.querySelector(
-            ".empty-code"
-        );
-
-
-    if (status) {
-
-        status.textContent =
-            "ARCHIVE STATUS";
-
-    }
-
-
-    const paragraph =
-        archive.querySelector(
-            "p"
-        );
-
-
-    if (paragraph) {
-
-        paragraph.textContent =
-            "INVESTIGATION ARCHIVE UNDER CONSTRUCTION";
-
-    }
-
-
-    const button =
-        archive.querySelector(
-            "a.button"
-        );
-
-
-    if (button) {
-
-        button.href =
-            "/investigations/";
-
-
-        button.innerHTML =
-            `
-                VIEW INVESTIGATION ARCHIVE
-                <span>→</span>
-            `;
-
-    }
+        });
 
 }
 
@@ -1243,17 +953,14 @@ function fixAncientRamVideo() {
         return;
     }
 
-
     const wrapper =
         video.closest(
             ".upcoming-event-video"
         );
 
-
     if (!wrapper) {
         return;
     }
-
 
     /*
      * The video must behave like a controlled
@@ -1265,12 +972,10 @@ function fixAncientRamVideo() {
             "style"
         );
 
-
     style.setAttribute(
         "data-ep-ram-video",
         "true"
     );
-
 
     style.textContent = `
 
@@ -1306,10 +1011,7 @@ function fixAncientRamVideo() {
 
     `;
 
-
-    document.head.appendChild(
-        style
-    );
+    document.head.appendChild(style);
 
 }
 
@@ -1323,18 +1025,14 @@ function ensureFacebookLink() {
     const facebookURL =
         "https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr";
 
-
     document
         .querySelectorAll(
             'a[href*="facebook.com"]'
         )
-        .forEach(
-            (link) => {
+        .forEach((link) => {
 
-                link.href =
-                    facebookURL;
+            link.href = facebookURL;
 
-            }
-        );
+        });
 
 }
