@@ -51,6 +51,14 @@ export default {
         }
 
 
+        const legacyLegalPaths = new Set([
+            "/privacy", "/privacy-policy.html", "/cookie-policy.html",
+            "/terms.html", "/disclaimer.html", "/copyright.html", "/accessibility.html"
+        ]);
+        if (request.method === "GET" && legacyLegalPaths.has(url.pathname)) {
+            return env.ASSETS.fetch(new Request(new URL("/legal.html", request.url), request));
+        }
+
         /*
          * =====================================================
          * STATIC WEBSITE ASSETS

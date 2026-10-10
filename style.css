@@ -5015,3 +5015,46 @@ h4 {
         font-size: 1.2rem;
     }
 }
+
+/* Published Control Room cards use the existing site palette and typography. */
+.published-investigation-list,
+.published-event-list {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+}
+.published-investigation-card,
+.published-event-card {
+    padding: 24px;
+    border: 1px solid rgba(192, 255, 79, .28);
+    border-radius: 10px;
+    background: rgba(5, 6, 8, .82);
+    color: #fff;
+}
+.published-investigation-card h3,
+.published-event-card h3 {
+    margin: 0 0 12px;
+    color: #C0FF4F;
+}
+.published-record-category,
+.published-record-date {
+    color: #C0FF4F;
+    font-size: .86rem;
+    letter-spacing: .06em;
+}
+.published-empty-state[hidden] {
+    display: none !important;
+}
+.published-empty-state {
+    margin: 18px 0;
+    color: rgba(255, 255, 255, .7);
+}
+.published-media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+.published-media-grid figure { margin: 0; }
+.published-media-grid img,
+.published-media-grid video { width: 100%; height: auto; }
+.published-media-grid figcaption { margin-top: 8px; }

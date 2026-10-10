@@ -1117,12 +1117,12 @@
             <div class="container hero-content">
                 <p class="eyebrow">HONEST • REAL • UNBIASED</p>
 
-                <h1>
+                <h1 data-control-room-homepage-title>
                     ESSEX
                     <span>PARANORMAL</span>
                 </h1>
 
-                <p class="hero-description">
+                <p class="hero-description" data-control-room-homepage-introduction>
                     Evidence before assumption.
                     Real people. Real places. Real experiences.
                 </p>
@@ -1199,6 +1199,9 @@
                         </video>
                     </div>
                 </article>
+
+                <p id="event-empty-state" class="published-empty-state">Information coming soon.</p>
+                <div id="event-list" class="published-event-list" aria-live="polite"></div>
             </div>
         </section>
 
@@ -1561,6 +1564,8 @@
 
                 </div>
 
+                <div id="investigation-list" class="published-investigation-list" aria-live="polite"></div>
+
                 <!-- INVESTIGATION ARCHIVE -->
 
                 <div class="archive-coming-soon">
@@ -1637,6 +1642,7 @@
                 </div>
 
                 <div class="gallery-content">
+                    <div id="public-media" class="published-media-grid" aria-live="polite"></div>
                     <p>
                         Explore photographs, videos and media from
                         Essex Paranormal investigations. New material
@@ -1708,7 +1714,7 @@
                     </p>
                 </div>
 
-                <div class="social-grid">
+                <div id="social-links" class="social-grid">
 
                     <!-- TIKTOK -->
 
@@ -2092,6 +2098,7 @@
     <!-- EXISTING SITE SCRIPT -->
 
     <script src="/script.js" defer></script>
+    <script src="/public-content.js" defer></script>
 
 </body>
 </html>

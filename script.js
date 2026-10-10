@@ -1036,3 +1036,190 @@ function ensureFacebookLink() {
         });
 
 }
+
+
+/* Published Control Room records. Static site content remains the fallback. */
+(() => {
+    "use strict";
+
+    const text = (value, limit = 160) =>
+        typeof value === "string" ? value.trim().slice(0, limit) : "";
+
+    const isInvestigationRecord = (entry) => {
+        const data = entry?.content;
+        if (!data || typeof data !== "object" || Array.isArray(data)) return false;
+        const type = text(data.recordType, 40).toLowerCase();
+        const section = text(data.section, 120).toLowerCase();
+        const category = text(data.category, 120).toLowerCase();
+        const key = text(entry.contentKey, 160).toLowerCase();
+        if (["event", "events"].includes(type) || ["event", "events"].includes(section)) return false;
+        if (["investigation", "investigations"].includes(type) || ["investigation", "investigations"].includes(section)) return true;
+        return ["investigation", "investigations"].includes(category)
+            || /(^|[-_ ])investigations?($|[-_ ])/.test(key);
+    };
+
+    const renderInvestigations = (payload) => {
+        const container = document.querySelector("#investigation-list");
+        if (!container || !Array.isArray(payload?.content)) return;
+        const records = payload.content.filter(isInvestigationRecord);
+        if (!records.length) return;
+        const fragment = document.createDocumentFragment();
+        records.forEach((entry) => {
+            const data = entry.content;
+            const card = document.createElement("article");
+            card.className = "published-investigation-card";
+            card.id = `investigation-${text(entry.contentKey, 160).toLowerCase().replace(/[^a-z0-9_-]+/g, "-")}`;
+            const title = document.createElement("h3");
+            title.textContent = text(data.title) || "Paranormal Investigation";
+            card.append(title);
+            const category = text(data.category, 120);
+            if (category && !["investigation", "investigations"].includes(category.toLowerCase())) {
+                const label = document.createElement("p");
+                label.className = "published-record-category";
+                label.textContent = category;
+                card.append(label);
+            }
+            const date = text(data.date, 80);
+            if (date) {
+                const dateElement = document.createElement("p");
+                dateElement.className = "published-record-date";
+                dateElement.textContent = date;
+                card.append(dateElement);
+            }
+            const description = text(data.text, 10000);
+            if (description) {
+                const paragraph = document.createElement("p");
+                paragraph.textContent = description;
+                card.append(paragraph);
+            }
+            fragment.append(card);
+        });
+        container.replaceChildren(fragment);
+    };
+
+    const renderEvents = (payload) => {
+        const container = document.querySelector("#event-list");
+        if (!container || !Array.isArray(payload?.content)) return;
+        const emptyState = document.querySelector("#event-empty-state");
+        const now = new Date();
+        const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+        const records = payload.content.filter((entry) => {
+            const data = entry?.content;
+            if (!data || typeof data !== "object" || Array.isArray(data)) return false;
+            const type = text(data.recordType, 40).toLowerCase();
+            const section = text(data.section ?? data.category, 120).toLowerCase();
+            const key = text(entry.contentKey, 160).toLowerCase();
+            const date = text(data.date, 80);
+            const endDate = text(data.endDate, 80) || date;
+            const isEvent = ["event", "events"].includes(type)
+                ? true
+                : ["investigation", "investigations"].includes(type)
+                    ? false
+                    : ["event", "events"].includes(section)
+                        || /(^|[-_ ])events?($|[-_ ])/.test(key);
+            const isISODate = (value) => {
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+                const parsed = new Date(`${value}T00:00:00Z`);
+                return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+            };
+            return isEvent && isISODate(date) && isISODate(endDate) && endDate >= today;
+        }).sort((a, b) => a.content.date.localeCompare(b.content.date));
+        if (!records.length) {
+            container.replaceChildren();
+            if (emptyState) emptyState.hidden = false;
+            return;
+        }
+        if (emptyState) emptyState.hidden = true;
+        const fragment = document.createDocumentFragment();
+        records.forEach((entry) => {
+            const data = entry.content;
+            const card = document.createElement("article");
+            card.className = "published-event-card";
+            const content = document.createElement("div");
+            content.className = "upcoming-event-content";
+            const title = document.createElement("h3");
+            title.textContent = text(data.title) || "Essex Paranormal Event";
+            content.append(title);
+            const date = text(data.date, 80);
+            const endDate = text(data.endDate, 80);
+            if (date) {
+                const dateElement = document.createElement("p");
+                dateElement.className = "upcoming-event-description";
+                dateElement.textContent = endDate && endDate !== date ? `${date} – ${endDate}` : date;
+                content.append(dateElement);
+            }
+            const description = text(data.text, 10000);
+            if (description) {
+                const paragraph = document.createElement("p");
+                paragraph.className = "upcoming-event-description";
+                paragraph.textContent = description;
+                content.append(paragraph);
+            }
+            const linkedKey = text(data.investigationKey, 160);
+            const related = payload.content.find((candidate) =>
+                text(candidate?.contentKey, 160) === linkedKey && isInvestigationRecord(candidate));
+            if (related) {
+                const link = document.createElement("a");
+                link.href = `#investigation-${linkedKey.toLowerCase().replace(/[^a-z0-9_-]+/g, "-")}`;
+                link.className = "button button-secondary";
+                link.textContent = `Related investigation: ${text(related.content?.title) || linkedKey}`;
+                content.append(link);
+            }
+            card.append(content);
+            fragment.append(card);
+        });
+        container.replaceChildren(fragment);
+    };
+
+    const renderMedia = (payload) => {
+        const container = document.querySelector("#public-media");
+        if (!container || !Array.isArray(payload?.media)) return;
+        const records = payload.media.filter((item) => {
+            const type = text(item?.metadata?.type, 100);
+            return text(item?.signedUrl, 2048) && /^(image|video|audio)\//.test(type);
+        });
+        if (!records.length) return;
+        container.replaceChildren();
+        records.slice(0, 18).forEach((item) => {
+            const figure = document.createElement("figure");
+            const type = text(item?.metadata?.type, 100);
+            const element = document.createElement(type.startsWith("image/") ? "img" : type.startsWith("video/") ? "video" : "audio");
+            element.src = text(item.signedUrl, 2048);
+            element.controls = !type.startsWith("image/");
+            element.preload = type.startsWith("audio/") ? "none" : "metadata";
+            if (type.startsWith("image/")) element.alt = text(item.title) || "Essex Paranormal archive media";
+            figure.append(element);
+            if (text(item.title)) {
+                const caption = document.createElement("figcaption");
+                caption.textContent = text(item.title);
+                figure.append(caption);
+            }
+            container.append(figure);
+        });
+    };
+
+    const renderSocialLinks = (payload) => {
+        const container = document.querySelector("#social-links");
+        if (!container || !Array.isArray(payload?.socialLinks) || !payload.socialLinks.length) return;
+        container.replaceChildren();
+        payload.socialLinks.forEach((item) => {
+            const url = text(item?.url, 2048);
+            const platform = text(item?.platform, 80);
+            if (!platform || !/^https:\/\//.test(url)) return;
+            const anchor = document.createElement("a");
+            anchor.href = url;
+            anchor.target = "_blank";
+            anchor.rel = "noopener noreferrer";
+            anchor.textContent = platform;
+            container.append(anchor);
+        });
+        if (!container.childElementCount) container.textContent = "Information coming soon.";
+    };
+
+    addEventListener("essex-public-content", (event) => {
+        renderMedia(event.detail);
+        renderSocialLinks(event.detail);
+        renderInvestigations(event.detail);
+        renderEvents(event.detail);
+    });
+})();

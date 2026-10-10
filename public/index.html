@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Essex Paranormal is an independent paranormal investigation practice focused on evidence, truth and accountability.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#050608">
+    <meta name="color-scheme" content="dark">
+
+    <title>Essex Paranormal | Evidence Before Assumption</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        /* =========================================================
+           ESSEX PARANORMAL MASTER OVERRIDES
+           GREEN / BLACK / WHITE
+           ZERO ORANGE
+           ========================================================= */
+
+        :root {
+            --ep-green: #c0ff4f;
+            --ep-green-bright: #d5ff78;
+            --ep-green-dark: #7fae20;
+            --ep-black: #050608;
+            --ep-panel: #090b0d;
+            --ep-white: #ffffff;
+            --ep-muted: rgba(255,255,255,.68);
+            --ep-border: rgba(192,255,79,.22);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            overflow-x: hidden;
+            background:
+                linear-gradient(180deg, rgba(5,6,8,.32), rgba(5,6,8,.78)),
+                url("/essex-paranormal-cinematic-background.webp") center top / cover fixed no-repeat;
+            color: var(--ep-white);
+        }
+
+        img, video {
+            max-width: 100%;
+        }
+
+        a, button, input, textarea {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* HEADER */
+
+        .site-header {
+            position: relative;
+            z-index: 9000;
+        }
+
+        .brand-logo-crop {
+            display: block;
+            width: 78px;
+            height: 58px;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .brand-logo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* GLOBAL GREEN OVERRIDES */
+
+        .eyebrow,
+        .section-heading h2 span,
+        .community-copy h2 span,
+        .social-heading h2 span,
+        .feature-number,
+        .method-card > span,
+        .evidence-card > span,
+        .case-meta span,
+        .social-platform,
+        .social-icon,
+        .social-arrow {
+            color: var(--ep-green) !important;
+        }
+
+        .button-primary {
+            background: var(--ep-green) !important;
+            border-color: var(--ep-green) !important;
+            color: #050608 !important;
+        }
+
+        .button-primary:hover {
+            background: var(--ep-green-bright) !important;
+            border-color: var(--ep-green-bright) !important;
+            color: #050608 !important;
+        }
+
+        .button-secondary {
+            border-color: rgba(192,255,79,.55) !important;
+            color: var(--ep-white) !important;
+        }
+
+        .button-secondary:hover {
+            border-color: var(--ep-green) !important;
+            color: var(--ep-green) !important;
+        }
+
+        /* CONSTRUCTION TICKER */
+
+        .construction-ticker {
+            position: relative;
+            z-index: 500;
+            width: 100%;
+            overflow: hidden;
+            background: #050608;
+            border-top: 1px solid rgba(192,255,79,.22);
+            border-bottom: 1px solid rgba(192,255,79,.22);
+            padding: 11px 0;
+        }
+
+        .construction-ticker-track {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: epTicker 28s linear infinite;
+        }
+
+        .construction-ticker-track span {
+            display: block;
+            flex-shrink: 0;
+            padding-right: 80px;
+            color: rgba(255,255,255,.82);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+        }
+
+        @keyframes epTicker {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-scroll {
+            z-index: 10;
+        }
+
+        /* UPCOMING EVENTS */
+
+        .upcoming-events-section {
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 50%, rgba(192,255,79,.045), transparent 42%),
+                #050608;
+        }
+
+        .upcoming-events-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.018), transparent);
+        }
+
+        .upcoming-event-card {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
+            min-height: 520px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #090a0d;
+            box-shadow: 0 30px 90px rgba(0,0,0,.4);
+        }
+
+        .upcoming-event-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(32px,5vw,70px);
+        }
+
+        .upcoming-event-content h3 {
+            margin: 18px 0 25px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem,6vw,6rem);
+            line-height: .86;
+            font-weight: 900;
+            letter-spacing: -.045em;
+            text-transform: uppercase;
+        }
+
+        .upcoming-event-description {
+            max-width: 620px;
+            margin: 0 0 30px;
+            color: var(--ep-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .upcoming-event-details {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .upcoming-event-details div {
+            padding: 18px 20px;
+            border-left: 2px solid var(--ep-green);
+            background: rgba(255,255,255,.025);
+        }
+
+        .upcoming-event-details span {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .15em;
+        }
+
+        .upcoming-event-details strong {
+            display: block;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.35rem;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .upcoming-event-video {
+            position: relative !important;
+            width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            min-height: 0 !important;
+            height: auto !important;
+            overflow: hidden !important;
+            background: #000 !important;
+        }
+
+        .upcoming-event-video video {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: block !important;
+            object-fit: cover !important;
+            background: #000 !important;
+        }
+
+        /* COMPLETED STAMP */
+
+        .completed-stamp {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 13px 22px;
+            border: 4px solid #d40000;
+            color: #d40000;
+            background: rgba(0,0,0,.86);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.55rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            transform: rotate(-8deg);
+            box-shadow: 0 0 0 2px rgba(212,0,0,.18), 0 15px 35px rgba(0,0,0,.5);
+            text-shadow: 0 0 8px rgba(212,0,0,.35);
+            pointer-events: none;
+        }
+
+        .completed-stamp::after {
+            content: "";
+            position: absolute;
+            inset: 5px;
+            border: 1px solid rgba(212,0,0,.75);
+        }
+
+        /* INVESTIGATION CARDS */
+
+        .featured-investigation {
+            display: grid;
+            grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #090a0d;
+            box-shadow: 0 30px 80px rgba(0,0,0,.35);
+        }
+
+        .featured-investigation-image {
+            min-height: 460px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .featured-investigation-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .featured-investigation-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(30px,5vw,60px);
+        }
+
+        .featured-investigation-content h3 {
+            margin: 14px 0 20px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem,5vw,5.5rem);
+            line-height: .88;
+            font-weight: 900;
+            letter-spacing: -.045em;
+        }
+
+        .featured-investigation-content p {
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        .investigation-cards {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 24px;
+            margin-top: 34px;
+        }
+
+        .investigation-cards .featured-investigation {
+            grid-template-columns: 1fr;
+            height: 100%;
+        }
+
+        .investigation-cards .featured-investigation-image {
+            min-height: 320px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .investigation-cards .featured-investigation-content {
+            min-height: 100%;
+            padding: clamp(28px,4vw,46px);
+        }
+
+        .investigation-cards .featured-investigation-content h3 {
+            font-size: clamp(2.8rem,4vw,4.5rem);
+        }
+
+        .case-meta {
+            display: grid;
+            gap: 5px;
+            margin: 25px 0 30px;
+            padding: 18px 20px;
+            border-left: 2px solid var(--ep-green);
+            background: rgba(255,255,255,.025);
+        }
+
+        .case-meta strong {
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: .04em;
+        }
+
+        .case-status-grid {
+            display: grid;
+            grid-template-columns: repeat(3,minmax(0,1fr));
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+
+        .case-status-grid div {
+            padding: 13px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.025);
+        }
+
+        .case-status-grid small {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+        }
+
+        .case-status-grid strong {
+            color: var(--ep-white);
+            font-size: .75rem;
+            line-height: 1.3;
+        }
+
+        /* ARCHIVE */
+
+        .archive-coming-soon {
+            margin-top: 28px;
+            padding: clamp(28px,5vw,55px);
+            border: 1px solid rgba(192,255,79,.18);
+            background: linear-gradient(135deg, rgba(192,255,79,.035), rgba(255,255,255,.012));
+        }
+
+        .archive-coming-soon h3 {
+            margin: 12px 0 16px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(2rem,4vw,3.8rem);
+            line-height: .95;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .archive-coming-soon p {
+            max-width: 850px;
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        .archive-coming-soon .button {
+            margin-top: 24px;
+        }
+
+        /* GALLERY */
+
+        .gallery-content {
+            padding: clamp(24px,4vw,40px);
+            border: 1px solid rgba(192,255,79,.18);
+            background: linear-gradient(135deg, rgba(192,255,79,.035), rgba(255,255,255,.012));
+        }
+
+        .gallery-content p {
+            max-width: 850px;
+            margin: 0;
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        /* COMMUNITY */
+
+        .community-section {
+            background: #050608;
+        }
+
+        .community-panel {
+            display: grid;
+            grid-template-columns: minmax(0,1.2fr) minmax(300px,.8fr);
+            gap: 30px;
+            padding: clamp(28px,5vw,60px);
+            border: 1px solid rgba(255,255,255,.10);
+            background: linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+            box-shadow: 0 30px 90px rgba(0,0,0,.30);
+        }
+
+        .community-copy h2 {
+            margin: 0 0 20px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem,6vw,6rem);
+            line-height: .88;
+            font-weight: 900;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+        }
+
+        .community-copy p {
+            max-width: 720px;
+            color: var(--ep-muted);
+            line-height: 1.8;
+        }
+
+        .community-action {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-left: 30px;
+            border-left: 1px solid rgba(255,255,255,.10);
+        }
+
+        .community-action p {
+            margin: 0 0 22px;
+            color: rgba(255,255,255,.58);
+            line-height: 1.7;
+        }
+
+        /* SOCIAL */
+
+        .social-section {
+            background: #050608;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4,minmax(0,1fr));
+            gap: 18px;
+        }
+
+        .social-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            min-height: 150px;
+            padding: 25px;
+            overflow: hidden;
+            color: var(--ep-white);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.025);
+            transition: transform .35s ease, border-color .35s ease, background .35s ease;
+        }
+
+        .social-button::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--ep-green);
+            transform: scaleY(.25);
+            transform-origin: bottom;
+            transition: transform .35s ease;
+        }
+
+        .social-button:hover {
+            transform: translateY(-5px);
+            border-color: var(--ep-green);
+            background: rgba(192,255,79,.045);
+        }
+
+        .social-button:hover::before {
+            transform: scaleY(1);
+        }
+
+        .social-icon {
+            flex: 0 0 58px;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(192,255,79,.35);
+        }
+
+        .social-icon svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+            fill: currentColor;
+        }
+
+        .social-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .social-platform {
+            display: block;
+            margin-bottom: 4px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .16em;
+        }
+
+        .social-content h3 {
+            margin: 0 0 5px;
+            color: var(--ep-white);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.55rem;
+            line-height: .95;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .social-handle {
+            display: block;
+            color: rgba(255,255,255,.48);
+            font-size: .76rem;
+            overflow-wrap: anywhere;
+        }
+
+        .social-arrow {
+            font-size: 1.25rem;
+        }
+
+        /* FOOTER */
+
+        .site-footer {
+            position: relative;
+            background: #030405;
+            border-top: 1px solid rgba(192,255,79,.18);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding: 70px 0 50px;
+        }
+
+        .footer-brand img {
+            display: block;
+            width: 105px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .footer-links h3 {
+            margin: 0 0 10px;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .82rem;
+            font-weight: 900;
+            letter-spacing: .15em;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,.65);
+            text-decoration: none;
+            font-size: .82rem;
+            transition: color .2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--ep-green);
+        }
+
+        .footer-links p {
+            margin: 0;
+            color: rgba(255,255,255,.55);
+            font-size: .82rem;
+            line-height: 1.7;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,.08);
+            color: rgba(255,255,255,.42);
+            font-size: .68rem;
+            line-height: 1.5;
+        }
+
+        /* CINEMATIC INTRO: BLUE IS ALLOWED ONLY HERE */
+
+        #entry-screen {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            width: 100vw !important;
+            height: 100dvh !important;
+            overflow: hidden !important;
+            background: #02050b !important;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 900ms cubic-bezier(.22,.61,.36,1), visibility 900ms linear;
+        }
+
+        #entry-screen .entry-image {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            background-image: url("/essex-paranormal-intro.PNG") !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            transform: scale(1.012);
+        }
+
+        #entry-screen .entry-image::before {
+            content: "";
+            position: absolute;
+            inset: -3%;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 45%, transparent 25%, rgba(0,0,0,.08) 58%, rgba(0,0,0,.62) 100%),
+                linear-gradient(180deg, rgba(0,10,30,.28), transparent 30%, transparent 70%, rgba(0,0,0,.32));
+        }
+
+        #entry-rain-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
+            opacity: .72;
+            mix-blend-mode: screen;
+        }
+
+        #entry-screen .entry-mist {
+            position: absolute;
+            inset: -20%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: .30;
+            background:
+                radial-gradient(ellipse at 18% 72%, rgba(205,225,240,.13), transparent 34%),
+                radial-gradient(ellipse at 76% 42%, rgba(194,218,240,.10), transparent 36%),
+                radial-gradient(ellipse at 52% 88%, rgba(225,235,250,.07), transparent 42%);
+            filter: blur(24px);
+            animation: epMist 9s ease-in-out infinite alternate;
+        }
+
+        #entry-screen .entry-blue-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(35,105,190,.12), transparent 38%),
+                linear-gradient(180deg, rgba(8,31,72,.08), transparent 45%, rgba(0,17,55,.16));
+            mix-blend-mode: screen;
+        }
+
+        #entry-screen .entry-lightning {
+            position: absolute;
+            inset: -5%;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+            background: rgba(190,225,255,.18);
+            mix-blend-mode: screen;
+        }
+
+        #entry-screen .flash-one {
+            animation: epLightningOne 5.1s infinite;
+        }
+
+        #entry-screen .flash-two {
+            animation: epLightningTwo 7.4s infinite;
+        }
+
+        #entry-screen .entry-content {
+            position: absolute;
+            inset: 0;
+            z-index: 7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 30px 30px clamp(55px,9vh,100px);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        #entry-screen .entry-loading {
+            width: min(520px,72vw);
+            margin-bottom: 14px;
+        }
+
+        #entry-screen .entry-loading-label {
+            margin-bottom: 8px;
+            color: rgba(255,255,255,.86);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .20em;
+            text-transform: uppercase;
+        }
+
+        #entry-screen .entry-loading-track {
+            position: relative;
+            width: 100%;
+            height: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(100,175,255,.55);
+            background: rgba(0,0,0,.68);
+            box-shadow: 0 0 20px rgba(35,125,255,.22);
+        }
+
+        #entry-screen .entry-loading-fill {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 0%;
+            background: linear-gradient(90deg, #174ea6, #2d8cff, #9ed3ff);
+            box-shadow: 0 0 16px rgba(45,140,255,.95);
+            transition: width .08s linear;
+        }
+
+        #entry-screen .entry-loading-percent {
+            margin-top: 7px;
+            color: rgba(255,255,255,.68);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .65rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+        }
+
+        #entry-screen .entry-bottom-copy {
+            position: absolute;
+            left: 25px;
+            bottom: 22px;
+            color: rgba(255,255,255,.58);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-align: left;
+        }
+
+        #entry-screen .entry-bottom-copy-right {
+            position: absolute;
+            right: 25px;
+            bottom: 22px;
+            color: rgba(255,255,255,.58);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        #entry-screen.is-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        @keyframes epMist {
+            from { transform: translate3d(-2%,1%,0) scale(1.08); }
+            to { transform: translate3d(3%,-2%,0) scale(1.13); }
+        }
+
+        @keyframes epLightningOne {
+            0%, 67%, 100% { opacity: 0; }
+            68% { opacity: .05; }
+            69% { opacity: .42; }
+            69.5% { opacity: .04; }
+            70% { opacity: .22; }
+            70.8% { opacity: 0; }
+        }
+
+        @keyframes epLightningTwo {
+            0%, 35%, 100% { opacity: 0; }
+            36% { opacity: .08; }
+            36.5% { opacity: .34; }
+            37% { opacity: 0; }
+        }
+
+        /* MOBILE / TABLET */
+
+        @media (max-width:1100px) {
+            .social-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:900px) {
+            .upcoming-event-card {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-event-video {
+                order: -1;
+            }
+
+            .investigation-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-investigation {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-investigation-image {
+                min-height: 360px;
+            }
+
+            .case-status-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .community-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .community-action {
+                padding: 25px 0 0;
+                border-left: 0;
+                border-top: 1px solid rgba(255,255,255,.10);
+            }
+
+            .completed-stamp {
+                top: 18px;
+                right: 18px;
+                min-width: 155px;
+                padding: 10px 15px;
+                font-size: 1.15rem;
+            }
+        }
+
+        @media (max-width:700px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 50px 0 35px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+
+            .case-status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width:550px) {
+            .brand-logo-crop {
+                width: 64px;
+                height: 52px;
+            }
+
+            .upcoming-event-content {
+                padding: 30px 22px;
+            }
+
+            .upcoming-event-content h3 {
+                font-size: clamp(2.7rem,14vw,4.2rem);
+            }
+
+            .upcoming-event-details {
+                grid-template-columns: 1fr;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .completed-stamp {
+                top: 12px;
+                right: 12px;
+                min-width: 130px;
+                padding: 8px 12px;
+                border-width: 3px;
+                font-size: .95rem;
+            }
+
+            #entry-screen .entry-bottom-copy,
+            #entry-screen .entry-bottom-copy-right {
+                display: none;
+            }
+
+            #entry-screen .entry-content {
+                padding-bottom: 65px;
+            }
+
+            #entry-screen .entry-loading {
+                width: 82vw;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+
+            #entry-rain-canvas,
+            #entry-screen .entry-mist,
+            #entry-screen .entry-lightning {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CINEMATIC ENTRY -->
+
+    <div id="entry-screen" aria-hidden="true">
+        <div class="entry-image">
+            <div class="entry-mist" aria-hidden="true"></div>
+            <div class="entry-blue-glow" aria-hidden="true"></div>
+            <canvas id="entry-rain-canvas" aria-hidden="true"></canvas>
+            <div class="entry-lightning flash-one" aria-hidden="true"></div>
+            <div class="entry-lightning flash-two" aria-hidden="true"></div>
+
+            <div class="entry-content">
+                <div class="entry-loading">
+                    <div class="entry-loading-label">ENTERING SITE...</div>
+                    <div class="entry-loading-track">
+                        <div id="entry-loading-fill" class="entry-loading-fill"></div>
+                    </div>
+                    <div id="entry-loading-percent" class="entry-loading-percent">0%</div>
+                </div>
+
+                <div class="entry-bottom-copy">
+                    REAL PEOPLE. REAL PLACES. REAL EXPERIENCES.
+                </div>
+
+                <div class="entry-bottom-copy-right">
+                    TRUTH LIES IN THE SHADOWS.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="#home" class="brand" aria-label="Essex Paranormal home">
+                <span class="brand-logo-crop">
+                    <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo" decoding="async">
+                </span>
+            </a>
+
+            <nav id="main-navigation" aria-label="Main navigation">
+                <a href="#home" class="active">HOME</a>
+                <a href="#upcoming-events">UPCOMING EVENTS</a>
+                <a href="#about">MEET LEWIS</a>
+                <a href="#experiences">EXPERIENCES</a>
+                <a href="#investigations">INVESTIGATIONS</a>
+                <a href="#gallery">GALLERY</a>
+                <a href="#community">JOIN US / FORUM</a>
+                <a href="#contact">CONTACT</a>
+            </nav>
+
+            <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="main-navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONSTRUCTION TICKER -->
+
+    <div class="construction-ticker" role="status" aria-label="Website under construction">
+        <div class="construction-ticker-track">
+            <span>WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE</span>
+            <span aria-hidden="true">WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE</span>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- HERO -->
+
+        <section id="home" class="hero">
+            <div class="hero-background"></div>
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content">
+                <p class="eyebrow">HONEST • REAL • UNBIASED</p>
+
+                <h1 data-control-room-homepage-title>
+                    ESSEX
+                    <span>PARANORMAL</span>
+                </h1>
+
+                <p class="hero-description" data-control-room-homepage-introduction>
+                    Evidence before assumption.
+                    Real people. Real places. Real experiences.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#upcoming-events" class="button button-primary">UPCOMING INVESTIGATION</a>
+                    <a href="#about" class="button button-secondary">MEET LEWIS</a>
+                </div>
+            </div>
+
+            <a href="#upcoming-events" class="hero-scroll" aria-label="Scroll to upcoming events">
+                <span>SCROLL</span>
+                <span>↓</span>
+            </a>
+        </section>
+
+        <!-- ANCIENT RAM INN -->
+
+        <section id="upcoming-events" class="section upcoming-events-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">UPCOMING EVENTS</p>
+
+                    <h2>
+                        THE ANCIENT
+                        <span>RAM INN.</span>
+                    </h2>
+
+                    <p>
+                        Essex Paranormal heads to one of Britain's
+                        most notorious paranormal locations for an
+                        extended live investigation.
+                    </p>
+                </div>
+
+                <article class="upcoming-event-card">
+                    <div class="completed-stamp" aria-label="Completed">
+                        <span>COMPLETED</span>
+                    </div>
+
+                    <div class="upcoming-event-content">
+                        <span class="eyebrow">ANCIENT RAM INN</span>
+                        <h3>THE ANCIENT RAM INN</h3>
+
+                        <p class="upcoming-event-description">
+                            Essex Paranormal heads to one of
+                            Britain's most notorious paranormal
+                            locations for an extended live
+                            investigation.
+                        </p>
+
+                        <div class="upcoming-event-details">
+                            <div>
+                                <span>DATE</span>
+                                <strong>16–17 SEPTEMBER</strong>
+                            </div>
+
+                            <div>
+                                <span>DURATION</span>
+                                <strong>24 HOURS LIVE</strong>
+                            </div>
+                        </div>
+
+                        <a href="#social" class="button button-primary">
+                            FOLLOW THE INVESTIGATION
+                            <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="upcoming-event-video">
+                        <video autoplay muted loop playsinline controls preload="metadata" aria-label="Ancient Ram Inn promotional video">
+                            <source src="/ancient-ram-inn-promo.MP4" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                    </div>
+                </article>
+
+                <p id="event-empty-state" class="published-empty-state">Information coming soon.</p>
+                <div id="event-list" class="published-event-list" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- MEET LEWIS -->
+
+        <section id="about" class="section profile-section">
+            <div class="container">
+                <div class="profile-layout">
+                    <div class="profile-copy">
+                        <p class="eyebrow">MEET LEWIS</p>
+
+                        <h2>
+                            Biography -
+                            <span>Lewis McDiarmid</span>
+                        </h2>
+
+                        <p class="role">OWNER &amp; LEAD INVESTIGATOR, ESSEX PARANORMAL</p>
+
+                        <div class="bio-content">
+                            <p>
+                                My name is Lewis McDiarmid, and I am the owner
+                                and lead investigator of Essex Paranormal.
+                            </p>
+
+                            <p>
+                                I have always had an interest in the paranormal
+                                and the unexplained. Over time that interest
+                                developed into a commitment to investigate
+                                reported activity properly, document what happens
+                                and remain honest about what the evidence does
+                                and does not show.
+                            </p>
+
+                            <p>
+                                Essex Paranormal is built around honesty, truth
+                                and accountability. I will never deliberately
+                                mislead people about an investigation or
+                                manufacture evidence for entertainment.
+                            </p>
+
+                            <p>
+                                Essex Paranormal was originally created by my
+                                mother, who had a unique team of people who
+                                explored and investigated the phenomena. She was
+                                heavily invested in truth and clarity, and she
+                                built Essex Paranormal on that ethos. The group
+                                eventually disbanded in the early 2000s after
+                                many team changes and a name change.
+                            </p>
+
+                            <p>
+                                Last year, after much thought and consideration,
+                                I decided to reboot Essex Paranormal and return
+                                it to its original ethos and principles.
+                            </p>
+
+                            <p>
+                                What makes Essex Paranormal different is that it
+                                is totally evidence-based and reality-based.
+                                No trickery, no staged events, no faked activity.
+                                I look at every angle of truth and fact to ensure
+                                honesty and accountability are always upheld.
+                            </p>
+
+                            <h3>Investigations &amp; Evidence</h3>
+
+                            <p>
+                                Essex Paranormal uses a minimum amount of equipment
+                                because I believe the most powerful tool is myself.
+                            </p>
+
+                            <p>
+                                I do use cameras, night-vision systems, field
+                                cameras and similar equipment to gain footage
+                                after dark. I also use trigger objects as a
+                                precursor to gaining interaction between realms.
+                            </p>
+
+                            <p>
+                                Ouija boards, crystal balls, sensory equipment,
+                                and historical information relating to the
+                                environment are also part of my process. Essex
+                                Paranormal also uses drones to gather information
+                                and aerial data of locations when required.
+                            </p>
+
+                            <h3>My Experiences &amp; Beliefs</h3>
+
+                            <p>
+                                My personal experiences are too many to mention,
+                                but throughout the site I will share as many as
+                                I can so people can read them and hopefully gain
+                                some insight into them all.
+                            </p>
+
+                            <p>
+                                I believe there is definitely something other
+                                than what we consciously choose to be aware of.
+                                I believe in what I see, feel, hear, and understand.
+                            </p>
+
+                            <p>
+                                Visitors to Essex Paranormal should understand
+                                that everything I do is based on truth, fact,
+                                and evidence-based material that I always
+                                endeavour to collect honestly. Nothing I say,
+                                do, share, or post will ever be fake, trickery,
+                                or false. Essex Paranormal is proud to be honest
+                                and truthful.
+                            </p>
+
+                            <h3>What Paranormal Investigation Means to Me</h3>
+
+                            <p>
+                                A paranormal investigation is an important part
+                                of my life and my journey to try and understand
+                                what else is out there. I love being able to
+                                explore and understand what the real answer is
+                                to life and the afterlife. If there really is a
+                                continuation from one stage of awareness to the
+                                next, then I will continue to pursue the search
+                                for it.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="profile-visual">
+                        <div class="profile-image-frame">
+                            <img src="/meet-lewis-biography.jpg" alt="Lewis McDiarmid, Owner and Lead Investigator of Essex Paranormal" class="profile-image" loading="lazy" decoding="async">
+                            <span class="frame-corner frame-corner-top"></span>
+                            <span class="frame-corner frame-corner-bottom"></span>
+                        </div>
+
+                        <div class="profile-quote">
+                            <span></span>
+                            <p>“THE TRUTH EXISTS, EVEN WHEN NO ONE BELIEVES.”</p>
+                        </div>
+
+                        <div class="profile-identifiers">
+                            <div>
+                                <strong>INVESTIGATOR</strong>
+                                <small>Evidence Led</small>
+                            </div>
+                            <div>
+                                <strong>DOCUMENTARY</strong>
+                                <small>Truth Focused</small>
+                            </div>
+                            <div>
+                                <strong>DRONE OPERATIONS</strong>
+                                <small>Aerial Reconnaissance</small>
+                            </div>
+                            <div>
+                                <strong>EXPLORER</strong>
+                                <small>Always Seeking Answers</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCES -->
+
+        <section id="experiences" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">EXPERIENCES</p>
+
+                    <h2>
+                        REAL LOCATIONS.
+                        <span>REAL EXPERIENCES.</span>
+                    </h2>
+
+                    <p>
+                        Essex Paranormal explores historic,
+                        abandoned and reported haunted locations
+                        using a careful and evidence-led approach.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <span class="feature-number">01</span>
+                        <h3>PRIVATE INVESTIGATIONS</h3>
+                        <p>
+                            Focused investigations of locations
+                            where unexplained activity has been
+                            reported or experienced.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">02</span>
+                        <h3>HISTORIC LOCATIONS</h3>
+                        <p>
+                            Research-led investigations that
+                            consider the history, people and
+                            circumstances surrounding each location.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">03</span>
+                        <h3>EVIDENCE REVIEW</h3>
+                        <p>
+                            Photographs, video, audio and other
+                            observations are reviewed carefully
+                            before conclusions are reached.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHOD -->
+
+        <section id="method" class="section approach-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">OUR APPROACH</p>
+
+                    <h2>
+                        EVIDENCE
+                        <span>BEFORE ASSUMPTION.</span>
+                    </h2>
+
+                    <p>
+                        Every investigation begins with the same
+                        principle: document what happens without
+                        deciding what it means before the evidence
+                        has been examined.
+                    </p>
+                </div>
+
+                <div class="method-grid">
+                    <article class="method-card">
+                        <span>01</span>
+                        <h3>RESEARCH</h3>
+                        <p>Understand the history and environment before an investigation begins.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span>02</span>
+                        <h3>OBSERVE</h3>
+                        <p>Record what happens and consider environmental and natural explanations.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span>03</span>
+                        <h3>REVIEW</h3>
+                        <p>Examine recordings, photographs, audio and observations after the investigation.</p>
+                    </article>
+
+                    <article class="method-card">
+                        <span>04</span>
+                        <h3>REPORT</h3>
+                        <p>Present the findings honestly, including uncertainty where it exists.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- INVESTIGATIONS -->
+
+        <section id="investigations" class="section investigations-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">FEATURED INVESTIGATIONS</p>
+
+                    <h2>
+                        RECENT
+                        <span>CASE FILES.</span>
+                    </h2>
+
+                    <p>Published investigation case files from Essex Paranormal.</p>
+                </div>
+
+                <div class="investigation-cards">
+
+                    <!-- EP-001 HMP ASHWELL -->
+
+                    <article class="featured-investigation">
+                        <div class="featured-investigation-image">
+                            <img src="/hmp-ashwell.PNG" alt="Former HMP Ashwell prison" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="featured-investigation-content">
+                            <span class="eyebrow">CASE FILE EP-001</span>
+                            <h3>HMP ASHWELL</h3>
+
+                            <p>
+                                An evidence-led investigation into the
+                                former HM Prison Ashwell, examining
+                                reported experiences while considering
+                                historical and environmental context.
+                            </p>
+
+                            <div class="case-status-grid">
+                                <div>
+                                    <small>LOCATION</small>
+                                    <strong>FORMER HM PRISON ASHWELL</strong>
+                                </div>
+                                <div>
+                                    <small>STATUS</small>
+                                    <strong>PUBLISHED</strong>
+                                </div>
+                                <div>
+                                    <small>APPROACH</small>
+                                    <strong>EVIDENCE LED</strong>
+                                </div>
+                            </div>
+
+                            <a href="/investigations/hmp-ashwell.html" class="button button-primary">
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- EP-002 GRAIN BATTERY TOWER -->
+
+                    <article class="featured-investigation">
+                        <div class="featured-investigation-image">
+                            <img src="/investigations/grain-battery-01.JPG" alt="Grain Battery Tower sea fort" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="featured-investigation-content">
+                            <span class="eyebrow">CASE FILE EP-002</span>
+                            <h3>GRAIN BATTERY TOWER</h3>
+
+                            <p>
+                                An overnight lockdown paranormal
+                                investigation at Grain Battery Tower,
+                                focusing on audio phenomena, movement,
+                                environmental changes and potential
+                                intelligent communication.
+                            </p>
+
+                            <div class="case-status-grid">
+                                <div>
+                                    <small>LOCATION</small>
+                                    <strong>GRAIN, KENT</strong>
+                                </div>
+                                <div>
+                                    <small>STATUS</small>
+                                    <strong>PUBLISHED</strong>
+                                </div>
+                                <div>
+                                    <small>METHOD</small>
+                                    <strong>OVERNIGHT LOCKDOWN</strong>
+                                </div>
+                            </div>
+
+                            <a href="/investigations/grain-battery.html" class="button button-primary">
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div id="investigation-list" class="published-investigation-list" aria-live="polite"></div>
+
+                <!-- INVESTIGATION ARCHIVE -->
+
+                <div class="archive-coming-soon">
+                    <span class="eyebrow">INVESTIGATION ARCHIVE</span>
+                    <h3>BROWSE THE CASE FILES.</h3>
+
+                    <p>
+                        Browse the Essex Paranormal investigation
+                        archive, including published case files,
+                        investigation reports and future
+                        investigations as they are added.
+                    </p>
+
+                    <a href="/investigations/" class="button button-secondary">
+                        VIEW INVESTIGATION ARCHIVE
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVIDENCE -->
+
+        <section id="evidence" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">EVIDENCE</p>
+
+                    <h2>
+                        FOLLOW THE
+                        <span>EVIDENCE.</span>
+                    </h2>
+
+                    <p>
+                        Evidence will be published as individual
+                        investigations are completed and reviewed.
+                    </p>
+                </div>
+
+                <div class="evidence-grid">
+                    <article class="evidence-card">
+                        <span>AUDIO</span>
+                        <h3>AUDIO EVIDENCE</h3>
+                        <p>Recorded audio and relevant analysis will be published here.</p>
+                    </article>
+
+                    <article class="evidence-card">
+                        <span>VIDEO</span>
+                        <h3>VIDEO EVIDENCE</h3>
+                        <p>Investigation footage and reviewed material will be added here.</p>
+                    </article>
+
+                    <article class="evidence-card">
+                        <span>PHOTOGRAPHY</span>
+                        <h3>PHOTOGRAPHIC EVIDENCE</h3>
+                        <p>Photographs and supporting information will be published with relevant cases.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY / MEDIA
+             Construction notice removed. Gallery section and navigation remain. -->
+
+        <section id="gallery" class="section gallery-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">GALLERY &amp; MEDIA</p>
+
+                    <h2>
+                        MEDIA
+                        <span>ARCHIVE.</span>
+                    </h2>
+                </div>
+
+                <div class="gallery-content">
+                    <div id="public-media" class="published-media-grid" aria-live="polite"></div>
+                    <p>
+                        Explore photographs, videos and media from
+                        Essex Paranormal investigations. New material
+                        can be added here as investigations are
+                        completed and evidence is reviewed.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN US / FORUM -->
+
+        <section id="community" class="section community-section">
+            <div class="container">
+                <div class="community-panel">
+                    <div class="community-copy">
+                        <p class="eyebrow">JOIN US / FORUM</p>
+
+                        <h2>
+                            BE PART OF THE
+                            <span>COMMUNITY.</span>
+                        </h2>
+
+                        <p>
+                            Follow Essex Paranormal, keep up with
+                            investigations and become part of the
+                            wider community surrounding the group.
+                        </p>
+
+                        <p>
+                            A dedicated community and discussion
+                            area is being developed as part of the
+                            website build.
+                        </p>
+                    </div>
+
+                    <div class="community-action">
+                        <p class="eyebrow">COMMUNITY AREA</p>
+
+                        <p>
+                            The Essex Paranormal forum and community
+                            features are currently being prepared.
+                        </p>
+
+                        <a href="#social" class="button button-primary">
+                            FOLLOW ESSEX PARANORMAL
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA -->
+
+        <section id="social" class="section social-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">SOCIAL MEDIA</p>
+
+                    <h2>
+                        FOLLOW THE
+                        <span>INVESTIGATION.</span>
+                    </h2>
+
+                    <p>
+                        Keep up with Essex Paranormal across social
+                        media for investigations, updates, videos
+                        and future events.
+                    </p>
+                </div>
+
+                <div id="social-links" class="social-grid">
+
+                    <!-- TIKTOK -->
+
+                    <a href="#" class="social-button" aria-label="Essex Paranormal TikTok">
+                        <div class="social-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-3.9h-3.12v13.1a2.9 2.9 0 1 1-2-2.76V10a6 6 0 1 0 5.12 5.93V9.28a7.9 7.9 0 0 0 4.77 1.6V7.77a4.83 4.83 0 0 1-1-.08z"/>
+                            </svg>
+                        </div>
+
+                        <div class="social-content">
+                            <span class="social-platform">TIKTOK</span>
+                            <h3>ESSEX PARANORMAL</h3>
+                            <span class="social-handle">FOLLOW THE INVESTIGATION</span>
+                        </div>
+
+                        <span class="social-arrow">→</span>
+                    </a>
+
+                    <!-- YOUTUBE -->
+
+                    <a href="#" class="social-button" aria-label="Essex Paranormal YouTube">
+                        <div class="social-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.6 15.8V8.2l6.5 3.8-6.5 3.8z"/>
+                            </svg>
+                        </div>
+
+                        <div class="social-content">
+                            <span class="social-platform">YOUTUBE</span>
+                            <h3>ESSEX PARANORMAL</h3>
+                            <span class="social-handle">INVESTIGATIONS &amp; VIDEO</span>
+                        </div>
+
+                        <span class="social-arrow">→</span>
+                    </a>
+
+                    <!-- INSTAGRAM -->
+
+                    <a href="#" class="social-button" aria-label="Essex Paranormal Instagram">
+                        <div class="social-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.5 6.5A1 1 0 1 1 16.5 7a1 1 0 0 1 1-1z"/>
+                            </svg>
+                        </div>
+
+                        <div class="social-content">
+                            <span class="social-platform">INSTAGRAM</span>
+                            <h3>ESSEX PARANORMAL</h3>
+                            <span class="social-handle">PHOTOGRAPHS &amp; UPDATES</span>
+                        </div>
+
+                        <span class="social-arrow">→</span>
+                    </a>
+
+                    <!-- FACEBOOK -->
+
+                    <a href="https://www.facebook.com/share/g/1DWrfynuJ4/?mibextid=wwXIfr" class="social-button" target="_blank" rel="noopener noreferrer" aria-label="Essex Paranormal Facebook">
+                        <div class="social-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.5-4 4.1V10H8.7v3h2.7v8h2.1z"/>
+                            </svg>
+                        </div>
+
+                        <div class="social-content">
+                            <span class="social-platform">FACEBOOK</span>
+                            <h3>COMMUNITY</h3>
+                            <span class="social-handle">JOIN THE ESSEX PARANORMAL GROUP</span>
+                        </div>
+
+                        <span class="social-arrow">→</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+
+        <section id="contact" class="section contact-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">CONTACT</p>
+
+                    <h2>
+                        GET IN
+                        <span>TOUCH.</span>
+                    </h2>
+
+                    <p>
+                        For enquiries, investigations, collaborations
+                        or other Essex Paranormal matters, use the
+                        contact form below.
+                    </p>
+                </div>
+
+                <form class="contact-form" action="https://formsubmit.co/essexparanormal@outlook.com" method="POST">
+                    <input type="hidden" name="_subject" value="Essex Paranormal Website Enquiry">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://essexparanormal.com/#contact">
+
+                    <div class="contact-form-grid">
+                        <div class="form-field">
+                            <label for="name">NAME</label>
+                            <input id="name" name="name" type="text" autocomplete="name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="email">EMAIL</label>
+                            <input id="email" name="email" type="email" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="subject">SUBJECT</label>
+                        <input id="subject" name="subject" type="text" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="message">MESSAGE</label>
+                        <textarea id="message" name="message" rows="8" required></textarea>
+                    </div>
+
+                    <p class="form-privacy-note">
+                        By submitting this form, you agree that the
+                        information provided may be used to respond
+                        to your enquiry. See our
+                        <a href="/privacy-policy.html">Privacy Policy</a>
+                        for details.
+                    </p>
+
+                    <button type="submit" class="button button-primary">
+                        SEND MESSAGE
+                        <span>→</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+
+                <!-- BRAND -->
+
+                <div class="footer-brand">
+                    <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" loading="lazy" decoding="async">
+
+                    <p>HONEST • REAL • UNBIASED</p>
+                    <p>Evidence before assumption.</p>
+                </div>
+
+                <!-- QUICK LINKS -->
+
+                <div class="footer-links">
+                    <h3>QUICK LINKS</h3>
+                    <a href="#home">HOME</a>
+                    <a href="#upcoming-events">UPCOMING EVENTS</a>
+                    <a href="#about">MEET LEWIS</a>
+                    <a href="#experiences">EXPERIENCES</a>
+                    <a href="#investigations">INVESTIGATIONS</a>
+                    <a href="#gallery">GALLERY</a>
+                    <a href="#community">JOIN US / FORUM</a>
+                    <a href="#contact">CONTACT</a>
+                </div>
+
+                <!-- INVESTIGATIONS -->
+
+                <div class="footer-links">
+                    <h3>INVESTIGATIONS</h3>
+                    <a href="/investigations/hmp-ashwell.html">HMP ASHWELL</a>
+                    <a href="/investigations/grain-battery.html">GRAIN BATTERY TOWER</a>
+                    <a href="/investigations/">INVESTIGATION ARCHIVE</a>
+                </div>
+
+                <!-- LEGAL -->
+
+                <div class="footer-links">
+                    <h3>LEGAL</h3>
+                    <a href="/privacy-policy.html">PRIVACY POLICY</a>
+                    <a href="/cookie-policy.html">COOKIE POLICY</a>
+                    <a href="/terms.html">TERMS &amp; CONDITIONS</a>
+                    <a href="/disclaimer.html">PARANORMAL / INVESTIGATION DISCLAIMER</a>
+                    <a href="/copyright.html">COPYRIGHT &amp; MEDIA RIGHTS</a>
+                    <a href="/accessibility.html">ACCESSIBILITY</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>
+                    ©
+                    <span id="current-year"></span>
+                    ESSEX PARANORMAL. ALL RIGHTS RESERVED.
+                </span>
+
+                <span>HONEST • REAL • UNBIASED</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CINEMATIC INTRO ENGINE -->
+
+    <script>
+        (function () {
+            "use strict";
+
+            const entry = document.getElementById("entry-screen");
+            const canvas = document.getElementById("entry-rain-canvas");
+            const fill = document.getElementById("entry-loading-fill");
+            const percent = document.getElementById("entry-loading-percent");
+
+            if (!entry || !canvas) {
+                return;
+            }
+
+            window.scrollTo(0, 0);
+
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            if (reducedMotion) {
+                if (fill) {
+                    fill.style.width = "100%";
+                }
+
+                if (percent) {
+                    percent.textContent = "100%";
+                }
+
+                window.setTimeout(function () {
+                    entry.classList.add("is-hidden");
+                }, 650);
+
+                return;
+            }
+
+            const ctx = canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            let width = 0;
+            let height = 0;
+            let animationFrame = null;
+
+            const drops = [];
+
+            function resizeCanvas() {
+                const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+                width = window.innerWidth;
+                height = window.innerHeight;
+
+                canvas.width = width * ratio;
+                canvas.height = height * ratio;
+                canvas.style.width = width + "px";
+                canvas.style.height = height + "px";
+
+                ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+                drops.length = 0;
+
+                const count = Math.max(120, Math.floor(width / 8));
+
+                for (let i = 0; i < count; i++) {
+                    drops.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        length: 10 + Math.random() * 32,
+                        speed: 7 + Math.random() * 15,
+                        opacity: .15 + Math.random() * .55,
+                        width: .4 + Math.random() * 1.15
+                    });
+                }
+            }
+
+            function drawRain() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (const drop of drops) {
+                    drop.y += drop.speed;
+
+                    if (drop.y > height + drop.length) {
+                        drop.y = -drop.length;
+                        drop.x = Math.random() * width;
+                    }
+
+                    const angle = -0.18;
+                    const endX = drop.x + Math.sin(angle) * drop.length;
+                    const endY = drop.y + drop.length;
+
+                    const gradient = ctx.createLinearGradient(drop.x, drop.y, endX, endY);
+
+                    gradient.addColorStop(0, "rgba(180,220,255,0)");
+                    gradient.addColorStop(.35, `rgba(180,220,255,${drop.opacity})`);
+                    gradient.addColorStop(1, "rgba(110,180,255,0)");
+
+                    ctx.beginPath();
+                    ctx.moveTo(drop.x, drop.y);
+                    ctx.lineTo(endX, endY);
+                    ctx.strokeStyle = gradient;
+                    ctx.lineWidth = drop.width;
+                    ctx.stroke();
+                }
+
+                animationFrame = requestAnimationFrame(drawRain);
+            }
+
+            resizeCanvas();
+            drawRain();
+
+            window.addEventListener("resize", resizeCanvas, { passive: true });
+
+            /* LOADING BAR */
+
+            const duration = 2750;
+            const start = performance.now();
+
+            function updateLoader(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = Math.round(progress * 100);
+
+                if (fill) {
+                    fill.style.width = value + "%";
+                }
+
+                if (percent) {
+                    percent.textContent = value + "%";
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateLoader);
+                }
+            }
+
+            requestAnimationFrame(updateLoader);
+
+            /*
+             * Stop the rain engine once the intro has disappeared.
+             * This prevents unnecessary animation work after entry.
+             */
+
+            window.setTimeout(function () {
+                if (fill) {
+                    fill.style.width = "100%";
+                }
+
+                if (percent) {
+                    percent.textContent = "100%";
+                }
+
+                window.setTimeout(function () {
+                    if (animationFrame) {
+                        cancelAnimationFrame(animationFrame);
+                        animationFrame = null;
+                    }
+                }, 1100);
+            }, duration);
+        })();
+    </script>
+
+    <!-- CURRENT YEAR -->
+
+    <script>
+        (function () {
+            const year = document.getElementById("current-year");
+
+            if (year) {
+                year.textContent = new Date().getFullYear();
+            }
+        })();
+    </script>
+
+    <!-- EXISTING SITE SCRIPT -->
+
+    <script src="/script.js" defer></script>
+    <script src="/public-content.js" defer></script>
+
+</body>
+</html>

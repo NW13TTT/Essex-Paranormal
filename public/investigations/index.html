@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Essex Paranormal Investigation Archive. EP-001 HMP Ashwell and EP-002 Grain Battery Tower. Evidence-led paranormal investigations, documented experiences and investigation media."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050608"
+    >
+
+    <meta
+        name="color-scheme"
+        content="dark"
+    >
+
+    <title>
+        Investigation Archive | Essex Paranormal
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/style.css"
+    >
+
+    <style>
+
+        :root {
+
+            --archive-green: #c0ff4f;
+            --archive-green-bright: #d5ff78;
+            --archive-black: #050608;
+            --archive-panel: #090b0d;
+            --archive-white: #ffffff;
+            --archive-text: rgba(255,255,255,.82);
+            --archive-muted: rgba(255,255,255,.62);
+            --archive-border: rgba(192,255,79,.22);
+            --archive-border-strong: rgba(192,255,79,.45);
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+
+        }
+
+
+        body {
+
+            margin: 0;
+            overflow-x: hidden;
+            background: var(--archive-black);
+            color: var(--archive-white);
+
+        }
+
+
+        img {
+
+            max-width: 100%;
+
+        }
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .site-header {
+
+            position: relative;
+            z-index: 9000;
+
+        }
+
+
+        .brand-logo-crop {
+
+            display: block;
+            width: 78px;
+            height: 58px;
+            overflow: hidden;
+            background: transparent;
+
+        }
+
+
+        .brand-logo {
+
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+
+        }
+
+
+        /* =========================================================
+           TICKER
+           ========================================================= */
+
+        .construction-ticker {
+
+            position: relative;
+            z-index: 100;
+            width: 100%;
+            overflow: hidden;
+            padding: 11px 0;
+            background: #050608;
+            border-top: 1px solid rgba(192,255,79,.22);
+            border-bottom: 1px solid rgba(192,255,79,.22);
+
+        }
+
+
+        .construction-ticker-track {
+
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: archiveTicker 28s linear infinite;
+
+        }
+
+
+        .construction-ticker-track span {
+
+            display: block;
+            flex-shrink: 0;
+            padding-right: 80px;
+            color: rgba(255,255,255,.82);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+
+        }
+
+
+        @keyframes archiveTicker {
+
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+
+        }
+
+
+        /* =========================================================
+           ARCHIVE INTRO
+           ========================================================= */
+
+        .archive-page {
+
+            min-height: 100vh;
+            background: #050608;
+
+        }
+
+
+        .archive-intro {
+
+            position: relative;
+            overflow: hidden;
+            padding: clamp(90px,12vw,160px) 0 clamp(70px,9vw,115px);
+            text-align: center;
+            background:
+                radial-gradient(
+                    circle at 50% 15%,
+                    rgba(192,255,79,.07),
+                    transparent 36%
+                ),
+                #050608;
+
+        }
+
+
+        .archive-intro::after {
+
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: min(800px,80%);
+            height: 1px;
+            transform: translateX(-50%);
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(192,255,79,.5),
+                    transparent
+                );
+
+        }
+
+
+        .archive-intro-inner {
+
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+
+        }
+
+
+        .archive-kicker {
+
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 900;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-kicker::before,
+        .archive-kicker::after {
+
+            content: "";
+            width: 32px;
+            height: 1px;
+            background: var(--archive-green);
+
+        }
+
+
+        .archive-intro h1 {
+
+            margin: 0 0 28px;
+            color: #fff;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(4rem,10vw,9rem);
+            line-height: .82;
+            font-weight: 900;
+            letter-spacing: -.055em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-intro h1 span {
+
+            display: block;
+            color: var(--archive-green);
+
+        }
+
+
+        .archive-intro-description {
+
+            max-width: 780px;
+            margin: 0 auto;
+            color: var(--archive-muted);
+            font-size: 1rem;
+            line-height: 1.85;
+
+        }
+
+
+        /* =========================================================
+           CASE ARCHIVE GRID
+           ========================================================= */
+
+        .archive-cases {
+
+            padding: clamp(70px,9vw,120px) 0;
+
+        }
+
+
+        .archive-section-heading {
+
+            max-width: 900px;
+            margin-bottom: 50px;
+
+        }
+
+
+        .archive-section-heading span {
+
+            display: block;
+            margin-bottom: 14px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 900;
+            letter-spacing: .20em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-section-heading h2 {
+
+            margin: 0 0 18px;
+            color: #fff;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3.2rem,7vw,6.5rem);
+            line-height: .85;
+            font-weight: 900;
+            letter-spacing: -.05em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-section-heading h2 strong {
+
+            color: var(--archive-green);
+            font-weight: 900;
+
+        }
+
+
+        .archive-section-heading p {
+
+            max-width: 720px;
+            margin: 0;
+            color: var(--archive-muted);
+            line-height: 1.8;
+
+        }
+
+
+        .archive-grid {
+
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 24px;
+
+        }
+
+
+        /* =========================================================
+           CASE CARD
+           ========================================================= */
+
+        .archive-card {
+
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.10);
+            background: #090b0d;
+            box-shadow: 0 30px 80px rgba(0,0,0,.35);
+
+        }
+
+
+        .archive-card-image {
+
+            position: relative;
+            height: 390px;
+            overflow: hidden;
+            background: #000;
+
+        }
+
+
+        .archive-card-image::after {
+
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0,0,0,.05),
+                    rgba(0,0,0,.72)
+                );
+
+        }
+
+
+        .archive-card-image img {
+
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .45s ease;
+
+        }
+
+
+        .archive-card:hover .archive-card-image img {
+
+            transform: scale(1.035);
+
+        }
+
+
+        .archive-card-status {
+
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            z-index: 2;
+            padding: 8px 12px;
+            border: 1px solid var(--archive-green);
+            background: rgba(5,6,8,.88);
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-card-case {
+
+            position: absolute;
+            left: 24px;
+            bottom: 24px;
+            z-index: 2;
+            color: rgba(255,255,255,.82);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-card-content {
+
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: clamp(28px,4vw,44px);
+
+        }
+
+
+        .archive-card-kicker {
+
+            margin-bottom: 12px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .68rem;
+            font-weight: 900;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-card h3 {
+
+            margin: 0 0 18px;
+            color: #fff;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(2.7rem,5vw,5rem);
+            line-height: .85;
+            font-weight: 900;
+            letter-spacing: -.045em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-card h3 span {
+
+            display: block;
+            color: var(--archive-green);
+
+        }
+
+
+        .archive-card-description {
+
+            margin: 0 0 28px;
+            color: var(--archive-text);
+            line-height: 1.8;
+
+        }
+
+
+        .archive-card-meta {
+
+            display: grid;
+            grid-template-columns: repeat(3,minmax(0,1fr));
+            margin-top: auto;
+            margin-bottom: 30px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .archive-meta-item {
+
+            min-width: 0;
+            padding: 18px 14px;
+            border-right: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .archive-meta-item:last-child {
+
+            border-right: 0;
+
+        }
+
+
+        .archive-meta-item small {
+
+            display: block;
+            margin-bottom: 7px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .62rem;
+            font-weight: 900;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-meta-item strong {
+
+            display: block;
+            color: #fff;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .88rem;
+            line-height: 1.2;
+            font-weight: 800;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-card-button {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            padding: 0 25px;
+            border: 1px solid var(--archive-green);
+            color: var(--archive-green);
+            background: transparent;
+            text-decoration: none;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .78rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            transition:
+                background .25s ease,
+                color .25s ease;
+
+        }
+
+
+        .archive-card-button span {
+
+            margin-left: 12px;
+            font-size: 1.1rem;
+
+        }
+
+
+        .archive-card-button:hover {
+
+            background: var(--archive-green);
+            color: #050608;
+
+        }
+
+
+        /* =========================================================
+           ARCHIVE STATUS
+           ========================================================= */
+
+        .archive-status {
+
+            padding: 0 0 clamp(75px,9vw,120px);
+
+        }
+
+
+        .archive-status-box {
+
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: clamp(32px,5vw,55px);
+            border: 1px solid rgba(192,255,79,.20);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(192,255,79,.035),
+                    rgba(255,255,255,.012)
+                );
+
+        }
+
+
+        .archive-status-box span {
+
+            display: block;
+            margin-bottom: 12px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-status-box h2 {
+
+            margin: 0 0 18px;
+            color: #fff;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(2.8rem,5vw,5rem);
+            line-height: .9;
+            font-weight: 900;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-status-box p {
+
+            max-width: 800px;
+            margin: 0;
+            color: var(--archive-muted);
+            line-height: 1.85;
+
+        }
+
+
+        .archive-status-box strong {
+
+            display: block;
+            margin-top: 25px;
+            color: var(--archive-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .78rem;
+            font-weight: 900;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+
+        }
+
+
+        .archive-actions {
+
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+
+        }
+
+
+        .archive-button {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 25px;
+            border: 1px solid var(--archive-green);
+            color: var(--archive-green);
+            background: transparent;
+            text-decoration: none;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: .78rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            transition:
+                background .25s ease,
+                color .25s ease;
+
+        }
+
+
+        .archive-button:hover {
+
+            background: var(--archive-green);
+            color: #050608;
+
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .site-footer {
+
+            background: #030405;
+            border-top: 1px solid rgba(192,255,79,.18);
+
+        }
+
+
+        .footer-links a:hover {
+
+            color: var(--archive-green);
+
+        }
+
+
+        /* =========================================================
+           TABLET
+           ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .archive-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .archive-card-image {
+
+                height: 420px;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .construction-ticker {
+
+                padding: 9px 0;
+
+            }
+
+
+            .construction-ticker-track span {
+
+                padding-right: 55px;
+                font-size: .62rem;
+                letter-spacing: .10em;
+
+            }
+
+
+            .archive-intro {
+
+                padding: 75px 0 65px;
+
+            }
+
+
+            .archive-kicker::before,
+            .archive-kicker::after {
+
+                width: 20px;
+
+            }
+
+
+            .archive-intro h1 {
+
+                font-size: clamp(3.5rem,18vw,6rem);
+
+            }
+
+
+            .archive-intro-description {
+
+                font-size: .92rem;
+
+            }
+
+
+            .archive-cases {
+
+                padding: 70px 0;
+
+            }
+
+
+            .archive-section-heading {
+
+                margin-bottom: 35px;
+
+            }
+
+
+            .archive-section-heading h2 {
+
+                font-size: clamp(3rem,15vw,4.8rem);
+
+            }
+
+
+            .archive-card-image {
+
+                height: 280px;
+
+            }
+
+
+            .archive-card-content {
+
+                padding: 26px 22px;
+
+            }
+
+
+            .archive-card h3 {
+
+                font-size: clamp(2.8rem,14vw,4.5rem);
+
+            }
+
+
+            .archive-card-meta {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .archive-meta-item {
+
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,.08);
+
+            }
+
+
+            .archive-meta-item:last-child {
+
+                border-bottom: 0;
+
+            }
+
+
+            .archive-status {
+
+                padding-bottom: 70px;
+
+            }
+
+
+            .archive-status-box {
+
+                padding: 30px 24px;
+
+            }
+
+
+            .archive-actions {
+
+                flex-direction: column;
+
+            }
+
+
+            .archive-button {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+
+                scroll-behavior: auto;
+
+            }
+
+
+            .construction-ticker-track {
+
+                animation: none;
+
+            }
+
+
+            .archive-card-image img {
+
+                transition: none;
+
+            }
+
+
+            .archive-card-button,
+            .archive-button {
+
+                transition: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+
+    <header class="site-header">
+
+        <div class="container header-container">
+
+            <a
+                href="/"
+                class="brand"
+                aria-label="Essex Paranormal home"
+            >
+
+                <span class="brand-logo-crop">
+
+                    <img
+                        src="/essex-paranormal-logo.png"
+                        alt="Essex Paranormal"
+                        class="brand-logo"
+                        decoding="async"
+                    >
+
+                </span>
+
+            </a>
+
+
+            <nav
+                id="main-navigation"
+                aria-label="Main navigation"
+            >
+
+                <a href="/#home">
+                    HOME
+                </a>
+
+                <a href="/#upcoming-events">
+                    UPCOMING EVENTS
+                </a>
+
+                <a href="/#about">
+                    MEET LEWIS
+                </a>
+
+                <a href="/#experiences">
+                    EXPERIENCES
+                </a>
+
+                <a
+                    href="/investigations/"
+                    class="active"
+                >
+                    INVESTIGATIONS
+                </a>
+
+                <a href="/#gallery">
+                    GALLERY
+                </a>
+
+                <a href="/#community">
+                    JOIN US
+                </a>
+
+                <a href="/#contact">
+                    CONTACT
+                </a>
+
+            </nav>
+
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="main-navigation"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         TICKER
+         ========================================================= -->
+
+    <div
+        class="construction-ticker"
+        role="status"
+        aria-label="Essex Paranormal investigation archive"
+    >
+
+        <div class="construction-ticker-track">
+
+            <span>
+                ESSEX PARANORMAL • INVESTIGATION ARCHIVE • HONEST • REAL • UNBIASED • EVIDENCE BEFORE ASSUMPTION •
+            </span>
+
+            <span aria-hidden="true">
+                ESSEX PARANORMAL • INVESTIGATION ARCHIVE • HONEST • REAL • UNBIASED • EVIDENCE BEFORE ASSUMPTION •
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <main class="archive-page">
+
+
+        <!-- =====================================================
+             ARCHIVE INTRO
+             ===================================================== -->
+
+        <section class="archive-intro">
+
+            <div class="container">
+
+                <div class="archive-intro-inner">
+
+                    <div class="archive-kicker">
+                        ESSEX PARANORMAL
+                    </div>
+
+
+                    <h1>
+                        INVESTIGATION
+                        <span>ARCHIVE.</span>
+                    </h1>
+
+
+                    <p class="archive-intro-description">
+                        The Essex Paranormal Investigation Archive documents investigations, case information, reported experiences, investigation methods and published media. Each case is presented as part of Essex Paranormal's commitment to honesty, evidence and accountability.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PUBLISHED CASE FILES
+             ===================================================== -->
+
+        <section class="archive-cases">
+
+            <div class="container">
+
+                <div class="archive-section-heading">
+
+                    <span>
+                        PUBLISHED INVESTIGATIONS
+                    </span>
+
+
+                    <h2>
+                        CASE
+                        <strong>FILES.</strong>
+                    </h2>
+
+
+                    <p>
+                        Explore the published Essex Paranormal investigation case files. Each investigation has its own dedicated case page containing the available investigation information and media.
+                    </p>
+
+                </div>
+
+
+                <div class="archive-grid">
+
+
+                    <!-- =================================================
+                         EP-001 HMP ASHWELL
+                         ================================================= -->
+
+                    <article
+                        class="archive-card"
+                        id="hmp-ashwell"
+                    >
+
+                        <div class="archive-card-image">
+
+                            <img
+                                src="/hmp-ashwell.PNG"
+                                alt="Former HMP Ashwell prison entrance"
+                                loading="eager"
+                                decoding="async"
+                            >
+
+
+                            <span class="archive-card-status">
+                                PUBLISHED
+                            </span>
+
+
+                            <span class="archive-card-case">
+                                EP-001 · HMP ASHWELL
+                            </span>
+
+                        </div>
+
+
+                        <div class="archive-card-content">
+
+                            <div class="archive-card-kicker">
+                                CASE FILE EP-001
+                            </div>
+
+
+                            <h3>
+                                HMP
+                                <span>ASHWELL.</span>
+                            </h3>
+
+
+                            <p class="archive-card-description">
+                                An Essex Paranormal investigation into the former HMP Ashwell site, combining location research, observation, documentation and evidence-led review.
+                            </p>
+
+
+                            <div class="archive-card-meta">
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        LOCATION
+                                    </small>
+
+                                    <strong>
+                                        RUTLAND
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        TYPE
+                                    </small>
+
+                                    <strong>
+                                        FORMER PRISON
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        METHOD
+                                    </small>
+
+                                    <strong>
+                                        EVIDENCE LED
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="/investigations/hmp-ashwell.html"
+                                class="archive-card-button"
+                            >
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         EP-002 GRAIN BATTERY
+                         ================================================= -->
+
+                    <article
+                        class="archive-card"
+                        id="grain-battery"
+                    >
+
+                        <div class="archive-card-image">
+
+                            <img
+                                src="/investigations/grain-battery-01.JPG"
+                                alt="Grain Battery Tower sea fort investigation location"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+
+                            <span class="archive-card-status">
+                                PUBLISHED
+                            </span>
+
+
+                            <span class="archive-card-case">
+                                EP-002 · GRAIN BATTERY TOWER
+                            </span>
+
+                        </div>
+
+
+                        <div class="archive-card-content">
+
+                            <div class="archive-card-kicker">
+                                CASE FILE EP-002
+                            </div>
+
+
+                            <h3>
+                                GRAIN BATTERY
+                                <span>TOWER.</span>
+                            </h3>
+
+
+                            <p class="archive-card-description">
+                                An overnight lockdown paranormal investigation at Grain Battery Tower, focusing on audio phenomena, movement, environmental changes and potential intelligent communication.
+                            </p>
+
+
+                            <div class="archive-card-meta">
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        LOCATION
+                                    </small>
+
+                                    <strong>
+                                        GRAIN, KENT
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        TYPE
+                                    </small>
+
+                                    <strong>
+                                        SEA FORT
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="archive-meta-item">
+
+                                    <small>
+                                        METHOD
+                                    </small>
+
+                                    <strong>
+                                        OVERNIGHT LOCKDOWN
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="/investigations/grain-battery.html"
+                                class="archive-card-button"
+                            >
+                                VIEW CASE FILE
+                                <span>→</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ARCHIVE STATUS
+             ===================================================== -->
+
+        <section class="archive-status">
+
+            <div class="container">
+
+                <div class="archive-status-box">
+
+                    <span>
+                        ARCHIVE STATUS
+                    </span>
+
+
+                    <h2>
+                        MORE INVESTIGATIONS
+                        <span style="color:#c0ff4f;">
+                            WILL BE ADDED.
+                        </span>
+                    </h2>
+
+
+                    <p>
+                        The Essex Paranormal investigation archive will continue to grow as further investigations are completed, reviewed and prepared for publication. Published investigations will appear here with their own dedicated case files.
+                    </p>
+
+
+                    <strong>
+                        EP-001 · HMP ASHWELL &nbsp; / &nbsp; EP-002 · GRAIN BATTERY TOWER
+                    </strong>
+
+
+                    <div class="archive-actions">
+
+                        <a
+                            href="/"
+                            class="archive-button"
+                        >
+                            BACK TO MAIN WEBSITE
+                        </a>
+
+
+                        <a
+                            href="/#investigations"
+                            class="archive-button"
+                        >
+                            MAIN INVESTIGATIONS
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-main">
+
+
+                <div class="footer-brand">
+
+                    <span class="footer-logo-crop">
+
+                        <img
+                            src="/essex-paranormal-logo.png"
+                            alt="Essex Paranormal"
+                            decoding="async"
+                        >
+
+                    </span>
+
+
+                    <p>
+                        HONEST. REAL. UNBIASED.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <span>
+                        QUICK LINKS
+                    </span>
+
+
+                    <a href="/">
+                        HOME
+                    </a>
+
+
+                    <a href="/#upcoming-events">
+                        UPCOMING EVENTS
+                    </a>
+
+
+                    <a href="/#about">
+                        MEET LEWIS
+                    </a>
+
+
+                    <a href="/#experiences">
+                        EXPERIENCES
+                    </a>
+
+
+                    <a href="/investigations/">
+                        INVESTIGATIONS
+                    </a>
+
+
+                    <a href="/#gallery">
+                        GALLERY
+                    </a>
+
+
+                    <a href="/#community">
+                        JOIN US
+                    </a>
+
+
+                    <a href="/#contact">
+                        CONTACT
+                    </a>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <span>
+                        INVESTIGATIONS
+                    </span>
+
+
+                    <a href="/investigations/hmp-ashwell.html">
+                        HMP ASHWELL
+                    </a>
+
+
+                    <a href="/investigations/grain-battery.html">
+                        GRAIN BATTERY TOWER
+                    </a>
+
+
+                    <a href="/investigations/">
+                        INVESTIGATION ARCHIVE
+                    </a>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <span>
+                        LEGAL
+                    </span>
+
+
+                    <a href="/privacy-policy.html">
+                        PRIVACY
+                    </a>
+
+
+                    <a href="/cookie-policy.html">
+                        COOKIES
+                    </a>
+
+
+                    <a href="/terms.html">
+                        TERMS
+                    </a>
+
+
+                    <a href="/disclaimer.html">
+                        DISCLAIMER
+                    </a>
+
+
+                    <a href="/copyright.html">
+                        COPYRIGHT
+                    </a>
+
+
+                    <a href="/accessibility.html">
+                        ACCESSIBILITY
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © <span id="current-year"></span> Essex Paranormal. All rights reserved.
+                </span>
+
+
+                <span>
+                    HONEST • REAL • UNBIASED
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="/script.js"></script>
+
+
+</body>
+
+</html>
