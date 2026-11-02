@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Book Your Investigation | Essex Paranormal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        :root {
+            --ep-green: #C0FF4F;
+            --ep-green-bright: #d5ff78;
+            --ep-black: #050608;
+            --ep-panel: rgba(9, 12, 14, 0.78);
+            --ep-white: #ffffff;
+            --ep-muted: rgba(255,255,255,.68);
+            --ep-border: rgba(192,255,79,.22);
+        }
+
+        body {
+            background: 
+                linear-gradient(180deg, rgba(5,6,8,.32), rgba(5,6,8,.78)),
+                url("/essex-paranormal-cinematic-background.webp") center top / cover fixed no-repeat;
+            background-color: var(--ep-black);
+            color: var(--ep-white);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .bookings-page {
+            padding-top: calc(var(--header-height) + 60px);
+            padding-bottom: 100px;
+            min-height: 100svh;
+        }
+
+        .bookings-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .bookings-header h1 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.045em;
+            margin: 0;
+        }
+
+        .bookings-header h1 span {
+            color: var(--ep-green);
+            display: block;
+        }
+
+        .bookings-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (min-width: 1024px) {
+            .bookings-layout {
+                grid-template-columns: 450px 1fr;
+            }
+        }
+
+        /* CALENDAR SECTION */
+        .calendar-container {
+            background: var(--ep-panel);
+            border: 1px solid var(--ep-border);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: calc(var(--header-height) + 20px);
+        }
+
+        .calendar-title {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--ep-white);
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--ep-border);
+            color: var(--ep-white);
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--ep-green);
+            color: var(--ep-green);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .day-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--ep-muted);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            color: var(--ep-white);
+        }
+
+        .day:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--ep-border);
+        }
+
+        .day.active {
+            background: var(--ep-green);
+            color: var(--ep-black);
+            font-weight: 900;
+        }
+
+        .day.has-event {
+            box-shadow: inset 0 0 0 2px var(--ep-green);
+            color: #fff;
+        }
+
+        .day.disabled {
+            color: rgba(255,255,255,0.2);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* FORM SECTION */
+        .booking-form-container {
+            background: var(--ep-panel);
+            border: 1px solid var(--ep-border);
+            border-radius: 12px;
+            padding: 40px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .form-section-title {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            color: var(--ep-white);
+            border-bottom: 1px solid var(--ep-border);
+            padding-bottom: 10px;
+        }
+
+        .booking-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field label {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ep-green);
+        }
+
+        .field input, .field textarea, .field select {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--ep-border);
+            padding: 14px;
+            color: #fff;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.2s ease;
+        }
+
+        .field input:focus, .field textarea:focus {
+            outline: none;
+            border-color: var(--ep-green);
+        }
+
+        /* PAYMENT OPTIONS */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .payment-card {
+            border: 1px solid var(--ep-border);
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .payment-card.selected {
+            border-color: var(--ep-green);
+            background: rgba(192,255,79,0.08);
+            box-shadow: 0 0 15px rgba(192,255,79,0.1);
+        }
+
+        .payment-card h4 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .payment-card p {
+            font-size: 13px;
+            color: var(--ep-muted);
+            margin: 0;
+        }
+
+        /* GIFT OPTION */
+        .gift-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .gift-toggle input {
+            accent-color: var(--ep-green);
+            width: 18px;
+            height: 18px;
+        }
+
+        .gift-toggle span {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .gift-fields {
+            display: none;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--ep-green);
+            margin-bottom: 20px;
+        }
+
+        .gift-fields.active { display: grid; }
+
+        /* SUMMARY */
+        .booking-summary {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(192,255,79,0.07);
+            border: 1px dashed var(--ep-green);
+            border-radius: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .summary-row.total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--ep-border);
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--ep-green);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 30px;
+            padding: 20px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="/" class="brand">
+                <div class="brand-logo-crop">
+                    <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo">
+                </div>
+            </a>
+            <nav id="main-navigation">
+                <a href="index.html#home">HOME</a>
+                <a href="bookings.html" class="active">BOOK A GHOST HUNT</a>
+                <a href="index.html#about">ABOUT</a>
+                <a href="index.html#experiences">EXPERIENCES</a>
+                <a href="index.html#contact">CONTACT</a>
+            </nav>
+            <button class="menu-toggle" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="bookings-page">
+        <div class="container">
+            <div class="bookings-header">
+                <h1>BOOK YOUR <span>INVESTIGATION</span></h1>
+            </div>
+
+            <div class="bookings-layout">
+                <!-- Left: Calendar -->
+                <aside class="calendar-container">
+                    <div class="calendar-title">
+                        <span id="monthDisplay">NOVEMBER 2026</span>
+                        <div class="calendar-nav">
+                            <button class="nav-btn" id="prevMonth">&larr;</button>
+                            <button class="nav-btn" id="nextMonth">&rarr;</button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <div class="day-label">SUN</div><div class="day-label">MON</div>
+                        <div class="day-label">TUE</div><div class="day-label">WED</div>
+                        <div class="day-label">THU</div><div class="day-label">FRI</div>
+                        <div class="day-label">SAT</div>
+                    </div>
+                </aside>
+
+                <!-- Right: Booking Details -->
+                <section class="booking-form-container">
+                    <h3 class="form-section-title">YOUR BOOKING DETAILS</h3>
+                    
+                    <form class="booking-form" id="bookingForm">
+                        <!-- Event Selection (Hidden input) -->
+                        <input type="hidden" id="selectedEventId" name="event_id" required>
+
+                        <div class="form-row">
+                            <div class="field">
+                                <label for="customerName">Full Name</label>
+                                <input type="text" id="customerName" required placeholder="Enter your name">
+                            </div>
+                            <div class="field">
+                                <label for="customerPhone">Telephone</label>
+                                <input type="tel" id="customerPhone" required placeholder="+44 7000 000000">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="customerEmail">Email Address</label>
+                            <input type="email" id="customerEmail" required placeholder="email@example.com">
+                        </div>
+
+                        <div class="field">
+                            <label for="ticketQty">Number of Tickets</label>
+                            <input type="number" id="ticketQty" min="1" max="10" value="1" required>
+                        </div>
+
+                        <!-- Gift Option -->
+                        <label class="gift-toggle">
+                            <input type="checkbox" id="isGift">
+                            <span>Buy as a Gift</span>
+                        </label>
+
+                        <div id="giftFields" class="gift-fields">
+                            <div class="field">
+                                <label for="recipientName">Recipient's Full Name</label>
+                                <input type="text" id="recipientName" placeholder="Who is this for?">
+                            </div>
+                            <div class="field">
+                                <label for="recipientEmail">Recipient's Email (Optional)</label>
+                                <input type="email" id="recipientEmail" placeholder="email@example.com">
+                            </div>
+                            <div class="field">
+                                <label for="giftMessage">Personal Gift Message</label>
+                                <textarea id="giftMessage" rows="3" placeholder="Your message..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="payment-grid">
+                            <div class="payment-card selected" data-type="deposit">
+                                <h4>Deposit</h4>
+                                <p>£20 per ticket. Balance due later.</p>
+                            </div>
+                            <div class="payment-card" data-type="full">
+                                <h4>Pay in Full</h4>
+                                <p>£60 per ticket. Fully paid.</p>
+                            </div>
+                        </div>
+
+                        <div class="booking-summary">
+                            <div class="summary-row">
+                                <span id="paymentLabel">Deposit per ticket:</span>
+                                <span id="perTicketPrice">£20.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span id="totalLabel">TOTAL DEPOSIT DUE:</span>
+                                <span id="totalDue">£20.00</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="button button-primary submit-btn">
+                            PROCEED TO SECURE PAYMENT &rarr;
+                        </button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="/script.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const monthDisplay = document.getElementById('monthDisplay');
+            const bookingForm = document.getElementById('bookingForm');
+            const ticketQtyInput = document.getElementById('ticketQty');
+            const totalDueEl = document.getElementById('totalDue');
+            const perTicketPriceEl = document.getElementById('perTicketPrice');
+            const totalLabelEl = document.getElementById('totalLabel');
+            const paymentLabelEl = document.getElementById('paymentLabel');
+            const giftCheckbox = document.getElementById('isGift');
+            const giftFields = document.getElementById('giftFields');
+
+            let currentDate = new Date();
+            let selectedDate = new Date();
+            let paymentType = 'deposit';
+
+            // Mock Events (Sourced from Supabase in production)
+            const mockEvents = [
+                { id: 'ev_001', title: 'HMP Ashwell Overnight', date: '2026-11-15', price: 60 },
+                { id: 'ev_002', title: 'Grain Battery Tower', date: '2026-11-22', price: 60 }
+            ];
+
+            function renderCalendar() {
+                const labels = document.querySelectorAll('.day-label');
+                calendarGrid.innerHTML = '';
+                labels.forEach(l => calendarGrid.appendChild(l));
+
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                monthDisplay.textContent = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).toUpperCase();
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'day disabled';
+                    calendarGrid.appendChild(div);
+                }
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const day = document.createElement('div');
+                    day.className = 'day';
+                    day.textContent = d;
+
+                    if (dateStr === selectedDate.toISOString().split('T')[0]) day.classList.add('active');
+                    if (mockEvents.some(e => e.date === dateStr)) day.classList.add('has-event');
+
+                    day.onclick = () => {
+                        selectedDate = new Date(year, month, d);
+                        document.getElementById('selectedEventId').value = mockEvents.find(e => e.date === dateStr)?.id || '';
+                        renderCalendar();
+                    };
+                    calendarGrid.appendChild(day);
+                }
+            }
+
+            function updatePricing() {
+                const qty = parseInt(ticketQtyInput.value) || 1;
+                const perTicket = paymentType === 'deposit' ? 20 : 60;
+                perTicketPriceEl.textContent = `£${perTicket}.00`;
+                totalDueEl.textContent = `£${(qty * perTicket).toFixed(2)}`;
+                paymentLabelEl.textContent = paymentType === 'deposit' ? 'Deposit per ticket:' : 'Full price per ticket:';
+                totalLabelEl.textContent = paymentType === 'deposit' ? 'TOTAL DEPOSIT DUE:' : 'TOTAL DUE:';
+            }
+
+            ticketQtyInput.oninput = updatePricing;
+
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.onclick = () => {
+                    document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    paymentType = card.dataset.type;
+                    updatePricing();
+                };
+            });
+
+            giftCheckbox.onchange = () => {
+                giftFields.classList.toggle('active', giftCheckbox.checked);
+            };
+
+            bookingForm.onsubmit = (e) => {
+                e.preventDefault();
+                const eventId = document.getElementById('selectedEventId').value;
+                if (!eventId) return alert('Please select a date with an available investigation first.');
+                
+                alert(`Integration Boundary: Redirecting to SumUp for ${paymentType} payment of ${totalDueEl.textContent}.\nEvent ID: ${eventId}\nGift: ${giftCheckbox.checked}`);
+            };
+
+            document.getElementById('prevMonth').onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); };
+            document.getElementById('nextMonth').onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
+
+            renderCalendar();
+            updatePricing();
+        });
+    </script>
+</body>
+</html>
