@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Upcoming Ghost Hunts | Essex Paranormal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        :root {
+            --ep-green: #C0FF4F;
+            --ep-black: #050608;
+            --ep-white: #ffffff;
+            --ep-muted: rgba(255,255,255,.68);
+            --ep-border: rgba(192,255,79,.22);
+        }
+        body {
+            background: 
+                linear-gradient(180deg, rgba(5,6,8,.32), rgba(5,6,8,.78)),
+                url("/essex-paranormal-cinematic-background.webp") center top / cover fixed no-repeat;
+            background-color: var(--ep-black);
+            color: var(--ep-white);
+            font-family: 'Inter', sans-serif;
+        }
+        .events-page {
+            padding-top: calc(var(--header-height) + 60px);
+            padding-bottom: 100px;
+            min-height: 100svh;
+        }
+        .events-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .events-header h1 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -0.045em;
+            margin: 0;
+        }
+        .events-header h1 span {
+            color: var(--ep-green);
+            display: block;
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .event-card {
+            background: rgba(9, 12, 14, 0.78);
+            border: 1px solid var(--ep-border);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--ep-green);
+        }
+        .event-card h3 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .event-meta {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--ep-muted);
+        }
+        .event-meta div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .event-meta strong {
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            width: 100px;
+            flex-shrink: 0;
+        }
+        .event-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--ep-muted);
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--ep-border);
+        }
+        .ticket-info {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .ticket-info span {
+            color: var(--ep-green);
+            font-size: 18px;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--ep-muted);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="/" class="brand">
+                <div class="brand-logo-crop">
+                    <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo">
+                </div>
+            </a>
+            <nav id="main-navigation">
+                <a href="index.html#home">HOME</a>
+                <a href="booking-events.html" class="active">BOOKING EVENTS</a>
+                <a href="index.html#about">ABOUT</a>
+                <a href="index.html#experiences">EXPERIENCES</a>
+                <a href="index.html#contact">CONTACT</a>
+            </nav>
+            <button class="menu-toggle" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="events-page">
+        <div class="container">
+            <div class="events-header">
+                <h1>UPCOMING <span>GHOST HUNTS</span></h1>
+            </div>
+            <div id="events-grid" class="events-grid">
+                <!-- Events injected by JS -->
+            </div>
+            <div id="event-empty-state" class="empty-state" style="display: none;">
+                No upcoming investigations currently scheduled. Please check back soon.
+            </div>
+        </div>
+    </main>
+
+    <script src="/script.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const eventsGrid = document.getElementById('events-grid');
+            const emptyState = document.getElementById('event-empty-state');
+            
+            try {
+                // Fetch events from Supabase (using the same pattern as public-content.js)
+                const response = await fetch('https://bluprrtwvubrqgzuimyc.supabase.co/functions/v1/public-website-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ domain: 'essexparanormal.com' })
+                });
+                const payload = await response.json();
+                
+                if (!payload || !payload.content) throw new Error('No data');
+
+                const events = payload.content.filter(entry => {
+                    const data = entry.content;
+                    return data.recordType === 'event' || data.section === 'events';
+                });
+
+                if (events.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                events.forEach(entry => {
+                    const data = entry.content;
+                    const card = document.createElement('div');
+                    card.className = 'event-card';
+                    card.innerHTML = \`
+                        <h3>\${data.title || 'Ghost Hunt'}</h3>
+                        <div class="event-meta">
+                            <div><strong>DATE</strong> \${data.date || 'TBA'}</div>
+                            <div><strong>LOCATION</strong> \${data.location || 'Essex'}</div>
+                            <div><strong>TICKETS</strong> \${data.remaining || 'Limited'} available</div>
+                        </div>
+                        <p class="event-description">\${data.text || 'Investigation details coming soon.'}</p>
+                        <div class="event-footer">
+                            <div class="ticket-info">PRICE <span>£\${data.price || '60'}</span></div>
+                            <a href="bookings.html?event_id=\${entry.contentKey}" class="button button-primary">BOOK NOW &rarr;</a>
+                        </div>
+                    \`;
+                    eventsGrid.appendChild(card);
+                });
+            } catch (e) {
+                console.error('Error loading events:', e);
+                emptyState.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
