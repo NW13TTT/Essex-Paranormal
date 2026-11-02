@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings | Essex Paranormal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Booking Page Specific Styles */
+        .bookings-container {
+            padding-top: calc(var(--header-height) + 40px);
+            padding-bottom: 100px;
+            min-height: 100svh;
+        }
+
+        .bookings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        @media (min-width: 1024px) {
+            .bookings-grid {
+                grid-template-columns: 400px 1fr;
+            }
+        }
+
+        /* Calendar Styling */
+        .booking-calendar {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            height: fit-content;
+            position: sticky;
+            top: calc(var(--header-height) + 20px);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar-day-label {
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--muted-dark);
+            letter-spacing: 0.1em;
+            padding-bottom: 10px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+            color: var(--white-soft);
+        }
+
+        .calendar-day:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--border);
+        }
+
+        .calendar-day.active {
+            background: var(--orange);
+            color: var(--black);
+            font-weight: 900;
+        }
+
+        .calendar-day.has-event {
+            box-shadow: inset 0 0 0 2px var(--orange);
+            color: #fff;
+        }
+
+        .calendar-day.disabled {
+            color: var(--muted-dark);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Event List Styling */
+        .event-selection-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .event-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            transition: transform 0.3s var(--ease), border-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            border-color: var(--orange);
+            transform: translateY(-4px);
+        }
+
+        .event-card.selected {
+            border-color: var(--orange);
+            background: rgba(183, 255, 0, 0.05);
+        }
+
+        .event-card.selected::after {
+            content: "SELECTED";
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--orange);
+            color: var(--black);
+            font-size: 9px;
+            font-weight: 900;
+            padding: 4px 30px;
+            transform: rotate(45deg);
+        }
+
+        .event-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: var(--white-soft);
+        }
+
+        .detail-item strong {
+            display: block;
+            color: var(--orange);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        .event-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--white-soft);
+            margin-bottom: 25px;
+        }
+
+        /* Booking Form Modal */
+        .booking-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            place-items: center;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--black-soft);
+            border: 1px solid var(--border);
+            width: min(600px, 90vw);
+            padding: 40px;
+            border-radius: 12px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--white-soft);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-field label {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: var(--orange);
+        }
+
+        .form-field input, .form-field textarea {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            padding: 12px;
+            color: #fff;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .form-field input:focus, .form-field textarea:focus {
+            outline: none;
+            border-color: var(--orange);
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 10px 0;
+        }
+
+        .payment-option-card {
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.02);
+        }
+
+        .payment-option-card.selected {
+            border-color: var(--orange);
+            background: rgba(183, 255, 0, 0.05);
+        }
+
+        .payment-option-card h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .payment-option-card p {
+            font-size: 12px;
+            color: var(--white-soft);
+        }
+
+        .deposit-summary {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(183, 255, 0, 0.1);
+            border: 1px dashed var(--orange);
+            border-radius: 4px;
+        }
+
+        .deposit-summary p {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .deposit-summary .total {
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--orange);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted-dark);
+        }
+
+        .gift-section {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .gift-section.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="/" class="brand">
+                <div class="brand-logo-crop">
+                    <img src="essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo">
+                </div>
+            </a>
+            <nav id="main-navigation">
+                <a href="index.html#home">HOME</a>
+                <a href="bookings.html" class="active">BOOKINGS</a>
+                <a href="index.html#about">ABOUT</a>
+                <a href="index.html#experiences">EXPERIENCES</a>
+                <a href="index.html#contact">CONTACT</a>
+            </nav>
+            <button class="menu-toggle" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="bookings-container">
+        <div class="container">
+            <div class="section-heading">
+                <p class="eyebrow">RESERVATIONS</p>
+                <h2>BOOK YOUR <span style="color: var(--orange);">INVESTIGATION.</span></h2>
+                <p>Secure your place on our upcoming ghost hunts. Standard tickets are £60. You can choose to pay a deposit of £20 per ticket or pay in full.</p>
+            </div>
+
+            <div class="bookings-grid">
+                <aside class="booking-calendar">
+                    <div class="calendar-header">
+                        <button id="prevMonth" class="button button-outline" style="min-height: 30px; padding: 0 10px;">&larr;</button>
+                        <h3 id="currentMonth" style="font-size: 14px; letter-spacing: 0.1em;">NOVEMBER 2026</h3>
+                        <button id="nextMonth" class="button button-outline" style="min-height: 30px; padding: 0 10px;">&rarr;</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <div class="calendar-day-label">SUN</div>
+                        <div class="calendar-day-label">MON</div>
+                        <div class="calendar-day-label">TUE</div>
+                        <div class="calendar-day-label">WED</div>
+                        <div class="calendar-day-label">THU</div>
+                        <div class="calendar-day-label">FRI</div>
+                        <div class="calendar-day-label">SAT</div>
+                    </div>
+                </aside>
+
+                <section class="event-selection-area">
+                    <div id="event-list" class="event-list"></div>
+                    <div id="event-empty-state" class="empty-state" style="display: none;">
+                        <p>No investigations available for the selected date.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div id="bookingModal" class="booking-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h3 id="modalTitle" style="margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.1em;">Complete Your Booking</h3>
+            
+            <form class="booking-form" id="bookingForm">
+                <div id="standardFields" class="form-fields">
+                    <div class="form-field">
+                        <label for="customerName">FULL NAME</label>
+                        <input type="text" id="customerName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-field">
+                        <label for="customerEmail">EMAIL ADDRESS</label>
+                        <input type="email" id="customerEmail" required placeholder="email@example.com">
+                    </div>
+                    <div class="form-field">
+                        <label for="customerPhone">TELEPHONE NUMBER</label>
+                        <input type="text" id="customerPhone" required placeholder="+44 7000 000000">
+                    </div>
+                </div>
+
+                <div id="giftFields" class="gift-section">
+                    <div class="form-field">
+                        <label for="recipientName">RECIPIENT FULL NAME</label>
+                        <input type="text" id="recipientName" placeholder="Who is this gift for?">
+                    </div>
+                    <div class="form-field">
+                        <label for="recipientEmail">RECIPIENT EMAIL (OPTIONAL)</label>
+                        <input type="email" id="recipientEmail" placeholder="email@example.com">
+                    </div>
+                    <div class="form-field">
+                        <label for="giftMessage">PERSONAL GIFT MESSAGE</label>
+                        <textarea id="giftMessage" rows="3" placeholder="Write your message here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="ticketQty">NUMBER OF TICKETS</label>
+                    <input type="number" id="ticketQty" min="1" max="10" value="1" required>
+                </div>
+
+                <div class="payment-options">
+                    <div class="payment-option-card selected" data-type="deposit">
+                        <h4>DEPOSIT</h4>
+                        <p>£20 per ticket. Balance due later.</p>
+                    </div>
+                    <div class="payment-option-card" data-type="full">
+                        <h4>PAY IN FULL</h4>
+                        <p>£60 per ticket. Fully paid.</p>
+                    </div>
+                </div>
+
+                <div class="deposit-summary">
+                    <p><span id="paymentLabel">Deposit per ticket:</span> <span id="perTicketPrice">£20.00</span></p>
+                    <p class="total"><span id="totalLabel">TOTAL DEPOSIT DUE:</span> <span id="totalDue">£20.00</span></p>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button type="button" id="toggleGift" class="button button-outline" style="flex: 1; font-size: 11px;">BUY AS A GIFT</button>
+                    <button type="submit" class="button button-primary" style="flex: 2;">
+                        PROCEED TO PAYMENT
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const currentMonthEl = document.getElementById('currentMonth');
+            const eventList = document.getElementById('event-list');
+            const emptyState = document.getElementById('event-empty-state');
+            const bookingModal = document.getElementById('bookingModal');
+            const bookingForm = document.getElementById('bookingForm');
+            const ticketQtyInput = document.getElementById('ticketQty');
+            const totalDueEl = document.getElementById('totalDue');
+            const perTicketPriceEl = document.getElementById('perTicketPrice');
+            const totalLabelEl = document.getElementById('totalLabel');
+            const paymentLabelEl = document.getElementById('paymentLabel');
+            
+            let currentDate = new Date();
+            let selectedDate = new Date();
+            let availableEvents = []; 
+            let selectedEvent = null;
+            let isGift = false;
+            let paymentType = 'deposit';
+
+            const mockEvents = [
+                { id: 'ev_001', title: 'HMP Ashwell Overnight', date: '2026-11-15', time: '20:00 - 08:00', location: 'Hertfordshire', description: 'Overnight investigation in one of the UK\'s most haunted prisons.', price: 60, capacity: 20, remaining: 5 },
+                { id: 'ev_002', title: 'Grain Battery Tower', date: '2026-11-22', time: '19:00 - 23:00', location: 'Kent', description: 'Exploring the eerie Battery Tower under moonlight.', price: 60, capacity: 15, remaining: 12 }
+            ];
+
+            function renderCalendar() {
+                const labels = document.querySelectorAll('.calendar-day-label');
+                calendarGrid.innerHTML = '';
+                labels.forEach(l => calendarGrid.appendChild(l));
+                const year = currentDate.getFullYear();
+                const month = currentDate.getMonth();
+                currentMonthEl.textContent = new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).toUpperCase();
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                for (let i = 0; i < firstDay; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'calendar-day disabled';
+                    calendarGrid.appendChild(div);
+                }
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day';
+                    day.textContent = d;
+                    if (dateStr === selectedDate.toISOString().split('T')[0]) day.classList.add('active');
+                    if (mockEvents.some(e => e.date === dateStr)) day.classList.add('has-event');
+                    day.onclick = () => { selectedDate = new Date(year, month, d); renderCalendar(); filterEvents(); };
+                    calendarGrid.appendChild(day);
+                }
+            }
+
+            function filterEvents() {
+                const dateStr = selectedDate.toISOString().split('T')[0];
+                availableEvents = mockEvents.filter(e => e.date === dateStr);
+                if (availableEvents.length === 0) { eventList.innerHTML = ''; emptyState.style.display = 'block'; return; }
+                emptyState.style.display = 'none';
+                eventList.innerHTML = '';
+                availableEvents.forEach(event => {
+                    const card = document.createElement('div');
+                    card.className = 'event-card';
+                    card.innerHTML = `
+                        <div class="event-details">
+                            <div class="detail-item"><strong>TIME</strong>${event.time}</div>
+                            <div class="detail-item"><strong>LOCATION</strong>${event.location}</div>
+                            <div class="detail-item"><strong>PRICE</strong>£${event.price}</div>
+                            <div class="detail-item"><strong>AVAILABILITY</strong>${event.remaining}/${event.capacity}</div>
+                        </div>
+                        <h3>${event.title}</h3>
+                        <p class="event-description">${event.description}</p>
+                        <button class="button button-primary" style="width: 100%">BOOK NOW</button>
+                    `;
+                    card.onclick = () => openBookingModal(event);
+                    eventList.appendChild(card);
+                });
+            }
+
+            function openBookingModal(event) {
+                selectedEvent = event;
+                bookingModal.style.display = 'grid';
+                document.body.style.overflow = 'hidden';
+                updatePricing();
+            }
+
+            document.getElementById('closeModal').onclick = () => {
+                bookingModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            document.querySelectorAll('.payment-option-card').forEach(card => {
+                card.onclick = () => {
+                    document.querySelectorAll('.payment-option-card').forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    paymentType = card.dataset.type;
+                    updatePricing();
+                };
+            });
+
+            function updatePricing() {
+                const qty = parseInt(ticketQtyInput.value) || 1;
+                const perTicket = paymentType === 'deposit' ? 20 : 60;
+                perTicketPriceEl.textContent = `£${perTicket}.00`;
+                totalDueEl.textContent = `£${(qty * perTicket).toFixed(2)}`;
+                
+                if (paymentType === 'deposit') {
+                    paymentLabelEl.textContent = 'Deposit per ticket:';
+                    totalLabelEl.textContent = 'TOTAL DEPOSIT DUE:';
+                } else {
+                    paymentLabelEl.textContent = 'Full price per ticket:';
+                    totalLabelEl.textContent = 'TOTAL DUE:';
+                }
+            }
+
+            ticketQtyInput.oninput = updatePricing;
+
+            document.getElementById('toggleGift').onclick = () => {
+                isGift = !isGift;
+                document.getElementById('giftFields').classList.toggle('active', isGift);
+                document.getElementById('modalTitle').textContent = isGift ? 'Gift a Ghost Hunt' : 'Complete Your Booking';
+                document.getElementById('toggleGift').textContent = isGift ? 'BOOK FOR MYSELF' : 'BUY AS A GIFT';
+                document.getElementById('standardFields').style.opacity = isGift ? '0.6' : '1';
+            };
+
+            bookingForm.onsubmit = (e) => {
+                e.preventDefault();
+                alert(`Integration Boundary: Redirecting to SumUp for ${paymentType} payment of ${totalDueEl.textContent}.\nGift: ${isGift ? 'Yes' : 'No'}`);
+            };
+
+            document.getElementById('prevMonth').onclick = () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); filterEvents(); };
+            document.getElementById('nextMonth').onclick = () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); filterEvents(); };
+
+            renderCalendar();
+            filterEvents();
+        });
+    </script>
+</body>
+</html>
