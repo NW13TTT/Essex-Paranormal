@@ -1,13 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#050608">
+
     <title>Upcoming Ghost Hunts | Essex Paranormal</title>
+    <meta name="description" content="Explore upcoming Essex Paranormal ghost hunts and paranormal investigations. Choose an event and book your tickets securely.">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="/style.css">
+
     <style>
         :root {
             --ep-green: #C0FF4F;
@@ -16,205 +24,655 @@
             --ep-muted: rgba(255,255,255,.68);
             --ep-border: rgba(192,255,79,.22);
         }
+
         body {
-            background: 
-                linear-gradient(180deg, rgba(5,6,8,.32), rgba(5,6,8,.78)),
-                url("/essex-paranormal-cinematic-background.webp") center top / cover fixed no-repeat;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(5,6,8,.32),
+                    rgba(5,6,8,.88)
+                ),
+                url("/essex-paranormal-cinematic-background.webp")
+                center top / cover fixed no-repeat;
+
             background-color: var(--ep-black);
             color: var(--ep-white);
             font-family: 'Inter', sans-serif;
         }
+
         .events-page {
             padding-top: calc(var(--header-height) + 60px);
             padding-bottom: 100px;
             min-height: 100svh;
         }
+
         .events-header {
             text-align: center;
             margin-bottom: 60px;
         }
+
         .events-header h1 {
             font-family: "Barlow Condensed", sans-serif;
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
             text-transform: uppercase;
-            line-height: 0.9;
-            letter-spacing: -0.045em;
+            line-height: .9;
+            letter-spacing: -.045em;
             margin: 0;
         }
+
         .events-header h1 span {
             color: var(--ep-green);
             display: block;
         }
+
+        .events-intro {
+            max-width: 650px;
+            margin: 24px auto 0;
+            color: var(--ep-muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(
+                auto-fill,
+                minmax(min(100%, 350px), 1fr)
+            );
             gap: 30px;
             margin-top: 40px;
         }
+
         .event-card {
-            background: rgba(9, 12, 14, 0.78);
+            background: rgba(9,12,14,.82);
             border: 1px solid var(--ep-border);
             border-radius: 12px;
             padding: 30px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
+
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+
+            min-width: 0;
+
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
         }
+
         .event-card:hover {
             transform: translateY(-5px);
             border-color: var(--ep-green);
+            box-shadow: 0 12px 40px rgba(0,0,0,.3);
         }
+
         .event-card h3 {
             font-family: "Barlow Condensed", sans-serif;
             font-size: 2rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin: 0 0 20px;
             color: #fff;
+            line-height: 1.1;
         }
+
         .event-meta {
             display: grid;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 22px;
             font-size: 14px;
             color: var(--ep-muted);
         }
+
         .event-meta div {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
+            line-height: 1.5;
         }
+
         .event-meta strong {
             color: var(--ep-green);
             font-family: "Barlow Condensed", sans-serif;
             font-size: 12px;
             text-transform: uppercase;
-            width: 100px;
+            letter-spacing: .08em;
+            width: 85px;
             flex-shrink: 0;
         }
+
         .event-description {
             font-size: 15px;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--ep-muted);
-            margin-bottom: 25px;
+            margin: 0 0 25px;
+            white-space: pre-line;
             flex-grow: 1;
         }
+
         .event-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
             margin-top: auto;
             padding-top: 20px;
             border-top: 1px solid var(--ep-border);
         }
+
         .ticket-info {
             font-family: "Barlow Condensed", sans-serif;
             font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
         }
+
         .ticket-info span {
             color: var(--ep-green);
-            font-size: 18px;
+            font-size: 20px;
+            display: block;
+            margin-top: 4px;
         }
-        .empty-state {
+
+        .event-book-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .events-status {
+            display: none;
             text-align: center;
-            padding: 100px 20px;
+            padding: 65px 20px;
             color: var(--ep-muted);
+            background: rgba(9,12,14,.75);
+            border: 1px solid var(--ep-border);
+            border-radius: 12px;
             font-family: "Barlow Condensed", sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            line-height: 1.6;
+        }
+
+        .events-status.visible {
+            display: block;
+        }
+
+        .events-status strong {
+            color: var(--ep-green);
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .events-retry {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 22px;
+            border: 1px solid var(--ep-green);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--ep-green);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .events-retry:hover {
+            background: var(--ep-green);
+            color: var(--ep-black);
+        }
+
+        @media (max-width: 600px) {
+            .events-page {
+                padding-top: calc(var(--header-height) + 45px);
+            }
+
+            .events-header {
+                margin-bottom: 35px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .event-card {
+                padding: 23px;
+            }
+
+            .event-footer {
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .event-card {
+                transition: none;
+            }
+
+            .event-card:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
+
 <body>
+
     <header class="site-header">
         <div class="container header-container">
+
             <a href="/" class="brand">
                 <div class="brand-logo-crop">
-                    <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo">
+                    <img
+                        src="/essex-paranormal-logo.png"
+                        alt="Essex Paranormal"
+                        class="brand-logo"
+                    >
                 </div>
             </a>
+
             <nav id="main-navigation">
-                <a href="index.html#home">HOME</a>
-                <a href="booking-events.html" class="active">BOOKING EVENTS</a>
-                <a href="index.html#about">ABOUT</a>
-                <a href="index.html#experiences">EXPERIENCES</a>
-                <a href="index.html#contact">CONTACT</a>
+                <a href="/#home">HOME</a>
+                <a href="/booking-events" class="active">BOOKING EVENTS</a>
+                <a href="/#about">ABOUT</a>
+                <a href="/#experiences">EXPERIENCES</a>
+                <a href="/#contact">CONTACT</a>
             </nav>
-            <button class="menu-toggle" aria-label="Open menu">
-                <span></span><span></span><span></span>
+
+            <button
+                class="menu-toggle"
+                aria-label="Open menu"
+                aria-expanded="false"
+                type="button"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
+
         </div>
     </header>
 
     <main class="events-page">
+
         <div class="container">
+
             <div class="events-header">
-                <h1>UPCOMING <span>GHOST HUNTS</span></h1>
+                <h1>
+                    UPCOMING
+                    <span>GHOST HUNTS</span>
+                </h1>
+
+                <p class="events-intro">
+                    Discover our upcoming paranormal investigations.
+                    Explore the events, choose your experience and
+                    secure your place on an investigation.
+                </p>
             </div>
-            <div id="events-grid" class="events-grid">
-                <!-- Events injected by JS -->
+
+            <div
+                id="events-status"
+                class="events-status visible"
+                role="status"
+                aria-live="polite"
+            >
+                <strong>LOADING INVESTIGATIONS</strong>
+                Please wait while we retrieve the latest events.
             </div>
-            <div id="event-empty-state" class="empty-state" style="display: none;">
-                No upcoming investigations currently scheduled. Please check back soon.
-            </div>
+
+            <div
+                id="events-grid"
+                class="events-grid"
+                aria-live="polite"
+            ></div>
+
         </div>
+
     </main>
 
     <script src="/script.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const eventsGrid = document.getElementById('events-grid');
-            const emptyState = document.getElementById('event-empty-state');
-            
-            try {
-                // Fetch events from Supabase (using the same pattern as public-content.js)
-                const response = await fetch('https://bluprrtwvubrqgzuimyc.supabase.co/functions/v1/public-website-content', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ domain: 'essexparanormal.com' })
-                });
-                const payload = await response.json();
-                
-                if (!payload || !payload.content) throw new Error('No data');
 
-                const events = payload.content.filter(entry => {
-                    const data = entry.content;
-                    return data.recordType === 'event' || data.section === 'events';
+    <script>
+    (() => {
+        "use strict";
+
+        const SUPABASE_URL =
+            "https://bluprrtwvubrqgzuimyc.supabase.co";
+
+        const CONTENT_URL =
+            `${SUPABASE_URL}/functions/v1/public-website-content`;
+
+        const eventsGrid =
+            document.getElementById("events-grid");
+
+        const eventsStatus =
+            document.getElementById("events-status");
+
+        function showStatus(title, message, retry = false) {
+            eventsStatus.replaceChildren();
+            eventsStatus.classList.add("visible");
+
+            const heading = document.createElement("strong");
+            heading.textContent = title;
+
+            const description = document.createElement("p");
+            description.textContent = message;
+
+            eventsStatus.append(heading, description);
+
+            if (retry) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "events-retry";
+                button.textContent = "TRY AGAIN";
+
+                button.addEventListener("click", loadEvents);
+
+                eventsStatus.append(button);
+            }
+        }
+
+        function hideStatus() {
+            eventsStatus.classList.remove("visible");
+        }
+
+        function addText(parent, tag, value, className) {
+            const element = document.createElement(tag);
+
+            element.textContent =
+                typeof value === "string" ? value : String(value ?? "");
+
+            if (className) {
+                element.className = className;
+            }
+
+            parent.appendChild(element);
+
+            return element;
+        }
+
+        function getEventDate(value) {
+            if (!value) return null;
+
+            const match = String(value).match(
+                /^(\d{4}-\d{2}-\d{2})/
+            );
+
+            if (!match) return null;
+
+            const date = new Date(`${match[1]}T00:00:00`);
+
+            if (Number.isNaN(date.getTime())) return null;
+
+            return date;
+        }
+
+        function formatDate(value) {
+            const date = getEventDate(value);
+
+            if (!date) return "Date to be confirmed";
+
+            return new Intl.DateTimeFormat("en-GB", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }).format(date);
+        }
+
+        function getUpcomingEvents(content) {
+            const today = new Date();
+
+            today.setHours(0, 0, 0, 0);
+
+            return content
+                .filter(entry => {
+                    const data = entry?.content;
+
+                    if (
+                        !data ||
+                        typeof data !== "object" ||
+                        Array.isArray(data)
+                    ) {
+                        return false;
+                    }
+
+                    const recordType =
+                        String(data.recordType || "").toLowerCase();
+
+                    const section =
+                        String(data.section || "").toLowerCase();
+
+                    return (
+                        recordType === "event" ||
+                        recordType === "events" ||
+                        section === "events" ||
+                        section === "event"
+                    );
+                })
+                .map(entry => ({
+                    id: entry.contentKey,
+                    data: entry.content
+                }))
+                .filter(event => {
+                    if (!event.id) return false;
+
+                    const startDate = getEventDate(event.data.date);
+
+                    if (!startDate) return false;
+
+                    const endDate = getEventDate(
+                        event.data.endDate ||
+                        event.data.end_date ||
+                        event.data.date
+                    );
+
+                    if (endDate) {
+                        endDate.setHours(23, 59, 59, 999);
+
+                        if (endDate < today) return false;
+                    } else if (startDate < today) {
+                        return false;
+                    }
+
+                    return true;
+                })
+                .sort((a, b) => {
+                    return String(a.data.date).localeCompare(
+                        String(b.data.date)
+                    );
                 });
+        }
+
+        function createEventCard(event) {
+            const data = event.data;
+
+            const card = document.createElement("article");
+            card.className = "event-card";
+
+            addText(
+                card,
+                "h3",
+                data.title || "Ghost Hunt"
+            );
+
+            const meta = document.createElement("div");
+            meta.className = "event-meta";
+
+            const dateRow = document.createElement("div");
+
+            addText(dateRow, "strong", "DATE");
+
+            dateRow.appendChild(
+                document.createTextNode(formatDate(data.date))
+            );
+
+            meta.appendChild(dateRow);
+
+            const locationRow = document.createElement("div");
+
+            addText(locationRow, "strong", "LOCATION");
+
+            locationRow.appendChild(
+                document.createTextNode(data.location || "Essex")
+            );
+
+            meta.appendChild(locationRow);
+
+            const ticketsRow = document.createElement("div");
+
+            addText(ticketsRow, "strong", "TICKETS");
+
+            const remaining =
+                data.remaining ??
+                data.remaining_tickets ??
+                "Limited";
+
+            ticketsRow.appendChild(
+                document.createTextNode(`${remaining} available`)
+            );
+
+            meta.appendChild(ticketsRow);
+
+            card.appendChild(meta);
+
+            addText(
+                card,
+                "p",
+                data.text ||
+                data.description ||
+                "Investigation details coming soon.",
+                "event-description"
+            );
+
+            const footer = document.createElement("div");
+            footer.className = "event-footer";
+
+            const ticketInfo = document.createElement("div");
+            ticketInfo.className = "ticket-info";
+
+            ticketInfo.appendChild(
+                document.createTextNode("PRICE")
+            );
+
+            const price = document.createElement("span");
+
+            const numericPrice = Number(data.price ?? 60);
+
+            price.textContent = Number.isFinite(numericPrice)
+                ? `£${numericPrice.toFixed(2)}`
+                : "£60.00";
+
+            ticketInfo.appendChild(price);
+            footer.appendChild(ticketInfo);
+
+            const bookLink = document.createElement("a");
+
+            bookLink.href =
+                `/bookings.html?event_id=${encodeURIComponent(event.id)}`;
+
+            bookLink.className =
+                "button button-primary event-book-button";
+
+            bookLink.textContent = "BOOK NOW →";
+
+            footer.appendChild(bookLink);
+
+            card.appendChild(footer);
+
+            return card;
+        }
+
+        async function loadEvents() {
+            eventsGrid.replaceChildren();
+
+            showStatus(
+                "LOADING INVESTIGATIONS",
+                "Please wait while we retrieve the latest events."
+            );
+
+            try {
+                const response = await fetch(CONTENT_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        domain: "essexparanormal.com"
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        `Events service returned HTTP ${response.status}`
+                    );
+                }
+
+                const payload = await response.json();
+
+                if (!Array.isArray(payload?.content)) {
+                    throw new Error(
+                        "The events service returned an unexpected response."
+                    );
+                }
+
+                const events = getUpcomingEvents(payload.content);
 
                 if (events.length === 0) {
-                    emptyState.style.display = 'block';
+                    showStatus(
+                        "NO UPCOMING INVESTIGATIONS",
+                        "There are currently no upcoming investigations scheduled. Please check back soon."
+                    );
+
                     return;
                 }
 
-                events.forEach(entry => {
-                    const data = entry.content;
-                    const card = document.createElement('div');
-                    card.className = 'event-card';
-                    card.innerHTML = \`
-                        <h3>\${data.title || 'Ghost Hunt'}</h3>
-                        <div class="event-meta">
-                            <div><strong>DATE</strong> \${data.date || 'TBA'}</div>
-                            <div><strong>LOCATION</strong> \${data.location || 'Essex'}</div>
-                            <div><strong>TICKETS</strong> \${data.remaining || 'Limited'} available</div>
-                        </div>
-                        <p class="event-description">\${data.text || 'Investigation details coming soon.'}</p>
-                        <div class="event-footer">
-                            <div class="ticket-info">PRICE <span>£\${data.price || '60'}</span></div>
-                            <a href="bookings.html?event_id=\${entry.contentKey}" class="button button-primary">BOOK NOW &rarr;</a>
-                        </div>
-                    \`;
-                    eventsGrid.appendChild(card);
+                const fragment =
+                    document.createDocumentFragment();
+
+                events.forEach(event => {
+                    fragment.appendChild(
+                        createEventCard(event)
+                    );
                 });
-            } catch (e) {
-                console.error('Error loading events:', e);
-                emptyState.style.display = 'block';
+
+                eventsGrid.replaceChildren(fragment);
+
+                hideStatus();
+
+            } catch (error) {
+                console.error(
+                    "Essex Paranormal events loading error:",
+                    error
+                );
+
+                showStatus(
+                    "EVENTS TEMPORARILY UNAVAILABLE",
+                    "We couldn't retrieve the investigation schedule. Please try again shortly.",
+                    true
+                );
             }
-        });
+        }
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadEvents,
+            { once: true }
+        );
+
+    })();
     </script>
+
 </body>
 </html>
