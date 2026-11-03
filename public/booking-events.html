@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -11,9 +10,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="/style.css">
 
     <style>
@@ -27,14 +24,8 @@
 
         body {
             background:
-                linear-gradient(
-                    180deg,
-                    rgba(5,6,8,.32),
-                    rgba(5,6,8,.88)
-                ),
-                url("/essex-paranormal-cinematic-background.webp")
-                center top / cover fixed no-repeat;
-
+                linear-gradient(180deg, rgba(5,6,8,.32), rgba(5,6,8,.88)),
+                url("/essex-paranormal-cinematic-background.webp") center top / cover fixed no-repeat;
             background-color: var(--ep-black);
             color: var(--ep-white);
             font-family: 'Inter', sans-serif;
@@ -76,10 +67,7 @@
 
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(
-                auto-fill,
-                minmax(min(100%, 350px), 1fr)
-            );
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 350px), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -91,16 +79,10 @@
             padding: 30px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-
             display: flex;
             flex-direction: column;
-
             min-width: 0;
-
-            transition:
-                transform .3s ease,
-                border-color .3s ease,
-                box-shadow .3s ease;
+            transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
         }
 
         .event-card:hover {
@@ -269,410 +251,362 @@
 
 <body>
 
-    <header class="site-header">
-        <div class="container header-container">
+<header class="site-header">
+    <div class="container header-container">
 
-            <a href="/" class="brand">
-                <div class="brand-logo-crop">
-                    <img
-                        src="/essex-paranormal-logo.png"
-                        alt="Essex Paranormal"
-                        class="brand-logo"
-                    >
-                </div>
-            </a>
-
-            <nav id="main-navigation">
-                <a href="/#home">HOME</a>
-                <a href="/booking-events" class="active">BOOKING EVENTS</a>
-                <a href="/#about">ABOUT</a>
-                <a href="/#experiences">EXPERIENCES</a>
-                <a href="/#contact">CONTACT</a>
-            </nav>
-
-            <button
-                class="menu-toggle"
-                aria-label="Open menu"
-                aria-expanded="false"
-                type="button"
-            >
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-        </div>
-    </header>
-
-    <main class="events-page">
-
-        <div class="container">
-
-            <div class="events-header">
-                <h1>
-                    UPCOMING
-                    <span>GHOST HUNTS</span>
-                </h1>
-
-                <p class="events-intro">
-                    Discover our upcoming paranormal investigations.
-                    Explore the events, choose your experience and
-                    secure your place on an investigation.
-                </p>
+        <a href="/" class="brand">
+            <div class="brand-logo-crop">
+                <img src="/essex-paranormal-logo.png" alt="Essex Paranormal" class="brand-logo">
             </div>
+        </a>
 
-            <div
-                id="events-status"
-                class="events-status visible"
-                role="status"
-                aria-live="polite"
-            >
-                <strong>LOADING INVESTIGATIONS</strong>
-                Please wait while we retrieve the latest events.
-            </div>
+        <nav id="main-navigation">
+            <a href="/#home">HOME</a>
+            <a href="/booking-events" class="active">BOOKING EVENTS</a>
+            <a href="/#about">ABOUT</a>
+            <a href="/#experiences">EXPERIENCES</a>
+            <a href="/#contact">CONTACT</a>
+        </nav>
 
-            <div
-                id="events-grid"
-                class="events-grid"
-                aria-live="polite"
-            ></div>
+        <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
+    </div>
+</header>
+
+<main class="events-page">
+    <div class="container">
+
+        <div class="events-header">
+            <h1>
+                UPCOMING
+                <span>GHOST HUNTS</span>
+            </h1>
+
+            <p class="events-intro">
+                Discover our upcoming paranormal investigations.
+                Explore the events, choose your experience and
+                secure your place on an investigation.
+            </p>
         </div>
 
-    </main>
+        <div id="events-status" class="events-status visible" role="status" aria-live="polite">
+            <strong>LOADING INVESTIGATIONS</strong>
+            Please wait while we retrieve the latest events.
+        </div>
 
-    <script src="/script.js" defer></script>
+        <div id="events-grid" class="events-grid" aria-live="polite"></div>
 
-    <script>
-    (() => {
-        "use strict";
+    </div>
+</main>
 
-        const SUPABASE_URL =
-            "https://bluprrtwvubrqgzuimyc.supabase.co";
+<script src="/script.js" defer></script>
 
-        const CONTENT_URL =
-            `${SUPABASE_URL}/functions/v1/public-website-content`;
+<script>
+(() => {
+    "use strict";
 
-        const eventsGrid =
-            document.getElementById("events-grid");
+    const SUPABASE_URL = "https://bluprrtwvubrqgzuimyc.supabase.co";
+    const CONTENT_URL = `${SUPABASE_URL}/functions/v1/public-website-content`;
 
-        const eventsStatus =
-            document.getElementById("events-status");
+    const eventsGrid = document.getElementById("events-grid");
+    const eventsStatus = document.getElementById("events-status");
 
-        function showStatus(title, message, retry = false) {
-            eventsStatus.replaceChildren();
-            eventsStatus.classList.add("visible");
+    function showStatus(title, message, retry = false) {
+        eventsStatus.replaceChildren();
+        eventsStatus.classList.add("visible");
 
-            const heading = document.createElement("strong");
-            heading.textContent = title;
+        const heading = document.createElement("strong");
+        heading.textContent = title;
 
-            const description = document.createElement("p");
-            description.textContent = message;
+        const description = document.createElement("p");
+        description.textContent = message;
 
-            eventsStatus.append(heading, description);
+        eventsStatus.append(heading, description);
 
-            if (retry) {
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "events-retry";
-                button.textContent = "TRY AGAIN";
+        if (retry) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "events-retry";
+            button.textContent = "TRY AGAIN";
+            button.addEventListener("click", loadEvents);
+            eventsStatus.append(button);
+        }
+    }
 
-                button.addEventListener("click", loadEvents);
+    function hideStatus() {
+        eventsStatus.classList.remove("visible");
+    }
 
-                eventsStatus.append(button);
-            }
+    function addText(parent, tag, value, className) {
+        const element = document.createElement(tag);
+
+        element.textContent =
+            typeof value === "string" ? value : String(value ?? "");
+
+        if (className) element.className = className;
+
+        parent.appendChild(element);
+        return element;
+    }
+
+    function getEventDate(value) {
+        if (!value) return null;
+
+        const match = String(value).match(/^(\d{4}-\d{2}-\d{2})/);
+        if (!match) return null;
+
+        const date = new Date(`${match[1]}T00:00:00`);
+
+        if (Number.isNaN(date.getTime())) return null;
+
+        return date;
+    }
+
+    function formatDate(value) {
+        const date = getEventDate(value);
+
+        if (!date) return "Date to be confirmed";
+
+        return new Intl.DateTimeFormat("en-GB", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }).format(date);
+    }
+
+    function isValidISODate(value) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value || ""))) {
+            return false;
         }
 
-        function hideStatus() {
-            eventsStatus.classList.remove("visible");
-        }
-
-        function addText(parent, tag, value, className) {
-            const element = document.createElement(tag);
-
-            element.textContent =
-                typeof value === "string" ? value : String(value ?? "");
-
-            if (className) {
-                element.className = className;
-            }
-
-            parent.appendChild(element);
-
-            return element;
-        }
-
-        function getEventDate(value) {
-            if (!value) return null;
-
-            const match = String(value).match(
-                /^(\d{4}-\d{2}-\d{2})/
-            );
-
-            if (!match) return null;
-
-            const date = new Date(`${match[1]}T00:00:00`);
-
-            if (Number.isNaN(date.getTime())) return null;
-
-            return date;
-        }
-
-        function formatDate(value) {
-            const date = getEventDate(value);
-
-            if (!date) return "Date to be confirmed";
-
-            return new Intl.DateTimeFormat("en-GB", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-            }).format(date);
-        }
-
-        function getUpcomingEvents(content) {
-            const today = new Date();
-
-            today.setHours(0, 0, 0, 0);
-
-            return content
-                .filter(entry => {
-                    const data = entry?.content;
-
-                    if (
-                        !data ||
-                        typeof data !== "object" ||
-                        Array.isArray(data)
-                    ) {
-                        return false;
-                    }
-
-                    const recordType =
-                        String(data.recordType || "").toLowerCase();
-
-                    const section =
-                        String(data.section || "").toLowerCase();
-
-                    return (
-                        recordType === "event" ||
-                        recordType === "events" ||
-                        section === "events" ||
-                        section === "event"
-                    );
-                })
-                .map(entry => ({
-                    id: entry.contentKey,
-                    data: entry.content
-                }))
-                .filter(event => {
-                    if (!event.id) return false;
-
-                    const startDate = getEventDate(event.data.date);
-
-                    if (!startDate) return false;
-
-                    const endDate = getEventDate(
-                        event.data.endDate ||
-                        event.data.end_date ||
-                        event.data.date
-                    );
-
-                    if (endDate) {
-                        endDate.setHours(23, 59, 59, 999);
-
-                        if (endDate < today) return false;
-                    } else if (startDate < today) {
-                        return false;
-                    }
-
-                    return true;
-                })
-                .sort((a, b) => {
-                    return String(a.data.date).localeCompare(
-                        String(b.data.date)
-                    );
-                });
-        }
-
-        function createEventCard(event) {
-            const data = event.data;
-
-            const card = document.createElement("article");
-            card.className = "event-card";
-
-            addText(
-                card,
-                "h3",
-                data.title || "Ghost Hunt"
-            );
-
-            const meta = document.createElement("div");
-            meta.className = "event-meta";
-
-            const dateRow = document.createElement("div");
-
-            addText(dateRow, "strong", "DATE");
-
-            dateRow.appendChild(
-                document.createTextNode(formatDate(data.date))
-            );
-
-            meta.appendChild(dateRow);
-
-            const locationRow = document.createElement("div");
-
-            addText(locationRow, "strong", "LOCATION");
-
-            locationRow.appendChild(
-                document.createTextNode(data.location || "Essex")
-            );
-
-            meta.appendChild(locationRow);
-
-            const ticketsRow = document.createElement("div");
-
-            addText(ticketsRow, "strong", "TICKETS");
-
-            const remaining =
-                data.remaining ??
-                data.remaining_tickets ??
-                "Limited";
-
-            ticketsRow.appendChild(
-                document.createTextNode(`${remaining} available`)
-            );
-
-            meta.appendChild(ticketsRow);
-
-            card.appendChild(meta);
-
-            addText(
-                card,
-                "p",
-                data.text ||
-                data.description ||
-                "Investigation details coming soon.",
-                "event-description"
-            );
-
-            const footer = document.createElement("div");
-            footer.className = "event-footer";
-
-            const ticketInfo = document.createElement("div");
-            ticketInfo.className = "ticket-info";
-
-            ticketInfo.appendChild(
-                document.createTextNode("PRICE")
-            );
-
-            const price = document.createElement("span");
-
-            const numericPrice = Number(data.price ?? 60);
-
-            price.textContent = Number.isFinite(numericPrice)
-                ? `£${numericPrice.toFixed(2)}`
-                : "£60.00";
-
-            ticketInfo.appendChild(price);
-            footer.appendChild(ticketInfo);
-
-            const bookLink = document.createElement("a");
-
-            bookLink.href =
-                `/bookings.html?event_id=${encodeURIComponent(event.id)}`;
-
-            bookLink.className =
-                "button button-primary event-book-button";
-
-            bookLink.textContent = "BOOK NOW →";
-
-            footer.appendChild(bookLink);
-
-            card.appendChild(footer);
-
-            return card;
-        }
-
-        async function loadEvents() {
-            eventsGrid.replaceChildren();
-
-            showStatus(
-                "LOADING INVESTIGATIONS",
-                "Please wait while we retrieve the latest events."
-            );
-
-            try {
-                const response = await fetch(CONTENT_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        domain: "essexparanormal.com"
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(
-                        `Events service returned HTTP ${response.status}`
-                    );
+        const parsed = new Date(`${value}T00:00:00Z`);
+
+        return (
+            !Number.isNaN(parsed.getTime()) &&
+            parsed.toISOString().slice(0, 10) === value
+        );
+    }
+
+    function getUpcomingEvents(content) {
+        const now = new Date();
+
+        const today = [
+            now.getFullYear(),
+            String(now.getMonth() + 1).padStart(2, "0"),
+            String(now.getDate()).padStart(2, "0")
+        ].join("-");
+
+        return content
+            .filter(entry => {
+                const data = entry?.content;
+
+                if (
+                    !data ||
+                    typeof data !== "object" ||
+                    Array.isArray(data)
+                ) {
+                    return false;
                 }
 
-                const payload = await response.json();
+                const recordType = String(
+                    data.recordType || ""
+                ).toLowerCase();
 
-                if (!Array.isArray(payload?.content)) {
-                    throw new Error(
-                        "The events service returned an unexpected response."
-                    );
-                }
+                const section = String(
+                    data.section ?? data.category ?? ""
+                ).toLowerCase();
 
-                const events = getUpcomingEvents(payload.content);
+                const key = String(
+                    entry.contentKey || ""
+                ).toLowerCase();
 
-                if (events.length === 0) {
-                    showStatus(
-                        "NO UPCOMING INVESTIGATIONS",
-                        "There are currently no upcoming investigations scheduled. Please check back soon."
-                    );
+                const isEvent = ["event", "events"].includes(recordType)
+                    ? true
+                    : ["investigation", "investigations"].includes(recordType)
+                        ? false
+                        : ["event", "events"].includes(section) ||
+                          /(^|[-_ ])events?($|[-_ ])/.test(key);
 
-                    return;
-                }
+                if (!isEvent) return false;
 
-                const fragment =
-                    document.createDocumentFragment();
+                const date = String(data.date || "");
+                const endDate = String(data.endDate || date);
 
-                events.forEach(event => {
-                    fragment.appendChild(
-                        createEventCard(event)
-                    );
-                });
-
-                eventsGrid.replaceChildren(fragment);
-
-                hideStatus();
-
-            } catch (error) {
-                console.error(
-                    "Essex Paranormal events loading error:",
-                    error
+                return (
+                    isValidISODate(date) &&
+                    isValidISODate(endDate) &&
+                    endDate >= today
                 );
+            })
+            .map(entry => ({
+                id: entry.contentKey,
+                data: entry.content
+            }))
+            .filter(event => Boolean(event.id))
+            .sort((a, b) =>
+                String(a.data.date).localeCompare(String(b.data.date))
+            );
+    }
 
-                showStatus(
-                    "EVENTS TEMPORARILY UNAVAILABLE",
-                    "We couldn't retrieve the investigation schedule. Please try again shortly.",
-                    true
-                );
-            }
-        }
+    function createEventCard(event) {
+        const data = event.data;
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            loadEvents,
-            { once: true }
+        const card = document.createElement("article");
+        card.className = "event-card";
+
+        addText(card, "h3", data.title || "Ghost Hunt");
+
+        const meta = document.createElement("div");
+        meta.className = "event-meta";
+
+        const dateRow = document.createElement("div");
+        addText(dateRow, "strong", "DATE");
+        dateRow.appendChild(document.createTextNode(formatDate(data.date)));
+        meta.appendChild(dateRow);
+
+        const locationRow = document.createElement("div");
+        addText(locationRow, "strong", "LOCATION");
+        locationRow.appendChild(
+            document.createTextNode(data.location || "Essex")
+        );
+        meta.appendChild(locationRow);
+
+        const ticketsRow = document.createElement("div");
+        addText(ticketsRow, "strong", "TICKETS");
+
+        const remaining =
+            data.remaining ??
+            data.remaining_tickets ??
+            "Limited";
+
+        ticketsRow.appendChild(
+            document.createTextNode(`${remaining} available`)
+        );
+        meta.appendChild(ticketsRow);
+
+        card.appendChild(meta);
+
+        addText(
+            card,
+            "p",
+            data.text ||
+            data.description ||
+            "Investigation details coming soon.",
+            "event-description"
         );
 
-    })();
-    </script>
+        const footer = document.createElement("div");
+        footer.className = "event-footer";
+
+        const ticketInfo = document.createElement("div");
+        ticketInfo.className = "ticket-info";
+        ticketInfo.appendChild(document.createTextNode("PRICE"));
+
+        const price = document.createElement("span");
+        const numericPrice = Number(data.price ?? 60);
+
+        price.textContent = Number.isFinite(numericPrice)
+            ? `£${numericPrice.toFixed(2)}`
+            : "£60.00";
+
+        ticketInfo.appendChild(price);
+        footer.appendChild(ticketInfo);
+
+        const bookLink = document.createElement("a");
+        bookLink.href =
+            `/bookings.html?event_id=${encodeURIComponent(event.id)}`;
+        bookLink.className =
+            "button button-primary event-book-button";
+        bookLink.textContent = "BOOK NOW →";
+
+        footer.appendChild(bookLink);
+        card.appendChild(footer);
+
+        return card;
+    }
+
+    async function loadEvents() {
+        eventsGrid.replaceChildren();
+
+        showStatus(
+            "LOADING INVESTIGATIONS",
+            "Please wait while we retrieve the latest events."
+        );
+
+        try {
+            const response = await fetch(CONTENT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    domain: "essexparanormal.com"
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(
+                    `Events service returned HTTP ${response.status}`
+                );
+            }
+
+            const payload = await response.json();
+
+            if (
+                payload?.website?.domain !== "essexparanormal.com" ||
+                !Array.isArray(payload?.content)
+            ) {
+                throw new Error(
+                    "The events service returned an unexpected response."
+                );
+            }
+
+            const events = getUpcomingEvents(payload.content);
+
+            if (events.length === 0) {
+                showStatus(
+                    "NO UPCOMING INVESTIGATIONS",
+                    "There are currently no upcoming investigations scheduled. Please check back soon."
+                );
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+
+            events.forEach(event => {
+                fragment.appendChild(createEventCard(event));
+            });
+
+            eventsGrid.replaceChildren(fragment);
+            hideStatus();
+
+        } catch (error) {
+            console.error(
+                "Essex Paranormal events loading error:",
+                error
+            );
+
+            showStatus(
+                "EVENTS TEMPORARILY UNAVAILABLE",
+                "We couldn't retrieve the investigation schedule. Please try again shortly.",
+                true
+            );
+        }
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        loadEvents,
+        { once: true }
+    );
+
+})();
+</script>
 
 </body>
 </html>
