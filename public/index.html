@@ -168,6 +168,43 @@
 
         /* UPCOMING EVENTS */
 
+        .upcoming-event-poster {
+            display: block;
+            max-width: 960px;
+            margin: 0 auto 32px;
+            overflow: hidden;
+            border: 1px solid #693e42;
+            border-radius: 16px;
+            background: #141116;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .upcoming-event-poster:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 5px;
+        }
+
+        .upcoming-event-poster img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .upcoming-event-poster-caption {
+            display: grid;
+            gap: 4px;
+            padding: 16px 20px;
+        }
+
+        .upcoming-event-poster-caption strong {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+        }
+
+        .upcoming-event-poster-caption span {
+            text-decoration: underline;
+        }
+
         .upcoming-events-section {
             position: relative;
             overflow: hidden;
@@ -1145,8 +1182,23 @@
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow">UPCOMING EVENTS</p>
-                    <h2><span>The Guildhall Thaxted dec 2026</span></h2>
+                    <h2>Upcoming investigations</h2>
                 </div>
+
+                <a class="upcoming-event-poster" href="/bookings?event_id=event-20270227-investigation">
+                    <img
+                        src="/moira-furnace-1120.webp"
+                        srcset="/moira-furnace-640.webp 640w, /moira-furnace-1120.webp 1120w, /moira-furnace-1672.webp 1672w"
+                        sizes="(max-width: 1000px) calc(100vw - 40px), 960px"
+                        width="1672" height="941" loading="lazy" decoding="async"
+                        alt="Moira Furnace at night, with red-lit brick arches, mist and a full moon">
+                    <div class="upcoming-event-poster-caption">
+                        <strong>Moira Furnace</strong>
+                        <time datetime="2027-02-27">Saturday, 27 February 2027</time>
+                        <div>Overnight public paranormal investigation</div>
+                        <span>Book this investigation →</span>
+                    </div>
+                </a>
 
                 <article class="upcoming-event-card">
                     <div class="upcoming-event-content">
