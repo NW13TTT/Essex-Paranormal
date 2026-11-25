@@ -1,0 +1,115 @@
+.investigation-release {
+    --signal: #bdff58;
+    --release-text: #dee6f0;
+    --release-border: #384a47;
+    color: var(--release-text);
+    font-family: Inter, system-ui, sans-serif;
+}
+.investigation-release [hidden], .investigation-release[hidden] { display: none !important; }
+.release-feature {
+    padding: clamp(24px, 5vw, 76px) max(20px, calc((100% - 1280px) / 2));
+    background: radial-gradient(ellipse at 70% 0%, #1c314d, transparent 65%), #070b12;
+    border-block: 1px solid var(--release-border);
+}
+.release-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: center;
+    gap: clamp(22px, 4vw, 62px);
+}
+.release-hero picture, .release-hero img { display: block; width: 100%; height: auto; }
+.release-hero picture {
+    border: 1px solid var(--release-border);
+    box-shadow: 0 16px 42px #0008;
+}
+.release-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .7em;
+    color: var(--signal);
+    font-size: .78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+}
+.release-status::before {
+    content: '';
+    width: .52rem;
+    height: .52rem;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 12px var(--signal);
+    animation: release-signal 2.6s ease-in-out infinite alternate;
+}
+@keyframes release-signal { to { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) {
+    .release-status::before { animation: none; }
+}
+.release-hero :is(h1, h2) {
+    margin: .12em 0;
+    font: 800 clamp(2.8rem, 7vw, 6.6rem)/.9 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+}
+.release-location { color: #d5e5ff; font-weight: 700; margin: .7rem 0 .25rem; }
+.release-date { display: block; margin-bottom: 1rem; }
+.release-countdown { margin: 1rem 0 1.2rem; }
+.release-countdown > p { font-size: .8rem; margin-bottom: .5rem; }
+.release-clock { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; max-width: 22rem; }
+.release-clock span {
+    display: grid;
+    text-align: center;
+    padding: .4rem .1rem;
+    font-size: .68rem;
+    background: #080e17;
+    border: 1px solid var(--release-border);
+}
+.release-clock strong { font-size: 1.35rem; font-variant-numeric: tabular-nums; color: var(--signal); }
+.release-action {
+    display: inline-block;
+    padding: .8rem 1rem;
+    font: inherit;
+    font-weight: 800;
+    color: #0a1104;
+    background: var(--signal);
+    border: 1px solid var(--signal);
+    border-radius: .25rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+.release-action:hover { background: #e1ffae; color: #0a1104; }
+.investigation-release a:focus-visible, .investigation-release button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 5px;
+}
+.release-listing {
+    background: #101c2a;
+    border: 1px solid var(--release-border);
+    border-inline-start: 3px solid var(--signal);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.release-listing h3 { margin: .35rem 0; color: #fff; }
+.release-listing a { color: var(--signal); font-weight: 700; }
+.release-page { margin: 0; background: #070b12; }
+.release-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    padding: 14px max(20px, calc((100% - 1280px) / 2));
+    background: #05070a;
+}
+.release-nav a { color: #fff; font-weight: 700; }
+.release-nav img { width: 44px; height: 44px; object-fit: contain; vertical-align: middle; margin-right: .4rem; }
+.release-content { max-width: 1120px; margin: auto; padding: clamp(24px, 5vw, 64px) 20px; }
+.release-content h2 { color: #fff; font: 800 clamp(2rem, 5vw, 3.4rem)/1 'Barlow Condensed', sans-serif; }
+.release-techniques { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); gap: 12px; padding: 0; list-style: none; }
+.release-techniques li { background: #101c2a; border-top: 2px solid var(--signal); padding: 1rem; color: #fff; font-weight: 700; }
+.release-letter { max-width: 72ch; line-height: 1.75; overflow-wrap: anywhere; }
+.release-letter a, .release-sharing a, .release-footer a { color: var(--signal); }
+.release-letter .release-signature { font-style: normal; }
+.release-sharing, .release-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.release-footer { padding: 20px; border-top: 1px solid var(--release-border); justify-content: center; }
+@media (max-width: 760px) { .release-hero { grid-template-columns: minmax(0, 1fr); } }
