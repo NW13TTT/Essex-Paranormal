@@ -40,8 +40,9 @@ Deno.serve(async (request) => {
   const fail = (status: number, error: string) => Response.json({success:false,error}, {status,headers});
   const pathname = new URL(request.url).pathname;
   const trustedOrigin = Boolean(origin && origin === env("ESSEX_BOOKING_ORIGIN"));
-  const enabled = env("ESSEX_CHECKOUT_ENABLED") === "true"
-    && Boolean(project && merchant && env("ESSEX_SUMUP_API_KEY") && env("SUPABASE_SERVICE_ROLE_KEY"));
+  const configured = Boolean(project && merchant && env("ESSEX_SUMUP_API_KEY") && env("SUPABASE_SERVICE_ROLE_KEY"));
+  const enabled = env("ESSEX_CHECKOUT_ENABLED") === "true" && configured;
+  const isWebhook = pathname.endsWith("/sumup-webhook");
 
   if (request.method === "OPTIONS") return new Response(null,{status:204,headers});
   try {
@@ -52,13 +53,14 @@ Deno.serve(async (request) => {
       return Response.json({ enabled, availability }, { headers });
     }
     if (request.method !== "POST") return fail(405,"Method not allowed.");
-    if (!enabled) return fail(503,"Online booking is temporarily unavailable.");
+    // A checkout pause must still allow known provider payments to settle.
+    if (isWebhook ? !configured : !enabled) return fail(503,"Online booking is temporarily unavailable.");
     if (Number(request.headers.get("content-length")) > 8192) return fail(413,"Request is too large.");
     const raw = await request.text();
     if (new TextEncoder().encode(raw).byteLength > 8192) return fail(413,"Request is too large.");
     const input = JSON.parse(raw);
     if (!input || typeof input !== "object" || Array.isArray(input)) return fail(400,"Invalid JSON.");
-    if (pathname.endsWith("/sumup-webhook")) {
+    if (isWebhook) {
       if (input.event_type !== "CHECKOUT_STATUS_CHANGED") return new Response(null,{status:204});
       if (typeof input.id !== "string" || !uuid.test(input.id)) return fail(400,"Invalid checkout ID.");
       const checkout = await sumup("/" + input.id);
