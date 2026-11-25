@@ -114,42 +114,6 @@
             color: var(--ep-green) !important;
         }
 
-        /* CONSTRUCTION TICKER */
-
-        .construction-ticker {
-            position: relative;
-            z-index: 500;
-            width: 100%;
-            overflow: hidden;
-            background: #050608;
-            border-top: 1px solid rgba(192,255,79,.22);
-            border-bottom: 1px solid rgba(192,255,79,.22);
-            padding: 11px 0;
-        }
-
-        .construction-ticker-track {
-            display: flex;
-            width: max-content;
-            white-space: nowrap;
-            animation: epTicker 28s linear infinite;
-        }
-
-        .construction-ticker-track span {
-            display: block;
-            flex-shrink: 0;
-            padding-right: 80px;
-            color: rgba(255,255,255,.82);
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: .72rem;
-            font-weight: 800;
-            letter-spacing: .14em;
-        }
-
-        @keyframes epTicker {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
         /* HERO */
 
         .hero {
@@ -1137,15 +1101,6 @@
         </div>
     </header>
 
-    <!-- CONSTRUCTION TICKER -->
-
-    <div class="construction-ticker" role="status" aria-label="Website under construction">
-        <div class="construction-ticker-track">
-            <span>WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE</span>
-            <span aria-hidden="true">WEBSITE UNDER CONSTRUCTION • NEW INVESTIGATIONS, STORIES &amp; CONTENT ARE EMERGING • WATCH THIS SPACE</span>
-        </div>
-    </div>
-
     <main>
 
         <!-- HERO -->
@@ -1711,8 +1666,7 @@
             </div>
         </section>
 
-        <!-- GALLERY / MEDIA
-             Construction notice removed. Gallery section and navigation remain. -->
+        <!-- GALLERY / MEDIA -->
 
         <section id="gallery" class="section gallery-section">
             <div class="container">
