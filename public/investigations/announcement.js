@@ -1,4 +1,12 @@
 const announcements = [...document.querySelectorAll('[data-investigation-date]')];
+for (const list of document.querySelectorAll('[data-announcement-order]')) {
+    const entries = [...list.children].filter(item => item.dataset.eventSort);
+    const sorted = [...entries].sort((a, b) => a.dataset.eventSort.localeCompare(b.dataset.eventSort));
+    if (sorted.some((entry, index) => entry !== entries[index])) {
+        list.prepend(...sorted);
+    }
+}
+
 const update = () => {
     const now = Date.now();
     let pending = false;
@@ -12,8 +20,9 @@ const update = () => {
 
         const status = item.querySelector('[data-investigation-status]');
         if (status) {
-            status.textContent = archived ? 'Investigation archive'
-                : now >= start ? 'Investigation date' : 'Upcoming investigation';
+            status.textContent = archived ? (item.dataset.archiveLabel || 'Investigation archive')
+                : now >= start ? (item.dataset.openLabel || 'Investigation date')
+                : (item.dataset.upcomingLabel || 'Upcoming investigation');
         }
 
         const countdown = item.querySelector('[data-investigation-countdown]');

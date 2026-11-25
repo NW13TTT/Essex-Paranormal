@@ -1,0 +1,85 @@
+.parameet {
+    --para-orange: #ff8242;
+    --signal: #c3ff60;
+    --release-text: #f1e6de;
+    --release-border: #63402b;
+    color: var(--release-text);
+}
+.parameet.release-feature {
+    background: radial-gradient(ellipse at 15% 0, #52220f, transparent 58%), #100c0a;
+}
+.parameet.release-hero {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+.parameet .release-hero-copy { min-width: 0; }
+.parameet .release-hero-copy h1,
+.parameet .release-hero-copy h2 {
+    color: var(--para-orange);
+    font-size: clamp(2.3rem, 6.4vw, 6rem);
+    line-height: .97;
+}
+.parameet .para-subtitle {
+    font: 700 clamp(1.3rem, 3vw, 2.2rem)/1.1 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    color: #fff;
+    margin: .45em 0 .85em;
+}
+.parameet .para-poster {
+    display: block;
+    width: min(100%, 540px);
+    margin: auto;
+}
+.parameet .para-poster span {
+    display: block;
+    color: #fff;
+    margin-top: .65rem;
+    text-decoration: underline;
+    text-underline-offset: .22em;
+}
+.parameet .para-facts {
+    margin: 1rem 0;
+    display: grid;
+    gap: .75rem;
+}
+.parameet .para-facts dt { color: var(--para-orange); font-weight: 800; }
+.parameet .para-facts dd { margin: .15em 0 0; }
+.parameet .para-meet { color: #fff; font-weight: 750; }
+.parameet .release-clock span { background: #17100c; }
+.parameet.release-listing { background: #19100a; border-inline-start-color: var(--para-orange); }
+.parameet.release-listing .release-status::before { animation: none; }
+.parameet.release-page { background: #100c0a; }
+.parameet .para-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .65rem 1rem;
+    margin: 1rem 0;
+}
+.parameet .para-links a:not(.release-action) { color: var(--signal); }
+.parameet .para-links .para-share {
+    background: #1f150e;
+    border-color: var(--para-orange);
+    color: #fff;
+}
+.parameet .release-content { display: grid; gap: 2rem; }
+.parameet .release-letter h3 { color: #fff; margin-top: 1.8rem; }
+.parameet .para-panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+    gap: .75rem;
+}
+.parameet details {
+    padding: .9rem 1rem;
+    border: 1px solid var(--release-border);
+    border-top-color: var(--para-orange);
+    background: #21150e;
+}
+.parameet summary { color: #fff; cursor: pointer; font-weight: 750; }
+.parameet summary:focus-visible { outline: 2px solid var(--signal); outline-offset: 5px; }
+.parameet details p { font-size: .93rem; line-height: 1.55; margin-bottom: 0; }
+.parameet [data-event-updates] img, .parameet [data-event-updates] video { max-width: 100%; height: auto; }
+@media (max-width: 760px) {
+    .parameet.release-hero { grid-template-columns: minmax(0, 1fr); }
+    .parameet .para-poster { grid-row: 2; }
+}
+.parameet .release-content p a { color: var(--signal); }
+#upcoming-events [data-announcement-order] .upcoming-event-card { margin-bottom: 2rem; }
