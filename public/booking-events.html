@@ -304,6 +304,7 @@
 </main>
 
 <script src="/script.js" defer></script>
+<script src="/booking-availability.js" defer></script>
 
 <script>
 (() => {
@@ -311,6 +312,7 @@
 
     const SUPABASE_URL = "https://bluprrtwvubrqgzuimyc.supabase.co";
     const CONTENT_URL = `${SUPABASE_URL}/functions/v1/public-website-content`;
+    const AVAILABILITY_URL = `${SUPABASE_URL}/functions/v1/create-booking/availability`;
 
     const eventsGrid = document.getElementById("events-grid");
     const eventsStatus = document.getElementById("events-status");
@@ -393,13 +395,7 @@
     }
 
     function getUpcomingEvents(content) {
-        const now = new Date();
-
-        const today = [
-            now.getFullYear(),
-            String(now.getMonth() + 1).padStart(2, "0"),
-            String(now.getDate()).padStart(2, "0")
-        ].join("-");
+        const today = essexBookingToday();
 
         return content
             .filter(entry => {
@@ -432,7 +428,8 @@
                         : ["event", "events"].includes(section) ||
                           /(^|[-_ ])events?($|[-_ ])/.test(key);
 
-                if (!isEvent) return false;
+                if (!isEvent || String(data.eventType || "bookable").toLowerCase() !== "bookable"
+                    || String(data.eventStatus || "UPCOMING").toUpperCase() !== "UPCOMING") return false;
 
                 const date = String(data.date || "");
                 const endDate = String(data.endDate || date);
@@ -453,7 +450,7 @@
             );
     }
 
-    function createEventCard(event) {
+    function createEventCard(event, remaining, bookingEnabled) {
         const data = event.data;
 
         const card = document.createElement("article");
@@ -479,14 +476,10 @@
         const ticketsRow = document.createElement("div");
         addText(ticketsRow, "strong", "TICKETS");
 
-        const remaining =
-            data.remaining ??
-            data.remaining_tickets ??
-            "Limited";
-
-        ticketsRow.appendChild(
-            document.createTextNode(`${remaining} available`)
-        );
+        ticketsRow.appendChild(document.createTextNode(
+            remaining === 0 ? "Sold out"
+                : Number.isInteger(remaining) ? `${remaining} available` : "Availability to be confirmed"
+        ));
         meta.appendChild(ticketsRow);
 
         card.appendChild(meta);
@@ -517,14 +510,15 @@
         ticketInfo.appendChild(price);
         footer.appendChild(ticketInfo);
 
-        const bookLink = document.createElement("a");
-        bookLink.href =
-            `/bookings.html?event_id=${encodeURIComponent(event.id)}`;
-        bookLink.className =
-            "button button-primary event-book-button";
-        bookLink.textContent = "BOOK NOW →";
-
-        footer.appendChild(bookLink);
+        if (bookingEnabled && remaining > 0) {
+            const bookLink = document.createElement("a");
+            bookLink.href = `/bookings.html?event_id=${encodeURIComponent(event.id)}`;
+            bookLink.className = "button button-primary event-book-button";
+            bookLink.textContent = "BOOK NOW →";
+            footer.appendChild(bookLink);
+        } else {
+            addText(footer, "p", remaining === 0 ? "Sold out" : "Online booking unavailable");
+        }
         card.appendChild(footer);
 
         return card;
@@ -576,10 +570,11 @@
                 return;
             }
 
+            const { enabled, availability } = await essexBookingAvailability(AVAILABILITY_URL);
             const fragment = document.createDocumentFragment();
 
             events.forEach(event => {
-                fragment.appendChild(createEventCard(event));
+                fragment.appendChild(createEventCard(event, availability.get(event.id)?.remaining, enabled));
             });
 
             eventsGrid.replaceChildren(fragment);

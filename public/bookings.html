@@ -509,6 +509,7 @@
                 <div class="selected-event" id="selectedEvent">
                     <strong id="selectedEventTitle"></strong>
                     <span id="selectedEventDate"></span>
+                    <span id="selectedEventAvailability"></span>
                 </div>
 
                 <form class="booking-form" id="bookingForm">
@@ -655,6 +656,7 @@
 </main>
 
 <script src="/script.js" defer></script>
+<script src="/booking-availability.js" defer></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
@@ -663,6 +665,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const SUPABASE_URL = 'https://bluprrtwvubrqgzuimyc.supabase.co';
     const CONTENT_URL = `${SUPABASE_URL}/functions/v1/public-website-content`;
     const BOOKING_URL = `${SUPABASE_URL}/functions/v1/create-booking`;
+    const AVAILABILITY_URL = `${BOOKING_URL}/availability`;
 
     const calendarGrid = document.getElementById('calendarGrid');
     const monthDisplay = document.getElementById('monthDisplay');
@@ -681,6 +684,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectedEventPanel = document.getElementById('selectedEvent');
     const selectedEventTitle = document.getElementById('selectedEventTitle');
     const selectedEventDate = document.getElementById('selectedEventDate');
+    const selectedEventAvailability = document.getElementById('selectedEventAvailability');
     const formStatus = document.getElementById('formStatus');
     const submitButton = document.getElementById('submitButton');
 
@@ -694,6 +698,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let paymentType = 'deposit';
     let currentDate = new Date();
     let isSubmitting = false;
+    let bookingEnabled = false;
+    // Associate repeat submissions of identical details with the same hold.
+    const requests = new Map();
 
     currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
@@ -736,24 +743,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function isUpcoming(event) {
-        const date = parseLocalDate(event.date);
-        if (!date) return false;
+        return Boolean(event.date && event.date >= essexBookingToday());
+    }
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (date < today) return false;
-
-        if (event.endDate) {
-            const endDate = parseLocalDate(event.endDate);
-
-            if (endDate) {
-                endDate.setHours(23, 59, 59, 999);
-                if (endDate < today) return false;
-            }
-        }
-
-        return true;
+    function canBook(event) {
+        return Boolean(bookingEnabled && event?.bookingId && event.remaining > 0);
     }
 
     function selectEvent(event) {
@@ -764,13 +758,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             selectedEventPanel.classList.add('active');
             selectedEventTitle.textContent = event.title;
             selectedEventDate.textContent = `${formatEventDate(event.date)} · ${event.location}`;
-            submitButton.disabled = false;
-            submitButton.textContent = 'PROCEED TO SECURE PAYMENT →';
+            selectedEventAvailability.textContent = event.remaining === 0 ? 'Sold out'
+                : event.remaining > 0 ? `${event.remaining} places remaining` : 'Availability to be confirmed';
+            ticketQtyInput.max = String(Math.max(1, Math.min(10, event.remaining ?? 10)));
+            if (Number(ticketQtyInput.value) > Number(ticketQtyInput.max)) ticketQtyInput.value = ticketQtyInput.max;
+            submitButton.disabled = !canBook(event);
+            submitButton.textContent = canBook(event) ? 'PROCEED TO SECURE PAYMENT →' : 'ONLINE BOOKING UNAVAILABLE';
             setCalendarStatus(`Selected investigation: ${event.title}`);
+            updatePricing();
         } else {
             selectedEventPanel.classList.remove('active');
             selectedEventTitle.textContent = '';
             selectedEventDate.textContent = '';
+            selectedEventAvailability.textContent = '';
             submitButton.disabled = true;
             submitButton.textContent = 'SELECT AN INVESTIGATION FIRST';
             setCalendarStatus('Choose a highlighted date to select an investigation.');
@@ -845,7 +845,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (!Number.isInteger(qty)) qty = 1;
 
-        qty = Math.max(1, Math.min(10, qty));
+        qty = Math.max(1, Math.min(Number(ticketQtyInput.max), qty));
 
         const perTicket = paymentType === 'deposit' ? 20 : 60;
         const total = qty * perTicket;
@@ -886,20 +886,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             throw new Error('Unexpected response from the events service.');
         }
 
+        const { enabled, availability } = await essexBookingAvailability(AVAILABILITY_URL);
+        bookingEnabled = enabled;
+
         events = payload.content
             .filter(entry => {
                 const content = entry?.content || {};
 
-                return (
-                    content.recordType === 'event' ||
-                    content.section === 'events'
-                );
+                return (content.recordType === 'event' || content.section === 'events')
+                    && String(content.eventType || 'bookable').toLowerCase() === 'bookable'
+                    && String(content.eventStatus || 'UPCOMING').toUpperCase() === 'UPCOMING';
             })
             .map(entry => {
                 const content = entry.content || {};
 
                 return {
                     id: entry.contentKey,
+                    bookingId: availability.get(entry.contentKey)?.event_id,
+                    remaining: availability.get(entry.contentKey)?.remaining,
                     title: content.title || 'Ghost Hunt',
                     date: dateKey(content.date),
                     endDate: content.endDate || content.end_date || '',
@@ -967,7 +971,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const formData = {
-            event_id: selectedEvent.id,
+            event_id: selectedEvent.bookingId,
             customer_name: document.getElementById('customerName').value.trim(),
             customer_email: document.getElementById('customerEmail').value.trim(),
             customer_phone: document.getElementById('customerPhone').value.trim(),
@@ -984,6 +988,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? document.getElementById('giftMessage').value.trim()
                 : ''
         };
+
+        if (!canBook(selectedEvent) || quantity > selectedEvent.remaining) {
+            setFormStatus('Online booking is unavailable for these places.', true);
+            return;
+        }
+        const fingerprint = JSON.stringify(formData);
+        const requestId = requests.get(fingerprint) ?? crypto.randomUUID();
+        requests.set(fingerprint, requestId);
+        formData.request_id = requestId;
 
         isSubmitting = true;
         submitButton.disabled = true;
@@ -1008,15 +1021,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 );
             }
 
-            if (
-                typeof result.checkoutUrl !== 'string' ||
-                !result.checkoutUrl.startsWith('https://checkout.sumup.com/')
-            ) {
+            if (typeof result.booking_reference !== 'string') {
+                throw new Error('The booking service did not return a reference. Retry with the same details.');
+            }
+            if (result.payment_status === 'paid') {
+                setFormStatus(`Payment verified. Booking reference: ${result.booking_reference}.`);
+                submitButton.textContent = 'PAYMENT VERIFIED';
+                return;
+            }
+            if (typeof result.checkoutUrl !== 'string'
+                || new URL(result.checkoutUrl).origin !== 'https://checkout.sumup.com') {
                 throw new Error('The booking service did not return a valid SumUp checkout URL.');
             }
-
-            setFormStatus('Booking created. Redirecting to secure payment...');
-            window.location.assign(result.checkoutUrl);
+            setFormStatus(`Reservation reference: ${result.booking_reference}. Your booking is confirmed after payment is verified.`);
+            const payLink = document.createElement('a');
+            payLink.href = result.checkoutUrl;
+            payLink.textContent = 'Continue to secure SumUp payment';
+            formStatus.append(' ', payLink);
+            submitButton.textContent = 'RESERVATION CREATED';
 
         } catch (error) {
             console.error('Booking submission failed:', error);
@@ -1027,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             );
 
             isSubmitting = false;
-            submitButton.disabled = !selectedEvent;
+            submitButton.disabled = !canBook(selectedEvent);
             submitButton.textContent = selectedEvent
                 ? 'PROCEED TO SECURE PAYMENT →'
                 : 'SELECT AN INVESTIGATION FIRST';

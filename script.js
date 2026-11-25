@@ -991,6 +991,17 @@ function ensureFacebookLink() {
             const title = document.createElement("h3");
             title.textContent = text(data.title) || "Essex Paranormal Event";
             content.append(title);
+            const artwork = Array.isArray(payload.media)
+                ? payload.media.find(item => item?.id === data.imageMediaId) : null;
+            const artworkUrl = text(artwork?.signedUrl, 4096);
+            if (/^https:\/\//i.test(artworkUrl) && text(artwork?.metadata?.type, 100).startsWith("image/")) {
+                const image = document.createElement("img");
+                image.src = artworkUrl;
+                image.alt = text(artwork.metadata?.altText, 200) || text(artwork.title);
+                image.loading = "lazy";
+                image.decoding = "async";
+                content.append(image);
+            }
             const date = text(data.date, 80);
             const endDate = text(data.endDate, 80);
             if (date) {
@@ -1027,7 +1038,11 @@ function ensureFacebookLink() {
         if (!container || !Array.isArray(payload?.media)) return;
         const records = payload.media.filter((item) => {
             const type = text(item?.metadata?.type, 100);
-            return text(item?.signedUrl, 2048) && /^(image|video|audio)\//.test(type);
+            return /^https:\/\//i.test(text(item?.signedUrl, 4096)) && /^(image|video|audio)\//.test(type);
+        }).sort((a, b) => {
+            const position = item => Number.isInteger(item?.metadata?.galleryPosition)
+                ? item.metadata.galleryPosition : Number.MAX_SAFE_INTEGER;
+            return position(a) - position(b);
         });
         if (!records.length) return;
         container.replaceChildren();
@@ -1035,10 +1050,14 @@ function ensureFacebookLink() {
             const figure = document.createElement("figure");
             const type = text(item?.metadata?.type, 100);
             const element = document.createElement(type.startsWith("image/") ? "img" : type.startsWith("video/") ? "video" : "audio");
-            element.src = text(item.signedUrl, 2048);
+            element.src = text(item.signedUrl, 4096);
             element.controls = !type.startsWith("image/");
             element.preload = type.startsWith("audio/") ? "none" : "metadata";
-            if (type.startsWith("image/")) element.alt = text(item.title) || "Essex Paranormal archive media";
+            if (type.startsWith("image/")) {
+                element.alt = text(item.metadata?.altText, 200) || text(item.title) || "Essex Paranormal archive media";
+                element.loading = "lazy";
+                element.decoding = "async";
+            }
             figure.append(element);
             if (text(item.title)) {
                 const caption = document.createElement("figcaption");

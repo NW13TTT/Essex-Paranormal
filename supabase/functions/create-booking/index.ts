@@ -1,321 +1,151 @@
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const env = (key: string) => Deno.env.get(key);
+const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const project = env("SUPABASE_URL");
+const merchant = env("ESSEX_SUMUP_MERCHANT_CODE");
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SUPABASE_SERVICE_ROLE_KEY =
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-const SUMUP_API_KEY = Deno.env.get("SUMUP_API_KEY") ?? "";
-const SUMUP_MERCHANT_CODE = "MBHEFYRS";
-
-const TICKET_PRICE = 60;
-const DEPOSIT_PRICE = 20;
-const BALANCE_PER_DEPOSIT_TICKET = 40;
-const MAX_TICKETS = 10;
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://essexparanormal.com",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Content-Type": "application/json",
-};
-
-function respond(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: corsHeaders,
+async function rpc(name: string, payload: object) {
+  const key = env("SUPABASE_SERVICE_ROLE_KEY");
+  const response = await fetch(project + "/rest/v1/rpc/" + name, {
+    method: "POST", headers: { apikey: key!, Authorization: "Bearer " + key, "Content-Type": "application/json" },
+    body: JSON.stringify(payload), signal: AbortSignal.timeout(8000),
   });
+  const result = await response.json();
+  if (!response.ok) {
+    if (result.code === "23514" || result.code === "P0001") throw new Error("availability");
+    if (result.code === "22023") throw new Error("request conflict");
+    throw new Error("database");
+  }
+  return result;
 }
 
-function validEmail(value: unknown): value is string {
-  return typeof value === "string" &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+async function sumup(path: string, payload?: object) {
+  const response = await fetch("https://api.sumup.com/v0.1/checkouts" + path, {
+    method: payload ? "POST" : "GET",
+    headers: { Authorization: "Bearer " + env("ESSEX_SUMUP_API_KEY"), "Content-Type": "application/json" },
+    body: payload ? JSON.stringify(payload) : undefined, signal: AbortSignal.timeout(8000),
+  });
+  if (!response.ok) throw new Error("payment provider");
+  return response.json();
 }
 
-function clean(value: unknown, max = 500): string {
-  return typeof value === "string" ? value.trim().slice(0, max) : "";
-}
-
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+Deno.serve(async (request) => {
+  const origin = request.headers.get("Origin");
+  const headers = new Headers({ "Cache-Control": "no-store", Vary: "Origin" });
+  if (origin && origin === env("ESSEX_BOOKING_ORIGIN")) {
+    headers.set("Access-Control-Allow-Origin", origin);
+    headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    headers.set("Access-Control-Allow-Headers", "Content-Type");
   }
+  const fail = (status: number, error: string) => Response.json({success:false,error}, {status,headers});
+  const pathname = new URL(request.url).pathname;
+  const trustedOrigin = Boolean(origin && origin === env("ESSEX_BOOKING_ORIGIN"));
+  const enabled = env("ESSEX_CHECKOUT_ENABLED") === "true"
+    && Boolean(project && merchant && env("ESSEX_SUMUP_API_KEY") && env("SUPABASE_SERVICE_ROLE_KEY"));
 
-  if (req.method !== "POST") {
-    return respond({ success: false, error: "Method not allowed" }, 405);
-  }
-
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !SUMUP_API_KEY) {
-    console.error("Required server environment variables are missing.");
-    return respond({
-      success: false,
-      error: "Booking service is temporarily unavailable.",
-    }, 503);
-  }
-
-  let eventId = "";
-  let quantity = 0;
-  let reservationMade = false;
-  let bookingId: string | null = null;
-  let bookingTable: "bookings" | "gift_bookings" = "bookings";
-
-  const supabase = createClient(
-    SUPABASE_URL,
-    SUPABASE_SERVICE_ROLE_KEY,
-    { auth: { persistSession: false } },
-  );
-
+  if (request.method === "OPTIONS") return new Response(null,{status:204,headers});
   try {
-    const body = await req.json();
-
-    const customerName = clean(body.customer_name, 150);
-    const customerEmail = clean(body.customer_email, 254).toLowerCase();
-    const customerPhone = clean(body.customer_phone, 40);
-
-    eventId = clean(body.event_id, 200);
-    quantity = Number(body.tickets_qty);
-
-    const paymentType = body.payment_type;
-    const isGift = body.is_gift === true;
-
-    const recipientName = clean(body.recipient_name, 150);
-    const recipientEmail = clean(body.recipient_email, 254).toLowerCase();
-    const giftMessage = clean(body.gift_message, 1000);
-
-    // Validate customer and booking details.
-    if (
-      !customerName ||
-      !validEmail(customerEmail) ||
-      !customerPhone ||
-      !eventId
-    ) {
-      return respond({
-        success: false,
-        error: "Please provide your name, valid email, phone and event.",
-      }, 400);
+    if (pathname.endsWith("/availability")) {
+      if (request.method !== "GET") return fail(405,"Method not allowed.");
+      if (!trustedOrigin) return fail(403,"Origin not allowed.");
+      const availability = await rpc("essex_booking_availability", {});
+      return Response.json({ enabled, availability }, { headers });
     }
-
-    if (
-      !Number.isInteger(quantity) ||
-      quantity < 1 ||
-      quantity > MAX_TICKETS
-    ) {
-      return respond({
-        success: false,
-        error: `You can book between 1 and ${MAX_TICKETS} tickets.`,
-      }, 400);
+    if (request.method !== "POST") return fail(405,"Method not allowed.");
+    if (!enabled) return fail(503,"Online booking is temporarily unavailable.");
+    if (Number(request.headers.get("content-length")) > 8192) return fail(413,"Request is too large.");
+    const raw = await request.text();
+    if (new TextEncoder().encode(raw).byteLength > 8192) return fail(413,"Request is too large.");
+    const input = JSON.parse(raw);
+    if (!input || typeof input !== "object" || Array.isArray(input)) return fail(400,"Invalid JSON.");
+    if (pathname.endsWith("/sumup-webhook")) {
+      if (input.event_type !== "CHECKOUT_STATUS_CHANGED") return new Response(null,{status:204});
+      if (typeof input.id !== "string" || !uuid.test(input.id)) return fail(400,"Invalid checkout ID.");
+      const checkout = await sumup("/" + input.id);
+      if (checkout.id !== input.id || checkout.merchant_code !== merchant || checkout.currency !== "GBP" ||
+          !uuid.test(checkout.checkout_reference) || !Number.isFinite(checkout.amount)) return fail(400,"Checkout verification failed.");
+      // A failed attempt may still be retried on the provider checkout.
+      if (["PAID","EXPIRED"].includes(checkout.status)) {
+        const state = await rpc("essex_settle_checkout",{p_checkout:checkout.id,p_reference:checkout.checkout_reference,
+          p_pence:Math.round(checkout.amount*100),p_status:checkout.status});
+        if (state === null) return fail(503,"Checkout record unavailable.");
+      }
+      return new Response(null,{status:204});
     }
-
-    if (paymentType !== "deposit" && paymentType !== "full") {
-      return respond({
-        success: false,
-        error: "Please select deposit or full payment.",
-      }, 400);
-    }
-
-    if (isGift && !recipientName) {
-      return respond({
-        success: false,
-        error: "Please enter the gift recipient's name.",
-      }, 400);
-    }
-
-    if (recipientEmail && !validEmail(recipientEmail)) {
-      return respond({
-        success: false,
-        error: "The recipient email address is invalid.",
-      }, 400);
-    }
-
-    // Calculate the amount in GBP.
-    const amountPerTicket =
-      paymentType === "full" ? TICKET_PRICE : DEPOSIT_PRICE;
-
-    const amountToPay = Number(
-      (quantity * amountPerTicket).toFixed(2),
-    );
-
-    const balanceDue = paymentType === "deposit"
-      ? quantity * BALANCE_PER_DEPOSIT_TICKET
-      : 0;
-
-    // Unique reference for this booking and SumUp checkout.
-    const bookingReference =
-      `EP-${crypto.randomUUID().replaceAll("-", "").slice(0, 12).toUpperCase()}`;
-
-    // Reserve tickets atomically using the existing database RPC.
-    const { data: reservationSuccess, error: reserveError } =
-      await supabase.rpc("reserve_tickets", {
-        target_event_id: eventId,
-        qty: quantity,
-      });
-
-    if (reserveError) {
-      console.error("Ticket reservation error:", reserveError);
-      throw new Error("Unable to reserve tickets.");
-    }
-
-    if (reservationSuccess !== true) {
-      return respond({
-        success: false,
-        error: "These tickets are no longer available.",
-      }, 409);
-    }
-
-    reservationMade = true;
-
-    // Create the pending booking before requesting payment.
-    if (isGift) {
-      bookingTable = "gift_bookings";
-
-      const { data, error } = await supabase
-        .from("gift_bookings")
-        .insert({
-          gift_reference: bookingReference,
-          purchaser_name: customerName,
-          purchaser_email: customerEmail,
-          purchaser_phone: customerPhone,
-          recipient_name: recipientName,
-          recipient_email: recipientEmail || null,
-          gift_message: giftMessage || null,
-          event_id: eventId,
-          tickets_qty: quantity,
-          payment_type: paymentType,
-          total_paid: amountToPay,
-          balance_due: balanceDue,
-          payment_status: "pending",
-          booking_status: "reserved",
-          sumup_checkout_id: null,
-        })
-        .select("id")
-        .single();
-
-      if (error) throw error;
-      bookingId = data.id;
-    } else {
-      bookingTable = "bookings";
-
-      const { data, error } = await supabase
-        .from("bookings")
-        .insert({
-          booking_reference: bookingReference,
-          customer_name: customerName,
-          customer_email: customerEmail,
-          customer_phone: customerPhone,
-          event_id: eventId,
-          tickets_qty: quantity,
-          total_price: quantity * TICKET_PRICE,
-          deposit_amount: amountToPay,
-          balance_due: balanceDue,
-          payment_status: "pending",
-          booking_status: "reserved",
-          sumup_checkout_id: null,
-        })
-        .select("id")
-        .single();
-
-      if (error) throw error;
-      bookingId = data.id;
-    }
-
-    // Create a genuine SumUp hosted checkout.
-    const sumupResponse = await fetch(
-      "https://api.sumup.com/v0.1/checkouts",
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${SUMUP_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          checkout_reference: bookingReference,
-          amount: amountToPay,
-          currency: "GBP",
-          merchant_code: SUMUP_MERCHANT_CODE,
-          description: isGift
-            ? `Essex Paranormal Gift Hunt - ${quantity} ticket(s)`
-            : `Essex Paranormal Ghost Hunt - ${quantity} ticket(s)`,
-          hosted_checkout: {
-            enabled: true,
-          },
-        }),
-      },
-    );
-
-    const checkout = await sumupResponse.json();
-
-    if (!sumupResponse.ok) {
-      console.error("SumUp checkout creation failed:", checkout);
-      throw new Error("Unable to create payment checkout.");
-    }
-
-    const checkoutId = clean(checkout.id, 200);
-    const checkoutUrl = clean(checkout.hosted_checkout_url, 1000);
-
-    if (
-      !checkoutId ||
-      !checkoutUrl ||
-      !checkoutUrl.startsWith("https://checkout.sumup.com/")
-    ) {
-      console.error("Invalid SumUp checkout response.");
-      throw new Error("Payment provider returned an invalid checkout.");
-    }
-
-    // Save the genuine SumUp checkout ID against the booking.
-    const { error: updateError } = await supabase
-      .from(bookingTable)
-      .update({
-        sumup_checkout_id: checkoutId,
-      })
-      .eq("id", bookingId);
-
-    if (updateError) {
-      console.error("Could not save SumUp checkout ID:", updateError);
-      throw new Error("Unable to save payment details.");
-    }
-
-    // Payment is still pending. Only the verified webhook can confirm it.
-    return respond({
-      success: true,
-      booking_reference: bookingReference,
-      checkoutUrl,
-      amount: amountToPay,
-      currency: "GBP",
-      payment_status: "pending",
+    if (!trustedOrigin) return fail(403,"Origin not allowed.");
+    const {event_id,tickets_qty,payment_type,is_gift,request_id} = input;
+    const field = (name: string, limit: number) => typeof input[name] === "string" ? input[name].trim().slice(0,limit+1) : "";
+    const customer_name = field("customer_name",200), customer_email = field("customer_email",254);
+    const customer_phone = field("customer_phone",40), recipient_name = field("recipient_name",200);
+    const recipient_email = field("recipient_email",254), gift_message = field("gift_message",1000);
+    const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (typeof request_id !== "string" || !uuid.test(request_id)
+        || typeof event_id !== "string" || !uuid.test(event_id) || !Number.isInteger(tickets_qty) || tickets_qty<1 || tickets_qty>10 ||
+        !["deposit","full"].includes(payment_type) || !customer_name || customer_name.length>200 ||
+        customer_email.length>254 || !email.test(customer_email) || customer_phone.length>40 ||
+        (is_gift === true && (!recipient_name || recipient_name.length>200 || recipient_email.length>254 ||
+          (recipient_email && !email.test(recipient_email)) || gift_message.length>1000))) return fail(400,"Check your booking details.");
+    const customer = {customer_name,customer_email,customer_phone,is_gift:is_gift===true,
+      ...(is_gift===true ? {recipient_name,recipient_email,gift_message} : {})};
+    const hold = await rpc("essex_start_checkout", {
+      p_request: request_id, p_event: event_id, p_quantity: tickets_qty,
+      p_type: payment_type, p_customer: customer,
     });
-  } catch (error) {
-    console.error("Create booking error:", error);
-
-    // Remove incomplete booking and release its ticket reservation.
-    if (bookingId) {
-      const { error: deleteError } = await supabase
-        .from(bookingTable)
-        .delete()
-        .eq("id", bookingId);
-
-      if (deleteError) {
-        console.error("Could not remove incomplete booking:", deleteError);
-      }
+    if (hold.state === "paid") {
+      return Response.json({ success: true, booking_reference: hold.id, payment_status: "paid" }, { headers });
     }
+    if (hold.state !== "pending") return fail(409,"This checkout is closed. Start a new booking.");
 
-    if (reservationMade && eventId && quantity > 0) {
-      const { error: releaseError } = await supabase.rpc(
-        "release_tickets",
-        {
-          target_event_id: eventId,
-          qty: quantity,
-        },
-      );
-
-      if (releaseError) {
-        console.error("Could not release reserved tickets:", releaseError);
+    let checkout;
+    if (hold.create_checkout) {
+      checkout = await sumup("", {
+        checkout_reference: hold.id, amount: hold.amount_pence / 100,
+        currency: "GBP", merchant_code: merchant, description: "Essex Paranormal tickets",
+        hosted_checkout: { enabled: true },
+        valid_until: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
+        return_url: project + "/functions/v1/create-booking/sumup-webhook",
+      });
+    } else if (hold.checkout_id) {
+      checkout = await sumup("/" + encodeURIComponent(hold.checkout_id));
+    } else {
+      // The original creation request may still be in flight.
+      const matches = await sumup("?checkout_reference=" + encodeURIComponent(hold.id));
+      if (!Array.isArray(matches) || matches.length !== 1) {
+        return fail(409,"Checkout is being prepared. Wait a moment and retry with the same details.");
       }
+      checkout = matches[0];
     }
-
-    return respond({
-      success: false,
-      error: "We could not start your booking. Please try again.",
-    }, 500);
+    const checkoutId = checkout?.id;
+    if (typeof checkoutId !== "string" || !uuid.test(checkoutId)
+        || (hold.checkout_id && hold.checkout_id !== checkoutId)
+        || checkout.checkout_reference !== hold.id || checkout.merchant_code !== merchant
+        || checkout.currency !== "GBP" || !Number.isFinite(checkout.amount)
+        || Math.round(checkout.amount * 100) !== hold.amount_pence) {
+      return fail(502,"Secure checkout could not be verified.");
+    }
+    if (checkout.status === "PAID") {
+      await rpc("essex_attach_checkout", { p_hold: hold.id, p_checkout: checkoutId });
+      const state = await rpc("essex_settle_checkout", {
+        p_checkout: checkoutId, p_reference: hold.id, p_pence: hold.amount_pence, p_status: "PAID",
+      });
+      if (state !== "paid") return fail(503,"Payment confirmation is being verified.");
+      return Response.json({ success: true, booking_reference: hold.id, payment_status: "paid" }, { headers });
+    }
+    if (checkout.status !== "PENDING"
+        || typeof checkout.hosted_checkout_url !== "string"
+        || new URL(checkout.hosted_checkout_url).origin !== "https://checkout.sumup.com") {
+      return fail(409,"The payment provider has not returned an open checkout.");
+    }
+    if (!await rpc("essex_attach_checkout", { p_hold: hold.id, p_checkout: checkoutId })) {
+      return fail(503,"Secure checkout could not be saved. Retry with the same details.");
+    }
+    return Response.json({
+      success: true, booking_reference: hold.id, payment_status: "pending", checkoutUrl: checkout.hosted_checkout_url,
+    }, { headers });
+  } catch(error) {
+    if (error instanceof SyntaxError) return fail(400,"Invalid JSON.");
+    if (error instanceof Error && error.message === "request conflict") return fail(409,"Checkout details changed. Start a new booking.");
+    if (error instanceof Error && error.message === "availability") return fail(409,"This event has insufficient ticket availability.");
+    return fail(503,"Online booking is temporarily unavailable.");
   }
 });
